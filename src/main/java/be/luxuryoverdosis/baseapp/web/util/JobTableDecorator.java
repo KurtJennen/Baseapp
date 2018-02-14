@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 import org.displaytag.decorator.TableDecorator;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.data.to.JobTO;

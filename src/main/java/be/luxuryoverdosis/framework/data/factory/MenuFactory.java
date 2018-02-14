@@ -1,7 +1,7 @@
 package be.luxuryoverdosis.framework.data.factory;
 
 import net.sf.navigator.menu.MenuComponent;
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.MenuTO;
@@ -18,10 +18,10 @@ public class MenuFactory {
 		menuDTO.setTitle(BaseSpringServiceLocator.getMessage(menuComponent.getTitle()));
 		menuDTO.setFullLevel(fullLevel);
 		menuDTO.setLevel(level);
-		menuDTO.setHidden(Constants.CODE_NEE);
-		menuDTO.setDisabled(Constants.CODE_NEE);
-		menuDTO.setForPay(Constants.CODE_NEE);
-		menuDTO.setPayed(Constants.CODE_NEE);
+		menuDTO.setHidden(BaseConstants.CODE_NEE);
+		menuDTO.setDisabled(BaseConstants.CODE_NEE);
+		menuDTO.setForPay(BaseConstants.CODE_NEE);
+		menuDTO.setPayed(BaseConstants.CODE_NEE);
 		
 		return menuDTO;
 	}

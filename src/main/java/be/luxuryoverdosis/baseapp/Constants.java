@@ -1,4 +1,4 @@
-package be.luxuryoverdosis;
+package be.luxuryoverdosis.baseapp;
 
 public class Constants extends be.luxuryoverdosis.framework.BaseConstants {
 	//Application base

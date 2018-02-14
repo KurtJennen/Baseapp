@@ -192,7 +192,7 @@ public class UserServiceSpringImpl implements UserService {
 			text.append(addMailKeyText("mail.user.text4.create", userTO.getRole().getName()));
 			
 			helper.setTo(userTO.getEmail());
-			helper.setFrom(be.luxuryoverdosis.Constants.MAIL_FROM);
+			helper.setFrom(BaseConstants.MAIL_FROM);
 			helper.setSubject(BaseSpringServiceLocator.getMessage("mail.user.subject.create", new Object[]{userTO.getName()}));
 			helper.setText(text.toString(), true);
 			

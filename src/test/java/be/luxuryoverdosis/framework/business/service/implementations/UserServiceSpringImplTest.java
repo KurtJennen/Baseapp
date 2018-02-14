@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import be.luxuryoverdosis.Constants;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
@@ -65,7 +65,7 @@ public class UserServiceSpringImplTest {
 		userServiceSpringImpl.createOrUpdate(userTO);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(Constants.ROLE_NORMALE_GEBRUIKER);
+		verify(roleHibernateDAO).readName(BaseConstants.ROLE_NORMALE_GEBRUIKER);
 		verify(userHibernateDAO).createOrUpdate(userTO);
 	}
 	

@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
@@ -111,7 +111,7 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		
 		BatchJobInstanceTO batchJobInstanceTO = batchJobInstanceHibernateDAO.readJobExecution(jobId);
 		
-		BatchJobParamsTO  batchJobParamsTO = batchJobParamsHibernateDAO.getJobParam(batchJobInstanceTO.getId(), Constants.JOB_ID);
+		BatchJobParamsTO  batchJobParamsTO = batchJobParamsHibernateDAO.getJobParam(batchJobInstanceTO.getId(), BaseConstants.JOB_ID);
 		
 		arrayList = jobLogHibernateDAO.list((int)batchJobParamsTO.getLongValue());
 		Logging.info(this, "End listJobLog");

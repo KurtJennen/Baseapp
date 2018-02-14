@@ -16,7 +16,7 @@ import org.jmesa.view.editor.BasicCellEditor;
 import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.DateCellEditor;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -60,13 +60,13 @@ public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 		    	String status = null;
 		        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 		        
-		        if(Constants.JOB_STATUS_NOT_STARTED.equals(value)) {
+		        if(BaseConstants.JOB_STATUS_NOT_STARTED.equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("job.status.not.started");
 				}
-				if(Constants.JOB_STATUS_STARTED.equals(value)) {
+				if(BaseConstants.JOB_STATUS_STARTED.equals(value)) {
 					status = BaseSpringServiceLocator.getMessage("job.status.started");
 				}
-				if(Constants.JOB_STATUS_EXECUTED.equals(value)) {
+				if(BaseConstants.JOB_STATUS_EXECUTED.equals(value)) {
 					status = BaseSpringServiceLocator.getMessage("job.status.executed");
 				}
 				

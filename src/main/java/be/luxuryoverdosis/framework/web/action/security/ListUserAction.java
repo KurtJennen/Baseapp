@@ -15,7 +15,7 @@ import org.apache.struts.upload.FormFile;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
@@ -64,7 +64,7 @@ public class ListUserAction extends DispatchAction {
         
 		BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
 		ArrayList<BatchJobInstanceTO> batchJobInstanceList = new ArrayList<BatchJobInstanceTO>();
-		batchJobInstanceList = batchJobInstanceService.list(Constants.JOB_EXPORT_USER);
+		batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_EXPORT_USER);
 		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
@@ -77,7 +77,7 @@ public class ListUserAction extends DispatchAction {
 		//JMesa End
         
         batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		batchJobInstanceList = batchJobInstanceService.list(Constants.JOB_IMPORT_USER);
+		batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_IMPORT_USER);
 		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_IMPORT_LIST, request, response);
@@ -129,7 +129,7 @@ public class ListUserAction extends DispatchAction {
 		Logging.info(this, "Begin ReadJob");
 		Logging.info(this, "End ReadJob Success");
 		
-		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, Constants.JOB_NIVEAU_USER);
+		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, BaseConstants.JOB_NIVEAU_USER);
 		
 		return (mapping.findForward("readJob"));
 	}
@@ -137,7 +137,7 @@ public class ListUserAction extends DispatchAction {
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ExportUserJob");
 		
-		FileDTO fileDTO = new FileDTO(null, Constants.JOB_EXPORT_USER_FILENAME, 0, FileContentType.TEXT_PLAIN);
+		FileDTO fileDTO = new FileDTO(null, BaseConstants.JOB_EXPORT_USER_FILENAME, 0, FileContentType.TEXT_PLAIN);
 		
 		BatchService batchService = BaseSpringServiceLocator.getBean(BatchService.class);
 		batchService.exportUserJob(fileDTO);

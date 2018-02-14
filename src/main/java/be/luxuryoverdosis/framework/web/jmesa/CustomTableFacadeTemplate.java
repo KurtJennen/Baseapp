@@ -29,7 +29,7 @@ import org.jmesa.view.html.component.HtmlTable;
 import org.jmesa.view.html.event.RowEvent;
 import org.jmesa.view.html.toolbar.Toolbar;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -237,7 +237,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 			        
 			        HtmlBuilder html = new HtmlBuilder();
-			        if(Constants.CODE_JA.equals(value)) {
+			        if(BaseConstants.CODE_JA.equals(value)) {
 			        	html.input().type("checkbox").checked().disabled().close();
 			        } else {
 			        	html.input().type("checkbox").disabled().close();

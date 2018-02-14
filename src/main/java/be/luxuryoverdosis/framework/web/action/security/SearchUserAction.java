@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import be.luxuryoverdosis.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
@@ -49,7 +49,7 @@ public class SearchUserAction extends SearchAction {
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
 		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
 		ArrayList<DocumentTO> documentList = new ArrayList<DocumentTO>();
-		documentList = documentService.list(Constants.DOCUMENTYPE_USER);
+		documentList = documentService.list(BaseConstants.DOCUMENTYPE_USER);
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
 		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, documentList);
 	}
