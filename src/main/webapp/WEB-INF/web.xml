@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="3.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" >
+	<display-name>
+	Baseapp</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<context-param>
+		<param-name>dbType</param-name>
+		<param-value>MySQL</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
+		<param-value>nl_BE</param-value>
+	</context-param>
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>be.luxuryoverdosis.resources.locale.ApplicationResources</param-value>
+	</context-param>
+    
+    <filter>
+		<filter-name>Security Filter</filter-name>
+		<filter-class>be.luxuryoverdosis.framework.web.security.SecurityFilter</filter-class>
+		<init-param>
+			<param-name>unsecured</param-name>
+			<param-value>/login</param-value>
+		</init-param>
+		<init-param>
+			<param-name>login</param-name>
+			<param-value>/login.do?method=index</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Security Filter</filter-name>
+		<url-pattern>*.jsp</url-pattern>	
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Security Filter</filter-name>
+		<servlet-name>action</servlet-name>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>Spring WS Security Filter</filter-name>
+		<filter-class>be.luxuryoverdosis.framework.web.security.SpringWsSecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Spring WS Security Filter</filter-name>
+		<servlet-name>spring-ws</servlet-name>
+	</filter-mapping>
+	
+	<listener>
+		<listener-class>be.luxuryoverdosis.baseapp.web.listener.AppListener</listener-class>
+	</listener>
+	
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/luxuryOverdosis</taglib-uri>
+			<taglib-location>/WEB-INF/luxuryOverdosis.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/taglib</taglib-uri>
+			<taglib-location>/WEB-INF/taglib106.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+	
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>/WEB-INF/struts-config.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>2</param-value>
+		</init-param>
+		<init-param>
+			<param-name>chainConfig</param-name>
+			<param-value>org/apache/struts/tiles/chain-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>spring-ws</servlet-name>
+		<servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>transformWsdlLocations</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring-ws</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>spring-rest</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>spring-rest</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+</web-app>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN" " http://struts.apache.org/dtds/struts-config_1_3.dtd"> 
+<struts-config>
+	<form-beans>
+		<form-bean name="baseForm" type="be.luxuryoverdosis.framework.web.form.BaseForm" />
+		
+		<form-bean name="documentForm" type="be.luxuryoverdosis.framework.web.form.DocumentForm" />
+		<form-bean name="documentTypeForm" type="be.luxuryoverdosis.framework.web.form.DocumentTypeForm" />
+		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
+		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
+		<form-bean name="numberForm" type="be.luxuryoverdosis.framework.web.form.NumberForm" />
+		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
+		<form-bean name="roleForm" type="be.luxuryoverdosis.framework.web.form.RoleForm" />
+		<form-bean name="searchForm" type="be.luxuryoverdosis.framework.web.form.SearchForm" />
+		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
+		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
+		<form-bean name="searchUserForm" type="be.luxuryoverdosis.framework.web.form.SearchUserForm" />
+		<form-bean name="jobForm" type="be.luxuryoverdosis.framework.web.form.JobForm" />
+	</form-beans>
+	
+	<global-exceptions>
+   		<exception type="java.lang.Exception" key="errors.exception" handler="be.luxuryoverdosis.framework.web.exception.ApplicationExceptionHandler" />
+	</global-exceptions>
+	
+	<action-mappings>
+		<action path="/login"
+				name="loginForm"
+				validate="true"
+				scope="request"
+				input="display.login.form"
+				type="be.luxuryoverdosis.framework.web.action.security.LoginAction"
+				parameter="method">
+				<forward name="success" path="display.body.form" />
+				<forward name="failed" path="display.login.form" />
+				<forward name="register" path="display.register.form" />
+		</action>
+		
+		<action path="/loginRegister"
+				name="detailUserForm"
+				validate="true"
+				scope="request"
+				input="display.register.form"
+				type="be.luxuryoverdosis.framework.web.action.security.UserAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="login" path="display.login.form" />
+		</action>
+		
+		<action path="/detailMenu"
+				name="menuForm"
+				validate="true"
+				scope="request"
+				input="display.detail.menu.form"
+				type="be.luxuryoverdosis.framework.web.action.security.MenuAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="disabled" path="display.error.menu.form" />
+				<forward name="forPay" path="display.error.menu.form" />
+		</action>
+		
+		<action path="/detailDocument"
+				name="documentForm"
+				validate="true"
+				scope="request"
+				input="display.detail.document.form"
+				type="be.luxuryoverdosis.framework.web.action.security.DocumentAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="display.list.document.form" />
+		</action>
+		
+		<action path="/detailDocumentType"
+				name="documentTypeForm"
+				validate="true"
+				scope="request"
+				input="display.detail.document.type.form"
+				type="be.luxuryoverdosis.framework.web.action.security.DocumentTypeAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="display.list.document.type.form" />
+		</action>
+		
+		<action path="/detailNumber"
+				name="numberForm"
+				validate="true"
+				scope="request"
+				input="display.detail.number.form"
+				type="be.luxuryoverdosis.framework.web.action.security.NumberAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="display.list.number.form" />
+		</action>
+		
+		<action path="/detailPdf"
+				name="pdfForm"
+				validate="true"
+				scope="request"
+				input="display.detail.pdf.form"
+				type="be.luxuryoverdosis.framework.web.action.security.PdfAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="display.list.pdf.form" />
+		</action>
+		
+		<action path="/detailRole"
+				name="roleForm"
+				validate="true"
+				scope="request"
+				input="display.detail.role.form"
+				type="be.luxuryoverdosis.framework.web.action.security.RoleAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="display.list.role.form" />
+		</action>
+		
+		<action path="/searchUser"
+				name="searchUserForm"
+				validate="true"
+				scope="session"
+				input="display.search.user.form"
+				type="be.luxuryoverdosis.framework.web.action.security.SearchUserAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="/listUser.do?method=list" />
+				<forward name="create" path="/detailUser.do?method=create" />
+		</action>
+		<action path="/listUser"
+				name="listUserForm"
+				validate="true"
+				scope="request"
+				input="display.list.user.form"
+				type="be.luxuryoverdosis.framework.web.action.security.ListUserAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="search" path="/searchUser.do?method=search" />
+				<forward name="create" path="/detailUser.do?method=create" />
+				<forward name="read" path="/detailUser.do?method=read" />
+				<forward name="readJob" path="/detailJob.do?method=read" />
+		</action>
+		<action path="/detailUser"
+				name="detailUserForm"
+				validate="true"
+				scope="request"
+				input="display.detail.user.form"
+				type="be.luxuryoverdosis.framework.web.action.security.DetailUserAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="search" path="/searchUser.do?method=search" />
+				<forward name="list" path="/listUser.do?method=list" />
+		</action>
+		
+		<action path="/detailJob"
+				name="jobForm"
+				validate="true"
+				scope="session"
+				input="display.detail.job.form"
+				type="be.luxuryoverdosis.framework.web.action.security.DetailJobAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="backUser" path="/listUser.do?method=list" />
+		</action>
+	</action-mappings>
+
+	<message-resources parameter="be.luxuryoverdosis.resources.locale.ApplicationResources"></message-resources>
+	
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames" value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml" />
+	</plug-in>
+	<plug-in className="org.apache.struts.tiles.TilesPlugin">
+		<set-property property="definitions-config" value="/WEB-INF/tiles-def.xml" />	
+	</plug-in>
+	<plug-in className="net.sf.navigator.menu.MenuPlugIn">
+ 		<set-property property="menuConfig" value="/WEB-INF/menu-config.xml" />
+	</plug-in>
+</struts-config>

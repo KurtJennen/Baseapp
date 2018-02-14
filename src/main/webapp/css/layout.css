@@ -1,0 +1,100 @@
+html {
+	height: 100%;
+	width: 100%;
+}
+
+body, table{
+	font-family: Arial;
+	color: black;
+}
+
+body{
+	height: 100%;
+	width: 100%;
+	font-size: small;
+	background-color: #888888;
+}
+
+table{
+	font-size: x-small;
+	background-color: #D3D3D3;
+	border-collapse: collapse;	 
+}
+
+a{color: black;}
+a:link{color: black;}
+a:visited{color: black;}
+a:hover{color: #888888;}
+a:active{color: #888888;}
+
+input, select{
+	background-color: #C8C8C8;
+}
+
+img{border: 0px;}
+
+button{
+	cursor: pointer;
+}
+
+.tiletable{
+	height: 100%;
+	width: 100%;
+	margin: 0px;
+	background-color: #D3D3D3;
+}
+
+.tiletable .td{
+	vertical-align: top;
+}
+
+.tilemenu{
+	height: 1%;
+	background-color: #888888;}
+.tilenomenu{
+	height: 1%;
+	text-align: center;
+	background-color: #888888;}
+
+.menuitem {width: 90%; text-decoration: none; border: none;}
+
+.tiletable a{text-decoration: none; border : none;}
+.tiletable a:hover{color: black; background-color: #C8C8C8;}
+.tiletable a:active{color: black; background-color: #C8C8C8;}
+
+.left{text-align: left;}
+.center{text-align: center;}
+.right{text-align: right;}
+
+displaytag{border-collapse: collapse;}
+.displaytag th{
+	color: #484848;
+	background-color: #B8B8B8;
+}
+.evenrows{background-color: #B8B8B8;}
+.oddrows{background-color: #C8C8C8;}
+
+.error{color: #C00000;}
+
+.jmesatag{
+	height: 400px;
+	width: 1000px;
+	overflow: auto;
+}
+
+.jmesatagsmall{
+	height: 350px;
+	width: 980px;
+	overflow: auto;
+}
+
+.defaultMessages{
+	height: 10%;
+	overflow: hidden;
+	background-color: lightgreen;
+}
+.errorMessages{
+	height: 10%;
+	overflow: hidden;
+	background-color: lightcoral;
+}

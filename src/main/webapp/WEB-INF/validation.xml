@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.3.0//EN" "http://jakarta.apache.org/commons/dtds/validator_1_3_0.dtd">
+<form-validation>
+	<formset>
+		<form name="loginForm">
+			<field property="name" depends="required">
+				<arg key="security.name" />
+			</field>
+			<field property="password" depends="required">
+				<arg key="security.password" />
+			</field>
+		</form>
+		
+		<form name="documentForm">
+			<field property="formFile" depends="required">
+				<arg key="file" />
+			</field>
+		</form>
+		
+		<form name="numberForm">
+			<field property="applicationCode" depends="required">
+				<arg key="security.number.application.code" />
+			</field>
+			<field property="year" depends="required">
+				<arg key="security.number.year" />
+			</field>
+			<field property="number" depends="required">
+				<arg key="security.number.number" />
+			</field>
+			<field property="type" depends="required">
+				<arg key="security.number.type" />
+			</field>
+		</form>
+		
+		<form name="pdfForm">
+			<field property="formFile" depends="required">
+				<arg key="file" />
+			</field>
+		</form>
+	
+		<form name="roleForm">
+			<field property="name" depends="required">
+				<arg key="security.name" />
+			</field>
+		</form>
+	
+		<form name="detailUserForm">
+			<field property="name" depends="required">
+				<arg key="security.name.unique" />
+			</field>
+			<field property="userName" depends="required">
+				<arg key="security.username" />
+			</field>
+			<field property="password" depends="required">
+				<arg key="security.password" />
+			</field>
+			<field property="passwordConfirm" depends="required">
+				<arg key="security.password.confirm" />
+			</field>
+			<field property="email" depends="required,email">
+				<arg key="security.email" />
+			</field>
+		</form>
+	</formset>
+</form-validation>

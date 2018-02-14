@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:sws="http://www.springframework.org/schema/web-services"
+	xmlns:oxm="http://www.springframework.org/schema/oxm"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd
+		http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm-3.1.xsd">
+		
+	<context:component-scan base-package="be.luxuryoverdosis.baseapp.business.webservice.endpoint" />
+	<context:component-scan base-package="be.luxuryoverdosis.framework.business.webservice.endpoint" />
+	
+	<sws:annotation-driven/>
+	
+	<bean id="xmlRootElementPayloadMethodProcessor" class="org.springframework.ws.server.endpoint.adapter.method.jaxb.XmlRootElementPayloadMethodProcessor">
+        <description>Alle request moeten geannoteerd worden met @XmlRootElement en @XmlType. De response moet geannoteerd worden met @XmlRootElement.</description>
+	</bean>
+	 
+	<bean id="defaultMethodEndpointAdapter" class="org.springframework.ws.server.endpoint.adapter.DefaultMethodEndpointAdapter">
+		<property name="methodArgumentResolvers">
+			<list>
+				<ref bean="xmlRootElementPayloadMethodProcessor"/>
+			</list>	
+		</property>
+		<property name="methodReturnValueHandlers">
+			<list>
+				<ref bean="xmlRootElementPayloadMethodProcessor"/>
+			</list>
+		</property>
+	</bean>
+	
+	<sws:interceptors>
+		<bean class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+			<property name="schemas">
+				<list>
+					<value>classpath:be/luxuryoverdosis/baseapp/business/webservice/xsd/user-1.0.xsd</value>
+				</list>
+			</property>
+			<property name="validateRequest" value="false" />
+			<property name="validateResponse" value="false" />
+		</bean>
+		<bean class="org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor"/>
+	</sws:interceptors>
+	
+	<bean class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping">
+        <description>An endpoint mapping strategy that looks for @Endpoint and @PayloadRoot annotations.</description>
+	</bean>
+	
+	<!--http://localhost:8080/Baseapp/services/user1Wsdl.wsdl-->
+	<sws:static-wsdl id="user1Wsdl" location="classpath:be/luxuryoverdosis/baseapp/business/webservice/wsdl/user-1.0.wsdl"/>
+	
+	<!--http://localhost:8080/Baseapp/services/user1Xsd.xsd-->
+	<bean id="user1Xsd" class="org.springframework.xml.xsd.SimpleXsdSchema">
+		<property name="xsd" value="classpath:be/luxuryoverdosis/baseapp/business/webservice/xsd/user-1.0.xsd"/>
+	</bean>
+</beans> 

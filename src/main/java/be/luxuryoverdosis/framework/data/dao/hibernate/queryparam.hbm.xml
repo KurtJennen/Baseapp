@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-lazy="false">
+	<class name="be.luxuryoverdosis.framework.data.to.QueryParamTO" table="base_query_param">
+		<id name="id" column="Id" type="int" unsaved-value="-1">
+			<generator class="identity"></generator>
+		</id>
+		<version name="version" column="Version" type="int" unsaved-value="negative" />
+		<property name="userAdd" column="UserAdd" type="string" not-null="true"></property>
+		<property name="userUpdate" column="UserUpdate" type="string" not-null="true"></property>
+		<property name="dateAdd" column="DateAdd" type="timestamp" not-null="true"></property>
+		<property name="dateUpdate" column="DateUpdate" type="timestamp" not-null="true"></property>
+		<property name="parameter" column="Parameter" type="string" not-null="true"></property>
+		<property name="operator" column="Operator" type="string" not-null="true"></property>
+		<property name="value" column="Value" type="string" not-null="true"></property>
+		<property name="openBracket" column="OpenBracket" type="string"></property>
+		<property name="closeBracket" column="CloseBracket" type="string"></property>
+		<property name="addAndOr" column="AddAndOr" type="string"></property>
+				
+		<many-to-one name="query" column="Query_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.QueryTO" lazy="false"></many-to-one>
+	</class>
+</hibernate-mapping>

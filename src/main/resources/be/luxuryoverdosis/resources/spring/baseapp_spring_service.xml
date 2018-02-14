@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+       						
+    <context:component-scan base-package="be.luxuryoverdosis.framework.business.service.implementations" />
+    <context:component-scan base-package="be.luxuryoverdosis.baseapp.business.service.implementations" />
+    
+    <context:annotation-config/>
+    
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>be.luxuryoverdosis.resources.locale.ApplicationResources</value>
+			</list>		
+		</property>
+	</bean>
+    
+    <bean id="senderService" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host">
+        	<value>${mail.host}</value>
+        </property>
+    </bean>
+	
+<!--	<bean id="baseService" class="be.luxuryoverdosis.framework.business.BaseService" />-->
+	
+<!--	<bean id="searchService" class="be.luxuryoverdosis.framework.business.service.implementations.SearchServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="sqlService" class="be.luxuryoverdosis.framework.business.service.implementations.SqlServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="jobService" class="be.luxuryoverdosis.framework.business.service.implementations.JobServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="jobLogService" class="be.luxuryoverdosis.framework.business.service.implementations.JobLogServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="jobParamService" class="be.luxuryoverdosis.framework.business.service.implementations.JobParamServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="queryService" class="be.luxuryoverdosis.framework.business.service.implementations.QueryServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="queryParamService" class="be.luxuryoverdosis.framework.business.service.implementations.QueryParamServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="menuService" class="be.luxuryoverdosis.framework.business.service.implementations.MenuServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="numberService" class="be.luxuryoverdosis.framework.business.service.implementations.NumberServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="roleService" class="be.luxuryoverdosis.framework.business.service.implementations.RoleServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="userService" class="be.luxuryoverdosis.framework.business.service.implementations.UserServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="reportService" class="be.luxuryoverdosis.framework.business.service.implementations.ReportServiceSpringImpl" parent="baseService" />-->
+<!--	<bean id="documentService" class="be.luxuryoverdosis.framework.business.service.implementations.DocumentServiceSpringImpl" parent="baseService" />-->
+	
+	<bean id="sqlExecuterService" class="be.luxuryoverdosis.baseapp.business.service.implementations.SqlExecuterServiceSpringImpl" />
+</beans>

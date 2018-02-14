@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+       						
+    <context:component-scan base-package="be.luxuryoverdosis.framework.data.dao.implementations" />
+    <context:component-scan base-package="be.luxuryoverdosis.baseapp.data.dao.implementations" />
+    
+    <context:annotation-config/>
+       
+	<bean id="daoBase" class="be.luxuryoverdosis.framework.data.dao.DAOBase" />
+	
+<!--	<bean id="hibernateDaoSupport" abstract="true" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport">-->
+<!--		<property name="sessionFactory" ref="sessionFactory" />-->
+<!--	</bean>-->
+	
+<!--	<bean id="searchHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.SearchHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="sqlHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.SqlHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="jobHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.JobHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="jobLogHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.JobLogHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="jobParamHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.JobParamHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="queryHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.QueryHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="queryParamHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.QueryParamHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="menuHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.MenuHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="numberHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.NumberHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="roleHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.RoleHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="userHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.UserHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+<!--	<bean id="documentHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.DocumentHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
+	
+	<bean id="sqlExecuterDAO" class="be.luxuryoverdosis.baseapp.data.dao.implementations.SqlExecuterDAOMySQLImpl" parent="daoBase" />
+</beans>

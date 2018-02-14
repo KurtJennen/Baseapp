@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns ="http://www.springframework.org/schema/beans" 
+       xmlns:batch="http://www.springframework.org/schema/batch" 
+       xmlns:util="http://www.springframework.org/schema/util" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+                    http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+                    
+    <bean id="user" class="be.luxuryoverdosis.framework.data.dto.UserDTO" scope="prototype" />
+                    
+	<bean id="userImportReader" class="be.luxuryoverdosis.framework.business.job.FlatFileItemDatabaseReader" scope="step">
+		<property name="jobId" value="#{jobParameters[jobId]}" />
+		<property name="lineMapper">
+			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+				<property name="lineTokenizer">
+					<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+						<property name="names" value="name,userName,password,email,dateExpirationAsString" />
+						<property name="delimiter" value="|" />
+					</bean>
+				</property>
+				<property name="fieldSetMapper">
+					<bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+						<property name="prototypeBeanName" value="user" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="userImportWriter" class="be.luxuryoverdosis.framework.business.service.batch.user.UserImportWriter" scope="step">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="jobId" value="#{jobParameters[jobId]}" />
+	</bean>
+ 	
+	<batch:step id="userImportStep">
+		<batch:tasklet>
+			<batch:chunk reader="userImportReader" writer="userImportWriter" commit-interval="1" />
+		</batch:tasklet>
+	</batch:step>
+	
+	<batch:job id="userImportJob">
+		<batch:step id="userImportStep1" parent="userImportStep" />
+	</batch:job>
+</beans>

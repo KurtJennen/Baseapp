@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.3//EN" "http://struts.apache.org/dtds/tiles-config_1_3.dtd">
+<tiles-definitions>
+	<definition name="myTile" path="/jsp/tile.jsp">
+		<put name="header" value="/jsp/header.jsp" />
+		<put name="footer" value="/jsp/footer.jsp" />
+		<put name="menu" value="/jsp/strutsmenu.jsp" />
+		<put name="messages" value="/jsp/messages.jsp" />
+	</definition>
+	
+	<definition name="display.error.form" extends="myTile">
+		<put name="body" value="/jsp/error.jsp" />
+		<put name="messages" value="blank.jsp" />
+	</definition>
+	
+	<definition name="display.error.menu.form" extends="myTile">
+		<put name="body" value="/jsp/menuerror.jsp" />
+		<put name="messages" value="blank.jsp" />
+	</definition>
+	
+	<definition name="display.login.form" extends="myTile">
+		<put name="body" value="login.jsp" />
+		<put name="menu" value="blank.jsp" />
+	</definition>
+	
+	<definition name="display.register.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayRegisterForm.jsp" />
+		<put name="menu" value="blank.jsp" />
+	</definition>
+	
+	<definition name="display.body.form" extends="myTile">
+		<put name="body" value="/jsp/body.jsp" />
+	</definition>
+	
+	<definition name="display.detail.menu.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailMenuForm.jsp" />
+	</definition>
+	
+	<definition name="display.list.document.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListDocumentForm.jsp" />
+	</definition>
+	<definition name="display.detail.document.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailDocumentForm.jsp" />
+	</definition>
+	<definition name="display.list.document.type.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListDocumentTypeForm.jsp" />
+	</definition>
+	<definition name="display.detail.document.type.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailDocumentTypeForm.jsp" />
+	</definition>
+	<definition name="display.list.number.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListNumberForm.jsp" />
+	</definition>
+	<definition name="display.detail.number.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailNumberForm.jsp" />
+	</definition>
+	<definition name="display.list.pdf.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListPdfForm.jsp" />
+	</definition>
+	<definition name="display.list.role.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListRoleForm.jsp" />
+	</definition>
+	<definition name="display.detail.role.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailRoleForm.jsp" />
+	</definition>
+	<definition name="display.search.user.form" extends="myTile">
+		<put name="body" value="/jsp/security/displaySearchUserForm.jsp" />
+	</definition>
+	<definition name="display.list.user.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayListUserForm.jsp" />
+	</definition>
+	<definition name="display.detail.user.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailUserForm.jsp" />
+	</definition>
+	<definition name="display.detail.job.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayDetailJobForm.jsp" />
+	</definition>
+</tiles-definitions>

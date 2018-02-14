@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+		
+		<bean id="searchUser" class="be.luxuryoverdosis.framework.business.query.SearchSelect">
+			<property name="select">
+				<value>SELECT new be.luxuryoverdosis.framework.data.to.UserTO(u.id, u.name, u.userName, u.email, u.dateExpiration, r.name)
+				FROM UserTO u
+				INNER JOIN u.role r
+				</value>
+			</property>
+			<property name="orderby">
+				<value>ORDER BY u.name DESC</value>
+			</property>
+			<property name="searchParameters">
+				<list>
+					<bean class="be.luxuryoverdosis.framework.business.query.SearchParameter">
+						<property name="name">
+							<value>u.name</value>
+						</property>
+						<property name="key">
+							<value>security.name.unique</value>
+						</property>
+						<property name="type">
+							<value>java.lang.String</value>
+						</property>
+					</bean>
+					<bean class="be.luxuryoverdosis.framework.business.query.SearchParameter">
+						<property name="name">
+							<value>u.userName</value>
+						</property>
+						<property name="key">
+							<value>security.username</value>
+						</property>
+						<property name="type">
+							<value>java.lang.String</value>
+						</property>
+					</bean>
+					<bean class="be.luxuryoverdosis.framework.business.query.SearchParameter">
+						<property name="name">
+							<value>u.email</value>
+						</property>
+						<property name="key">
+							<value>security.email</value>
+						</property>
+						<property name="type">
+							<value>java.lang.String</value>
+						</property>
+					</bean>
+				</list>
+			</property>
+		</bean>
+       
+</beans>
