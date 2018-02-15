@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<%@ page import="be.luxuryoverdosis.Constants"%>
 
 <script type="text/javascript">
     function PreviewImage() {

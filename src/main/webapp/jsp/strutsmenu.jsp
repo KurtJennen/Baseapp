@@ -1,6 +1,6 @@
 <%@ taglib uri="http://struts-menu.sf.net/tag-el" prefix="menu" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<%@page import="be.luxuryoverdosis.Constants"%>
+<%@page import="be.luxuryoverdosis.baseapp.Constants"%>
 <%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
 <%@page import="be.luxuryoverdosis.framework.data.to.UserTO"%>
 <c:if test="<%= Constants.ROLE_BEHEERDER.equals(((UserTO)request.getSession().getAttribute(WebConstants.USER)).getRole().getName()) %>">

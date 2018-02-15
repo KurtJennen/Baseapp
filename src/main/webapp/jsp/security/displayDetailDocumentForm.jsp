@@ -3,7 +3,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<%@ page import="be.luxuryoverdosis.Constants"%>
+<%@ page import="be.luxuryoverdosis.baseapp.Constants"%>
 <html:form action="/detailDocument.do" enctype="multipart/form-data">
 	<div align="center">
 		<h2><i><fmt:message key="displayDetail.title" />&nbsp;<fmt:message key="table.document" /></i></h2>
