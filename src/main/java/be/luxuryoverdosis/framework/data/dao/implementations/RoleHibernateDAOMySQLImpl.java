@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
@@ -64,7 +64,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public ArrayList<RoleDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listRole");
-		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) getHibernateTemplate().find(listHql,  new Object[]{Query.PROCENT + searchValue + Query.PROCENT});
+		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) getHibernateTemplate().find(listHql,  new Object[]{SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT});
 		Logging.info(this, "End listRole");
 		return arrayList;
 	}

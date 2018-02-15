@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryHibernateDAO;
@@ -46,13 +46,13 @@ public class QueryServiceSpringImpl implements QueryService {
 		queryParamHibernateDAO.deleteForQuery(queryTO.getId());
 		
 		for(int i = 0; i < queryDTO.getParameters().length; i++) {
-			if(!queryDTO.getParameters()[i].equals(Query.MINUS_ONE)) {
+			if(!queryDTO.getParameters()[i].equals(SearchQuery.MINUS_ONE)) {
 				QueryParamTO queryParamTO = new QueryParamTO();
 				queryParamTO.setQuery(queryTO);
 				queryParamTO.setParameter(queryDTO.getParameters()[i]);
 				queryParamTO.setOperator(queryDTO.getOperators()[i]);
 				queryParamTO.setValue(queryDTO.getValues()[i]);
-				if(queryDTO.getComplex().equals(Query.ONE)) {
+				if(queryDTO.getComplex().equals(SearchQuery.ONE)) {
 					queryParamTO.setOpenBracket(queryDTO.getOpenBrackets()[i]);
 					queryParamTO.setCloseBracket(queryDTO.getCloseBrackets()[i]);
 					if(i > 0) {
@@ -79,7 +79,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		queryDTO.setOperators(this.readOperators(id));
 		queryDTO.setValues(this.readValues(id));
 		
-		if(Query.ZERO.equals(queryTO.getComplex())) {
+		if(SearchQuery.ZERO.equals(queryTO.getComplex())) {
 			queryDTO.setAddAndOrs(null);
 			queryDTO.setOpenBrackets(null);
 			queryDTO.setCloseBrackets(null);

@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -28,7 +28,7 @@ public class SearchForm extends BaseForm {
 	private String searchName = "";
 	private String queryName = "";
 	private String selectQuery = "";
-	private String complexQuery = Query.ZERO;
+	private String complexQuery = SearchQuery.ZERO;
 	
 	private boolean isButton1Allowed = false;
 	private boolean isButton2Allowed = false;
@@ -158,30 +158,30 @@ public class SearchForm extends BaseForm {
 			int aantalCloseBrackets = 0;
 			
 			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(Query.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < 9) {
-					errors.add(Query.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.value")));
+				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < 9) {
+					errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.value")));
 				}
-				if(parameters[i].equals(Query.MINUS_ONE)) {
+				if(parameters[i].equals(SearchQuery.MINUS_ONE)) {
 					aantalParameters++;
 				}
-				if(complexQuery.equals(Query.ONE)) {
-					if(i > 0 && !parameters[i].equals(Query.MINUS_ONE) && addAndOrs[i - 1].equals(Query.MINUS_ONE)) {
-						errors.add(Query.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.and.or")));
+				if(complexQuery.equals(SearchQuery.ONE)) {
+					if(i > 0 && !parameters[i].equals(SearchQuery.MINUS_ONE) && addAndOrs[i - 1].equals(SearchQuery.MINUS_ONE)) {
+						errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.and.or")));
 					}
-					if(openBrackets[i].equals(Query.MINUS_ONE)) {
+					if(openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 						aantalOpenBrackets++;
 					}
-					if(closeBrackets[i].equals(Query.MINUS_ONE)) {
+					if(closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 						aantalCloseBrackets++;
 					}
 				}
 			}
 			if(aantalParameters == parameters.length) {
-				errors.add(Query.FIELD + Query.ZERO, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.parameter")));
+				errors.add(SearchQuery.FIELD + SearchQuery.ZERO, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.parameter")));
 			}
-			if(complexQuery.equals(Query.ONE)) {
+			if(complexQuery.equals(SearchQuery.ONE)) {
 				if(aantalOpenBrackets != aantalCloseBrackets) {
-					errors.add(Query.FIELD + Query.ZERO, new ActionMessage("errors.bracket"));
+					errors.add(SearchQuery.FIELD + SearchQuery.ZERO, new ActionMessage("errors.bracket"));
 				}
 			}
 			

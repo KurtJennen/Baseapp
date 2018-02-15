@@ -9,7 +9,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
@@ -57,11 +57,11 @@ public abstract class SearchAction extends AjaxAction {
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(Query.ZERO.equals(searchForm.getComplexQuery())) {
-			searchForm.setComplexQuery(Query.ONE);
+		if(SearchQuery.ZERO.equals(searchForm.getComplexQuery())) {
+			searchForm.setComplexQuery(SearchQuery.ONE);
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("complex.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
-			searchForm.setComplexQuery(Query.ZERO);
+			searchForm.setComplexQuery(SearchQuery.ZERO);
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("complex.success", MessageLocator.getMessage(request, "table.query")));
 		}
 		
@@ -114,7 +114,7 @@ public abstract class SearchAction extends AjaxAction {
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(!Query.MINUS_ONE.equals(searchForm.getSelectQuery())) {
+		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
 			//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
 			QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
 			
@@ -146,7 +146,7 @@ public abstract class SearchAction extends AjaxAction {
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(!Query.MINUS_ONE.equals(searchForm.getSelectQuery())) {
+		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
 			//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
 			QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
 			queryService.delete(Integer.valueOf(searchForm.getSelectQuery()));
@@ -174,7 +174,7 @@ public abstract class SearchAction extends AjaxAction {
 		searchForm.setSearchName("");
 		searchForm.setQueryName("");
 		searchForm.setSelectQuery("");
-		searchForm.setComplexQuery(Query.ZERO);
+		searchForm.setComplexQuery(SearchQuery.ZERO);
 		searchForm.setDefaultLines(2);
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("reset.success", MessageLocator.getMessage(request, "table.query")));

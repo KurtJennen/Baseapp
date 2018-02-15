@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
@@ -81,7 +81,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public ArrayList<UserDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listUser");
-		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) getHibernateTemplate().find(listHql1, new Object[]{Query.PROCENT + searchValue + Query.PROCENT});
+		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) getHibernateTemplate().find(listHql1, new Object[]{SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT});
 		Logging.info(this, "End listUser");
 		return arrayList;
 	}

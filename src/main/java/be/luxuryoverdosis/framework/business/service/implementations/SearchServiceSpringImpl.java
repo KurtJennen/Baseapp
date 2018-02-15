@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.business.query.SearchParameter;
@@ -44,74 +44,74 @@ public class SearchServiceSpringImpl implements SearchService {
 		String[] openBrackets = searchCriteria.getOpenBrackets();
 		String[] closeBrackets = searchCriteria.getCloseBrackets();
 		String[] addAndOrs = searchCriteria.getAddAndOrs();
-		String complexQuery = Query.ZERO;
+		String complexQuery = SearchQuery.ZERO;
 		String addOnSelect = searchCriteria.getAddOnSelect();
 		
 		StringBuffer search = new StringBuffer();
 		
 		search.append(searchSelect.getSelect());
-		search.append(Query.SPACE);
+		search.append(SearchQuery.SPACE);
 		if(addOnSelect != null && !StringUtils.isEmpty(addOnSelect)) {
 			search.append(addOnSelect);
-			search.append(Query.SPACE);
+			search.append(SearchQuery.SPACE);
 		}
 		
 		if(parameters != null) {
-			int fromPos = searchSelect.getSelect().lastIndexOf(Query.FROM);
+			int fromPos = searchSelect.getSelect().lastIndexOf(SearchQuery.FROM);
 			String from = searchSelect.getSelect().substring(fromPos);
 			
-			if(!from.contains(Query.WHERE) && !addOnSelect.contains(Query.WHERE)) {
-				search.append(Query.WHERE);
+			if(!from.contains(SearchQuery.WHERE) && !addOnSelect.contains(SearchQuery.WHERE)) {
+				search.append(SearchQuery.WHERE);
 			} else {
-				search.append(Query.AND);
+				search.append(SearchQuery.AND);
 			}
-			search.append(Query.SPACE);
+			search.append(SearchQuery.SPACE);
 			
 			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(Query.MINUS_ONE)) {
+				if(!parameters[i].equals(SearchQuery.MINUS_ONE)) {
 					SearchParameter searchParameter = searchSelect.getSearchParameter(Integer.valueOf(parameters[i]));
 					
 					if(i > 0) {
-						if(complexQuery.equals(Query.ONE)) {
-							search.append(Query.DEFAULT_ADD[Integer.valueOf(addAndOrs[i - 1])]);
+						if(complexQuery.equals(SearchQuery.ONE)) {
+							search.append(SearchQuery.DEFAULT_ADD[Integer.valueOf(addAndOrs[i - 1])]);
 						} else {
-							search.append(Query.AND);
+							search.append(SearchQuery.AND);
 						}
-						search.append(Query.SPACE);
+						search.append(SearchQuery.SPACE);
 					}
 					
-					if(complexQuery.equals(Query.ONE)) {
-						if(!openBrackets[i].equals(Query.MINUS_ONE)) {
-							search.append(Query.OPEN_BRACKET);
-							search.append(Query.SPACE);
+					if(complexQuery.equals(SearchQuery.ONE)) {
+						if(!openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+							search.append(SearchQuery.OPEN_BRACKET);
+							search.append(SearchQuery.SPACE);
 						}
 					}
 					
 					search.append(searchParameter.getName());
-					search.append(Query.SPACE);
+					search.append(SearchQuery.SPACE);
 					if(Integer.valueOf(operators[i]) < 6) {
-						search.append(Query.DEFAULT_OPERATORS[Integer.valueOf(operators[i])]);
+						search.append(SearchQuery.DEFAULT_OPERATORS[Integer.valueOf(operators[i])]);
 					} 
 					if(Integer.valueOf(operators[i]) >= 6 && Integer.valueOf(operators[i]) <= 8) {
-						search.append(Query.LIKE);
+						search.append(SearchQuery.LIKE);
 					}
 					if(Integer.valueOf(operators[i]) == 9) {
-						search.append(Query.IS_NULL);
+						search.append(SearchQuery.IS_NULL);
 					}
 					if(Integer.valueOf(operators[i]) == 10) {
-						search.append(Query.IS_NOT_NULL);
+						search.append(SearchQuery.IS_NOT_NULL);
 					}
-					search.append(Query.SPACE);
+					search.append(SearchQuery.SPACE);
 					
 					if(Integer.valueOf(operators[i]) < 9) {
-						search.append(Query.QUESTION);
-						search.append(Query.SPACE);
+						search.append(SearchQuery.QUESTION);
+						search.append(SearchQuery.SPACE);
 					}
 					
-					if(complexQuery.equals(Query.ONE)) {
-						if(!closeBrackets[i].equals(Query.MINUS_ONE)) {
-							search.append(Query.CLOSE_BRACKET);
-							search.append(Query.SPACE);
+					if(complexQuery.equals(SearchQuery.ONE)) {
+						if(!closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+							search.append(SearchQuery.CLOSE_BRACKET);
+							search.append(SearchQuery.SPACE);
 						}
 					}
 				}
@@ -134,7 +134,7 @@ public class SearchServiceSpringImpl implements SearchService {
 			int teller = 0;
 			
 			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(Query.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
+				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
 					teller++;
 				}
 			}
@@ -144,19 +144,19 @@ public class SearchServiceSpringImpl implements SearchService {
 			teller = 0;
 			
 			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(Query.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
+				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
 					SearchParameter searchParameter = searchSelect.getSearchParameter(Integer.valueOf(parameters[i]));
 					
 					if(searchParameter.getType() == null || searchParameter.getType().equals("java.lang.String")) {
 						if(Integer.valueOf(operators[i]) >= 6 && Integer.valueOf(operators[i]) <= 8) {
 							if(Integer.valueOf(operators[i]) == 6) {
-								objects[teller] = values[i] + Query.PROCENT;
+								objects[teller] = values[i] + SearchQuery.PROCENT;
 							}
 							if(Integer.valueOf(operators[i]) == 7) {
-								objects[teller] =  Query.PROCENT + values[i];
+								objects[teller] =  SearchQuery.PROCENT + values[i];
 							}
 							if(Integer.valueOf(operators[i]) == 8) {
-								objects[teller] = Query.PROCENT + values[i] + Query.PROCENT;
+								objects[teller] = SearchQuery.PROCENT + values[i] + SearchQuery.PROCENT;
 							}
 						} else {
 							objects[teller] = values[i];

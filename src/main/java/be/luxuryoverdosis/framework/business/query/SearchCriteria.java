@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.business.query;
 
-import be.luxuryoverdosis.framework.base.Query;
+import be.luxuryoverdosis.framework.base.SearchQuery;
 
 public class SearchCriteria {
 	private String[] operators;
@@ -9,7 +9,7 @@ public class SearchCriteria {
 	private String[] openBrackets;
 	private String[] closeBrackets;
 	private String[] addAndOrs;
-	private String complexQuery = Query.ZERO;
+	private String complexQuery = SearchQuery.ZERO;
 	private String addOnSelect = "";
 	
 	public String[] getOperators() {
