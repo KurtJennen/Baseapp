@@ -8,47 +8,47 @@ import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements RoleHibernateDAO {
-	public RoleTO createOrUpdate(final RoleTO roleTO) {
+	public Role createOrUpdate(final Role role) {
 		Logging.info(this, "Begin createRole");
-		getHibernateTemplate().saveOrUpdate(roleTO);
+		getHibernateTemplate().saveOrUpdate(role);
 		Logging.info(this, "End createRole");
-		return roleTO;
+		return role;
 	}
 
-	public RoleTO read(final int id) {
+	public Role read(final int id) {
 		Logging.info(this, "Begin readRole");
-		RoleTO roleTO = (RoleTO) getHibernateTemplate().load(RoleTO.class, id);
+		Role role = (Role) getHibernateTemplate().load(Role.class, id);
 		Logging.info(this, "End readRole");
-		return roleTO;
+		return role;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public RoleTO readName(final String name) {
+	public Role readName(final String name) {
 		Logging.info(this, "Begin readNameRole");
-		ArrayList<RoleTO> arrayList = (ArrayList<RoleTO>) getHibernateTemplate().find("from RoleTO r where r.name = ?", new Object[]{name});
-		RoleTO roleTO = null;
+		ArrayList<Role> arrayList = (ArrayList<Role>) getHibernateTemplate().find("from Role r where r.name = ?", new Object[]{name});
+		Role role = null;
 		if(!arrayList.isEmpty()) {
-			roleTO = (RoleTO)arrayList.iterator().next();
+			role = (Role)arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNameRole");
-		return roleTO;
+		return role;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteRole");
-		getHibernateTemplate().delete((RoleTO) getHibernateTemplate().load(RoleTO.class, id));
+		getHibernateTemplate().delete((Role) getHibernateTemplate().load(Role.class, id));
 		Logging.info(this, "End deleteRole");		
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<RoleTO> list() {
+	public ArrayList<Role> list() {
 		Logging.info(this, "Begin listRole");
-		ArrayList<RoleTO> arrayList = (ArrayList<RoleTO>) getHibernateTemplate().find("from RoleTO");
+		ArrayList<Role> arrayList = (ArrayList<Role>) getHibernateTemplate().find("from Role");
 		Logging.info(this, "End listRole");
 		return arrayList;
 	}
@@ -57,7 +57,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 			"r.id, " +
 			"r.name " +
 			") " +
-			"from RoleTO r " +
+			"from Role r " +
 			"where name like ?";
 	
 	
@@ -72,7 +72,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from RoleTO r where r.name = ? and r.id <> ?", new Object[]{name, id});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Role r where r.name = ? and r.id <> ?", new Object[]{name, id});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countRole");
 		return count;

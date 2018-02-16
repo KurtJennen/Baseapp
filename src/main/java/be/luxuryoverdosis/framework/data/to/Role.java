@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class RoleTO extends BaseTO {
+public class Role extends BaseTO {
 	private String name;
 	
 	public String getName() {

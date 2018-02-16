@@ -10,7 +10,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserRequest;
@@ -86,7 +86,7 @@ public class GetUserEndpoint {
 		userTO.setName(userWs.getName());
 		userTO.setUserName(userWs.getUserName());
 		
-		RoleTO role = getRoleService().readName(userWs.getRole());
+		Role role = getRoleService().readName(userWs.getRole());
 		userTO.setRole(role);
 		
 		CreateOrUpdateUserResponse createOrUpdateUserResponse = new CreateOrUpdateUserResponse();

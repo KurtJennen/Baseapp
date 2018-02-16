@@ -22,7 +22,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.DocumentTO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.search.SearchAction;
@@ -41,7 +41,7 @@ public class SearchUserAction extends SearchAction {
 		
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
 		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		ArrayList<RoleTO> roleList = new ArrayList<RoleTO>();
+		ArrayList<Role> roleList = new ArrayList<Role>();
 		roleList = roleService.list();
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.role")));
 		SessionManager.putInSession(request, BaseWebConstants.ROLE_LIST, roleList);

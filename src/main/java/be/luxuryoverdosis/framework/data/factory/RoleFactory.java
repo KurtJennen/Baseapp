@@ -1,27 +1,27 @@
 package be.luxuryoverdosis.framework.data.factory;
 
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 
 public class RoleFactory {
 	private RoleFactory() {
 	}
 	
-	public static RoleDTO produceRoleDTO(final RoleTO roleTO) {
+	public static RoleDTO produceRoleDTO(final Role role) {
 		RoleDTO roleDTO = new RoleDTO();
-		roleDTO.setId(roleTO.getId());
-		roleDTO.setName(roleTO.getName());
+		roleDTO.setId(role.getId());
+		roleDTO.setName(role.getName());
 		
 		return roleDTO;
 	}
 	
-	public static RoleTO produceRole(RoleTO roleTO, final RoleDTO roleDTO) {
-		if(roleTO == null) {
-			roleTO = new RoleTO();
+	public static Role produceRole(Role role, final RoleDTO roleDTO) {
+		if(role == null) {
+			role = new Role();
 		}
-		roleTO.setId(roleDTO.getId());
-		roleTO.setName(roleDTO.getName());
+		role.setId(roleDTO.getId());
+		role.setName(roleDTO.getName());
 		
-		return roleTO;
+		return role;
 	}
 }

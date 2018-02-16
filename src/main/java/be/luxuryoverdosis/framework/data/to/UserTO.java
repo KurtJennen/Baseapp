@@ -11,7 +11,7 @@ public class UserTO extends BaseTO {
 	private String encryptedPassword;
 	private String email;
 	private Date dateExpiration;
-	private RoleTO role;
+	private Role role;
 	
 	private String roleName;
 	
@@ -59,10 +59,10 @@ public class UserTO extends BaseTO {
 	public void setDateExpiration(Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
-	public RoleTO getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(RoleTO role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
 	public String getRoleName() {

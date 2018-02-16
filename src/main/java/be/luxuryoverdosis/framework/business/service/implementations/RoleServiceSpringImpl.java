@@ -13,7 +13,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.factory.RoleFactory;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -28,58 +28,58 @@ public class RoleServiceSpringImpl implements RoleService {
 	public RoleDTO createOrUpdateDTO(final RoleDTO roleDTO) {
 		Logging.info(this, "Begin createRoleDTO");
 		
-		RoleTO roleTO = new RoleTO();
+		Role role = new Role();
 		if(roleDTO.getId() > 0) {
-			roleTO = this.read(roleDTO.getId());
+			role = this.read(roleDTO.getId());
 		}
-		roleTO = RoleFactory.produceRole(roleTO, roleDTO);
+		role = RoleFactory.produceRole(role, roleDTO);
 		
-		roleTO = this.createOrUpdate(roleTO);
+		role = this.createOrUpdate(role);
 		
 		Logging.info(this, "End createRoleDTO");
-		return this.readDTO(roleTO.getId());
+		return this.readDTO(role.getId());
 	}
 	
 	@Transactional(readOnly=true)
 	public RoleDTO readDTO(final int id) {
 		Logging.info(this, "Begin readRoleDTO");
 		
-		RoleTO roleTO = this.read(id);
+		Role role = this.read(id);
 		
-		RoleDTO roleDTO = RoleFactory.produceRoleDTO(roleTO);
+		RoleDTO roleDTO = RoleFactory.produceRoleDTO(role);
 		
 		Logging.info(this, "End readRoleDTO");
 		return roleDTO;
 	}
 	
 	@Transactional
-	public RoleTO createOrUpdate(final RoleTO roleTO) {
+	public Role createOrUpdate(final Role role) {
 		Logging.info(this, "Begin createRole");
-		if(roleHibernateDAO.count(roleTO.getName(), roleTO.getId()) > 0) {
+		if(roleHibernateDAO.count(role.getName(), role.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.role"});
 		}
-		if(roleTO.getName() == null || StringUtils.isEmpty(roleTO.getName())) {
+		if(role.getName() == null || StringUtils.isEmpty(role.getName())) {
 			throw new ServiceException("errors.required", new String[] {"security.name"});
 		}
-		RoleTO result = null;
-		result = roleHibernateDAO.createOrUpdate(roleTO);
+		Role result = null;
+		result = roleHibernateDAO.createOrUpdate(role);
 		Logging.info(this, "End createRole");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public RoleTO read(final int id) {
+	public Role read(final int id) {
 		Logging.info(this, "Begin readRole");
-		RoleTO result = null;
+		Role result = null;
 		result = roleHibernateDAO.read(id);
 		Logging.info(this, "End readRole");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public RoleTO readName(final String name) {
+	public Role readName(final String name) {
 		Logging.info(this, "Begin readNameRole");
-		RoleTO result = null;
+		Role result = null;
 		result = roleHibernateDAO.readName(name);
 		Logging.info(this, "End readNameRole");
 		return result;
@@ -96,9 +96,9 @@ public class RoleServiceSpringImpl implements RoleService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<RoleTO> list() {
+	public ArrayList<Role> list() {
 		Logging.info(this, "Begin listRole");
-		ArrayList<RoleTO> arrayList = null;
+		ArrayList<Role> arrayList = null;
 		arrayList = roleHibernateDAO.list();
 		Logging.info(this, "End listRole");
 		return arrayList;

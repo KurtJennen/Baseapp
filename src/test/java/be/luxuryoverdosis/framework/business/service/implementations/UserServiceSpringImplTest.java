@@ -23,9 +23,9 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.UserTO;
-import be.luxuryoverdosis.framework.mother.RoleTOMother;
+import be.luxuryoverdosis.framework.mother.RoleMother;
 import be.luxuryoverdosis.framework.mother.UserTOMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -54,12 +54,12 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testcreateOrUpdate() {
-		RoleTO roleTO = RoleTOMother.produceRoleTO();
+		Role role = RoleMother.produceRole();
 		
 		UserTO userTO = UserTOMother.produceUserTO();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(roleTO);
+		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(userTO);
 		
 		userServiceSpringImpl.createOrUpdate(userTO);
@@ -87,12 +87,12 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testcreateOrUpdateDate() {
-		RoleTO roleTO = RoleTOMother.produceRoleTO();
+		Role role = RoleMother.produceRole();
 		
 		UserTO userTO = UserTOMother.produceUserTODate();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(roleTO);
+		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(userTO);
 		
 		userServiceSpringImpl.createOrUpdate(userTO);
@@ -117,11 +117,11 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testcreateOrUpdateNull() {
-		RoleTO roleTO = RoleTOMother.produceRoleTO();
+		Role role = RoleMother.produceRole();
 		UserTO userTO = UserTOMother.produceUserTODate();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(roleTO);
+		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(null);
 		
 		userServiceSpringImpl.createOrUpdate(userTO);
@@ -186,11 +186,11 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testActivateYear() {
-		RoleTO roleTO = RoleTOMother.produceRoleTO();
+		Role role = RoleMother.produceRole();
 		UserTO userTO = UserTOMother.produceUserTODate();
 		
 		when(userHibernateDAO.read(anyInt())).thenReturn(userTO);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(roleTO);
+		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
 		
 		userServiceSpringImpl.activate(anyInt(), UserService.YEAR);
 		

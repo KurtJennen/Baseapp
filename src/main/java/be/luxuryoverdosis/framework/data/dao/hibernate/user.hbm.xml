@@ -16,6 +16,6 @@
 		<property name="email" column="Email" type="string" not-null="true"></property>
 		<property name="dateExpiration" column="DateExp" type="timestamp" not-null="true"></property>
 		
-		<many-to-one name="role" column="Role_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.RoleTO" lazy="false"></many-to-one>
+		<many-to-one name="role" column="Role_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Role" lazy="false"></many-to-one>
 	</class>
 </hibernate-mapping>

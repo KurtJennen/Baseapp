@@ -16,7 +16,7 @@ import org.jmesa.facade.TableFacadeFactory;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.RoleForm;
@@ -28,7 +28,7 @@ public class RoleAction extends NavigationAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
 		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		ArrayList<RoleTO> roleList = new ArrayList<RoleTO>();
+		ArrayList<Role> roleList = new ArrayList<Role>();
 		roleList = roleService.list();
 		
 		//JMesa Start	

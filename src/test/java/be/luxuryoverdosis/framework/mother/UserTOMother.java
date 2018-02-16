@@ -57,7 +57,7 @@ public class UserTOMother {
 		userTO.setEncryptedPassword(Encryption.encode("kj"));
 		userTO.setEmail("kurt.jennen@skynet.be");
 		userTO.setDateExpiration(new Date());
-		userTO.setRole(RoleTOMother.produceRoleTO());
+		userTO.setRole(RoleMother.produceRole());
 		
 		return userTO;
 	}

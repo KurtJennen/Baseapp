@@ -12,7 +12,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.RoleTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import net.sf.json.JSONArray;
@@ -79,7 +79,7 @@ public class GetUserRest {
 		userTO.setName(name);
 		userTO.setUserName(userName);
 		
-		RoleTO role = getRoleService().readName(roleName);
+		Role role = getRoleService().readName(roleName);
 		if (role == null) {
 			message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.role")});
 		}
