@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryParamService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.QueryParamTO;
+import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -18,18 +18,18 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 	private QueryParamHibernateDAO queryParamHibernateDAO;
 	
 	@Transactional
-	public QueryParamTO createOrUpdate(final QueryParamTO queryParamTO) {
+	public QueryParam createOrUpdate(final QueryParam queryParam) {
 		Logging.info(this, "Begin createQueryParam");
-		QueryParamTO result = null;
-		result = queryParamHibernateDAO.createOrUpdate(queryParamTO);	
+		QueryParam result = null;
+		result = queryParamHibernateDAO.createOrUpdate(queryParam);	
 		Logging.info(this, "End createQueryParam");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public QueryParamTO read(final int id) {
+	public QueryParam read(final int id) {
 		Logging.info(this, "Begin readQueryParam");
-		QueryParamTO result = null;
+		QueryParam result = null;
 		result = queryParamHibernateDAO.read(id);
 		Logging.info(this, "End readQueryParam");
 		return result;
@@ -50,9 +50,9 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<QueryParamTO> list(final int queryId) {
+	public ArrayList<QueryParam> list(final int queryId) {
 		Logging.info(this, "Begin listQueryParam");
-		ArrayList<QueryParamTO> arrayList = null;
+		ArrayList<QueryParam> arrayList = null;
 		arrayList = queryParamHibernateDAO.list(queryId);
 		Logging.info(this, "End listQueryParam");
 		return arrayList;

@@ -11,28 +11,28 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.QueryParamTO;
+import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements QueryParamHibernateDAO {
-	public QueryParamTO createOrUpdate(final QueryParamTO queryParamTO) {
+	public QueryParam createOrUpdate(final QueryParam queryParam) {
 		Logging.info(this, "Begin createQueryParam");
-		getHibernateTemplate().saveOrUpdate(queryParamTO);
+		getHibernateTemplate().saveOrUpdate(queryParam);
 		Logging.info(this, "End createQueryParam");
-		return queryParamTO;
+		return queryParam;
 	}
 
-	public QueryParamTO read(final int id) {
+	public QueryParam read(final int id) {
 		Logging.info(this, "Begin readQueryParam");
-		QueryParamTO queryParamTO = (QueryParamTO) getHibernateTemplate().load(QueryParamTO.class, id);
+		QueryParam queryParam = (QueryParam) getHibernateTemplate().load(QueryParam.class, id);
 		Logging.info(this, "End readQueryParam");
-		return queryParamTO;
+		return queryParam;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteQueryParam");
-		getHibernateTemplate().delete((QueryParamTO) getHibernateTemplate().load(QueryParamTO.class, id));
+		getHibernateTemplate().delete((QueryParam) getHibernateTemplate().load(QueryParam.class, id));
 		Logging.info(this, "End deleteQueryParam");		
 	}
 	
@@ -41,7 +41,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 		getHibernateTemplate().execute(new HibernateCallback<Integer>() {
 
 			public Integer doInHibernate(Session session) throws HibernateException, SQLException {
-				Query updateQuery = session.createQuery("delete QueryParamTO qp where qp.query.id = ?");
+				Query updateQuery = session.createQuery("delete QueryParam qp where qp.query.id = ?");
 				updateQuery.setParameter(0, queryId);
 				return updateQuery.executeUpdate();
 			}
@@ -51,9 +51,9 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<QueryParamTO> list(final int queryParamId) {
+	public ArrayList<QueryParam> list(final int queryParamId) {
 		Logging.info(this, "Begin listQueryParam");
-		ArrayList<QueryParamTO> arrayList = (ArrayList<QueryParamTO>) getHibernateTemplate().find("from QueryParamTO qp where qp.query.id = ?", new Object[]{queryParamId});
+		ArrayList<QueryParam> arrayList = (ArrayList<QueryParam>) getHibernateTemplate().find("from QueryParam qp where qp.query.id = ?", new Object[]{queryParamId});
 		Logging.info(this, "End listQueryParam");
 		return arrayList;
 	}
@@ -61,7 +61,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	@SuppressWarnings("unchecked")
 	public long count(final int queryParamId) {
 		Logging.info(this, "Begin countQueryParam");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from QueryParamTO qp where qp.query.id = ?", new Object[]{queryParamId});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from QueryParam qp where qp.query.id = ?", new Object[]{queryParamId});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countQueryParam");
 		return count;

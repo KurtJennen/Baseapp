@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class QueryParamTO extends BaseTO {
+public class QueryParam extends BaseTO {
 	private String parameter;
 	private String operator;
 	private String value;

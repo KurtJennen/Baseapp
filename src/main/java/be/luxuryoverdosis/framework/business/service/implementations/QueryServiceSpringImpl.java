@@ -14,7 +14,7 @@ import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
-import be.luxuryoverdosis.framework.data.to.QueryParamTO;
+import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.data.to.Query;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -47,19 +47,19 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		for(int i = 0; i < queryDTO.getParameters().length; i++) {
 			if(!queryDTO.getParameters()[i].equals(SearchQuery.MINUS_ONE)) {
-				QueryParamTO queryParamTO = new QueryParamTO();
-				queryParamTO.setQuery(query);
-				queryParamTO.setParameter(queryDTO.getParameters()[i]);
-				queryParamTO.setOperator(queryDTO.getOperators()[i]);
-				queryParamTO.setValue(queryDTO.getValues()[i]);
+				QueryParam queryParam = new QueryParam();
+				queryParam.setQuery(query);
+				queryParam.setParameter(queryDTO.getParameters()[i]);
+				queryParam.setOperator(queryDTO.getOperators()[i]);
+				queryParam.setValue(queryDTO.getValues()[i]);
 				if(queryDTO.getComplex().equals(SearchQuery.ONE)) {
-					queryParamTO.setOpenBracket(queryDTO.getOpenBrackets()[i]);
-					queryParamTO.setCloseBracket(queryDTO.getCloseBrackets()[i]);
+					queryParam.setOpenBracket(queryDTO.getOpenBrackets()[i]);
+					queryParam.setCloseBracket(queryDTO.getCloseBrackets()[i]);
 					if(i > 0) {
-						queryParamTO.setAddAndOr(queryDTO.getAddAndOrs()[i - 1]);
+						queryParam.setAddAndOr(queryDTO.getAddAndOrs()[i - 1]);
 					}					
 				}
-				queryParamHibernateDAO.createOrUpdate(queryParamTO);
+				queryParamHibernateDAO.createOrUpdate(queryParam);
 			}
 		}
 		
@@ -124,15 +124,15 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readParameters(final int id) {
 		Logging.info(this, "Begin readParametersQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] parameters = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
-			parameters[teller] = queryParamTO.getParameter();
+			QueryParam queryParam = (QueryParam)iterator.next();
+			parameters[teller] = queryParam.getParameter();
 			teller++;
 		}
 		
@@ -144,15 +144,15 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readOperators(final int id) {
 		Logging.info(this, "Begin readOperatorsQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] operators = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
-			operators[teller] = queryParamTO.getOperator();
+			QueryParam queryParam = (QueryParam)iterator.next();
+			operators[teller] = queryParam.getOperator();
 			teller++;
 		}
 		
@@ -164,15 +164,15 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readValues(final int id) {
 		Logging.info(this, "Begin readValuesQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] values = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
-			values[teller] = queryParamTO.getValue();
+			QueryParam queryParam = (QueryParam)iterator.next();
+			values[teller] = queryParam.getValue();
 			teller++;
 		}
 		
@@ -184,16 +184,16 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readAddAndOrs(final int id) {
 		Logging.info(this, "Begin readAddAndOrsQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] addAndOrs = new String[queryParameters.size()];
 		int teller = -1;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
+			QueryParam queryParam = (QueryParam)iterator.next();
 			if(teller >= 0) {
-				addAndOrs[teller] = queryParamTO.getAddAndOr();
+				addAndOrs[teller] = queryParam.getAddAndOr();
 			}
 			teller++;
 		}
@@ -206,15 +206,15 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readOpenBrackets(final int id) {
 		Logging.info(this, "Begin readOpenBracketsQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] openBrackets = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
-			openBrackets[teller] = queryParamTO.getOpenBracket();
+			QueryParam queryParam = (QueryParam)iterator.next();
+			openBrackets[teller] = queryParam.getOpenBracket();
 			teller++;
 		}
 		
@@ -226,15 +226,15 @@ public class QueryServiceSpringImpl implements QueryService {
 	public String[] readCloseBrackets(final int id) {
 		Logging.info(this, "Begin readCloseBracketsQuery");
 		
-		ArrayList<QueryParamTO> queryParameters = queryParamHibernateDAO.list(id);
-		Iterator<QueryParamTO> iterator = queryParameters.iterator();
+		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
+		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
 		String[] closeBrackets = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
-			QueryParamTO queryParamTO = (QueryParamTO)iterator.next();
-			closeBrackets[teller] = queryParamTO.getCloseBracket();
+			QueryParam queryParam = (QueryParam)iterator.next();
+			closeBrackets[teller] = queryParam.getCloseBracket();
 			teller++;
 		}
 		
