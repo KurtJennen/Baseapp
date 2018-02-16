@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.data.dao.interfaces.SqlHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.sql.SqlStartup;
-import be.luxuryoverdosis.framework.data.to.SqlTO;
+import be.luxuryoverdosis.framework.data.to.Sql;
 
 public class DAOBaseSql extends DAOBase {
 	@Resource
@@ -73,11 +73,11 @@ public class DAOBaseSql extends DAOBase {
 				pStatement = connection.prepareStatement(sqlStatement);
 				pStatement.executeUpdate();
 				
-				SqlTO sqlTO = new SqlTO();
-				sqlTO.setName(name);
-				sqlTO.setContent(sqlStatement);
-				sqlTO.setApplication(application);
-				sqlHibernateDAO.createOrUpdate(sqlTO);
+				Sql sql = new Sql();
+				sql.setName(name);
+				sql.setContent(sqlStatement);
+				sql.setApplication(application);
+				sqlHibernateDAO.createOrUpdate(sql);
 				
 				System.out.println("SQL Executed: " + sqlStatement);
 			} catch (SQLException e) {

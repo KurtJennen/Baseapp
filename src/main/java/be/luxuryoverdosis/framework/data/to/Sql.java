@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class SqlTO extends BaseTO {
+public class Sql extends BaseTO {
 	private String name;
 	private String content;
 	private String application;

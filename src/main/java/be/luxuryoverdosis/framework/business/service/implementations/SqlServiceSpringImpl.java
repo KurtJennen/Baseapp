@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.SqlService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.SqlHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.SqlTO;
+import be.luxuryoverdosis.framework.data.to.Sql;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -18,27 +18,27 @@ public class SqlServiceSpringImpl implements SqlService {
 	private SqlHibernateDAO sqlHibernateDAO;
 	
 	@Transactional
-	public SqlTO createOrUpdate(final SqlTO sqlTO) {
+	public Sql createOrUpdate(final Sql sql) {
 		Logging.info(this, "Begin createSql");
-		SqlTO result = null;
-		result = sqlHibernateDAO.createOrUpdate(sqlTO);
+		Sql result = null;
+		result = sqlHibernateDAO.createOrUpdate(sql);
 		Logging.info(this, "End createSql");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public SqlTO read(final int id) {
+	public Sql read(final int id) {
 		Logging.info(this, "Begin readSql");
-		SqlTO result = null;
+		Sql result = null;
 		result = sqlHibernateDAO.read(id);
 		Logging.info(this, "End readSql");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public SqlTO readName(final String name) {
+	public Sql readName(final String name) {
 		Logging.info(this, "Begin readNameSql");
-		SqlTO result = null;
+		Sql result = null;
 		result = sqlHibernateDAO.readName(name);
 		Logging.info(this, "End readNameSql");
 		return result;
@@ -52,9 +52,9 @@ public class SqlServiceSpringImpl implements SqlService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<SqlTO> list() {
+	public ArrayList<Sql> list() {
 		Logging.info(this, "Begin listSql");
-		ArrayList<SqlTO> arrayList = null;
+		ArrayList<Sql> arrayList = null;
 		arrayList = sqlHibernateDAO.list();
 		Logging.info(this, "End listSql");
 		return arrayList;
