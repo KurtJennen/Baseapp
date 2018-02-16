@@ -3,12 +3,12 @@ package be.luxuryoverdosis.framework.data.dao.interfaces;
 import java.util.ArrayList;
 
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
-import be.luxuryoverdosis.framework.data.to.MenuTO;
+import be.luxuryoverdosis.framework.data.to.Menu;
 
 public interface MenuHibernateDAO {
-	public MenuTO createOrUpdate(MenuTO menuTO);
-	public MenuTO read(int id);
-	public MenuTO readFullName(String fullName, int userId);
+	public Menu createOrUpdate(Menu menu);
+	public Menu read(int id);
+	public Menu readFullName(String fullName, int userId);
 	public void delete(int id);
 	public void deleteForUser(int userId);
 	

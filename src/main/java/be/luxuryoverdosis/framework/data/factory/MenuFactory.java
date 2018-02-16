@@ -4,7 +4,7 @@ import net.sf.navigator.menu.MenuComponent;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
-import be.luxuryoverdosis.framework.data.to.MenuTO;
+import be.luxuryoverdosis.framework.data.to.Menu;
 
 public class MenuFactory {
 	private MenuFactory() {
@@ -26,41 +26,41 @@ public class MenuFactory {
 		return menuDTO;
 	}
 	
-	public static MenuDTO produceMenuDTO(final MenuTO menuTO, MenuDTO menuDTO) {
+	public static MenuDTO produceMenuDTO(final Menu menu, MenuDTO menuDTO) {
 		if(menuDTO == null) {
 			menuDTO = new MenuDTO();
 		}
-		menuDTO.setId(menuTO.getId());
-		menuDTO.setFullName(menuTO.getFullName());
-		menuDTO.setName(menuTO.getName());
-		menuDTO.setTitle(menuTO.getTitle());
-		menuDTO.setLevel(menuTO.getLevel());
-		menuDTO.setHidden(menuTO.getHidden());
-		menuDTO.setDisabled(menuTO.getDisabled());
-		menuDTO.setForPay(menuTO.getForPay());
-		menuDTO.setPayed(menuTO.getPayed());
-		if(menuTO.getUser() != null) {
-			menuDTO.setUserId(menuTO.getUser().getId());
+		menuDTO.setId(menu.getId());
+		menuDTO.setFullName(menu.getFullName());
+		menuDTO.setName(menu.getName());
+		menuDTO.setTitle(menu.getTitle());
+		menuDTO.setLevel(menu.getLevel());
+		menuDTO.setHidden(menu.getHidden());
+		menuDTO.setDisabled(menu.getDisabled());
+		menuDTO.setForPay(menu.getForPay());
+		menuDTO.setPayed(menu.getPayed());
+		if(menu.getUser() != null) {
+			menuDTO.setUserId(menu.getUser().getId());
 		}
 		
 		return menuDTO;
 	}
 	
-	public static MenuTO produceMenu(MenuTO menuTO, final MenuDTO menuDTO) {
-		if(menuTO == null) {
-			menuTO = new MenuTO();
+	public static Menu produceMenu(Menu menu, final MenuDTO menuDTO) {
+		if(menu == null) {
+			menu = new Menu();
 		}
-		menuTO.setId(menuDTO.getId());
-		menuTO.setFullName(menuDTO.getFullName());
-		menuTO.setName(menuDTO.getName());
-		menuTO.setTitle(menuDTO.getTitle());
-		menuTO.setFullLevel(menuDTO.getFullLevel());
-		menuTO.setLevel(menuDTO.getLevel());
-		menuTO.setHidden(menuDTO.getHidden());
-		menuTO.setDisabled(menuDTO.getDisabled());
-		menuTO.setForPay(menuDTO.getForPay());
-		menuTO.setPayed(menuDTO.getPayed());
+		menu.setId(menuDTO.getId());
+		menu.setFullName(menuDTO.getFullName());
+		menu.setName(menuDTO.getName());
+		menu.setTitle(menuDTO.getTitle());
+		menu.setFullLevel(menuDTO.getFullLevel());
+		menu.setLevel(menuDTO.getLevel());
+		menu.setHidden(menuDTO.getHidden());
+		menu.setDisabled(menuDTO.getDisabled());
+		menu.setForPay(menuDTO.getForPay());
+		menu.setPayed(menuDTO.getPayed());
 		
-		return menuTO;
+		return menu;
 	}
 }

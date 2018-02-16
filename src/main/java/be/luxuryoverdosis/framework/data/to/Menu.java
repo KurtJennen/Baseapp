@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class MenuTO extends BaseTO {
+public class Menu extends BaseTO {
 	private String fullName;
 	private String name;
 	private String title;

@@ -21,7 +21,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.factory.MenuFactory;
-import be.luxuryoverdosis.framework.data.to.MenuTO;
+import be.luxuryoverdosis.framework.data.to.Menu;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -36,56 +36,56 @@ public class MenuServiceSpringImpl implements MenuService {
 	public MenuDTO createOrUpdateDTO(final MenuDTO menuDTO) {
 		Logging.info(this, "Begin createMenuDTO");
 		
-		MenuTO menuTO = new MenuTO();
+		Menu menu = new Menu();
 		if(menuDTO.getId() > 0) {
-			menuTO = this.read(menuDTO.getId());
+			menu = this.read(menuDTO.getId());
 		}
-		menuTO = MenuFactory.produceMenu(menuTO, menuDTO);
+		menu = MenuFactory.produceMenu(menu, menuDTO);
 		if(menuDTO.getUserId() > 0) {
-			menuTO.setUser(userHibernateDAO.read(menuDTO.getUserId()));
+			menu.setUser(userHibernateDAO.read(menuDTO.getUserId()));
 		}
 		
-		menuTO = this.createOrUpdate(menuTO);
+		menu = this.createOrUpdate(menu);
 		
 		Logging.info(this, "End createMenuDTO");
-		return this.readDTO(menuTO.getId());
+		return this.readDTO(menu.getId());
 	}
 	
 	@Transactional(readOnly=true)
 	public MenuDTO readDTO(final int id) {
 		Logging.info(this, "Begin readMenuDTO");
 		
-		MenuTO menuTO = this.read(id);
+		Menu menu = this.read(id);
 		
-		MenuDTO menuDTO = MenuFactory.produceMenuDTO(menuTO, null);
+		MenuDTO menuDTO = MenuFactory.produceMenuDTO(menu, null);
 		
 		Logging.info(this, "End readMenuDTO");
 		return menuDTO;
 	}
 	
 	@Transactional
-	public MenuTO createOrUpdate(final MenuTO menuTO) {
+	public Menu createOrUpdate(final Menu menu) {
 		Logging.info(this, "Begin createMenu");
 		
-		MenuTO result = menuHibernateDAO.createOrUpdate(menuTO);
+		Menu result = menuHibernateDAO.createOrUpdate(menu);
 		
 		Logging.info(this, "End createMenu");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public MenuTO read(final int id) {
+	public Menu read(final int id) {
 		Logging.info(this, "Begin readMenu");
-		MenuTO result = null;
+		Menu result = null;
 		result = menuHibernateDAO.read(id);
 		Logging.info(this, "End readMenu)");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public MenuTO readFullName(final String fullName, final int userId) {
+	public Menu readFullName(final String fullName, final int userId) {
 		Logging.info(this, "Begin readFullNameMenu");
-		MenuTO result = null;
+		Menu result = null;
 		result = menuHibernateDAO.readFullName(fullName, userId);
 		Logging.info(this, "End readFullNameMenu");
 		return result;
@@ -113,9 +113,9 @@ public class MenuServiceSpringImpl implements MenuService {
 		ArrayList<MenuDTO> defaultMenuList = produceDefaultMenu(menuRepository);
 		
 		for (MenuDTO menuDTO : defaultMenuList) {
-			MenuTO menuTO = menuHibernateDAO.readFullName(menuDTO.getFullName(), userId);
-			if(menuTO != null) {
-				MenuFactory.produceMenuDTO(menuTO, menuDTO);
+			Menu menu = menuHibernateDAO.readFullName(menuDTO.getFullName(), userId);
+			if(menu != null) {
+				MenuFactory.produceMenuDTO(menu, menuDTO);
 			}
 		}
 		

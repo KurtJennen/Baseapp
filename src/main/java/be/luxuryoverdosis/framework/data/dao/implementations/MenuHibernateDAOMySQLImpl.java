@@ -7,46 +7,46 @@ import org.springframework.stereotype.Repository;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
-import be.luxuryoverdosis.framework.data.to.MenuTO;
+import be.luxuryoverdosis.framework.data.to.Menu;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements MenuHibernateDAO {
-	public MenuTO createOrUpdate(final MenuTO menuTO) {
+	public Menu createOrUpdate(final Menu menu) {
 		Logging.info(this, "Begin createMenu");
-		getHibernateTemplate().saveOrUpdate(menuTO);
+		getHibernateTemplate().saveOrUpdate(menu);
 		Logging.info(this, "End createMenu");
-		return menuTO;
+		return menu;
 	}
 
-	public MenuTO read(final int id) {
+	public Menu read(final int id) {
 		Logging.info(this, "Begin readMenu");
-		MenuTO menuTO = (MenuTO) getHibernateTemplate().load(MenuTO.class, id);
+		Menu menu = (Menu) getHibernateTemplate().load(Menu.class, id);
 		Logging.info(this, "End readMenu");
-		return menuTO;
+		return menu;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public MenuTO readFullName(final String fullName, final int userId) {
+	public Menu readFullName(final String fullName, final int userId) {
 		Logging.info(this, "Begin readFullName");
-		ArrayList<MenuTO> arrayList = (ArrayList<MenuTO>) getHibernateTemplate().find("from MenuTO m where m.fullName = ? and m.user.id = ?", new Object[]{fullName, userId});
-		MenuTO menuTO = null;
+		ArrayList<Menu> arrayList = (ArrayList<Menu>) getHibernateTemplate().find("from Menu m where m.fullName = ? and m.user.id = ?", new Object[]{fullName, userId});
+		Menu menu = null;
 		if(!arrayList.isEmpty()) {
-			menuTO = (MenuTO)arrayList.iterator().next();
+			menu = (Menu)arrayList.iterator().next();
 		}
 		Logging.info(this, "End readFullName");
-		return menuTO;
+		return menu;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteMenu");
-		getHibernateTemplate().delete((MenuTO) getHibernateTemplate().load(MenuTO.class, id));
+		getHibernateTemplate().delete((Menu) getHibernateTemplate().load(Menu.class, id));
 		Logging.info(this, "End deleteMenu");		
 	}
 	
 	public void deleteForUser(int userId) {
 		Logging.info(this, "Begin deleteForUserMenu");
-		getHibernateTemplate().bulkUpdate("delete from MenuTO m where m.user.id = ?", new Object[]{userId});
+		getHibernateTemplate().bulkUpdate("delete from Menu m where m.user.id = ?", new Object[]{userId});
 		Logging.info(this, "End deleteForUserMenu");	
 	}
 	
@@ -63,7 +63,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		"m.payed, " +
 		"u.id " +
 		") " +
-		"from MenuTO m " +
+		"from Menu m " +
 		"inner join m.user u ";
 	
 	private static final String listHql = listSelectHql +
@@ -121,7 +121,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final int userId) {
 		Logging.info(this, "Begin countMenu");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from MenuTO m where m.user.id = ?", new Object[]{userId});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Menu m where m.user.id = ?", new Object[]{userId});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countMenu)");
 		return count;
@@ -130,7 +130,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final String fullName, final int userId) {
 		Logging.info(this, "Begin countMenu");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from MenuTO m where m.fullName = ? and m.user.id = ?", new Object[]{fullName, userId});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Menu m where m.fullName = ? and m.user.id = ?", new Object[]{fullName, userId});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countMenu)");
 		return count;
