@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.to.JobParamTO;
+import be.luxuryoverdosis.framework.data.to.JobParam;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -32,7 +32,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 	private static final int LENGTH = 256;
 	
 	abstract public String getJobName();
-	abstract public void processFileJobBusiness(final JobTO jobTO, final ArrayList<JobParamTO> jobParams);
+	abstract public void processFileJobBusiness(final JobTO jobTO, final ArrayList<JobParam> jobParams);
 	
 	public void processReadJob() {
 		Logging.info(this, "Begin processReadJob");
@@ -44,7 +44,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		
 		while(jobsIterator.hasNext()) {
 			JobTO jobTO = (JobTO) jobsIterator.next();
-			ArrayList<JobParamTO> jobParams = jobParamHibernateDAO.list(jobTO.getId());
+			ArrayList<JobParam> jobParams = jobParamHibernateDAO.list(jobTO.getId());
 			
 			processFileJobBusiness(jobTO, jobParams);
 		}

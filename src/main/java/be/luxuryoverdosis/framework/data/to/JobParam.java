@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class JobParamTO extends BaseTO {
+public class JobParam extends BaseTO {
 	private String name;
 	private String value;
 	private JobTO job;

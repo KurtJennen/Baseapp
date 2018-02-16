@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.JobParamService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobParamTO;
+import be.luxuryoverdosis.framework.data.to.JobParam;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -18,18 +18,18 @@ public class JobParamServiceSpringImpl implements JobParamService {
 	private JobParamHibernateDAO jobParamHibernateDAO;
 	
 	@Transactional
-	public JobParamTO createOrUpdate(final JobParamTO jobParamTO) {
+	public JobParam createOrUpdate(final JobParam jobParam) {
 		Logging.info(this, "Begin createJobParam");
-		JobParamTO result = null;
-		result = jobParamHibernateDAO.createOrUpdate(jobParamTO);
+		JobParam result = null;
+		result = jobParamHibernateDAO.createOrUpdate(jobParam);
 		Logging.info(this, "End createJobParam");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public JobParamTO read(final int id) {
+	public JobParam read(final int id) {
 		Logging.info(this, "Begin readJobParam");
-		JobParamTO result = null;
+		JobParam result = null;
 		result = jobParamHibernateDAO.read(id);
 		Logging.info(this, "End readJobParam");
 		return result;
@@ -50,9 +50,9 @@ public class JobParamServiceSpringImpl implements JobParamService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<JobParamTO> list(final int jobId) {
+	public ArrayList<JobParam> list(final int jobId) {
 		Logging.info(this, "Begin listJobParam");
-		ArrayList<JobParamTO> arrayList = null;
+		ArrayList<JobParam> arrayList = null;
 		arrayList = jobParamHibernateDAO.list(jobId);
 		Logging.info(this, "End listJobParam");
 		return arrayList;
