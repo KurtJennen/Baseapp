@@ -17,6 +17,6 @@
 		<property name="closeBracket" column="CloseBracket" type="string"></property>
 		<property name="addAndOr" column="AddAndOr" type="string"></property>
 				
-		<many-to-one name="query" column="Query_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.QueryTO" lazy="false"></many-to-one>
+		<many-to-one name="query" column="Query_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Query" lazy="false"></many-to-one>
 	</class>
 </hibernate-mapping>

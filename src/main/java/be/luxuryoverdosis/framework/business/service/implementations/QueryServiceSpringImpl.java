@@ -15,7 +15,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.QueryHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
 import be.luxuryoverdosis.framework.data.to.QueryParamTO;
-import be.luxuryoverdosis.framework.data.to.QueryTO;
+import be.luxuryoverdosis.framework.data.to.Query;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -32,23 +32,23 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		UserTO userTO = ThreadManager.getUserFromThread();
 		
-		QueryTO queryTO = this.read(queryDTO.getName(), queryDTO.getType());
-		if(queryTO == null) {
-			queryTO = new QueryTO();
+		Query query = this.read(queryDTO.getName(), queryDTO.getType());
+		if(query == null) {
+			query = new Query();
 		}
-		queryTO.setName(queryDTO.getName());
-		queryTO.setType(queryDTO.getType());
-		queryTO.setComplex(queryDTO.getComplex());
-		queryTO.setUser(userTO);
+		query.setName(queryDTO.getName());
+		query.setType(queryDTO.getType());
+		query.setComplex(queryDTO.getComplex());
+		query.setUser(userTO);
 		
-		queryTO = this.createOrUpdate(queryTO);
+		query = this.createOrUpdate(query);
 		
-		queryParamHibernateDAO.deleteForQuery(queryTO.getId());
+		queryParamHibernateDAO.deleteForQuery(query.getId());
 		
 		for(int i = 0; i < queryDTO.getParameters().length; i++) {
 			if(!queryDTO.getParameters()[i].equals(SearchQuery.MINUS_ONE)) {
 				QueryParamTO queryParamTO = new QueryParamTO();
-				queryParamTO.setQuery(queryTO);
+				queryParamTO.setQuery(query);
 				queryParamTO.setParameter(queryDTO.getParameters()[i]);
 				queryParamTO.setOperator(queryDTO.getOperators()[i]);
 				queryParamTO.setValue(queryDTO.getValues()[i]);
@@ -64,22 +64,22 @@ public class QueryServiceSpringImpl implements QueryService {
 		}
 		
 		Logging.info(this, "End createQueryDTO");		
-		return this.readDTO(queryTO.getId());
+		return this.readDTO(query.getId());
 	}
 	
 	@Transactional(readOnly=true)
 	public QueryDTO readDTO(final int id) {
 		Logging.info(this, "Begin readQueryDTO");
 		
-		QueryTO queryTO = this.read(id);
+		Query query = this.read(id);
 		
 		QueryDTO queryDTO = new QueryDTO();
-		queryDTO.setComplex(queryTO.getComplex());
+		queryDTO.setComplex(query.getComplex());
 		queryDTO.setParameters(this.readParameters(id));
 		queryDTO.setOperators(this.readOperators(id));
 		queryDTO.setValues(this.readValues(id));
 		
-		if(SearchQuery.ZERO.equals(queryTO.getComplex())) {
+		if(SearchQuery.ZERO.equals(query.getComplex())) {
 			queryDTO.setAddAndOrs(null);
 			queryDTO.setOpenBrackets(null);
 			queryDTO.setCloseBrackets(null);
@@ -94,27 +94,27 @@ public class QueryServiceSpringImpl implements QueryService {
 	}
 	
 	@Transactional
-	public QueryTO createOrUpdate(final QueryTO queryTO) {
+	public Query createOrUpdate(final Query query) {
 		Logging.info(this, "Begin createQuery(Query)");
-		QueryTO result = null;
-		result = queryHibernateDAO.createOrUpdate(queryTO);	
+		Query result = null;
+		result = queryHibernateDAO.createOrUpdate(query);	
 		Logging.info(this, "End createQuery(Query)");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public QueryTO read(final int id) {
+	public Query read(final int id) {
 		Logging.info(this, "Begin readQuery");
-		QueryTO result = null;
+		Query result = null;
 		result = queryHibernateDAO.read(id);
 		Logging.info(this, "End readQuery");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public QueryTO read(final String name, final String type) {
+	public Query read(final String name, final String type) {
 		Logging.info(this, "Begin readQuery");
-		QueryTO result = null;
+		Query result = null;
 		result = queryHibernateDAO.read(name, type);
 		Logging.info(this, "End readQuery");
 		return result;
@@ -253,12 +253,12 @@ public class QueryServiceSpringImpl implements QueryService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<QueryTO> list(final String type) {
+	public ArrayList<Query> list(final String type) {
 		Logging.info(this, "Begin listQuery");
 		
 		UserTO userTO = ThreadManager.getUserFromThread();
 		
-		ArrayList<QueryTO> arrayList = null;
+		ArrayList<Query> arrayList = null;
 		arrayList = queryHibernateDAO.list(type, userTO.getId());
 		Logging.info(this, "End listQuery");
 		return arrayList;

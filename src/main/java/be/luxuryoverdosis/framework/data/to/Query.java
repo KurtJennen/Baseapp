@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class QueryTO extends BaseTO {
+public class Query extends BaseTO {
 	private String name;
 	private String type;
 	private String complex;

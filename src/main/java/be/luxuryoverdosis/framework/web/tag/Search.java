@@ -14,7 +14,7 @@ import be.luxuryoverdosis.framework.business.query.SearchParameter;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
-import be.luxuryoverdosis.framework.data.to.QueryTO;
+import be.luxuryoverdosis.framework.data.to.Query;
 import be.luxuryoverdosis.framework.web.form.SearchForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
@@ -62,7 +62,7 @@ public class Search implements Tag {
 				searchForm.setDefaultLines(2);
 			}
 			
-			ArrayList<QueryTO> queries = queryService.list(searchService);
+			ArrayList<Query> queries = queryService.list(searchService);
 			
 			//hidden
 			out.print("<input type=\"hidden\" name=\"searchName\" value=\"" + searchName + "\" />");
@@ -111,14 +111,14 @@ public class Search implements Tag {
 			out.print("<select name=\"selectQuery\">");
 			out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
 			
-			Iterator<QueryTO> queriesIterator = queries.iterator();
+			Iterator<Query> queriesIterator = queries.iterator();
 			
 			while(queriesIterator.hasNext()) {
-				QueryTO queryTO = (QueryTO)queriesIterator.next();
-				if(searchForm.getSelectQuery() != null && searchForm.getSelectQuery().equals(String.valueOf(queryTO.getId()))) {
-					out.print("<option value=\"" + queryTO.getId() + "\" selected=\"selected\">" + queryTO.getName() + "</option>");
+				Query query = (Query)queriesIterator.next();
+				if(searchForm.getSelectQuery() != null && searchForm.getSelectQuery().equals(String.valueOf(query.getId()))) {
+					out.print("<option value=\"" + query.getId() + "\" selected=\"selected\">" + query.getName() + "</option>");
 				} else {
-					out.print("<option value=\"" + queryTO.getId() + "\">" + queryTO.getName() + "</option>");
+					out.print("<option value=\"" + query.getId() + "\">" + query.getName() + "</option>");
 				}
 			}
 			out.print("</select>");

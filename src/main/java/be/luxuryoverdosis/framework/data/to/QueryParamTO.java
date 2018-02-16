@@ -7,7 +7,7 @@ public class QueryParamTO extends BaseTO {
 	private String openBracket;
 	private String closeBracket;
 	private String addAndOr;
-	private QueryTO query;
+	private Query query;
 	
 	public String getParameter() {
 		return parameter;
@@ -45,10 +45,10 @@ public class QueryParamTO extends BaseTO {
 	public void setAddAndOr(String addAndOr) {
 		this.addAndOr = addAndOr;
 	}
-	public QueryTO getQuery() {
+	public Query getQuery() {
 		return query;
 	}
-	public void setQuery(QueryTO query) {
+	public void setQuery(Query query) {
 		this.query = query;
 	}
 	
