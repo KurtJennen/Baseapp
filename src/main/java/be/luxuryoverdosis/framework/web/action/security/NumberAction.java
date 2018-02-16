@@ -17,7 +17,7 @@ import org.jmesa.facade.TableFacadeFactory;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.NumberService;
 import be.luxuryoverdosis.framework.data.dto.NumberDTO;
-import be.luxuryoverdosis.framework.data.to.NumberTO;
+import be.luxuryoverdosis.framework.data.to.Number;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.NumberForm;
@@ -29,7 +29,7 @@ public class NumberAction extends DispatchAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
 		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
-		ArrayList<NumberTO> numberList = new ArrayList<NumberTO>();
+		ArrayList<Number> numberList = new ArrayList<Number>();
 		numberList = numberService.list();
 		
 		//JMesa Start	

@@ -6,47 +6,47 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.NumberHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.NumberTO;
+import be.luxuryoverdosis.framework.data.to.Number;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements NumberHibernateDAO {
-	public NumberTO createOrUpdate(final NumberTO numberTO) {
+	public Number createOrUpdate(final Number number) {
 		Logging.info(this, "Begin createNumber");
-		getHibernateTemplate().saveOrUpdate(numberTO);
+		getHibernateTemplate().saveOrUpdate(number);
 		Logging.info(this, "End createNumber");
-		return numberTO;
+		return number;
 	}
 
-	public NumberTO read(final int id) {
+	public Number read(final int id) {
 		Logging.info(this, "Begin readNumber");
-		NumberTO numberTO = (NumberTO) getHibernateTemplate().load(NumberTO.class, id);
+		Number number = (Number) getHibernateTemplate().load(Number.class, id);
 		Logging.info(this, "End readNumber");
-		return numberTO;
+		return number;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public NumberTO read(final String year, final String type) {
+	public Number read(final String year, final String type) {
 		Logging.info(this, "Begin readNumber");
-		ArrayList<NumberTO> arrayList = (ArrayList<NumberTO>) getHibernateTemplate().find("from NumberTO n where n.year = ? and n.type = ?", new Object[]{year, type});
-		NumberTO numberTO = null;
+		ArrayList<Number> arrayList = (ArrayList<Number>) getHibernateTemplate().find("from Number n where n.year = ? and n.type = ?", new Object[]{year, type});
+		Number number = null;
 		if(!arrayList.isEmpty()) {
-			numberTO = (NumberTO)arrayList.iterator().next();
+			number = (Number)arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNumber");
-		return numberTO;
+		return number;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteNumber");
-		getHibernateTemplate().delete((NumberTO) getHibernateTemplate().load(NumberTO.class, id));
+		getHibernateTemplate().delete((Number) getHibernateTemplate().load(Number.class, id));
 		Logging.info(this, "End deleteNumber");		
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<NumberTO> list() {
+	public ArrayList<Number> list() {
 		Logging.info(this, "Begin listNumber");
-		ArrayList<NumberTO> arrayList = (ArrayList<NumberTO>) getHibernateTemplate().find("from NumberTO");
+		ArrayList<Number> arrayList = (ArrayList<Number>) getHibernateTemplate().find("from Number");
 		Logging.info(this, "End listNumber");
 		return arrayList;
 	}
@@ -54,7 +54,7 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	public long count(final String applicationCode, final String year, final String type, final int id) {
 		Logging.info(this, "Begin countNumber");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from NumberTO n where n.applicationCode = ? and  n.year = ? and n.type = ? and n.id <> ?", new Object[]{applicationCode, year, type, id});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Number n where n.applicationCode = ? and  n.year = ? and n.type = ? and n.id <> ?", new Object[]{applicationCode, year, type, id});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countNumber");
 		return count;

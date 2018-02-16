@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
-public class NumberTO extends BaseTO {
+public class Number extends BaseTO {
 	private String applicationCode;
 	private String year;
 	private int number;
