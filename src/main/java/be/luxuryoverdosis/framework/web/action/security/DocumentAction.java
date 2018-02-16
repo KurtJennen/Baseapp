@@ -19,7 +19,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
-import be.luxuryoverdosis.framework.data.to.DocumentTO;
+import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.DocumentForm;
@@ -35,7 +35,7 @@ public class DocumentAction extends DispatchAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
 		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		ArrayList<DocumentTO> documentList = new ArrayList<DocumentTO>();
+		ArrayList<Document> documentList = new ArrayList<Document>();
 		documentList = documentService.list();
 		
 		//JMesa Start	

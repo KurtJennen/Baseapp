@@ -21,7 +21,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.DocumentTO;
+import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -48,7 +48,7 @@ public class SearchUserAction extends SearchAction {
 		
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
 		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		ArrayList<DocumentTO> documentList = new ArrayList<DocumentTO>();
+		ArrayList<Document> documentList = new ArrayList<Document>();
 		documentList = documentService.list(BaseConstants.DOCUMENTYPE_USER);
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
 		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, documentList);

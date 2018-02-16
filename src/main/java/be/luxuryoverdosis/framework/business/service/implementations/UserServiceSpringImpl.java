@@ -26,7 +26,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.document.UserDocument;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
-import be.luxuryoverdosis.framework.data.to.DocumentTO;
+import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
@@ -291,13 +291,13 @@ public class UserServiceSpringImpl implements UserService {
 	@Transactional(readOnly=true)
 	public File createDocument(final int documentId) {
 		//Template
-		DocumentTO documentTO = documentService.read(documentId);
+		Document document = documentService.read(documentId);
 		
 		//Data
 		UserDocument userDocument = new UserDocument();
 		userDocument.setUsers(userHibernateDAO.list());
 		
-		return documentService.createDocument(documentTO, userDocument, UserDocument.class);
+		return documentService.createDocument(document, userDocument, UserDocument.class);
 	}
 	
 	@Transactional(readOnly=true)

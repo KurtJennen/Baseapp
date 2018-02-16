@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.sql.Blob;
 
-public class DocumentTO extends BaseTO {
+public class Document extends BaseTO {
 	private String type;
 	private String fileName;
 	private Blob file;
@@ -10,11 +10,11 @@ public class DocumentTO extends BaseTO {
 	private int fileSize;
 	private String contentType;
 	
-	public DocumentTO() {
+	public Document() {
 		super();
 	}
 	
-	public DocumentTO(int id, String type, String fileName, int fileSize, String contentType) {
+	public Document(int id, String type, String fileName, int fileSize, String contentType) {
 		super();
 		setId(id);
 		this.type = type;

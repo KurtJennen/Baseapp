@@ -23,7 +23,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.DocumentHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.factory.DocumentFactory;
-import be.luxuryoverdosis.framework.data.to.DocumentTO;
+import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import freemarker.ext.dom.NodeModel;
@@ -37,58 +37,58 @@ public class DocumentServiceSpringImpl implements DocumentService {
 	public DocumentDTO createOrUpdateDTO(final DocumentDTO documentDTO) {
 		Logging.info(this, "Begin createDocumentDTO");
 
-		DocumentTO documentTO = new DocumentTO();
+		Document document = new Document();
 		if(documentDTO.getId() > 0) {
-			documentTO = this.read(documentDTO.getId());
+			document = this.read(documentDTO.getId());
 		}
-		documentTO = DocumentFactory.produceDocument(documentTO, documentDTO);
+		document = DocumentFactory.produceDocument(document, documentDTO);
 
-		documentTO = this.createOrUpdate(documentTO);
+		document = this.createOrUpdate(document);
 
 		Logging.info(this, "End createDocumentDTO");
-		return this.readDTO(documentTO.getId());
+		return this.readDTO(document.getId());
 	}
 	
 	@Transactional(readOnly=true)
 	public DocumentDTO readDTO(final int id) {
 		Logging.info(this, "Begin readDocumentDTO");
 		
-		DocumentTO documentTO = this.read(id);
+		Document document = this.read(id);
 		
-		DocumentDTO documentDTO = DocumentFactory.produceDocumentDTO(documentTO);
+		DocumentDTO documentDTO = DocumentFactory.produceDocumentDTO(document);
 		
 		Logging.info(this, "End readDocumentDTO");
 		return documentDTO;
 	}
 	
 	@Transactional
-	public DocumentTO createOrUpdate(final DocumentTO documentTO) {
+	public Document createOrUpdate(final Document document) {
 		Logging.info(this, "Begin createDocument");
-		if(documentHibernateDAO.count(documentTO.getType(), documentTO.getFileName(), documentTO.getId()) > 0) {
+		if(documentHibernateDAO.count(document.getType(), document.getFileName(), document.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.document"});
 		}
-		if(documentTO.getFileName() == null || StringUtils.isEmpty(documentTO.getFileName())) {
+		if(document.getFileName() == null || StringUtils.isEmpty(document.getFileName())) {
 			throw new ServiceException("errors.required", new String[] {"file.name"});
 		}
-		if(documentTO.getFileData() == null) {
+		if(document.getFileData() == null) {
 			throw new ServiceException("errors.required", new String[] {"file.data"});
 		}
-		if(documentTO.getContentType() == null || StringUtils.isEmpty(documentTO.getContentType())) {
+		if(document.getContentType() == null || StringUtils.isEmpty(document.getContentType())) {
 			throw new ServiceException("errors.required", new String[] {"file.contenttype"});
 		}
-		if(!documentTO.getFileName().endsWith(FileType.ODT)) {
+		if(!document.getFileName().endsWith(FileType.ODT)) {
 			throw new ServiceException("ends.not.with", new String[] {"file"});
 		}
-		DocumentTO result = null;
-		result = documentHibernateDAO.createOrUpdate(documentTO);
+		Document result = null;
+		result = documentHibernateDAO.createOrUpdate(document);
 		Logging.info(this, "End createDocument");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public DocumentTO read(final int id) {
+	public Document read(final int id) {
 		Logging.info(this, "Begin readDocument");
-		DocumentTO result = null;
+		Document result = null;
 		result = documentHibernateDAO.read(id);
 		Logging.info(this, "End readDocument");
 		return result;
@@ -104,30 +104,30 @@ public class DocumentServiceSpringImpl implements DocumentService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<DocumentTO> list() {
+	public ArrayList<Document> list() {
 		Logging.info(this, "Begin listJob");
-		ArrayList<DocumentTO> arrayList = null;
+		ArrayList<Document> arrayList = null;
 		arrayList = documentHibernateDAO.list();
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
 	
 	@Transactional(readOnly=true)
-	public ArrayList<DocumentTO> list(final String type) {
+	public ArrayList<Document> list(final String type) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<DocumentTO> arrayList = null;
+		ArrayList<Document> arrayList = null;
 		arrayList = documentHibernateDAO.list(type);
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public File createDocument(final DocumentTO documentTO, final Object data, final Class clazz) {
+	public File createDocument(final Document document, final Object data, final Class clazz) {
 		try {
 			DocumentTemplateFactory documentTemplateFactory = new DocumentTemplateFactory();
-			DocumentTemplate template = documentTemplateFactory.getTemplate(documentTO.getFile().getBinaryStream());
+			DocumentTemplate template = documentTemplateFactory.getTemplate(document.getFile().getBinaryStream());
 	
-			File file = new File(documentTO.getFileName());
+			File file = new File(document.getFileName());
 			FileOutputStream fileOutputStream = new FileOutputStream(file);
 			
 			InputStream inputStream = JaxbTool.getInputStream(clazz, data);
