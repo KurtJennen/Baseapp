@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -53,21 +53,21 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 					
 					userService.createOrUpdateDTO(userDTO);
 					
-					JobLogTO jobLogTO = new JobLogTO();
-					jobLogTO = JobLogFactory.produceJobLog(jobLogTO, jobTO, getInput("import.success"), getOutput(userDTO));
-					jobLogService.createOrUpdate(jobLogTO);
+					JobLog jobLog = new JobLog();
+					jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.success"), getOutput(userDTO));
+					jobLogService.createOrUpdate(jobLog);
 				} else {
-					JobLogTO jobLogTO = new JobLogTO();
-					jobLogTO = JobLogFactory.produceJobLog(jobLogTO, jobTO, getInput("import.failed") + ":" + getInput("exists"), getOutput(userDTO));
-					jobLogService.createOrUpdate(jobLogTO);
+					JobLog jobLog = new JobLog();
+					jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.failed") + ":" + getInput("exists"), getOutput(userDTO));
+					jobLogService.createOrUpdate(jobLog);
 				}
 			}
 		} catch (Exception e) {
 			String output = ExceptionTool.convertExceptionToString(e, "import.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			
-			JobLogTO jobLogTO = new JobLogTO();
-			jobLogTO = JobLogFactory.produceJobLog(jobLogTO, jobTO, getInput("import.failed"), output);
-			jobLogService.createOrUpdate(jobLogTO);
+			JobLog jobLog = new JobLog();
+			jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.failed"), output);
+			jobLogService.createOrUpdate(jobLog);
 			
 			Logging.error(this, output);
 		}

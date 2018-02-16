@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -57,9 +57,9 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 				
 				baos.write(exportBuffer.toString().getBytes(), 0, exportBuffer.length());
 				
-				JobLogTO jobLogTO = new JobLogTO();
-				jobLogTO = JobLogFactory.produceJobLog(jobLogTO, jobTO, getInput("export.success"), getOutput(userTO));
-				jobLogService.createOrUpdate(jobLogTO);
+				JobLog jobLog = new JobLog();
+				jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("export.success"), getOutput(userTO));
+				jobLogService.createOrUpdate(jobLog);
 			}
 			
 			jobTO.setFileData(baos.toString().getBytes());
@@ -72,9 +72,9 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 		} catch (Exception e) {
 			String output = ExceptionTool.convertExceptionToString(e, "export.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			
-			JobLogTO jobLogTO = new JobLogTO();
-			jobLogTO = JobLogFactory.produceJobLog(jobLogTO, jobTO, getInput("export.failed"), output);
-			jobLogService.createOrUpdate(jobLogTO);
+			JobLog jobLog = new JobLog();
+			jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("export.failed"), output);
+			jobLogService.createOrUpdate(jobLog);
 			
 			Logging.error(this, output);
 		}

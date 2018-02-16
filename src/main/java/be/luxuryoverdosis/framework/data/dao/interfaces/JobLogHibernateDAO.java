@@ -2,13 +2,13 @@ package be.luxuryoverdosis.framework.data.dao.interfaces;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 
 public interface JobLogHibernateDAO {
-	public JobLogTO createOrUpdate(JobLogTO jobLogTO);
-	public JobLogTO read(int id);
+	public JobLog createOrUpdate(JobLog jobLog);
+	public JobLog read(int id);
 	public void delete(int id);
 	public void deleteForJob(int jobId);
 	
-	public ArrayList<JobLogTO> list(int jobId);
+	public ArrayList<JobLog> list(int jobId);
 }

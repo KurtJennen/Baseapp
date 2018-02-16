@@ -1,21 +1,21 @@
 package be.luxuryoverdosis.framework.data.factory;
 
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 
 public class JobLogFactory {
 	private JobLogFactory() {
 	}
 	
-	public static JobLogTO produceJobLog(JobLogTO jobLogTO, final JobTO jobTO, final String input, final String output) {
-		if(jobLogTO == null) {
-			jobLogTO = new JobLogTO();
+	public static JobLog produceJobLog(JobLog jobLog, final JobTO jobTO, final String input, final String output) {
+		if(jobLog == null) {
+			jobLog = new JobLog();
 		}
-		jobLogTO.setInput(input);
-		jobLogTO.setOutput(output);
-		jobLogTO.setFileData(output.getBytes());
-		jobLogTO.setJob(jobTO);
+		jobLog.setInput(input);
+		jobLog.setOutput(output);
+		jobLog.setFileData(output.getBytes());
+		jobLog.setJob(jobTO);
 		
-		return jobLogTO;
+		return jobLog;
 	}
 }

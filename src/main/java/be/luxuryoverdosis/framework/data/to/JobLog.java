@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.sql.Blob;
 
-public class JobLogTO extends BaseTO {
+public class JobLog extends BaseTO {
 	private String input;
 	private String output;
 	private Blob file;

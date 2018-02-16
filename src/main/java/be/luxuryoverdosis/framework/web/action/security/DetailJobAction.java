@@ -28,7 +28,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
 import be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -98,7 +98,7 @@ public class DetailJobAction extends DispatchAction {
 		//JMesa End
         
         JobLogService jobLogService = BaseSpringServiceLocator.getBean(JobLogService.class);
-        ArrayList<JobLogTO> jobLogList = new ArrayList<JobLogTO>();
+        ArrayList<JobLog> jobLogList = new ArrayList<JobLog>();
         jobLogList = jobLogService.listForBatch(id);
         
         //JMesa Start	
@@ -173,8 +173,8 @@ public class DetailJobAction extends DispatchAction {
 		Logging.info(this, "Begin downloadFileLog");
 		
 		JobLogService jobLogService = BaseSpringServiceLocator.getBean(JobLogService.class);
-		JobLogTO jobLogTO = jobLogService.downloadFile(id);
-		byte[] bytes = jobLogTO.getFileData();
+		JobLog jobLog = jobLogService.downloadFile(id);
+		byte[] bytes = jobLog.getFileData();
 		
 		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + "." + FileType.TXT, FileContentType.TEXT_PLAIN, bytes);
 		

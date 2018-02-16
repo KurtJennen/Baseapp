@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.AbstractJobServi
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobParamTO;
 import be.luxuryoverdosis.framework.data.to.JobTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -109,10 +109,10 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 			}
 		}
 		
-		JobLogTO jobLogTO = new JobLogTO();
-		jobLogTO.setInput(recordBuffer.toString());
-		jobLogTO.setOutput(outputBuffer.toString());
-		jobLogTO.setJob(jobTO);
-		jobLogHibernateDAO.createOrUpdate(jobLogTO);
+		JobLog jobLog = new JobLog();
+		jobLog.setInput(recordBuffer.toString());
+		jobLog.setOutput(outputBuffer.toString());
+		jobLog.setJob(jobTO);
+		jobLogHibernateDAO.createOrUpdate(jobLog);
 	}
 }

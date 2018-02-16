@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateD
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -32,32 +32,32 @@ public class JobLogServiceSpringImpl implements JobLogService {
 	private static final int LENGTH = 256;
 	
 	@Transactional
-	public JobLogTO createOrUpdate(final JobLogTO jobLogTO) {
+	public JobLog createOrUpdate(final JobLog jobLog) {
 		Logging.info(this, "Begin createJobLog");
-		JobLogTO result = null;
+		JobLog result = null;
 		
-		if(jobLogTO.getInput() == null) {
-			jobLogTO.setInput(StringUtils.EMPTY);
+		if(jobLog.getInput() == null) {
+			jobLog.setInput(StringUtils.EMPTY);
 		}
-		if(jobLogTO.getOutput() == null) {
-			jobLogTO.setOutput(StringUtils.EMPTY);
+		if(jobLog.getOutput() == null) {
+			jobLog.setOutput(StringUtils.EMPTY);
 		}
-		if(jobLogTO.getInput().length() > LENGTH) {
-			jobLogTO.setInput(jobLogTO.getInput().substring(0, LENGTH));
+		if(jobLog.getInput().length() > LENGTH) {
+			jobLog.setInput(jobLog.getInput().substring(0, LENGTH));
 		}
-		if(jobLogTO.getOutput().length() > LENGTH) {
-			jobLogTO.setOutput(jobLogTO.getOutput().substring(0, LENGTH));
+		if(jobLog.getOutput().length() > LENGTH) {
+			jobLog.setOutput(jobLog.getOutput().substring(0, LENGTH));
 		}
 		
-		result = jobLogHibernateDAO.createOrUpdate(jobLogTO);
+		result = jobLogHibernateDAO.createOrUpdate(jobLog);
 		Logging.info(this, "End createJobLog");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public JobLogTO read(final int id) {
+	public JobLog read(final int id) {
 		Logging.info(this, "Begin readJobLog");
-		JobLogTO result = null;
+		JobLog result = null;
 		result = jobLogHibernateDAO.read(id);
 		Logging.info(this, "End readJobLog");
 		return result;
@@ -78,36 +78,36 @@ public class JobLogServiceSpringImpl implements JobLogService {
 	}
 	
 	@Transactional(readOnly=true)
-	public JobLogTO downloadFile(int jobLogId) {
+	public JobLog downloadFile(int jobLogId) {
 		Logging.info(this, "Begin downloadFileLog");
 		
-		JobLogTO jobLogTO = null;
+		JobLog jobLog = null;
 		
-		jobLogTO = read(jobLogId);
+		jobLog = read(jobLogId);
 		
-		if(jobLogTO != null) {
-			byte[] bytes = BlobTool.convertBlobToBytes(jobLogTO.getFile());
-			jobLogTO.setFileData(bytes);
+		if(jobLog != null) {
+			byte[] bytes = BlobTool.convertBlobToBytes(jobLog.getFile());
+			jobLog.setFileData(bytes);
 		}
 		
 		Logging.info(this, "End downloadFileLog");
 		
-		return jobLogTO;
+		return jobLog;
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<JobLogTO> list(final int jobId) {
+	public ArrayList<JobLog> list(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
-		ArrayList<JobLogTO> arrayList = null;
+		ArrayList<JobLog> arrayList = null;
 		arrayList = jobLogHibernateDAO.list(jobId);
 		Logging.info(this, "End listJobLog");
 		return arrayList;
 	}
 	
 	@Transactional(readOnly=true)
-	public ArrayList<JobLogTO> listForBatch(final int jobId) {
+	public ArrayList<JobLog> listForBatch(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
-		ArrayList<JobLogTO> arrayList = null;
+		ArrayList<JobLog> arrayList = null;
 		
 		BatchJobInstanceTO batchJobInstanceTO = batchJobInstanceHibernateDAO.readJobExecution(jobId);
 		

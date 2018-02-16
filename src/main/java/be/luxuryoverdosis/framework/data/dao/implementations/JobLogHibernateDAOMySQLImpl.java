@@ -11,36 +11,36 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobLogTO;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements JobLogHibernateDAO {
-	public JobLogTO createOrUpdate(final JobLogTO jobLogTO) {
+	public JobLog createOrUpdate(final JobLog jobLog) {
 		Logging.info(this, "Begin createJobLog");
 		try {
 			Session session = getSessionFactory().openSession();
-			Blob blob = session.getLobHelper().createBlob(jobLogTO.getFileData());
-			//Blob blob = Hibernate.createBlob(jobLogTO.getFileData());
-			jobLogTO.setFile(blob);
+			Blob blob = session.getLobHelper().createBlob(jobLog.getFileData());
+			//Blob blob = Hibernate.createBlob(jobLog.getFileData());
+			jobLog.setFile(blob);
 		} catch (Exception e) {
 			Logging.error(this, "Blob error" + e.getMessage());
 		}
-		getHibernateTemplate().saveOrUpdate(jobLogTO);
+		getHibernateTemplate().saveOrUpdate(jobLog);
 		Logging.info(this, "End createJobLog");
-		return jobLogTO;
+		return jobLog;
 	}
 
-	public JobLogTO read(final int id) {
+	public JobLog read(final int id) {
 		Logging.info(this, "Begin readJobLog");
-		JobLogTO jobLogTO = (JobLogTO) getHibernateTemplate().load(JobLogTO.class, id);
+		JobLog jobLog = (JobLog) getHibernateTemplate().load(JobLog.class, id);
 		Logging.info(this, "End readJobLog");
-		return jobLogTO;
+		return jobLog;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteJobLog");
-		getHibernateTemplate().delete((JobLogTO) getHibernateTemplate().load(JobLogTO.class, id));
+		getHibernateTemplate().delete((JobLog) getHibernateTemplate().load(JobLog.class, id));
 		Logging.info(this, "End deleteJobLog");		
 	}
 	
@@ -49,7 +49,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		getHibernateTemplate().execute(new HibernateCallback<Integer>() {
 
 			public Integer doInHibernate(Session session) throws HibernateException, SQLException {
-				org.hibernate.Query updateQuery = session.createQuery("delete JobLogTO jl where jl.job.id = ?");
+				org.hibernate.Query updateQuery = session.createQuery("delete JobLog jl where jl.job.id = ?");
 				updateQuery.setParameter(0, jobId);
 				return updateQuery.executeUpdate();
 			}
@@ -59,9 +59,9 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	}	
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<JobLogTO> list(final int jobId) {
+	public ArrayList<JobLog> list(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
-		ArrayList<JobLogTO> arrayList = (ArrayList<JobLogTO>) getHibernateTemplate().find("from JobLogTO jl where jl.job.id = ?", new Object[]{jobId});
+		ArrayList<JobLog> arrayList = (ArrayList<JobLog>) getHibernateTemplate().find("from JobLog jl where jl.job.id = ?", new Object[]{jobId});
 		Logging.info(this, "End listJobLog");
 		return arrayList;
 	}
