@@ -20,7 +20,7 @@ public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoS
 	}
 	
 	private static final String readJobExecutionHql = "SELECT bji " +
-			"from BatchJobExecutionTO bje " +
+			"from BatchJobExecution bje " +
 			"inner join bje.batchJobInstance bji " +
 			"where bje.id = ? " +
 			"order by bje.createTime desc";
@@ -51,7 +51,7 @@ public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoS
 		"bje.exitMessage, " +
 		"bje.lastUpdated " +
 		") " +
-		"from BatchJobExecutionTO bje " +
+		"from BatchJobExecution bje " +
 		"inner join bje.batchJobInstance bji " +
 		"where bji.jobName = ? " +
 		"order by bje.createTime desc";

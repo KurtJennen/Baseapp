@@ -20,7 +20,7 @@ public class BatchStepExecutionTO {
 	private String exitCode;
 	private String exitMessage;
 	private Date lastUpdated;
-	private BatchJobExecutionTO batchJobExecution;
+	private BatchJobExecution batchJobExecution;
 	
 	public long getId() {
 		return id;
@@ -124,10 +124,10 @@ public class BatchStepExecutionTO {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	public BatchJobExecutionTO getBatchJobExecution() {
+	public BatchJobExecution getBatchJobExecution() {
 		return batchJobExecution;
 	}
-	public void setBatchJobExecution(BatchJobExecutionTO batchJobExecution) {
+	public void setBatchJobExecution(BatchJobExecution batchJobExecution) {
 		this.batchJobExecution = batchJobExecution;
 	}
 	

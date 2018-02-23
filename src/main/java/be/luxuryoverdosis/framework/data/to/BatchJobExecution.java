@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
-public class BatchJobExecutionTO {
+public class BatchJobExecution {
 	private long id;
 	private long version;
 	private Date createTime;
@@ -14,7 +14,7 @@ public class BatchJobExecutionTO {
 	private Date lastUpdated;
 	private BatchJobInstanceTO batchJobInstance;
 	
-	public BatchJobExecutionTO() {
+	public BatchJobExecution() {
 		super();
 	}
 	

@@ -20,6 +20,6 @@
 		<property name="exitMessage" column="Exit_Message" type="string"></property>
 		<property name="lastUpdated" column="Last_Updated" type="timestamp"></property>
 		
-		<many-to-one name="batchJobExecution" column="Job_Execution_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.BatchJobExecutionTO" lazy="false"></many-to-one>
+		<many-to-one name="batchJobExecution" column="Job_Execution_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.BatchJobExecution" lazy="false"></many-to-one>
 	</class>
 </hibernate-mapping>
