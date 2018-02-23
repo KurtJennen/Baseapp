@@ -29,7 +29,7 @@ import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
 import be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.JobForm;
@@ -157,10 +157,10 @@ public class DetailJobAction extends DispatchAction {
 		Logging.info(this, "Begin downloadFile");
 		
 		JobService jobService = BaseSpringServiceLocator.getBean(JobService.class);
-		JobTO jobTO = jobService.downloadFile(id);
-		byte[] bytes = jobTO.getFileData();
+		Job job = jobService.downloadFile(id);
+		byte[] bytes = job.getFileData();
 		
-		ResponseTool.writeResponseForDownload(response, jobTO.getFileName(), FileContentType.TEXT_PLAIN, bytes);
+		ResponseTool.writeResponseForDownload(response, job.getFileName(), FileContentType.TEXT_PLAIN, bytes);
 		
 		Logging.info(this, "End downloadFile");
 	}

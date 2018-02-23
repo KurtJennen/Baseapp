@@ -13,7 +13,7 @@
 		<property name="name" column="Name" type="string"></property>
 		<property name="value" column="Value" type="string"></property>
 		
-		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.JobTO" lazy="false"></many-to-one>
+		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Job" lazy="false"></many-to-one>
 		
 	</class>
 </hibernate-mapping>

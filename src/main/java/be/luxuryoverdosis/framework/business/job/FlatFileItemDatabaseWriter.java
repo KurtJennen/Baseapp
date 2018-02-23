@@ -31,7 +31,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 
 public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport implements ResourceAwareItemWriterItemStream<T>,
 		InitializingBean {
@@ -437,11 +437,11 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 				if (outputBufferedWriter != null) {
 					//added by luxuryoverdosis
 					
-					JobTO jobTO = jobHibernateDAO.read(jobId);
-					jobTO.setFileData(baos.toByteArray());
-					jobTO.setFileSize(baos.size());
+					Job job = jobHibernateDAO.read(jobId);
+					job.setFileData(baos.toByteArray());
+					job.setFileSize(baos.size());
 					
-					jobHibernateDAO.createOrUpdate(jobTO);
+					jobHibernateDAO.createOrUpdate(job);
 					
 					//outputBufferedWriter.close();
 				}

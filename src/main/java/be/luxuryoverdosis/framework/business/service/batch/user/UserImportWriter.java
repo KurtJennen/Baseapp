@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -39,7 +39,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 
 	@Override
 	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserDTO> user) {
-		JobTO jobTO = jobService.read(jobId);
+		Job job = jobService.read(jobId);
 		try {
 			
 			for (UserDTO userDTO : user) {
@@ -54,11 +54,11 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 					userService.createOrUpdateDTO(userDTO);
 					
 					JobLog jobLog = new JobLog();
-					jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.success"), getOutput(userDTO));
+					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.success"), getOutput(userDTO));
 					jobLogService.createOrUpdate(jobLog);
 				} else {
 					JobLog jobLog = new JobLog();
-					jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.failed") + ":" + getInput("exists"), getOutput(userDTO));
+					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.failed") + ":" + getInput("exists"), getOutput(userDTO));
 					jobLogService.createOrUpdate(jobLog);
 				}
 			}
@@ -66,7 +66,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 			String output = ExceptionTool.convertExceptionToString(e, "import.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			
 			JobLog jobLog = new JobLog();
-			jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("import.failed"), output);
+			jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.failed"), output);
 			jobLogService.createOrUpdate(jobLog);
 			
 			Logging.error(this, output);

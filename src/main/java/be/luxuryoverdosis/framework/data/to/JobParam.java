@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.to;
 public class JobParam extends BaseTO {
 	private String name;
 	private String value;
-	private JobTO job;
+	private Job job;
 	
 	public String getName() {
 		return name;
@@ -17,10 +17,10 @@ public class JobParam extends BaseTO {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public JobTO getJob() {
+	public Job getJob() {
 		return job;
 	}
-	public void setJob(JobTO job) {
+	public void setJob(Job job) {
 		this.job = job;
 	};	
 	

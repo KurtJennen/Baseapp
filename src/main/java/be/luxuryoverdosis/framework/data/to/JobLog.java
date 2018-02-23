@@ -7,7 +7,7 @@ public class JobLog extends BaseTO {
 	private String output;
 	private Blob file;
 	private byte[] fileData;
-	private JobTO job;
+	private Job job;
 	
 	public String getInput() {
 		return input;
@@ -27,7 +27,7 @@ public class JobLog extends BaseTO {
 	public void setFile(Blob file) {
 		this.file = file;
 	}
-	public JobTO getJob() {
+	public Job getJob() {
 		return job;
 	}
 	public byte[] getFileData() {
@@ -36,7 +36,7 @@ public class JobLog extends BaseTO {
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
 	}
-	public void setJob(JobTO job) {
+	public void setJob(Job job) {
 		this.job = job;
 	};	
 	

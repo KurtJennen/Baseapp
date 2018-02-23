@@ -14,7 +14,7 @@
 		<property name="output" column="Output" type="string"></property>
 		<property name="file" column="File" type="blob"></property>
 		
-		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.JobTO" lazy="false"></many-to-one>
+		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Job" lazy="false"></many-to-one>
 		
 	</class>
 </hibernate-mapping>

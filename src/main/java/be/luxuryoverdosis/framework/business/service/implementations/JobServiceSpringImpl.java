@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -33,18 +33,18 @@ public class JobServiceSpringImpl implements JobService {
 	private BatchJobParamsHibernateDAO batchJobParamsHibernateDAO;
 	
 	@Transactional
-	public JobTO createOrUpdate(final JobTO jobTO) {
+	public Job createOrUpdate(final Job job) {
 		Logging.info(this, "Begin createJob");
-		JobTO result = null;
-		result = jobHibernateDAO.createOrUpdate(jobTO);
+		Job result = null;
+		result = jobHibernateDAO.createOrUpdate(job);
 		Logging.info(this, "End createJob");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public JobTO read(final int id) {
+	public Job read(final int id) {
 		Logging.info(this, "Begin readJob");
-		JobTO result = null;
+		Job result = null;
 		result = jobHibernateDAO.read(id);
 		Logging.info(this, "End readJob");
 		return result;
@@ -62,37 +62,37 @@ public class JobServiceSpringImpl implements JobService {
 	}
 	
 	@Transactional(readOnly=true)
-	public JobTO downloadFile(int jobInstanceId){
+	public Job downloadFile(int jobInstanceId){
 		Logging.info(this, "Begin downloadFileJob");
 		
-		JobTO jobTO = null;
+		Job job = null;
 		
 		BatchJobParamsTO batchJobParamsTO = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, "jobId");
 		
 		if(batchJobParamsTO != null) {
-			jobTO = jobHibernateDAO.read((int)batchJobParamsTO.getLongValue());
-			byte[] bytes = BlobTool.convertBlobToBytes(jobTO.getFile());
-			jobTO.setFileData(bytes);
+			job = jobHibernateDAO.read((int)batchJobParamsTO.getLongValue());
+			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
+			job.setFileData(bytes);
 		}
 		
 		Logging.info(this, "End downloadFileJob");
 		
-		return jobTO;
+		return job;
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<JobTO> list(final String name) {
+	public ArrayList<Job> list(final String name) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<JobTO> arrayList = null;
+		ArrayList<Job> arrayList = null;
 		arrayList = jobHibernateDAO.list(name);
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
 	
 	@Transactional(readOnly=true)
-	public ArrayList<JobTO> list(final String name, final boolean started) {
+	public ArrayList<Job> list(final String name, final boolean started) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<JobTO> arrayList = null;
+		ArrayList<Job> arrayList = null;
 		if(started) {
 			arrayList = jobHibernateDAO.listStarted(name);
 		} else {
@@ -104,35 +104,35 @@ public class JobServiceSpringImpl implements JobService {
 	}
 	
 	@Transactional
-	public void startJobs(final ArrayList<JobTO> jobs) {
+	public void startJobs(final ArrayList<Job> jobs) {
 		Logging.info(this, "Begin startReadJob");
 		
-		Iterator<JobTO> jobsIterator = jobs.iterator();
+		Iterator<Job> jobsIterator = jobs.iterator();
 		
 		while(jobsIterator.hasNext()) {
-			JobTO jobTO = (JobTO) jobsIterator.next();
+			Job job = (Job) jobsIterator.next();
 			
-			jobTO.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
-			jobTO.setStatus(BaseConstants.JOB_STATUS_STARTED);
-			jobHibernateDAO.createOrUpdate(jobTO);
+			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
+			job.setStatus(BaseConstants.JOB_STATUS_STARTED);
+			jobHibernateDAO.createOrUpdate(job);
 		}
 		
 		Logging.info(this, "End startReadJob");
 	}
 	
 	@Transactional
-	public void endJobs(final ArrayList<JobTO> jobs) {
+	public void endJobs(final ArrayList<Job> jobs) {
 		Logging.info(this, "Begin endReadJob");
 		
-		Iterator<JobTO> jobsIterator = jobs.iterator();
+		Iterator<Job> jobsIterator = jobs.iterator();
 		
 		while(jobsIterator.hasNext()) {
-			JobTO jobTO = (JobTO) jobsIterator.next();
+			Job job = (Job) jobsIterator.next();
 			
-			jobTO.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
-			jobTO.setStatus(BaseConstants.JOB_STATUS_EXECUTED);
-			jobTO.setExecuted(true);
-			jobHibernateDAO.createOrUpdate(jobTO);
+			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
+			job.setStatus(BaseConstants.JOB_STATUS_EXECUTED);
+			job.setExecuted(true);
+			jobHibernateDAO.createOrUpdate(job);
 		}
 		
 		Logging.info(this, "End endReadJob");

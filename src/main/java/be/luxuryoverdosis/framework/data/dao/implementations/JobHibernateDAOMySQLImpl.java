@@ -8,61 +8,61 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements JobHibernateDAO {
-	public JobTO createOrUpdate(final JobTO jobTO) {
+	public Job createOrUpdate(final Job job) {
 		Logging.info(this, "Begin createJob");
 		try {
 			Session session = getSessionFactory().openSession();
-			Blob blob = session.getLobHelper().createBlob(jobTO.getFileData());
-			//Blob blob = Hibernate.createBlob(jobTO.getFileData());
-			jobTO.setFile(blob);
+			Blob blob = session.getLobHelper().createBlob(job.getFileData());
+			//Blob blob = Hibernate.createBlob(job.getFileData());
+			job.setFile(blob);
 		} catch (Exception e) {
 			Logging.error(this, "Blob error" + e.getMessage());
 		}
-		getHibernateTemplate().saveOrUpdate(jobTO);
+		getHibernateTemplate().saveOrUpdate(job);
 		Logging.info(this, "End createJob");
-		return jobTO;
+		return job;
 	}
 
-	public JobTO read(final int id) {
+	public Job read(final int id) {
 		Logging.info(this, "Begin readJob");
-		JobTO jobTO = (JobTO) getHibernateTemplate().load(JobTO.class, id);
+		Job job = (Job) getHibernateTemplate().load(Job.class, id);
 		Logging.info(this, "End readJob");
-		return jobTO;
+		return job;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteJob");
-		getHibernateTemplate().delete((JobTO) getHibernateTemplate().load(JobTO.class, id));
+		getHibernateTemplate().delete((Job) getHibernateTemplate().load(Job.class, id));
 		Logging.info(this, "End deleteJob");		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<JobTO> list(final String name) {
+	public ArrayList<Job> list(final String name) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<JobTO> arrayList = (ArrayList<JobTO>) getHibernateTemplate().find("from JobTO j where j.name = ? order by j.ended asc", new Object[]{name});
+		ArrayList<Job> arrayList = (ArrayList<Job>) getHibernateTemplate().find("from Job j where j.name = ? order by j.ended asc", new Object[]{name});
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<JobTO> listStarted(final String name) {
+	public ArrayList<Job> listStarted(final String name) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<JobTO> arrayList = null;
-		arrayList = (ArrayList<JobTO>) getHibernateTemplate().find("from JobTO j where j.name = ? and j.started is not null", new Object[]{name});	 
+		ArrayList<Job> arrayList = null;
+		arrayList = (ArrayList<Job>) getHibernateTemplate().find("from Job j where j.name = ? and j.started is not null", new Object[]{name});	 
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<JobTO> listNotStarted(final String name) {
+	public ArrayList<Job> listNotStarted(final String name) {
 		Logging.info(this, "Begin listJob");
-		ArrayList<JobTO> arrayList = null;
-		arrayList = (ArrayList<JobTO>) getHibernateTemplate().find("from JobTO j where j.name = ? and j.started is null", new Object[]{name});
+		ArrayList<Job> arrayList = null;
+		arrayList = (ArrayList<Job>) getHibernateTemplate().find("from Job j where j.name = ? and j.started is null", new Object[]{name});
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}

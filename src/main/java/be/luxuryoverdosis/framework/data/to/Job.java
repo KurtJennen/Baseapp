@@ -6,7 +6,7 @@ import java.util.Date;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 
-public class JobTO extends BaseTO {
+public class Job extends BaseTO {
 	private String name;
 	private String fileName;
 	private Blob file;
@@ -18,11 +18,11 @@ public class JobTO extends BaseTO {
 	private Date ended;
 	private String status;
 	
-	public JobTO() {
+	public Job() {
 		super();
 	}
 	
-	public JobTO(String name) {
+	public Job(String name) {
 		super();
 		
 		this.setName(name);
@@ -30,7 +30,7 @@ public class JobTO extends BaseTO {
 		this.setStatus(BaseConstants.JOB_STATUS_NOT_STARTED);
 	}
 	
-	public JobTO(String name, FileDTO fileDTO) {
+	public Job(String name, FileDTO fileDTO) {
 		super();
 		this.setName(name);
 		this.setFileData(fileDTO.getFileData());

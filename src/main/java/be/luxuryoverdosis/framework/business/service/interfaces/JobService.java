@@ -2,17 +2,17 @@ package be.luxuryoverdosis.framework.business.service.interfaces;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 
 public interface JobService {
-	public JobTO createOrUpdate(JobTO jobTO);
-	public JobTO read(int id);
+	public Job createOrUpdate(Job job);
+	public Job read(int id);
 	public void delete(int id);
-	public JobTO downloadFile(int jobInstanceId);
+	public Job downloadFile(int jobInstanceId);
 	
-	public ArrayList<JobTO> list(String name);
-	public ArrayList<JobTO> list(String name, boolean started);
+	public ArrayList<Job> list(String name);
+	public ArrayList<Job> list(String name, boolean started);
 	
-	public void startJobs(ArrayList<JobTO> jobs);
-	public void endJobs(ArrayList<JobTO> jobs);
+	public void startJobs(ArrayList<Job> jobs);
+	public void endJobs(ArrayList<Job> jobs);
 }

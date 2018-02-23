@@ -24,7 +24,7 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStreamItemReader<T> implements
@@ -251,10 +251,10 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 		Assert.notNull(recordSeparatorPolicy, "RecordSeparatorPolicy must be set");
 		
 		//added by luxuryoverdosis
-		JobTO jobTO = jobHibernateDAO.read(jobId);
+		Job job = jobHibernateDAO.read(jobId);
 
 		//added by luxuryoverdosis
-        resource = new InputStreamResource(jobTO.getFile().getBinaryStream());
+        resource = new InputStreamResource(job.getFile().getBinaryStream());
 
 		noInput = true;
 		if (!resource.exists()) {

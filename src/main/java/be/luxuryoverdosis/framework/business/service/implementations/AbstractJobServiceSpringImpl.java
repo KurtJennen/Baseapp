@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobParam;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public abstract class AbstractJobServiceSpringImpl extends BaseService implements AbstractJobService {
@@ -32,21 +32,21 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 	private static final int LENGTH = 256;
 	
 	abstract public String getJobName();
-	abstract public void processFileJobBusiness(final JobTO jobTO, final ArrayList<JobParam> jobParams);
+	abstract public void processFileJobBusiness(final Job job, final ArrayList<JobParam> jobParams);
 	
 	public void processReadJob() {
 		Logging.info(this, "Begin processReadJob");
 		
-		Collection<JobTO> jobs = jobHibernateDAO.listNotStarted(getJobName());
-		Iterator<JobTO> jobsIterator = jobs.iterator();
+		Collection<Job> jobs = jobHibernateDAO.listNotStarted(getJobName());
+		Iterator<Job> jobsIterator = jobs.iterator();
 		
 		this.startReadJob(jobs);
 		
 		while(jobsIterator.hasNext()) {
-			JobTO jobTO = (JobTO) jobsIterator.next();
-			ArrayList<JobParam> jobParams = jobParamHibernateDAO.list(jobTO.getId());
+			Job job = (Job) jobsIterator.next();
+			ArrayList<JobParam> jobParams = jobParamHibernateDAO.list(job.getId());
 			
-			processFileJobBusiness(jobTO, jobParams);
+			processFileJobBusiness(job, jobParams);
 		}
 		
 		this.endReadJob(jobs);
@@ -55,41 +55,41 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 	}
 	
 	@Transactional
-	private void startReadJob(final Collection<JobTO> jobs) {
+	private void startReadJob(final Collection<Job> jobs) {
 		Logging.info(this, "Begin startReadJob");
 		
-		Iterator<JobTO> jobsIterator = jobs.iterator();
+		Iterator<Job> jobsIterator = jobs.iterator();
 		
 		while(jobsIterator.hasNext()) {
-			JobTO jobTO = (JobTO) jobsIterator.next();
+			Job job = (Job) jobsIterator.next();
 			
-			jobTO.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
-			jobTO.setStatus(BaseConstants.JOB_STATUS_STARTED);
-			jobHibernateDAO.createOrUpdate(jobTO);
+			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
+			job.setStatus(BaseConstants.JOB_STATUS_STARTED);
+			jobHibernateDAO.createOrUpdate(job);
 		}
 		
 		Logging.info(this, "End startReadJob");
 	}
 	
 	@Transactional
-	private void endReadJob(final Collection<JobTO> jobs) {
+	private void endReadJob(final Collection<Job> jobs) {
 		Logging.info(this, "Begin endReadJob");
 		
-		Iterator<JobTO> jobsIterator = jobs.iterator();
+		Iterator<Job> jobsIterator = jobs.iterator();
 		
 		while(jobsIterator.hasNext()) {
-			JobTO jobTO = (JobTO) jobsIterator.next();
+			Job job = (Job) jobsIterator.next();
 			
-			jobTO.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
-			jobTO.setStatus(BaseConstants.JOB_STATUS_EXECUTED);
-			jobTO.setExecuted(true);
-			jobHibernateDAO.createOrUpdate(jobTO);
+			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
+			job.setStatus(BaseConstants.JOB_STATUS_EXECUTED);
+			job.setExecuted(true);
+			jobHibernateDAO.createOrUpdate(job);
 		}
 		
 		Logging.info(this, "End endReadJob");
 	}
 	
-	public void addJobLog(final JobTO jobTO, final String record, final String output) {
+	public void addJobLog(final Job job, final String record, final String output) {
 		StringBuffer recordBuffer = new StringBuffer();
 		StringBuffer outputBuffer = new StringBuffer();
 		
@@ -112,7 +112,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		JobLog jobLog = new JobLog();
 		jobLog.setInput(recordBuffer.toString());
 		jobLog.setOutput(outputBuffer.toString());
-		jobLog.setJob(jobTO);
+		jobLog.setJob(job);
 		jobLogHibernateDAO.createOrUpdate(jobLog);
 	}
 }

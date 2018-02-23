@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.to.JobTO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.UserTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -36,13 +36,13 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 
 	@Override
 	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserTO> user) {
-		JobTO jobTO = jobService.read(jobId);
+		Job job = jobService.read(jobId);
 		try {
 			StringBuffer exportBuffer = new StringBuffer();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			
-			if(jobTO.getFile() != null) {
-				byte[] bytes = BlobTool.convertBlobToBytes(jobTO.getFile());
+			if(job.getFile() != null) {
+				byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 				baos.write(bytes);
 			}
 			
@@ -58,22 +58,22 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 				baos.write(exportBuffer.toString().getBytes(), 0, exportBuffer.length());
 				
 				JobLog jobLog = new JobLog();
-				jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("export.success"), getOutput(userTO));
+				jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("export.success"), getOutput(userTO));
 				jobLogService.createOrUpdate(jobLog);
 			}
 			
-			jobTO.setFileData(baos.toString().getBytes());
-			jobTO.setFileName(BaseConstants.JOB_EXPORT_USER_FILENAME);
-			jobTO.setFileSize(baos.size());
-			jobTO.setContentType(FileContentType.TEXT_PLAIN);
+			job.setFileData(baos.toString().getBytes());
+			job.setFileName(BaseConstants.JOB_EXPORT_USER_FILENAME);
+			job.setFileSize(baos.size());
+			job.setContentType(FileContentType.TEXT_PLAIN);
 			
-			jobService.createOrUpdate(jobTO);
+			jobService.createOrUpdate(job);
 			
 		} catch (Exception e) {
 			String output = ExceptionTool.convertExceptionToString(e, "export.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			
 			JobLog jobLog = new JobLog();
-			jobLog = JobLogFactory.produceJobLog(jobLog, jobTO, getInput("export.failed"), output);
+			jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("export.failed"), output);
 			jobLogService.createOrUpdate(jobLog);
 			
 			Logging.error(this, output);
