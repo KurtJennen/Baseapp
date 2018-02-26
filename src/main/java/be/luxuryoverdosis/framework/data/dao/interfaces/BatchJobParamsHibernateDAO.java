@@ -2,10 +2,10 @@ package be.luxuryoverdosis.framework.data.dao.interfaces;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 
 public interface BatchJobParamsHibernateDAO {
-	public BatchJobParamsTO getJobParam(final long jobInstanceId, final String keyName);
+	public BatchJobParams getJobParam(final long jobInstanceId, final String keyName);
 	
-	public ArrayList<BatchJobParamsTO> list(long jobInstanceId);
+	public ArrayList<BatchJobParams> list(long jobInstanceId);
 }

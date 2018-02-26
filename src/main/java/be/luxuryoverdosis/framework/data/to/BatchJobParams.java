@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
-public class BatchJobParamsTO {
+public class BatchJobParams {
 	private long id;
 	private String typeCode;
 	private String keyName;

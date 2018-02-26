@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateD
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -67,10 +67,10 @@ public class JobServiceSpringImpl implements JobService {
 		
 		Job job = null;
 		
-		BatchJobParamsTO batchJobParamsTO = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, "jobId");
+		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, "jobId");
 		
-		if(batchJobParamsTO != null) {
-			job = jobHibernateDAO.read((int)batchJobParamsTO.getLongValue());
+		if(batchJobParams != null) {
+			job = jobHibernateDAO.read((int)batchJobParams.getLongValue());
 			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 			job.setFileData(bytes);
 		}
