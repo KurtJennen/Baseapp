@@ -12,7 +12,7 @@ public class BatchJobExecution {
 	private String exitCode;
 	private String exitMessage;
 	private Date lastUpdated;
-	private BatchJobInstanceTO batchJobInstance;
+	private BatchJobInstance batchJobInstance;
 	
 	public BatchJobExecution() {
 		super();
@@ -72,10 +72,10 @@ public class BatchJobExecution {
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
-	public BatchJobInstanceTO getBatchJobInstance() {
+	public BatchJobInstance getBatchJobInstance() {
 		return batchJobInstance;
 	}
-	public void setBatchJobInstance(BatchJobInstanceTO batchJobInstance) {
+	public void setBatchJobInstance(BatchJobInstance batchJobInstance) {
 		this.batchJobInstance = batchJobInstance;
 	}
 	

@@ -2,10 +2,10 @@ package be.luxuryoverdosis.framework.business.service.interfaces;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 
 public interface BatchJobInstanceService {
-	public BatchJobInstanceTO read(long id);
+	public BatchJobInstance read(long id);
 	
-	public ArrayList<BatchJobInstanceTO> list(String jobName);
+	public ArrayList<BatchJobInstance> list(String jobName);
 }

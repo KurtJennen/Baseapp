@@ -24,7 +24,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstance
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
-import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.ListUserForm;
@@ -63,7 +63,7 @@ public class ListUserAction extends DispatchAction {
 		//SessionManager.putInSession(request, WebConstants.USER_LIST, searchUserList);
         
 		BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		ArrayList<BatchJobInstanceTO> batchJobInstanceList = new ArrayList<BatchJobInstanceTO>();
+		ArrayList<BatchJobInstance> batchJobInstanceList = new ArrayList<BatchJobInstance>();
 		batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_EXPORT_USER);
 		
 		//JMesa Start	

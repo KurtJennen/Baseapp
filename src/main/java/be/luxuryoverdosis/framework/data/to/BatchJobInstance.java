@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
-public class BatchJobInstanceTO {
+public class BatchJobInstance {
 	private long id;
 	private long version;
 	private String jobName;
@@ -18,10 +18,10 @@ public class BatchJobInstanceTO {
 	String batchJobExecutionExitMessage;
 	Date batchJobExecutionLastUpdated;
 	
-	public BatchJobInstanceTO() {
+	public BatchJobInstance() {
 	}
 	
-	public BatchJobInstanceTO(long id, String jobName, long batchJobExecutionId, long batchJobExecutionVersion, Date batchJobExecutionCreateTime, Date batchJobExecutionStartTime, 
+	public BatchJobInstance(long id, String jobName, long batchJobExecutionId, long batchJobExecutionVersion, Date batchJobExecutionCreateTime, Date batchJobExecutionStartTime, 
 			Date batchJobExecutionEndTime, String batchJobExecutionStatus, String batchJobExecutionExitCode, String batchJobExecutionExitMessage, Date batchJobExecutionLastUpdated) {
 		super();
 		this.id = id;

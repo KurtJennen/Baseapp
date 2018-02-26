@@ -25,7 +25,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobParamsSe
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchStepExecutionService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
-import be.luxuryoverdosis.framework.data.to.BatchJobInstanceTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
 import be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO;
 import be.luxuryoverdosis.framework.data.to.JobLog;
@@ -65,9 +65,9 @@ public class DetailJobAction extends DispatchAction {
 		JobForm jobForm = (JobForm) form;
 		
 		BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		BatchJobInstanceTO batchJobInstanceTO = batchJobInstanceService.read(id);
+		BatchJobInstance batchJobInstance = batchJobInstanceService.read(id);
 		
-		jobForm.setJobName(batchJobInstanceTO.getJobName());
+		jobForm.setJobName(batchJobInstance.getJobName());
 		
 		BatchJobParamsService batchJobParamsService = BaseSpringServiceLocator.getBean(BatchJobParamsService.class);
 		ArrayList<BatchJobParamsTO> batchJobParamsList = new ArrayList<BatchJobParamsTO>();
