@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-lazy="false">
-	<class name="be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO" table="batch_step_execution">
+	<class name="be.luxuryoverdosis.framework.data.to.BatchStepExecution" table="batch_step_execution">
 		<id name="id" column="Step_Execution_Id" type="long" unsaved-value="-1" />
 		<property name="version" column="Version" type="long" not-null="true"></property>
 		<property name="stepName" column="Step_Name" type="string" not-null="true"></property>

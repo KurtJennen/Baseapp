@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
-public class BatchStepExecutionTO {
+public class BatchStepExecution {
 	private long id;
 	private long version;
 	private String stepName;

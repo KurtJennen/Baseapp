@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchStepExecutionService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchStepExecutionHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO;
+import be.luxuryoverdosis.framework.data.to.BatchStepExecution;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -18,9 +18,9 @@ public class BatchStepExecutionServiceSpringImpl implements BatchStepExecutionSe
 	private BatchStepExecutionHibernateDAO batchStepExecutionHibernateDAO;
 	
 	@Transactional
-	public ArrayList<BatchStepExecutionTO> list(long jobInstanceId) {
+	public ArrayList<BatchStepExecution> list(long jobInstanceId) {
 		Logging.info(this, "Begin listBatchStepExecution");
-		ArrayList<BatchStepExecutionTO> arrayList = null;
+		ArrayList<BatchStepExecution> arrayList = null;
 		arrayList = batchStepExecutionHibernateDAO.list(jobInstanceId);
 		Logging.info(this, "End listBatchStepExecution");
 		return arrayList;

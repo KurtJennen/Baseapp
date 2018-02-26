@@ -27,7 +27,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.to.BatchJobParamsTO;
-import be.luxuryoverdosis.framework.data.to.BatchStepExecutionTO;
+import be.luxuryoverdosis.framework.data.to.BatchStepExecution;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -84,7 +84,7 @@ public class DetailJobAction extends DispatchAction {
 		//JMesa End
         
         BatchStepExecutionService batchStepExecutionService = BaseSpringServiceLocator.getBean(BatchStepExecutionService.class);
-		ArrayList<BatchStepExecutionTO> batchStepExecutionList = new ArrayList<BatchStepExecutionTO>();
+		ArrayList<BatchStepExecution> batchStepExecutionList = new ArrayList<BatchStepExecution>();
 		batchStepExecutionList = batchStepExecutionService.list(id);
 		
 		//JMesa Start	
