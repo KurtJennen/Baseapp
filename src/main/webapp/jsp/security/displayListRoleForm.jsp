@@ -8,7 +8,7 @@
 	</div>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<hr />
-	<div class="jmesatag">
+	<div>
 		<%= request.getAttribute(WebConstants.ROLE_LIST) %>
 	</div>
 </html:form>

@@ -38,6 +38,6 @@ public class JobLog extends BaseTO {
 	}
 	public void setJob(Job job) {
 		this.job = job;
-	};	
+	}
 	
 }

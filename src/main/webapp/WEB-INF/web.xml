@@ -62,10 +62,6 @@
 			<taglib-uri>/luxuryOverdosis</taglib-uri>
 			<taglib-location>/WEB-INF/luxuryOverdosis.tld</taglib-location>
 		</taglib>
-		<taglib>
-			<taglib-uri>/taglib</taglib-uri>
-			<taglib-location>/WEB-INF/taglib106.tld</taglib-location>
-		</taglib>
 	</jsp-config>
 	
 	<servlet>

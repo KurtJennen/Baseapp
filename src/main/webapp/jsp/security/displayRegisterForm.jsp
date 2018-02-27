@@ -1,16 +1,27 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://ditchnet.org/jsp-tabs-taglib" prefix="tab" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<html:form action="/loginRegister.do">
-	<tab:tabContainer id="loginTag" skin="wireframe">
+<script>
+	$(document).ready(function() {
+		$('#tabs').tabs({
+// 			heightStyle: "fill"
+		});
 		
-		<tab:tabPane id="login" tabTitle="Registreren">
-			<div align="center">
-				<h2><i><fmt:message key="displayRegister.title" /></i></h2>
-			</div>
-			<hr />
+// 		function resizeUi() {
+// 			var h = $("#tabs").parent().parent().height();
+// 		    $("#tabs").css('height', h);
+// 		};
+		
+// 		resizeUi();
+	});
+</script>
+
+<html:form action="/loginRegister.do">
+	<div id="tabs" align="center">
+		<ul>
+			<li><a href="#tab1"><fmt:message key="displayRegister.title" /></a>
+		</ul>
+		<div id="tab1">
 			<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
 			<hr />
 			<html:hidden property="objectId" />
@@ -37,6 +48,6 @@
 					<td><html:text property="email" size="45" maxlength="45" tabindex="5"></html:text></td>
 				</tr>
 			</table>
-		</tab:tabPane>
-	</tab:tabContainer>
+		</div>
+	</div>
 </html:form>
