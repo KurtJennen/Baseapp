@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.Job;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public class UserImportWriter extends HibernateItemWriter<UserDTO> {
@@ -38,18 +38,18 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	}
 
 	@Override
-	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserDTO> user) {
+	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserDTO> users) {
 		Job job = jobService.read(jobId);
 		try {
 			
-			for (UserDTO userDTO : user) {
-				UserTO userTO = userService.readName(userDTO.getName());
+			for (UserDTO userDTO : users) {
+				User user = userService.readName(userDTO.getName());
 				
-				if(userTO == null) {
+				if(user == null) {
 					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
 					
-					userTO = new UserTO();
-					UserFactory.produceUser(userTO, userDTO);
+					user = new User();
+					UserFactory.produceUser(user, userDTO);
 					
 					userService.createOrUpdateDTO(userDTO);
 					

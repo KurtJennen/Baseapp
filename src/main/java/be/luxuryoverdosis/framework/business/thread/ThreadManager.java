@@ -1,15 +1,15 @@
 package be.luxuryoverdosis.framework.business.thread;
 
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 
 public class ThreadManager {
-	private static final ThreadLocal<UserTO> THREAD_LOCAL = new ThreadLocal<UserTO>();
+	private static final ThreadLocal<User> THREAD_LOCAL = new ThreadLocal<User>();
 	
-	public static void setUserOnThread(UserTO userTO) {
-		THREAD_LOCAL.set(userTO);
+	public static void setUserOnThread(User user) {
+		THREAD_LOCAL.set(user);
 	}
 	
-	public static UserTO getUserFromThread() {
-		return (UserTO) THREAD_LOCAL.get();
+	public static User getUserFromThread() {
+		return (User) THREAD_LOCAL.get();
 	}
 }

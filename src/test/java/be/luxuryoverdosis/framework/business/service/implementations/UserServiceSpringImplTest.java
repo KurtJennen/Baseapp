@@ -16,17 +16,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Role;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.mother.RoleMother;
-import be.luxuryoverdosis.framework.mother.UserTOMother;
+import be.luxuryoverdosis.framework.mother.UserMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -56,27 +56,27 @@ public class UserServiceSpringImplTest {
 	public void testcreateOrUpdate() {
 		Role role = RoleMother.produceRole();
 		
-		UserTO userTO = UserTOMother.produceUserTO();
+		User user = UserMother.produceUser();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(userTO);
+		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
 		
-		userServiceSpringImpl.createOrUpdate(userTO);
+		userServiceSpringImpl.createOrUpdate(user);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(BaseConstants.ROLE_NORMALE_GEBRUIKER);
-		verify(userHibernateDAO).createOrUpdate(userTO);
+		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
 	@Test
 	public void testcreateOrUpdateExists() {
 		try {
-			UserTO userTO = UserTOMother.produceUserTO();
+			User user = UserMother.produceUser();
 			
 			when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(1L);
 			
-			userServiceSpringImpl.createOrUpdate(userTO);
+			userServiceSpringImpl.createOrUpdate(user);
 			
 			verify(userHibernateDAO).count(anyString(), anyInt());
 		} catch (Exception e) {
@@ -89,53 +89,53 @@ public class UserServiceSpringImplTest {
 	public void testcreateOrUpdateDate() {
 		Role role = RoleMother.produceRole();
 		
-		UserTO userTO = UserTOMother.produceUserTODate();
+		User user = UserMother.produceUserDate();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(userTO);
+		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
 		
-		userServiceSpringImpl.createOrUpdate(userTO);
+		userServiceSpringImpl.createOrUpdate(user);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(anyString());
-		verify(userHibernateDAO).createOrUpdate(userTO);
+		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
 	@Test
 	public void testcreateOrUpdateRole() {
-		UserTO userTO = UserTOMother.produceUserTORole();
+		User user = UserMother.produceUserRole();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(userTO);
+		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
 		
-		userServiceSpringImpl.createOrUpdate(userTO);
+		userServiceSpringImpl.createOrUpdate(user);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(userHibernateDAO).createOrUpdate(userTO);
+		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
 	@Test
 	public void testcreateOrUpdateNull() {
 		Role role = RoleMother.produceRole();
-		UserTO userTO = UserTOMother.produceUserTODate();
+		User user = UserMother.produceUserDate();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(userTO)).thenReturn(null);
+		when(userHibernateDAO.createOrUpdate(user)).thenReturn(null);
 		
-		userServiceSpringImpl.createOrUpdate(userTO);
+		userServiceSpringImpl.createOrUpdate(user);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(anyString());
-		verify(userHibernateDAO).createOrUpdate(userTO);
+		verify(userHibernateDAO).createOrUpdate(user);
 	}
 
 	@Test
 	public void testRead() {
-		UserTO userTO = UserTOMother.produceUserTO();
+		User user = UserMother.produceUser();
 		
-		when(userHibernateDAO.read(anyInt())).thenReturn(userTO);
+		when(userHibernateDAO.read(anyInt())).thenReturn(user);
 		
 		userServiceSpringImpl.read(anyInt());
 		
@@ -144,9 +144,9 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testReadName() {
-		UserTO userTO = UserTOMother.produceUserTO();
+		User user = UserMother.produceUser();
 		
-		when(userHibernateDAO.readName(anyString())).thenReturn(userTO);
+		when(userHibernateDAO.readName(anyString())).thenReturn(user);
 		
 		userServiceSpringImpl.readName(anyString());
 		
@@ -174,7 +174,7 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testList() {
-		ArrayList<UserTO> arrayList = UserTOMother.produceListUserTO();
+		ArrayList<User> arrayList = UserMother.produceListUser();
 		
 		when(userHibernateDAO.list()).thenReturn(arrayList);
 		
@@ -187,9 +187,9 @@ public class UserServiceSpringImplTest {
 	@Test
 	public void testActivateYear() {
 		Role role = RoleMother.produceRole();
-		UserTO userTO = UserTOMother.produceUserTODate();
+		User user = UserMother.produceUserDate();
 		
-		when(userHibernateDAO.read(anyInt())).thenReturn(userTO);
+		when(userHibernateDAO.read(anyInt())).thenReturn(user);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
 		
 		userServiceSpringImpl.activate(anyInt(), UserService.YEAR);

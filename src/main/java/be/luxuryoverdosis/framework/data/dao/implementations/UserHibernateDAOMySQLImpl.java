@@ -8,47 +8,47 @@ import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements UserHibernateDAO {
-	public UserTO createOrUpdate(final UserTO userTO) {
+	public User createOrUpdate(final User user) {
 		Logging.info(this, "Begin createUser");
-		getHibernateTemplate().saveOrUpdate(userTO);
+		getHibernateTemplate().saveOrUpdate(user);
 		Logging.info(this, "End createUser");
-		return userTO;
+		return user;
 	}
 
-	public UserTO read(final int id) {
+	public User read(final int id) {
 		Logging.info(this, "Begin readUser");
-		UserTO userTO = (UserTO) getHibernateTemplate().load(UserTO.class, id);
+		User user = (User) getHibernateTemplate().load(User.class, id);
 		Logging.info(this, "End readUser");
-		return userTO;
+		return user;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public UserTO readName(final String name) {
+	public User readName(final String name) {
 		Logging.info(this, "Begin readNameUser");
-		ArrayList<UserTO> arrayList = (ArrayList<UserTO>) getHibernateTemplate().find("from UserTO u where u.name = ?", new Object[]{name});
-		UserTO userTO = null;
+		ArrayList<User> arrayList = (ArrayList<User>) getHibernateTemplate().find("from User u where u.name = ?", new Object[]{name});
+		User user = null;
 		if(!arrayList.isEmpty()) {
-			userTO = (UserTO)arrayList.iterator().next();
+			user = (User)arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNameUser");
-		return userTO;
+		return user;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteUser");
-		getHibernateTemplate().delete((UserTO) getHibernateTemplate().load(UserTO.class, id));
+		getHibernateTemplate().delete((User) getHibernateTemplate().load(User.class, id));
 		Logging.info(this, "End deleteUser");		
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<UserTO> list() {
+	public ArrayList<User> list() {
 		Logging.info(this, "Begin listUser");
-		ArrayList<UserTO> arrayList = (ArrayList<UserTO>) getHibernateTemplate().find("from UserTO");
+		ArrayList<User> arrayList = (ArrayList<User>) getHibernateTemplate().find("from User");
 		Logging.info(this, "End listUser");
 		return arrayList;
 	}
@@ -59,7 +59,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 			"u.userName, " +
 			"u.email " +
 			") " +
-			"from UserTO u";
+			"from User u";
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<UserDTO> listDTO() {
@@ -75,7 +75,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 			"u.userName, " +
 			"u.email " +
 			") " +
-			"from UserTO u " +
+			"from User u " +
 			"where u.name like ?";
 	
 	@SuppressWarnings("unchecked")
@@ -89,7 +89,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countUser(String, int)");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from UserTO u where u.name = ? and u.id <> ?", new Object[]{name, id});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from User u where u.name = ? and u.id <> ?", new Object[]{name, id});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countUser(String, int)");
 		return count;
@@ -98,7 +98,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final int roleId) {
 		Logging.info(this, "Begin countUser(int)");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from UserTO u where u.role.id = ?", new Object[]{roleId});
+		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from User u where u.role.id = ?", new Object[]{roleId});
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countUser(int)");
 		return count;

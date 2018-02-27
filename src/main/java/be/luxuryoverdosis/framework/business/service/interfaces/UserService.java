@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 
 public interface UserService {
 	public static final int YEAR = 0;
@@ -17,12 +17,12 @@ public interface UserService {
 	public UserDTO createOrUpdateDTO(UserDTO userDTO);
 	public UserDTO readDTO(int id);
 	
-	public UserTO createOrUpdate(UserTO userTO);
-	public UserTO read(int id);
-	public UserTO readName(String name);
+	public User createOrUpdate(User user);
+	public User read(int id);
+	public User readName(String name);
 	public void delete(int id);
 	
-	public ArrayList<UserTO> list();
+	public ArrayList<User> list();
 	public ArrayList<UserDTO> listDTO();
 	public ArrayList<UserDTO> listDTO(String searchValue);
 	
@@ -31,7 +31,7 @@ public interface UserService {
 	public File createDocument(int documentId);
 	public void writeDocument(final File file, final OutputStream outputStream);
 	
-	public UserTO activate(int id, int period);
-	public UserTO deactivate(int id);
-	public int daysBeforeDeactivate(UserTO userTO);
+	public User activate(int id, int period);
+	public User deactivate(int id);
+	public int daysBeforeDeactivate(User user);
 }

@@ -4,7 +4,7 @@ public class Query extends BaseTO {
 	private String name;
 	private String type;
 	private String complex;
-	private UserTO user;
+	private User user;
 	
 	public String getName() {
 		return name;
@@ -24,10 +24,10 @@ public class Query extends BaseTO {
 	public void setComplex(String complex) {
 		this.complex = complex;
 	}
-	public UserTO getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(UserTO user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	

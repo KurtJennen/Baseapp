@@ -27,7 +27,7 @@ import be.luxuryoverdosis.framework.data.document.UserDocument;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Document;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -46,67 +46,67 @@ public class UserServiceSpringImpl implements UserService {
 	public UserDTO createOrUpdateDTO(final UserDTO userDTO) {
 		Logging.info(this, "Begin createUserDTO");
 		
-		UserTO userTO = new UserTO();
+		User user = new User();
 		if(userDTO.getId() > 0) {
-			userTO = this.read(userDTO.getId());
+			user = this.read(userDTO.getId());
 		}
-		userTO = UserFactory.produceUser(userTO, userDTO);
+		user = UserFactory.produceUser(user, userDTO);
 		if(userDTO.getRoleId() > 0) {
-			userTO.setRole(roleHibernateDAO.read(userDTO.getRoleId()));
+			user.setRole(roleHibernateDAO.read(userDTO.getRoleId()));
 		}
 		
-		userTO = this.createOrUpdate(userTO);
+		user = this.createOrUpdate(user);
 		
 		Logging.info(this, "End createUserDTO");
-		return this.readDTO(userTO.getId());
+		return this.readDTO(user.getId());
 	}
 	
 	@Transactional(readOnly=true)
 	public UserDTO readDTO(final int id) {
 		Logging.info(this, "Begin readUserDTO");
 		
-		UserTO userTO = this.read(id);
+		User user = this.read(id);
 		
-		UserDTO userDTO = UserFactory.produceUserDTO(userTO);
+		UserDTO userDTO = UserFactory.produceUserDTO(user);
 		
 		Logging.info(this, "End readUserDTO");
 		return userDTO;
 	}
 	
 	@Transactional
-	public UserTO createOrUpdate(final UserTO userTO) {
+	public User createOrUpdate(final User user) {
 		Logging.info(this, "Begin createUser");
-		if(userHibernateDAO.count(userTO.getName(), userTO.getId()) > 0) {
+		if(userHibernateDAO.count(user.getName(), user.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.user"});
 		}
-		if(userTO.getName() == null || StringUtils.isEmpty(userTO.getName())) {
+		if(user.getName() == null || StringUtils.isEmpty(user.getName())) {
 			throw new ServiceException("errors.required", new String[] {"security.name.unique"});
 		}
-		if(userTO.getUserName() == null || StringUtils.isEmpty(userTO.getUserName())) {
+		if(user.getUserName() == null || StringUtils.isEmpty(user.getUserName())) {
 			throw new ServiceException("errors.required", new String[] {"security.username"});
 		}
-		if(userTO.getEncryptedPassword() == null || StringUtils.isEmpty(userTO.getEncryptedPassword())) {
+		if(user.getEncryptedPassword() == null || StringUtils.isEmpty(user.getEncryptedPassword())) {
 			throw new ServiceException("errors.required", new String[] {"security.password"});
 		}
-		if(userTO.getEmail() == null || StringUtils.isEmpty(userTO.getEmail())) {
+		if(user.getEmail() == null || StringUtils.isEmpty(user.getEmail())) {
 			throw new ServiceException("errors.required", new String[] {"security.email"});
 		}
 		
-		//userTO.setEncryptedPassword(Encryption.encode(userTO.getEncryptedPassword()));
+		//user.setEncryptedPassword(Encryption.encode(user.getEncryptedPassword()));
 		
-		if(userTO.getDateExpiration() == null) {
+		if(user.getDateExpiration() == null) {
 			Calendar calendar = Calendar.getInstance();
 			calendar.clear();
 			calendar.set(2100, 0, 1);
-			userTO.setDateExpiration(calendar.getTime());
+			user.setDateExpiration(calendar.getTime());
 		}
 		
-		if(userTO.getRole() == null) {
-			userTO.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
+		if(user.getRole() == null) {
+			user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
 		}
 		
-		UserTO result = null;
-		result = userHibernateDAO.createOrUpdate(userTO);
+		User result = null;
+		result = userHibernateDAO.createOrUpdate(user);
 		if(result != null) {
 			sendUserMail(result);
 		}
@@ -116,18 +116,18 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	@Transactional(readOnly=true)
-	public UserTO read(final int id) {
+	public User read(final int id) {
 		Logging.info(this, "Begin readUser");
-		UserTO result = null;
+		User result = null;
 		result = userHibernateDAO.read(id);
 		Logging.info(this, "End readUser)");
 		return result;
 	}
 	
 	@Transactional(readOnly=true)
-	public UserTO readName(final String name) {
+	public User readName(final String name) {
 		Logging.info(this, "Begin readNameUser");
-		UserTO result = null;
+		User result = null;
 		result = userHibernateDAO.readName(name);
 		Logging.info(this, "End readNameUser");
 		return result;
@@ -142,9 +142,9 @@ public class UserServiceSpringImpl implements UserService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<UserTO> list() {
+	public ArrayList<User> list() {
 		Logging.info(this, "Begin listUser");
-		ArrayList<UserTO> arrayList = null;
+		ArrayList<User> arrayList = null;
 		arrayList = userHibernateDAO.list();
 		Logging.info(this, "End listUser");
 		return arrayList;
@@ -177,7 +177,7 @@ public class UserServiceSpringImpl implements UserService {
 		return countUser.longValue();
 	}
 	
-	private void sendUserMail(final UserTO userTO) {
+	private void sendUserMail(final User user) {
 		try {
 			JavaMailSenderImpl sender = (JavaMailSenderImpl)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SENDER_SERVICE);
 			
@@ -185,18 +185,18 @@ public class UserServiceSpringImpl implements UserService {
 			MimeMessageHelper helper = new MimeMessageHelper(msg);
 			
 			StringBuffer text = new StringBuffer();
-			text.append(addMailKeyText("mail.user.text.create", userTO.getName()));
-			text.append(addMailKeyText("mail.user.text1.create", userTO.getUserName()));
-			text.append(addMailKeyText("mail.user.text2.create", Encryption.decode(userTO.getEncryptedPassword())));
-			text.append(addMailKeyText("mail.user.text3.create", userTO.getEmail()));
-			text.append(addMailKeyText("mail.user.text4.create", userTO.getRole().getName()));
+			text.append(addMailKeyText("mail.user.text.create", user.getName()));
+			text.append(addMailKeyText("mail.user.text1.create", user.getUserName()));
+			text.append(addMailKeyText("mail.user.text2.create", Encryption.decode(user.getEncryptedPassword())));
+			text.append(addMailKeyText("mail.user.text3.create", user.getEmail()));
+			text.append(addMailKeyText("mail.user.text4.create", user.getRole().getName()));
 			
-			helper.setTo(userTO.getEmail());
+			helper.setTo(user.getEmail());
 			helper.setFrom(BaseConstants.MAIL_FROM);
-			helper.setSubject(BaseSpringServiceLocator.getMessage("mail.user.subject.create", new Object[]{userTO.getName()}));
+			helper.setSubject(BaseSpringServiceLocator.getMessage("mail.user.subject.create", new Object[]{user.getName()}));
 			helper.setText(text.toString(), true);
 			
-			sender.send(msg);
+			//sender.send(msg);
 		} catch (Exception e) {
 			throw new ServiceException("mail.send.error");
 		}
@@ -211,9 +211,9 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	@Transactional
-	public UserTO activate(final int id, final int period) {
+	public User activate(final int id, final int period) {
 		Logging.info(this, "Begin activate");
-		UserTO userTO = userHibernateDAO.read(id);
+		User user = userHibernateDAO.read(id);
 		
 		Calendar defaultCalendar = Calendar.getInstance();
 		defaultCalendar.clear();
@@ -221,7 +221,7 @@ public class UserServiceSpringImpl implements UserService {
 		
 		Calendar expCalendar = Calendar.getInstance();
 		expCalendar.clear();
-		expCalendar.setTime(userTO.getDateExpiration());
+		expCalendar.setTime(user.getDateExpiration());
 		
 		if(defaultCalendar.compareTo(expCalendar) == 0) {
 			Calendar calendar = Calendar.getInstance();
@@ -230,40 +230,40 @@ public class UserServiceSpringImpl implements UserService {
 			} else {
 				calendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_HALF_YEAR);
 			}
-			userTO.setDateExpiration(calendar.getTime());
+			user.setDateExpiration(calendar.getTime());
 		} else {
 			if(period == YEAR) {
 				expCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_YEAR);
 			} else {
 				expCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_HALF_YEAR);
 			}
-			userTO.setDateExpiration(expCalendar.getTime());
+			user.setDateExpiration(expCalendar.getTime());
 		}
-		userTO.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_UITGEBREIDE_GEBRUIKER));
+		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_UITGEBREIDE_GEBRUIKER));
 		
 		Logging.info(this, "Begin activate");
 		
-		return userHibernateDAO.createOrUpdate(userTO);
+		return userHibernateDAO.createOrUpdate(user);
 	}
 	
 	@Transactional
-	public UserTO deactivate(final int id) {
+	public User deactivate(final int id) {
 		Logging.info(this, "Begin deactivate");
-		UserTO userTO = userHibernateDAO.read(id);
+		User user = userHibernateDAO.read(id);
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
 		calendar.set(2100, 0, 1);
-		userTO.setDateExpiration(calendar.getTime());
-		userTO.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
+		user.setDateExpiration(calendar.getTime());
+		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
 		
 		Logging.info(this, "Begin deactivate");
 		
-		return userHibernateDAO.createOrUpdate(userTO);
+		return userHibernateDAO.createOrUpdate(user);
 	}
 	
 	@Transactional
-	public int daysBeforeDeactivate(final UserTO userTO) {
+	public int daysBeforeDeactivate(final User user) {
 		Logging.info(this, "Begin daysBeforeDeactivate");
 		
 		int days = -1;
@@ -272,7 +272,7 @@ public class UserServiceSpringImpl implements UserService {
 		defaultCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_WARNING);
 		
 		Calendar expCalendar = Calendar.getInstance();
-		expCalendar.setTime(userTO.getDateExpiration());
+		expCalendar.setTime(user.getDateExpiration());
 		
 		if(defaultCalendar.after(expCalendar)) {
 			int daysExp = expCalendar.get(Calendar.DAY_OF_YEAR);

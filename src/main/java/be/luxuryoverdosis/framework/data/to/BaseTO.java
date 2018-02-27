@@ -62,11 +62,11 @@ public class BaseTO implements Lifecycle {
 	}
 	
 	public boolean onSave(Session arg0) throws CallbackException {
-		UserTO userTO = (UserTO) ThreadManager.getUserFromThread();
+		User user = (User) ThreadManager.getUserFromThread();
 		
-		if(userTO != null) {
-			userAdd = userTO.getName();
-			userUpdate = userTO.getName();
+		if(user != null) {
+			userAdd = user.getName();
+			userUpdate = user.getName();
 		}
 		dateAdd = new Date(System.currentTimeMillis());
 		dateUpdate = new Date(System.currentTimeMillis());
@@ -75,10 +75,10 @@ public class BaseTO implements Lifecycle {
 	}
 	
 	public boolean onUpdate(Session arg0) throws CallbackException {
-		UserTO userTO = (UserTO) ThreadManager.getUserFromThread();
+		User user = (User) ThreadManager.getUserFromThread();
 		
-		if(userTO != null) {
-			userUpdate = userTO.getName();
+		if(user != null) {
+			userUpdate = user.getName();
 		}		
 		dateUpdate = new Date(System.currentTimeMillis());
 		

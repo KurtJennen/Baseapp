@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.LoginForm;
@@ -51,14 +51,14 @@ public class LoginAction extends DispatchAction {
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
 		
-		UserTO userTO = userService.readName(loginForm.getName());
-		if(userTO != null && loginForm.getName().equals(userTO.getName()) && encryptedPassword.equals(userTO.getEncryptedPassword())) {
+		User user = userService.readName(loginForm.getName());
+		if(user != null && loginForm.getName().equals(user.getName()) && encryptedPassword.equals(user.getEncryptedPassword())) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
 			saveMessages(request, actionMessages);
 			
-			int days = userService.daysBeforeDeactivate(userTO);
+			int days = userService.daysBeforeDeactivate(user);
 			if(days == 0) {
-				userTO = userService.deactivate(userTO.getId());
+				user = userService.deactivate(user.getId());
 				loginForm.setDeactivation(true);
 				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.reset"));
 			}	
@@ -67,8 +67,8 @@ public class LoginAction extends DispatchAction {
 				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.warning", String.valueOf(days)));
 			}
 			
-			SessionManager.putInSession(request, BaseWebConstants.USER, userTO);
-			ThreadManager.setUserOnThread(userTO);
+			SessionManager.putInSession(request, BaseWebConstants.USER, user);
+			ThreadManager.setUserOnThread(user);
 			request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
 			
 			alterMenu(request);

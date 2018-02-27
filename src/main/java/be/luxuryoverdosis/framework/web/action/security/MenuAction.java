@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.MenuForm;
@@ -32,7 +32,7 @@ public class MenuAction extends DispatchAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		ArrayList<UserTO> userList = new ArrayList<UserTO>();
+		ArrayList<User> userList = new ArrayList<User>();
 		userList = userService.list();
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.user")));
 		SessionManager.putInSession(request, BaseWebConstants.USER_LIST, userList);
@@ -46,7 +46,7 @@ public class MenuAction extends DispatchAction {
 		
 		storeListsInSession(request, actionMessages);
 		
-		UserTO userTO = ThreadManager.getUserFromThread();
+		User user = ThreadManager.getUserFromThread();
 		
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
@@ -54,7 +54,7 @@ public class MenuAction extends DispatchAction {
 		
 		MenuForm menuForm = (MenuForm) form;
 		if(menuForm.getUserId() < 0) {
-			menuForm.setUserId(userTO.getId());
+			menuForm.setUserId(user.getId());
 		}
 		menuForm.setMenus(menuService.produceMenu(menuRepository, menuForm.getUserId()));
 		

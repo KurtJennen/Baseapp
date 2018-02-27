@@ -20,6 +20,6 @@
 		<property name="forPay" column="ForPay" type="string" not-null="true"></property>
 		<property name="payed" column="Payed" type="string" not-null="true"></property>
 		
-		<many-to-one name="user" column="User_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.UserTO" lazy="false"></many-to-one>
+		<many-to-one name="user" column="User_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.User" lazy="false"></many-to-one>
 	</class>
 </hibernate-mapping>

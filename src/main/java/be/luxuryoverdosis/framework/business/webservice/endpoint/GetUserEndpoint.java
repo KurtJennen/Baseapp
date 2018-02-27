@@ -11,7 +11,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.to.Role;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserRequest;
 import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserResponse;
@@ -32,9 +32,9 @@ public class GetUserEndpoint {
 		ReadUserResponse readUserResponse = new ReadUserResponse();
 		Message message = new Message();
 		
-		UserTO userTO = getUserService().readName(request.getName());
-		if(userTO != null) {
-			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(userTO);
+		User user = getUserService().readName(request.getName());
+		if(user != null) {
+			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(user);
 			
 			readUserResponse.setUser(userWs);
 			
@@ -54,9 +54,9 @@ public class GetUserEndpoint {
 		ReadAllUsersResponse readAllUsersResponse = new ReadAllUsersResponse();
 		Message message = new Message();
 		
-		ArrayList<UserTO> userList = getUserService().list();
-		for (UserTO userTO : userList) {
-			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(userTO);
+		ArrayList<User> userList = getUserService().list();
+		for (User user : userList) {
+			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(user);
 			
 			readAllUsersResponse.getUser().add(userWs);
 		}
@@ -74,26 +74,26 @@ public class GetUserEndpoint {
 		
 		be.luxuryoverdosis.user.schema.v1.User userWs = request.getUser();
 		
-		UserTO userTO = getUserService().readName(userWs.getName());
-		if(userTO == null) {
-			userTO = new UserTO();
-			userTO.setId(-1);
+		User user = getUserService().readName(userWs.getName());
+		if(user == null) {
+			user = new User();
+			user.setId(-1);
 			isNew = true;
 		}
 		
-		userTO.setEmail(userWs.getEmail());
-		userTO.setEncryptedPassword(userWs.getEncryptedPassword());
-		userTO.setName(userWs.getName());
-		userTO.setUserName(userWs.getUserName());
+		user.setEmail(userWs.getEmail());
+		user.setEncryptedPassword(userWs.getEncryptedPassword());
+		user.setName(userWs.getName());
+		user.setUserName(userWs.getUserName());
 		
 		Role role = getRoleService().readName(userWs.getRole());
-		userTO.setRole(role);
+		user.setRole(role);
 		
 		CreateOrUpdateUserResponse createOrUpdateUserResponse = new CreateOrUpdateUserResponse();
 		Message message = new Message();
 		
 		try {
-			getUserService().createOrUpdate(userTO);
+			getUserService().createOrUpdate(user);
 			if (isNew) {
 				message.setMessage(BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")}));
 			} else {
@@ -114,10 +114,10 @@ public class GetUserEndpoint {
 		DeleteUserResponse deleteUserResponse = new DeleteUserResponse();
 		Message message = new Message();
 		
-		UserTO userTO = getUserService().readName(request.getName());
+		User user = getUserService().readName(request.getName());
 		
-		if(userTO != null) {
-			getUserService().delete(userTO.getId());
+		if(user != null) {
+			getUserService().delete(user.getId());
 			message.setMessage(BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")}));
 		} else {
 			message.setMessage(BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")}));
@@ -129,14 +129,14 @@ public class GetUserEndpoint {
 		return deleteUserResponse;
 	}
 	
-	private be.luxuryoverdosis.user.schema.v1.User createUser(UserTO userTO) {
+	private be.luxuryoverdosis.user.schema.v1.User createUser(User user) {
 		be.luxuryoverdosis.user.schema.v1.User userWs = new be.luxuryoverdosis.user.schema.v1.User();
 		//userWs.setDateExpiration(user.getDateExpiration());
-		userWs.setEmail(userTO.getEmail());
-		userWs.setEncryptedPassword(userTO.getEncryptedPassword());
-		userWs.setName(userTO.getName());
-		userWs.setRole(userTO.getRoleName());
-		userWs.setUserName(userTO.getUserName());
+		userWs.setEmail(user.getEmail());
+		userWs.setEncryptedPassword(user.getEncryptedPassword());
+		userWs.setName(user.getName());
+		userWs.setRole(user.getRoleName());
+		userWs.setUserName(user.getUserName());
 		return userWs;
 	}
 	

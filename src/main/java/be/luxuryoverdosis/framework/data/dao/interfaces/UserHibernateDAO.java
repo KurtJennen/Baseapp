@@ -3,15 +3,15 @@ package be.luxuryoverdosis.framework.data.dao.interfaces;
 import java.util.ArrayList;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 
 public interface UserHibernateDAO {
-	public UserTO createOrUpdate(UserTO userTO);
-	public UserTO read(int id);
-	public UserTO readName(String name);
+	public User createOrUpdate(User user);
+	public User read(int id);
+	public User readName(String name);
 	public void delete(int id);
 	
-	public ArrayList<UserTO> list();
+	public ArrayList<User> list();
 	public ArrayList<UserDTO> listDTO();
 	public ArrayList<UserDTO> listDTO(String searchValue);
 	

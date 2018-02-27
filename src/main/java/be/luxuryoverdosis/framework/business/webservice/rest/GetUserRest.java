@@ -13,7 +13,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import net.sf.json.JSONArray;
 
@@ -26,11 +26,11 @@ public class GetUserRest {
 	//public String readUserRequest(@RequestParam(value="name") String name) throws Exception {
 	public String readUserRequest(@RequestHeader(value="name") String name) throws Exception {
 		UserDTO userDTO = null;
-		UserTO userTO = getUserService().readName(name);
-		if (userTO == null) {
+		User user = getUserService().readName(name);
+		if (user == null) {
 			message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 		} else {
-			userDTO = getUserService().readDTO(userTO.getId());
+			userDTO = getUserService().readDTO(user.getId());
 			if (userDTO == null) {
 				message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			}
@@ -67,26 +67,26 @@ public class GetUserRest {
 		boolean isNew = false;
 		String message = StringUtils.EMPTY;
 		
-		UserTO userTO = getUserService().readName(name);
-		if (userTO == null) {
-			userTO = new UserTO();
-			userTO.setId(-1);
+		User user = getUserService().readName(name);
+		if (user == null) {
+			user = new User();
+			user.setId(-1);
 			isNew = true;
 		}
 		
-		userTO.setEmail(email);
-		userTO.setEncryptedPassword(encryptedPassword);
-		userTO.setName(name);
-		userTO.setUserName(userName);
+		user.setEmail(email);
+		user.setEncryptedPassword(encryptedPassword);
+		user.setName(name);
+		user.setUserName(userName);
 		
 		Role role = getRoleService().readName(roleName);
 		if (role == null) {
 			message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.role")});
 		}
-		userTO.setRole(role);
+		user.setRole(role);
 		
 		try {
-			getUserService().createOrUpdate(userTO);
+			getUserService().createOrUpdate(user);
 			if (isNew) {
 				message = BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			} else {
@@ -101,9 +101,9 @@ public class GetUserRest {
 	
 	@RequestMapping(value = "/deleteUserRequest", method = RequestMethod.POST)
 	public String deleteUserRequest(@RequestHeader(value="name") String name) {
-		UserTO userTO = getUserService().readName(name);
-		if(userTO != null) {
-			getUserService().delete(userTO.getId());
+		User user = getUserService().readName(name);
+		if(user != null) {
+			getUserService().delete(user.getId());
 			message = BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 		} else {
 			message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});

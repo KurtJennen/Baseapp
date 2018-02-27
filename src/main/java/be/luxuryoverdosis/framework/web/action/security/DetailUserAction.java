@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.form.DetailUserForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -145,10 +145,10 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		UserTO userTO = userService.activate(userForm.getObjectId(), UserService.YEAR);
+		User user = userService.activate(userForm.getObjectId(), UserService.YEAR);
 		
-		userForm.setRoleId(userTO.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(userTO.getDateExpiration()));
+		userForm.setRoleId(user.getRole().getId());
+		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateYear");
 		return mapping.getInputForward();
@@ -161,10 +161,10 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		UserTO userTO = userService.activate(userForm.getObjectId(), UserService.HALF_YEAR);
+		User user = userService.activate(userForm.getObjectId(), UserService.HALF_YEAR);
 		
-		userForm.setRoleId(userTO.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(userTO.getDateExpiration()));
+		userForm.setRoleId(user.getRole().getId());
+		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateHalfYear");
 		return mapping.getInputForward();
@@ -177,10 +177,10 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		UserTO userTO = userService.deactivate(userForm.getObjectId());
+		User user = userService.deactivate(userForm.getObjectId());
 		
-		userForm.setRoleId(userTO.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(userTO.getDateExpiration()));
+		userForm.setRoleId(user.getRole().getId());
+		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End Deactivate");
 		return mapping.getInputForward();

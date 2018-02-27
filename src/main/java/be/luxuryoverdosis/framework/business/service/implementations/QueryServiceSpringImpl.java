@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
 import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.data.to.Query;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -30,7 +30,7 @@ public class QueryServiceSpringImpl implements QueryService {
 	public QueryDTO createOrUpdateDTO(final QueryDTO queryDTO) {
 		Logging.info(this, "Begin createQueryDTO");
 		
-		UserTO userTO = ThreadManager.getUserFromThread();
+		User user = ThreadManager.getUserFromThread();
 		
 		Query query = this.read(queryDTO.getName(), queryDTO.getType());
 		if(query == null) {
@@ -39,7 +39,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		query.setName(queryDTO.getName());
 		query.setType(queryDTO.getType());
 		query.setComplex(queryDTO.getComplex());
-		query.setUser(userTO);
+		query.setUser(user);
 		
 		query = this.createOrUpdate(query);
 		
@@ -256,10 +256,10 @@ public class QueryServiceSpringImpl implements QueryService {
 	public ArrayList<Query> list(final String type) {
 		Logging.info(this, "Begin listQuery");
 		
-		UserTO userTO = ThreadManager.getUserFromThread();
+		User user = ThreadManager.getUserFromThread();
 		
 		ArrayList<Query> arrayList = null;
-		arrayList = queryHibernateDAO.list(type, userTO.getId());
+		arrayList = queryHibernateDAO.list(type, user.getId());
 		Logging.info(this, "End listQuery");
 		return arrayList;
 	}
@@ -268,10 +268,10 @@ public class QueryServiceSpringImpl implements QueryService {
 	public long countAndCreateOrUpdateDTO(final String name, final String type, final QueryDTO queryDTO) {
 		Logging.info(this, "Begin countQuery");
 		
-		UserTO userTO = ThreadManager.getUserFromThread();
+		User user = ThreadManager.getUserFromThread();
 		
 		Long countQuery = new Long(0);
-		countQuery = queryHibernateDAO.count(name, type, userTO.getId());
+		countQuery = queryHibernateDAO.count(name, type, user.getId());
 		
 		this.createOrUpdateDTO(queryDTO);
 		

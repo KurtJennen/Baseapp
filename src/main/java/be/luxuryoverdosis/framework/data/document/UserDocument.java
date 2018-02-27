@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 
 @XmlRootElement(name="users")
 public class UserDocument {
-	private ArrayList<UserTO> users;
+	private ArrayList<User> users;
 
 	@XmlElement(name="user")
-	public ArrayList<UserTO> getUsers() {
+	public ArrayList<User> getUsers() {
 		return users;
 	}
 
-	public void setUsers(ArrayList<UserTO> users) {
+	public void setUsers(ArrayList<User> users) {
 		this.users = users;
 	}
 

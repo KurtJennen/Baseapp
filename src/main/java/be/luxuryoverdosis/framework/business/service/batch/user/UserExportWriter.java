@@ -18,10 +18,10 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.Job;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
-public class UserExportWriter extends HibernateItemWriter<UserTO> {
+public class UserExportWriter extends HibernateItemWriter<User> {
 	@Resource
 	private JobService jobService;
 	
@@ -35,7 +35,7 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 	}
 
 	@Override
-	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserTO> user) {
+	protected void doWrite(HibernateOperations hibernateOperations, List<? extends User> users) {
 		Job job = jobService.read(jobId);
 		try {
 			StringBuffer exportBuffer = new StringBuffer();
@@ -46,19 +46,19 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 				baos.write(bytes);
 			}
 			
-			for (UserTO userTO : user) {
-				exportBuffer.append(userTO.getName()).append(BaseConstants.PIPE);
-				exportBuffer.append(userTO.getUserName()).append(BaseConstants.PIPE);
-				exportBuffer.append(userTO.getEncryptedPassword()).append(BaseConstants.PIPE);
-				exportBuffer.append(userTO.getEmail()).append(BaseConstants.PIPE);
-				exportBuffer.append(userTO.getDateExpiration()).append(BaseConstants.PIPE);
-				exportBuffer.append(userTO.getRole().getName());
+			for (User user : users) {
+				exportBuffer.append(user.getName()).append(BaseConstants.PIPE);
+				exportBuffer.append(user.getUserName()).append(BaseConstants.PIPE);
+				exportBuffer.append(user.getEncryptedPassword()).append(BaseConstants.PIPE);
+				exportBuffer.append(user.getEmail()).append(BaseConstants.PIPE);
+				exportBuffer.append(user.getDateExpiration()).append(BaseConstants.PIPE);
+				exportBuffer.append(user.getRole().getName());
 				exportBuffer.append(BaseConstants.CARRIAGE_RETURN);
 				
 				baos.write(exportBuffer.toString().getBytes(), 0, exportBuffer.length());
 				
 				JobLog jobLog = new JobLog();
-				jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("export.success"), getOutput(userTO));
+				jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("export.success"), getOutput(user));
 				jobLogService.createOrUpdate(jobLog);
 			}
 			
@@ -84,8 +84,8 @@ public class UserExportWriter extends HibernateItemWriter<UserTO> {
 		return BaseSpringServiceLocator.getMessage(key,  new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 	}
 
-	private String getOutput(UserTO userTO) {
-		return userTO.getName() + " " + userTO.getUserName();
+	private String getOutput(User user) {
+		return user.getName() + " " + user.getUserName();
 	}
 
 	

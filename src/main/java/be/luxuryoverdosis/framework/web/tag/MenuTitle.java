@@ -6,7 +6,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
@@ -41,14 +41,14 @@ public class MenuTitle implements Tag {
 		try {
 			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserTO userTO = (UserTO)request.getSession().getAttribute(BaseWebConstants.USER);
+			User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
 			
 			boolean enabled = false;
-			if(userTO != null) {
+			if(user != null) {
 				if(roles != null) {
 					String[] seperatedRoles = roles.split(",");
 					for(int i = 0; i < seperatedRoles.length; i++) {
-						if(seperatedRoles[i].equals(userTO.getRole().getName())) {
+						if(seperatedRoles[i].equals(user.getRole().getName())) {
 							enabled = true;
 						}
 					}

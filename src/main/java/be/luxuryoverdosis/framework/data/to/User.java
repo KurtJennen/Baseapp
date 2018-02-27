@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlType
-public class UserTO extends BaseTO {
+public class User extends BaseTO {
 	private String name;
 	private String userName;
 	private String encryptedPassword;
@@ -15,11 +15,11 @@ public class UserTO extends BaseTO {
 	
 	private String roleName;
 	
-	public UserTO() {
+	public User() {
 		super();
 	}
 	
-	public UserTO(int id, String name, String userName, String email, Date dateExpiration, String roleName) {
+	public User(int id, String name, String userName, String email, Date dateExpiration, String roleName) {
 		super();
 		setId(id);
 		this.name = name;

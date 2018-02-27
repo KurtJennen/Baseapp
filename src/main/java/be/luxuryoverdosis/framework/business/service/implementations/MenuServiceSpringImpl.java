@@ -22,7 +22,7 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.factory.MenuFactory;
 import be.luxuryoverdosis.framework.data.to.Menu;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -180,8 +180,8 @@ public class MenuServiceSpringImpl implements MenuService {
 	
 	@Transactional(readOnly=true)
 	public MenuRepository produceAlterredMenu(MenuRepository menuRepository) {
-		UserTO userTO = ThreadManager.getUserFromThread();
-		int userId = userTO.getId();
+		User user = ThreadManager.getUserFromThread();
+		int userId = user.getId();
 		
 		disableMenuItems(menuRepository, userId);
 		forPayMenuItems(menuRepository, userId);

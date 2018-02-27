@@ -10,7 +10,7 @@ public class Menu extends BaseTO {
 	private String disabled;
 	private String forPay;
 	private String payed;
-	private UserTO user;
+	private User user;
 	
 	public String getFullName() {
 		return fullName;
@@ -66,10 +66,10 @@ public class Menu extends BaseTO {
 	public void setPayed(String payed) {
 		this.payed = payed;
 	}
-	public UserTO getUser() {
+	public User getUser() {
 		return user;
 	}
-	public void setUser(UserTO user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	

@@ -15,7 +15,7 @@ import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
-import be.luxuryoverdosis.framework.data.to.UserTO;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 
@@ -40,8 +40,8 @@ public class SpringWsSecurityFilter implements Filter {
         final String[] values = credentials.split(":",2);
         
         UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-        UserTO userTO = userService.readName(values[0]);
-        if(userTO == null || !userTO.getEncryptedPassword().equals(Encryption.encode(values[0]))) {
+        User user = userService.readName(values[0]);
+        if(user == null || !user.getEncryptedPassword().equals(Encryption.encode(values[0]))) {
         	try {
 				ResponseTool.writeResponseForAuthentication(httpServletResponse, BaseSpringServiceLocator.getMessage("security.access.denied"));
 			} catch (Exception e) {
