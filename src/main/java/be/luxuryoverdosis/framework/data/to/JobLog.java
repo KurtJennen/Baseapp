@@ -27,14 +27,14 @@ public class JobLog extends BaseTO {
 	public void setFile(Blob file) {
 		this.file = file;
 	}
-	public Job getJob() {
-		return job;
-	}
 	public byte[] getFileData() {
 		return fileData;
 	}
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
+	}
+	public Job getJob() {
+		return job;
 	}
 	public void setJob(Job job) {
 		this.job = job;
