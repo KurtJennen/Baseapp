@@ -14,10 +14,6 @@ public class BatchJobExecution {
 	private Date lastUpdated;
 	private BatchJobInstance batchJobInstance;
 	
-	public BatchJobExecution() {
-		super();
-	}
-	
 	public long getId() {
 		return id;
 	}
