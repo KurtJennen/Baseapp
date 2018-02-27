@@ -10,7 +10,7 @@
 		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
 		<form-bean name="numberForm" type="be.luxuryoverdosis.framework.web.form.NumberForm" />
 		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
-		<form-bean name="roleForm" type="be.luxuryoverdosis.framework.web.form.RoleForm" />
+		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
 		<form-bean name="searchForm" type="be.luxuryoverdosis.framework.web.form.SearchForm" />
 		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
 		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
@@ -40,10 +40,10 @@
 				validate="true"
 				scope="request"
 				input="display.register.form"
-				type="be.luxuryoverdosis.framework.web.action.security.UserAction"
+				type="be.luxuryoverdosis.framework.web.action.security.DetailUserAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
-				<forward name="login" path="display.login.form" />
+				<forward name="login" path="/login.do?method=index" />
 		</action>
 		
 		<action path="/detailMenu"
@@ -102,15 +102,27 @@
 				<forward name="list" path="display.list.pdf.form" />
 		</action>
 		
+		<action path="/listRole"
+				name="baseForm"
+				validate="true"
+				scope="request"
+				input="display.list.role.form"
+				type="be.luxuryoverdosis.framework.web.action.security.ListRoleAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="create" path="/detailRole.do?method=create" />
+				<forward name="read" path="/detailRole.do?method=read" />
+		</action>
 		<action path="/detailRole"
-				name="roleForm"
+				name="detailRoleForm"
 				validate="true"
 				scope="request"
 				input="display.detail.role.form"
-				type="be.luxuryoverdosis.framework.web.action.security.RoleAction"
+				type="be.luxuryoverdosis.framework.web.action.security.DetailRoleAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
-				<forward name="list" path="display.list.role.form" />
+				<forward name="list" path="/listRole.do?method=list" />
+				<forward name="read" path="/detailRole.do?method=read" />
 		</action>
 		
 		<action path="/searchUser"
@@ -121,6 +133,7 @@
 				type="be.luxuryoverdosis.framework.web.action.security.SearchUserAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
+				<forward name="search" path="/searchUser.do?method=search" />
 				<forward name="list" path="/listUser.do?method=list" />
 				<forward name="create" path="/detailUser.do?method=create" />
 		</action>
@@ -133,6 +146,7 @@
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
 				<forward name="search" path="/searchUser.do?method=search" />
+				<forward name="list" path="/listUser.do?method=list" />
 				<forward name="create" path="/detailUser.do?method=create" />
 				<forward name="read" path="/detailUser.do?method=read" />
 				<forward name="readJob" path="/detailJob.do?method=read" />
@@ -147,6 +161,7 @@
 				<forward name="failed" path="display.error.form" />
 				<forward name="search" path="/searchUser.do?method=search" />
 				<forward name="list" path="/listUser.do?method=list" />
+				<forward name="read" path="/listUser.do?method=read" />
 		</action>
 		
 		<action path="/detailJob"

@@ -10,6 +10,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
 import org.jmesa.facade.TableFacade;
@@ -96,12 +97,20 @@ public class ListUserAction extends DispatchAction {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
+		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
+		
 		//storeListsInSession(request, actionMessages);
 		
 		if(listJmesa(mapping, form, request, response) == null) {
 			return null;
 		}
 		
+		if(BaseWebConstants.DELETE.equals(previous)) {
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.user")));
+		}
+		if(BaseWebConstants.JOB.equals(previous)) {
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("job.success", MessageLocator.getMessage(request, "table.user")));
+		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.user")));
 		saveMessages(request, actionMessages);
 		
@@ -144,7 +153,10 @@ public class ListUserAction extends DispatchAction {
 		
 		Logging.info(this, "End ExportUserJob Success");
 		
-		return list(mapping, form, request, response);
+		//return list(mapping, form, request, response);
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
+		return actionRedirect;
 	}
 	
 	public ActionForward importUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -160,7 +172,10 @@ public class ListUserAction extends DispatchAction {
 		
 		Logging.info(this, "End ImportUserJob Success");
 		
-		return list(mapping, form, request, response);
+		//return list(mapping, form, request, response);
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
+		return actionRedirect;
 	}
 	
 }

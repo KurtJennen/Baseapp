@@ -10,7 +10,7 @@
 			<Item name="menuitem1" title="logout" action="login.do?method=logout" />
 		</Menu>
 		<Menu name="menu1Beheerder" title="menu1.title">
-			<Item name="menu1item1" title="displayRole.title" action="detailRole.do?method=list" />
+			<Item name="menu1item1" title="displayRole.title" action="listRole.do?method=list" />
 			<Item name="menu1item2" title="displayUser.title" action="searchUser.do?method=search" />
 			<Item name="menu1item3" title="displayMenu.title" action="detailMenu.do?method=list" />
 			<Item name="menu1item4" title="displayNumber.title" action="detailNumber.do?method=list" />

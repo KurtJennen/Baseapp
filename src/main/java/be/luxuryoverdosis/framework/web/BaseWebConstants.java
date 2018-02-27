@@ -16,6 +16,7 @@ public class BaseWebConstants {
 	public static final String CREATE_DOCUMENT = "createDocument";
 	public static final String DOWNLOAD_FILE_LOG = "downloadFileLog";
 	public static final String READ = "read";
+	public static final String SAVE = "save";
 	public static final String UPDATE = "update";
 	public static final String DELETE = "delete";
 	public static final String RESET = "reset";
@@ -24,6 +25,7 @@ public class BaseWebConstants {
 	public static final String NEXT = "next";
 	public static final String LAST = "last";
 	public static final String BACK = "back";
+	public static final String JOB = "job";
 	public static final String AJAX = "ajax";
 	
 	public static final String IMPORT_USER_JOB = "importUserJob";

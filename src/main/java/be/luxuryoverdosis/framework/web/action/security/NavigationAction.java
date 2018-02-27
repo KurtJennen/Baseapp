@@ -17,6 +17,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public abstract class NavigationAction extends AjaxAction {	
 	
+	public abstract String getNameIds();
 	public abstract ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 	public ActionForward first(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
@@ -54,7 +55,8 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		int objectId = getObjectId(baseForm, request);
 		
-		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read&nameIds=" + getNameIds(request));
+//		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read&nameIds=" + getNameIds());
+		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read");
 		redirect.addParameter("objectId", objectId);
 		
 		Logging.info(this, "End Navigate Success");
@@ -74,6 +76,9 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		int position = getCurrentPosition(baseForm, request);
 		
+		if(position == -1) {
+			saveIds(baseForm, request);
+		}
 		if(position == 0) {
 			baseForm.setFirstVisible(false);
 			baseForm.setPreviousVisible(false);
@@ -116,18 +121,26 @@ public abstract class NavigationAction extends AjaxAction {
 		return position;
 	}
 	
-	private String loadIds(BaseForm baseForm, HttpServletRequest request) {
-		String nameIds = getNameIds(request);
-		int[] ids = (int[])SessionManager.getFromSession(request, nameIds);
+	private void loadIds(BaseForm baseForm, HttpServletRequest request) {
+//		String nameIds = getNameIds(request);
+		int[] ids = (int[])SessionManager.getFromSession(request, getNameIds());
 		
 		baseForm.setId(ids);
 		
-		return nameIds;
+//		return nameIds;
+	}
+	
+	private void saveIds(BaseForm baseForm, HttpServletRequest request) {
+		int[] ids = ArrayTool.addToArray(baseForm.getId(), baseForm.getObjectId());
+		
+		baseForm.setId(ids);
+		
+		SessionManager.putInSession(request, getNameIds(), ids);
 	}
 
-	private String getNameIds(HttpServletRequest request) {
-		String nameIds = request.getParameter("nameIds");
-		return nameIds;
-	}
+//	private String getNameIds(HttpServletRequest request) {
+//		String nameIds = request.getParameter("nameIds");
+//		return nameIds;
+//	}
 	
 }

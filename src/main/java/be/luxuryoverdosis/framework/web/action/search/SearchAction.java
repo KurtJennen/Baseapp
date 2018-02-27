@@ -8,12 +8,14 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.ActionRedirect;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.SearchForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -152,12 +154,15 @@ public abstract class SearchAction extends AjaxAction {
 			queryService.delete(Integer.valueOf(searchForm.getSelectQuery()));
 		}
 		
-		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.query")));
+		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.query")));
 		saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Delete Success");
 		
-		return mapping.getInputForward();
+		//return mapping.getInputForward();
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("search"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
+		return actionRedirect;
 	}
 	
 	public ActionForward resetSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

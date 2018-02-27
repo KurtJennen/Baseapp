@@ -29,6 +29,16 @@ public class ArrayTool {
 		return number;
 	}
 	
+	public static int[] addToArray(int[] number, int value) {
+		int[] newArray = new int[number.length + 1];
+		for(int i = 0; i < number.length; i++) {
+			newArray[i] = number[i];
+		}
+		newArray[newArray.length - 1] = value;
+		
+		return newArray;
+	}
+	
 	public static boolean isValueInArray(int[] number, int value) {
 		for(int i = 0; i < number.length; i++) {
 			if(number[i] == value) {
@@ -44,7 +54,8 @@ public class ArrayTool {
 				return i;
 			}
 		}
-		return 0;
+		//return 0;
+		return -1;
 	}
 	
 	public static void makeZero(int[] number) {

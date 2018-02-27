@@ -58,10 +58,15 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "Begin Search");
 		ActionMessages actionMessages = new ActionMessages();
 		
+		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
+		
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_IDS);
 		
 		storeListsInSession(request, actionMessages);
 						
+		if(BaseWebConstants.DELETE.equals(previous)) {
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.query")));
+		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("search.success", MessageLocator.getMessage(request, "table.user")));
 		saveMessages(request, actionMessages);
 		
