@@ -16,8 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
@@ -53,7 +53,7 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
-	public void testcreateOrUpdate() {
+	public void testCreateOrUpdate() {
 		Role role = RoleMother.produceRole();
 		
 		User user = UserMother.produceUser();
@@ -70,7 +70,7 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
-	public void testcreateOrUpdateExists() {
+	public void testCreateOrUpdateExists() {
 		try {
 			User user = UserMother.produceUser();
 			
@@ -86,7 +86,7 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
-	public void testcreateOrUpdateDate() {
+	public void testCreateOrUpdateDate() {
 		Role role = RoleMother.produceRole();
 		
 		User user = UserMother.produceUserDate();
@@ -103,7 +103,7 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
-	public void testcreateOrUpdateRole() {
+	public void testCreateOrUpdateRole() {
 		User user = UserMother.produceUserRole();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
@@ -116,7 +116,7 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
-	public void testcreateOrUpdateNull() {
+	public void testCreateOrUpdateNull() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserDate();
 		
