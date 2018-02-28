@@ -10,6 +10,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
+import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
@@ -31,6 +32,12 @@ public class GetUserEndpoint {
 	public ReadUserResponse readUserRequest(@RequestPayload ReadUserRequest request) throws Exception {
 		ReadUserResponse readUserResponse = new ReadUserResponse();
 		Message message = new Message();
+		
+		if(ThreadManager.getUserFromThread() == null) {
+			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
+			readUserResponse.setMessage(message);
+			return readUserResponse;
+		}
 		
 		User user = getUserService().readName(request.getName());
 		if(user != null) {
@@ -54,6 +61,12 @@ public class GetUserEndpoint {
 		ReadAllUsersResponse readAllUsersResponse = new ReadAllUsersResponse();
 		Message message = new Message();
 		
+		if(ThreadManager.getUserFromThread() == null) {
+			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
+			readAllUsersResponse.setMessage(message);
+			return readAllUsersResponse;
+		}
+		
 		ArrayList<User> userList = getUserService().list();
 		for (User user : userList) {
 			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(user);
@@ -70,6 +83,15 @@ public class GetUserEndpoint {
 	@PayloadRoot(localPart="CreateOrUpdateUserRequest", namespace="http://www.luxuryoverdosis.be/user/schema/v1")
 	@ResponsePayload
 	public CreateOrUpdateUserResponse createOrUpdateUserRequest(@RequestPayload CreateOrUpdateUserRequest request) {
+		CreateOrUpdateUserResponse createOrUpdateUserResponse = new CreateOrUpdateUserResponse();
+		Message message = new Message();
+		
+		if(ThreadManager.getUserFromThread() == null) {
+			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
+			createOrUpdateUserResponse.setMessage(message);
+			return createOrUpdateUserResponse;
+		}
+		
 		boolean isNew = false;
 		
 		be.luxuryoverdosis.user.schema.v1.User userWs = request.getUser();
@@ -88,9 +110,6 @@ public class GetUserEndpoint {
 		
 		Role role = getRoleService().readName(userWs.getRole());
 		user.setRole(role);
-		
-		CreateOrUpdateUserResponse createOrUpdateUserResponse = new CreateOrUpdateUserResponse();
-		Message message = new Message();
 		
 		try {
 			getUserService().createOrUpdate(user);
@@ -113,6 +132,12 @@ public class GetUserEndpoint {
 	public DeleteUserResponse deleteUserRequest(@RequestPayload DeleteUserRequest request) {
 		DeleteUserResponse deleteUserResponse = new DeleteUserResponse();
 		Message message = new Message();
+		
+		if(ThreadManager.getUserFromThread() == null) {
+			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
+			deleteUserResponse.setMessage(message);
+			return deleteUserResponse;
+		}
 		
 		User user = getUserService().readName(request.getName());
 		

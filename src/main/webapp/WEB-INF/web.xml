@@ -45,12 +45,16 @@
 	</filter-mapping>
 	
 	<filter>
-		<filter-name>Spring WS Security Filter</filter-name>
-		<filter-class>be.luxuryoverdosis.framework.web.security.SpringWsSecurityFilter</filter-class>
+		<filter-name>Spring Security Filter</filter-name>
+		<filter-class>be.luxuryoverdosis.framework.web.security.SpringSecurityFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>Spring WS Security Filter</filter-name>
+		<filter-name>Spring Security Filter</filter-name>
 		<servlet-name>spring-ws</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>Spring Security Filter</filter-name>
+		<servlet-name>spring-rest</servlet-name>
 	</filter-mapping>
 	
 	<listener>
