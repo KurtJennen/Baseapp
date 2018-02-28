@@ -12,7 +12,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
-public class DocumentForm extends BaseForm {
+public class DetailDocumentForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 	
 	private FormFile formFile;

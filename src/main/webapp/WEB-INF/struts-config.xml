@@ -4,7 +4,7 @@
 	<form-beans>
 		<form-bean name="baseForm" type="be.luxuryoverdosis.framework.web.form.BaseForm" />
 		
-		<form-bean name="documentForm" type="be.luxuryoverdosis.framework.web.form.DocumentForm" />
+		<form-bean name="detailDocumentForm" type="be.luxuryoverdosis.framework.web.form.DetailDocumentForm" />
 		<form-bean name="documentTypeForm" type="be.luxuryoverdosis.framework.web.form.DocumentTypeForm" />
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
 		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
@@ -58,15 +58,27 @@
 				<forward name="forPay" path="display.error.menu.form" />
 		</action>
 		
+		<action path="/listDocument"
+				name="baseForm"
+				validate="true"
+				scope="request"
+				input="display.list.document.form"
+				type="be.luxuryoverdosis.framework.web.action.security.ListDocumentAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
+				<forward name="create" path="/detailDocument.do?method=create" />
+				<forward name="read" path="/detailDocument.do?method=read" />
+		</action>
 		<action path="/detailDocument"
-				name="documentForm"
+				name="detailDocumentForm"
 				validate="true"
 				scope="request"
 				input="display.detail.document.form"
-				type="be.luxuryoverdosis.framework.web.action.security.DocumentAction"
+				type="be.luxuryoverdosis.framework.web.action.security.DetailDocumentAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
-				<forward name="list" path="display.list.document.form" />
+				<forward name="list" path="/listDocument.do?method=list" />
+				<forward name="read" path="/detailDocument.do?method=read" />
 		</action>
 		
 		<action path="/detailDocumentType"

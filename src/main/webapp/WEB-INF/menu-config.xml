@@ -14,7 +14,7 @@
 			<Item name="menu1item2" title="displayUser.title" action="searchUser.do?method=search" />
 			<Item name="menu1item3" title="displayMenu.title" action="detailMenu.do?method=list" />
 			<Item name="menu1item4" title="displayNumber.title" action="detailNumber.do?method=list" />
-			<Item name="menu1item5" title="displayDocument.title" action="detailDocument.do?method=list" />
+			<Item name="menu1item5" title="displayDocument.title" action="listDocument.do?method=list" />
 			<Item name="menu1item6" title="displayPdf.title" action="detailPdf.do?method=list" />
 		</Menu>
 	</Menus>

@@ -11,7 +11,7 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="documentForm" property="objectId" value="-1">
+	<logic:notEqual name="detailDocumentForm" property="objectId" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	</logic:notEqual>
 	<hr />
@@ -34,15 +34,15 @@
 		</tr>
 		<tr>
 			<td><fmt:message key="file.name" />:</td>
-			<td><c:out value="${documentForm.fileName}"/></td>
+			<td><c:out value="${detailDocumentForm.fileName}"/></td>
 		</tr>
 		<tr>
 			<td><fmt:message key="file.size" />:</td>
-			<td><c:out value="${documentForm.fileSize}"/></td>
+			<td><c:out value="${detailDocumentForm.fileSize}"/></td>
 		</tr>
 		<tr>
 			<td><fmt:message key="file.content.type" />:</td>
-			<td><c:out value="${documentForm.contentType}"/></td>
+			<td><c:out value="${detailDocumentForm.contentType}"/></td>
 		</tr>
 	</table>
 </html:form>
