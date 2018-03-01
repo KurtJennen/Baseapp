@@ -13,7 +13,7 @@
 			<Item name="menu1item1" title="displayRole.title" action="listRole.do?method=list" />
 			<Item name="menu1item2" title="displayUser.title" action="searchUser.do?method=search" />
 			<Item name="menu1item3" title="displayMenu.title" action="detailMenu.do?method=list" />
-			<Item name="menu1item4" title="displayNumber.title" action="detailNumber.do?method=list" />
+			<Item name="menu1item4" title="displayNumber.title" action="listNumber.do?method=list" />
 			<Item name="menu1item5" title="displayDocument.title" action="listDocument.do?method=list" />
 			<Item name="menu1item6" title="displayPdf.title" action="detailPdf.do?method=list" />
 		</Menu>
