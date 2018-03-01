@@ -4,7 +4,6 @@ public class BaseSpringServiceConstants {
 	public static final String SEARCH_USER = "searchUser";
 	
 	public static final String DOCUMENT_SERVICE = "documentService";
-	public static final String DOCUMENTTYPE_SERVICE = "documentTypeService";
 	public static final String MAIL_SERVICE = "mailService";
 	public static final String REPORT_SERVICE = "reportService";
 	public static final String SEARCH_SERVICE = "searchService";

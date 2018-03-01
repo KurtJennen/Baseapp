@@ -42,12 +42,6 @@
 	<definition name="display.detail.document.form" extends="myTile">
 		<put name="body" value="/jsp/security/displayDetailDocumentForm.jsp" />
 	</definition>
-	<definition name="display.list.document.type.form" extends="myTile">
-		<put name="body" value="/jsp/security/displayListDocumentTypeForm.jsp" />
-	</definition>
-	<definition name="display.detail.document.type.form" extends="myTile">
-		<put name="body" value="/jsp/security/displayDetailDocumentTypeForm.jsp" />
-	</definition>
 	<definition name="display.list.number.form" extends="myTile">
 		<put name="body" value="/jsp/security/displayListNumberForm.jsp" />
 	</definition>

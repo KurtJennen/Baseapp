@@ -5,7 +5,6 @@
 		<form-bean name="baseForm" type="be.luxuryoverdosis.framework.web.form.BaseForm" />
 		
 		<form-bean name="detailDocumentForm" type="be.luxuryoverdosis.framework.web.form.DetailDocumentForm" />
-		<form-bean name="documentTypeForm" type="be.luxuryoverdosis.framework.web.form.DocumentTypeForm" />
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
 		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
 		<form-bean name="numberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
@@ -79,17 +78,6 @@
 				<forward name="failed" path="display.error.form" />
 				<forward name="list" path="/listDocument.do?method=list" />
 				<forward name="read" path="/detailDocument.do?method=read" />
-		</action>
-		
-		<action path="/detailDocumentType"
-				name="documentTypeForm"
-				validate="true"
-				scope="request"
-				input="display.detail.document.type.form"
-				type="be.luxuryoverdosis.framework.web.action.security.DocumentTypeAction"
-				parameter="method">
-				<forward name="failed" path="display.error.form" />
-				<forward name="list" path="display.list.document.type.form" />
 		</action>
 		
 		<action path="/listNumber"
