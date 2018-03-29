@@ -10,11 +10,11 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="numberForm" property="objectId" value="-1">
+	<logic:notEqual name="numberForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	</logic:notEqual>
 	<hr />
-	<html:hidden property="objectId" />
+	<html:hidden property="id" />
 	<table>
 		<tr>
 			<td><fmt:message key="security.number.application.code" />*:</td>

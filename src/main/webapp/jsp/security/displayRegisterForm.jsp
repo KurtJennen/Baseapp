@@ -24,7 +24,7 @@
 		<div id="tab1">
 			<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
 			<hr />
-			<html:hidden property="objectId" />
+			<html:hidden property="id" />
 			<html:hidden property="roleId" value="0" />
 			<table>
 				<tr>

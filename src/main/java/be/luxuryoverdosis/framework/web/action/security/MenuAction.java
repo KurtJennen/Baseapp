@@ -96,7 +96,7 @@ public class MenuAction extends DispatchAction {
 		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
 		
 		MenuForm menuForm = (MenuForm) form;
-		menuService.updateMenu(menuRepository, menuForm.getId(), menuForm.getHidden(), menuForm.getDisabled(), menuForm.getForPay(), menuForm.getPayed(), menuForm.getUserId());
+		menuService.updateMenu(menuRepository, menuForm.getIds(), menuForm.getHidden(), menuForm.getDisabled(), menuForm.getForPay(), menuForm.getPayed(), menuForm.getUserId());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.menu")));
 		saveMessages(request, actionMessages);

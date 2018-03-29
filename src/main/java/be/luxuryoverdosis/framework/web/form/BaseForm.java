@@ -13,8 +13,8 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 public class BaseForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	private String method;
-	private int[] id;
-	private int objectId;
+	private int[] ids;
+	private int id;
 	private int version;
 	private int documentId;
 	private boolean firstVisible;
@@ -22,11 +22,11 @@ public class BaseForm extends ValidatorForm {
 	private boolean nextVisible;
 	private boolean lastVisible;
 	
-	public int[] getId() {
-		return id;
+	public int[] getIds() {
+		return ids;
 	}
-	public void setId(int[] id) {
-		this.id = id;
+	public void setIds(int[] ids) {
+		this.ids = ids;
 	}
 	public String getMethod() {
 		return method;
@@ -34,11 +34,11 @@ public class BaseForm extends ValidatorForm {
 	public void setMethod(String method) {
 		this.method = method;
 	}
-	public int getObjectId() {
-		return objectId;
+	public int getId() {
+		return id;
 	}
-	public void setObjectId(int objectId) {
-		this.objectId = objectId;
+	public void setId(int id) {
+		this.id = id;
 	}
 	public int getVersion() {
 		return version;
@@ -79,7 +79,7 @@ public class BaseForm extends ValidatorForm {
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setMethod("");
-		this.setObjectId(-1);
+		this.setId(-1);
 		this.setVersion(-1);
 		this.setDocumentId(-1);
 		this.setFirstVisible(true);

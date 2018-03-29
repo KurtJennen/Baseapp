@@ -118,7 +118,7 @@ public class DetailJobAction extends DispatchAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		storeDetailListsInSession(request, response, id);
 		
@@ -168,7 +168,7 @@ public class DetailJobAction extends DispatchAction {
 	public void downloadFileLog(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		listJmesa(mapping, form, request, response);
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		Logging.info(this, "Begin downloadFileLog");
 		

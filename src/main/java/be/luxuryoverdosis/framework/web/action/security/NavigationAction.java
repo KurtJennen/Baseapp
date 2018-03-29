@@ -53,20 +53,20 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		BaseForm baseForm = (BaseForm) form;
 		
-		int objectId = getObjectId(baseForm, request);
+		int id = getId(baseForm, request);
 		
 //		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read&nameIds=" + getNameIds());
 		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read");
-		redirect.addParameter("objectId", objectId);
+		redirect.addParameter("id", id);
 		
 		Logging.info(this, "End Navigate Success");
 		
 		return redirect;
 	}
 	
-	private int getObjectId(BaseForm baseForm, HttpServletRequest request) {
+	private int getId(BaseForm baseForm, HttpServletRequest request) {
 		int position = getPosition(baseForm, request);
-		return baseForm.getId()[position];
+		return baseForm.getIds()[position];
 	}
 	
 	public void setNavigationButtons(ActionForm form, HttpServletRequest request) {
@@ -83,7 +83,7 @@ public abstract class NavigationAction extends AjaxAction {
 			baseForm.setFirstVisible(false);
 			baseForm.setPreviousVisible(false);
 		}
-		if(position == baseForm.getId().length - 1) {
+		if(position == baseForm.getIds().length - 1) {
 			baseForm.setNextVisible(false);
 			baseForm.setLastVisible(false);
 		}
@@ -94,7 +94,7 @@ public abstract class NavigationAction extends AjaxAction {
 	private int getCurrentPosition(BaseForm baseForm, HttpServletRequest request) {
 		loadIds(baseForm, request);
 		
-		return ArrayTool.positionValueInArray(baseForm.getId(), baseForm.getObjectId());
+		return ArrayTool.positionValueInArray(baseForm.getIds(), baseForm.getId());
 	}
 	
 	private int getPosition(BaseForm baseForm, HttpServletRequest request) {
@@ -110,13 +110,13 @@ public abstract class NavigationAction extends AjaxAction {
 			return position;
 		}
 		if(BaseWebConstants.NEXT.equals(baseForm.getMethod())) {
-			if(position != baseForm.getId().length - 1) {
+			if(position != baseForm.getIds().length - 1) {
 				position++;
 			}
 			return position;
 		}
 		if(BaseWebConstants.LAST.equals(baseForm.getMethod())) {
-			return baseForm.getId().length - 1;
+			return baseForm.getIds().length - 1;
 		}
 		return position;
 	}
@@ -125,15 +125,15 @@ public abstract class NavigationAction extends AjaxAction {
 //		String nameIds = getNameIds(request);
 		int[] ids = (int[])SessionManager.getFromSession(request, getNameIds());
 		
-		baseForm.setId(ids);
+		baseForm.setIds(ids);
 		
 //		return nameIds;
 	}
 	
 	private void saveIds(BaseForm baseForm, HttpServletRequest request) {
-		int[] ids = ArrayTool.addToArray(baseForm.getId(), baseForm.getObjectId());
+		int[] ids = ArrayTool.addToArray(baseForm.getIds(), baseForm.getId());
 		
-		baseForm.setId(ids);
+		baseForm.setIds(ids);
 		
 		SessionManager.putInSession(request, getNameIds(), ids);
 	}

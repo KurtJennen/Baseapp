@@ -140,9 +140,9 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 						Object id = ItemUtils.getItemValue(item, "id");
 	
 						if(nameIds != null) {
-							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&objectId=" + id + "&nameIds=" + nameIds + "');";
+							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&id=" + id + "&nameIds=" + nameIds + "');";
 						} else {
-							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&objectId=" + id + "');";
+							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&id=" + id + "');";
 						}
 					}
 				});

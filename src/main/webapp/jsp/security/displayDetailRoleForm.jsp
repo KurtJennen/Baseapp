@@ -9,12 +9,12 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="detailRoleForm" property="objectId" value="-1">
+	<logic:notEqual name="detailRoleForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	</logic:notEqual>
 	<lo:navigation nameIds="roleIds" firstVisible="${detailRoleForm.firstVisible}" previousVisible="${detailRoleForm.previousVisible}" nextVisible="${detailRoleForm.nextVisible}" lastVisible="${detailRoleForm.lastVisible}"/>
 	<hr />
-	<html:hidden property="objectId" />
+	<html:hidden property="id" />
 	<table>
 		<tr>
 			<td><fmt:message key="security.name" />*:</td>

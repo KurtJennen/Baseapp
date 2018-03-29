@@ -11,11 +11,11 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="detailDocumentForm" property="objectId" value="-1">
+	<logic:notEqual name="detailDocumentForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	</logic:notEqual>
 	<hr />
-	<html:hidden property="objectId" />
+	<html:hidden property="id" />
 	<html:hidden property="fileName" />
 	<html:hidden property="fileSize" />
 	<html:hidden property="contentType" />

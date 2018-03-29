@@ -12,7 +12,7 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="detailUserForm" property="objectId" value="-1">
+	<logic:notEqual name="detailUserForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 		<lo:button image="flag_green.png" method="activateYear" key="button.activate.year"></lo:button>
 		<lo:button image="flag_orange.png" method="activateHalfYear" key="button.activate.half.year"></lo:button>
@@ -20,7 +20,7 @@
 	</logic:notEqual>
 	<lo:navigation nameIds="userIds" firstVisible="${detailUserForm.firstVisible}" previousVisible="${detailUserForm.previousVisible}" nextVisible="${detailUserForm.nextVisible}" lastVisible="${detailUserForm.lastVisible}"/>
 	<hr />
-	<html:hidden property="objectId" />
+	<html:hidden property="id" />
 	<html:hidden property="dateExpirationAsString" />
 	<table>
 		<tr>

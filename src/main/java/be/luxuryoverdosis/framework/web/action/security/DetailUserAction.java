@@ -49,14 +49,14 @@ public class DetailUserAction extends NavigationAction {
 
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
 		UserDTO userDTO = userService.readDTO(id);
 		DetailUserForm userForm = (DetailUserForm) form;
-		userForm.setObjectId(userDTO.getId());
+		userForm.setId(userDTO.getId());
 		userForm.setName(userDTO.getName());
 		userForm.setUserName(userDTO.getUserName());
 		userForm.setPassword(userDTO.getPassword());
@@ -106,7 +106,7 @@ public class DetailUserAction extends NavigationAction {
 		DetailUserForm userForm = (DetailUserForm) form;
 
 		UserDTO userDTO = new UserDTO();
-		userDTO.setId(userForm.getObjectId());
+		userDTO.setId(userForm.getId());
 		userDTO.setName(userForm.getName());
 		userDTO.setUserName(userForm.getUserName());
 		userDTO.setPassword(userForm.getPassword());
@@ -122,7 +122,7 @@ public class DetailUserAction extends NavigationAction {
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
 		userDTO = userService.createOrUpdateDTO(userDTO);
-		if(userForm.getObjectId() < 0) {
+		if(userForm.getId() < 0) {
 			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.user")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 //			if(userForm.getRoleId() == 0) {
@@ -133,10 +133,10 @@ public class DetailUserAction extends NavigationAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//userForm.setObjectId(userDTO.getId());
+		//userForm.setId(userDTO.getId());
 		//userForm.setDateExpirationAsString(userDTO.getDateExpirationAsString());
 		
-		actionRedirect.addParameter("objectId", userDTO.getId());
+		actionRedirect.addParameter("id", userDTO.getId());
 		
 		//saveMessages(request, actionMessages);
 		
@@ -149,7 +149,7 @@ public class DetailUserAction extends NavigationAction {
 		Logging.info(this, "Begin Delete");
 		//ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
@@ -173,7 +173,7 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.activate(userForm.getObjectId(), UserService.YEAR);
+		User user = userService.activate(userForm.getId(), UserService.YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
@@ -189,7 +189,7 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.activate(userForm.getObjectId(), UserService.HALF_YEAR);
+		User user = userService.activate(userForm.getId(), UserService.HALF_YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
@@ -205,7 +205,7 @@ public class DetailUserAction extends NavigationAction {
 		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.deactivate(userForm.getObjectId());
+		User user = userService.deactivate(userForm.getId());
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));

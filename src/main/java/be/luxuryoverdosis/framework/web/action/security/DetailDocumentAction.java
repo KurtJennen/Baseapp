@@ -34,14 +34,14 @@ public class DetailDocumentAction extends DispatchAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
 		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
 		DocumentDTO documentDTO = documentService.readDTO(id);
 		DetailDocumentForm documentForm = (DetailDocumentForm) form;
-		documentForm.setObjectId(documentDTO.getId());
+		documentForm.setId(documentDTO.getId());
 		documentForm.setType(documentDTO.getType());
 		documentForm.setFileName(documentDTO.getFileDTO().getFileName());
 		documentForm.setFileSize(documentDTO.getFileDTO().getFileSize());
@@ -91,12 +91,12 @@ public class DetailDocumentAction extends DispatchAction {
 		FileDTO fileDTO = new FileDTO(formFile.getFileData(), formFile.getFileName(), formFile.getFileSize(), formFile.getContentType());
 		
 		DocumentDTO documentDTO = new DocumentDTO();
-		documentDTO.setId(documentForm.getObjectId());
+		documentDTO.setId(documentForm.getId());
 		documentDTO.setType(documentForm.getType());
 		documentDTO.setFileDTO(fileDTO);
 		
 		documentDTO = documentService.createOrUpdateDTO(documentDTO);
-		if(documentForm.getObjectId() < 0) {
+		if(documentForm.getId() < 0) {
 			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.document")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
@@ -104,13 +104,13 @@ public class DetailDocumentAction extends DispatchAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//documentForm.setObjectId(documentDTO.getId());
+		//documentForm.setId(documentDTO.getId());
 		//documentForm.setType(documentDTO.getType());
 		//documentForm.setFileName(documentDTO.getFileDTO().getFileName());
 		//documentForm.setFileSize(documentDTO.getFileDTO().getFileSize());
 		//documentForm.setContentType(documentDTO.getFileDTO().getContentType());
 		
-		actionRedirect.addParameter("objectId", documentDTO.getId());
+		actionRedirect.addParameter("id", documentDTO.getId());
 		
 		//saveMessages(request, actionMessages);
 		
@@ -123,7 +123,7 @@ public class DetailDocumentAction extends DispatchAction {
 		Logging.info(this, "Begin Delete");
 		//ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
 		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);

@@ -31,7 +31,7 @@ function doActionId(sMethod, oObject) {
 		sId = oTag.firstElementChild.firstElementChild.value;
 	}
 	
-	window.document.forms[0].action += '?method=' + sMethod + '&objectId=' + sId;
+	window.document.forms[0].action += '?method=' + sMethod + '&id=' + sId;
 	doSubmit();
 }
 

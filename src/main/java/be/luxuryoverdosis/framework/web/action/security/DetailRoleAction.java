@@ -35,14 +35,14 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
 		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
 		RoleDTO roleDTO = roleService.readDTO(id);
 		DetailRoleForm roleForm = (DetailRoleForm) form;
-		roleForm.setObjectId(roleDTO.getId());
+		roleForm.setId(roleDTO.getId());
 		roleForm.setName(roleDTO.getName());
 		
 		super.setNavigationButtons(form, request);
@@ -86,14 +86,14 @@ public class DetailRoleAction extends NavigationAction {
 		DetailRoleForm roleForm = (DetailRoleForm) form;
 		
 		RoleDTO roleDTO = new RoleDTO();
-		roleDTO.setId(roleForm.getObjectId());
+		roleDTO.setId(roleForm.getId());
 		roleDTO.setName(roleForm.getName());
 		
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
 		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
 		
 		roleDTO = roleService.createOrUpdateDTO(roleDTO);
-		if(roleForm.getObjectId() < 0) {
+		if(roleForm.getId() < 0) {
 			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.role")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
@@ -101,9 +101,9 @@ public class DetailRoleAction extends NavigationAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//roleForm.setObjectId(roleDTO.getId());
+		//roleForm.setId(roleDTO.getId());
 		
-		actionRedirect.addParameter("objectId", roleDTO.getId());
+		actionRedirect.addParameter("id", roleDTO.getId());
 		
 		//saveMessages(request, actionMessages);
 		
@@ -116,7 +116,7 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "Begin Delete");
 		//ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
 		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);

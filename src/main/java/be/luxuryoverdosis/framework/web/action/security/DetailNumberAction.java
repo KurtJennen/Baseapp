@@ -32,14 +32,14 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
 		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
 		NumberDTO numberDTO = numberService.readDTO(id);
 		DetailNumberForm numberForm = (DetailNumberForm) form;
-		numberForm.setObjectId(numberDTO.getId());
+		numberForm.setId(numberDTO.getId());
 		numberForm.setApplicationCode(numberDTO.getApplicationCode());
 		numberForm.setYear(numberDTO.getYear());
 		numberForm.setNumber(numberDTO.getNumber());
@@ -84,7 +84,7 @@ public class DetailNumberAction extends DispatchAction {
 		DetailNumberForm numberForm = (DetailNumberForm) form;
 		
 		NumberDTO numberDTO = new NumberDTO();
-		numberDTO.setId(numberForm.getObjectId());
+		numberDTO.setId(numberForm.getId());
 		numberDTO.setApplicationCode(numberForm.getApplicationCode());
 		numberDTO.setYear(numberForm.getYear());
 		numberDTO.setNumber(numberForm.getNumber());
@@ -94,7 +94,7 @@ public class DetailNumberAction extends DispatchAction {
 		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
 		
 		numberDTO = numberService.createOrUpdateDTO(numberDTO);
-		if(numberForm.getObjectId() < 0) {
+		if(numberForm.getId() < 0) {
 			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.number")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
@@ -102,9 +102,9 @@ public class DetailNumberAction extends DispatchAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//numberForm.setObjectId(numberDTO.getId());
+		//numberForm.setId(numberDTO.getId());
 		
-		actionRedirect.addParameter("objectId", numberDTO.getId());
+		actionRedirect.addParameter("id", numberDTO.getId());
 		
 		//saveMessages(request, actionMessages);
 		
@@ -117,7 +117,7 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "Begin Delete");
 		//ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("objectId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
 		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
 		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
