@@ -77,7 +77,7 @@ public abstract class NavigationAction extends AjaxAction {
 		int position = getCurrentPosition(baseForm, request);
 		
 		if(position == -1) {
-			saveIds(baseForm, request);
+			position = saveIds(baseForm, request);
 		}
 		if(position == 0) {
 			baseForm.setFirstVisible(false);
@@ -130,12 +130,14 @@ public abstract class NavigationAction extends AjaxAction {
 //		return nameIds;
 	}
 	
-	private void saveIds(BaseForm baseForm, HttpServletRequest request) {
+	private int saveIds(BaseForm baseForm, HttpServletRequest request) {
 		int[] ids = ArrayTool.addToArray(baseForm.getIds(), baseForm.getId());
 		
 		baseForm.setIds(ids);
 		
 		SessionManager.putInSession(request, getNameIds(), ids);
+		
+		return ArrayTool.positionValueInArray(baseForm.getIds(), baseForm.getId());
 	}
 
 //	private String getNameIds(HttpServletRequest request) {

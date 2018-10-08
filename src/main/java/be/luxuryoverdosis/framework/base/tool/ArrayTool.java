@@ -30,9 +30,18 @@ public class ArrayTool {
 	}
 	
 	public static int[] addToArray(int[] number, int value) {
-		int[] newArray = new int[number.length + 1];
-		for(int i = 0; i < number.length; i++) {
-			newArray[i] = number[i];
+		int length = 0;
+		
+		if(number != null) {
+			length = number.length;
+		}
+		
+		int[] newArray = new int[length + 1];
+		
+		if(number != null) {
+			for(int i = 0; i < length; i++) {
+				newArray[i] = number[i];
+			}
 		}
 		newArray[newArray.length - 1] = value;
 		
@@ -49,6 +58,10 @@ public class ArrayTool {
 	}
 	
 	public static int positionValueInArray(int[] number, int value) {
+		if(number == null) {
+			return -1;
+		}
+		
 		for(int i = 0; i < number.length; i++) {
 			if(number[i] == value) {
 				return i;

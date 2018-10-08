@@ -108,7 +108,7 @@ public class UserServiceSpringImpl implements UserService {
 		User result = null;
 		result = userHibernateDAO.createOrUpdate(user);
 		if(result != null) {
-			sendUserMail(result);
+			//sendUserMail(result);
 		}
 		
 		Logging.info(this, "End createUser");
