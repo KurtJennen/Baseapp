@@ -3,6 +3,7 @@ package be.luxuryoverdosis.framework.data.dao;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate3.HibernateTemplate;
@@ -28,6 +29,10 @@ public abstract class AbstractHibernateDaoSupport extends HibernateDaoSupport {
 	public void doAfter() {
 		setSessionFactory(sessionFactory);
 		setHibernateTemplate(new HibernateTemplate(sessionFactory));
+	}
+	
+	public Session getCurrentSession() {
+		return sessionFactory.getCurrentSession();
 	}
 	
 }

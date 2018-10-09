@@ -12,4 +12,29 @@
 		<property name="dateUpdate" column="DateUpdate" type="timestamp" not-null="true"></property>
 		<property name="name" column="Name" type="string" not-null="true"></property>
 	</class>
+	
+	<query name="getAllRoles">
+		from Role r
+	</query>
+	
+	<query name="getAllRolesByName">
+		from Role r
+		where r.name = :name
+	</query>
+	
+	<query name="getAllRolesDtoByName">
+		select new be.luxuryoverdosis.framework.data.dto.RoleDTO(
+			r.id,
+			r.name
+		)
+		from Role r
+		where name like :name
+	</query>
+	
+	<query name="getCountRolesByName">
+		select count(*)
+		from Role r
+		where r.name = :name
+		and r.id != :id
+	</query>
 </hibernate-mapping>
