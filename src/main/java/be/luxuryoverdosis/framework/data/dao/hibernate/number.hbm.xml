@@ -15,4 +15,24 @@
 		<property name="number" column="Number" type="int" not-null="true"></property>
 		<property name="type" column="Type" type="string" not-null="true"></property>
 	</class>
+	
+	<query name="getAllNumbers">
+		from Number n
+	</query>
+	
+	<query name="getNumberByApplicationCodeAndYearAndType">
+		from Number n
+		where n.applicationCode = :applicationCode
+		and n.year = :year
+		and n.type = :type
+	</query>
+	
+	<query name="getCountByApplicationCodeAndYearAndType">
+		select count(*)
+		from Number n
+		where n.applicationCode = :applicationCode
+		and n.year = :year
+		and n.type = :type
+		and n.id != :id
+	</query>
 </hibernate-mapping>

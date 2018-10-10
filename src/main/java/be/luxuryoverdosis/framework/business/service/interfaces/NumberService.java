@@ -11,7 +11,7 @@ public interface NumberService {
 	
 	public Number createOrUpdate(Number number);
 	public Number read(int id);
-	public Number read(String year, String type);
+	public Number read(String applicationCode, String year, String type);
 	public void delete(int id);
 	
 	public ArrayList<Number> list();

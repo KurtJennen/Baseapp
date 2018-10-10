@@ -80,10 +80,10 @@ public class NumberServiceSpringImpl implements NumberService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Number read(final String year, final String type) {
+	public Number read(final String applicationCode, final String year, final String type) {
 		Logging.info(this, "Begin readNumber");
 		Number result = null;
-		result = numberHibernateDAO.read(year, type);
+		result = numberHibernateDAO.read(applicationCode, year, type);
 		Logging.info(this, "End readNumber");
 		return result;
 	}
