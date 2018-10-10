@@ -22,4 +22,112 @@
 		
 		<many-to-one name="user" column="User_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.User" lazy="false"></many-to-one>
 	</class>
+	
+	<query name="getMenusByFullNameAndUser">
+		from Menu m
+		where m.fullName = :fullName
+		and m.user.id = :userId
+	</query>
+	
+	<query name="getMenusDtoByUser">
+		SELECT new be.luxuryoverdosis.framework.data.dto.MenuDTO(
+			m.id,
+			m.fullName,
+			m.name,
+			m.title,
+			m.fullLevel,
+			m.level,
+			m.hidden,
+			m.disabled,
+			m.forPay,
+			m.payed,
+			u.id
+		)
+		from Menu m
+		inner join m.user u
+		where u.id = :userId
+		order by m.fullLevel
+	</query>
+	
+	<query name="getHiddenMenusDtoByUser">
+		SELECT new be.luxuryoverdosis.framework.data.dto.MenuDTO(
+			m.id,
+			m.fullName,
+			m.name,
+			m.title,
+			m.fullLevel,
+			m.level,
+			m.hidden,
+			m.disabled,
+			m.forPay,
+			m.payed,
+			u.id
+		)
+		from Menu m
+		inner join m.user u
+		where u.id = :userId
+		and m.hidden = :hidden
+		order by m.fullLevel desc
+	</query>
+	
+	<query name="getDisabledMenusDtoByUser">
+		SELECT new be.luxuryoverdosis.framework.data.dto.MenuDTO(
+			m.id,
+			m.fullName,
+			m.name,
+			m.title,
+			m.fullLevel,
+			m.level,
+			m.hidden,
+			m.disabled,
+			m.forPay,
+			m.payed,
+			u.id
+		)
+		from Menu m
+		inner join m.user u
+		where u.id = :userId
+		and m.disabled = :disabled
+		order by m.fullLevel desc
+	</query>
+	
+	<query name="getForPayMenusDtoByUserAndPayed">
+		SELECT new be.luxuryoverdosis.framework.data.dto.MenuDTO(
+			m.id,
+			m.fullName,
+			m.name,
+			m.title,
+			m.fullLevel,
+			m.level,
+			m.hidden,
+			m.disabled,
+			m.forPay,
+			m.payed,
+			u.id
+		)
+		from Menu m
+		inner join m.user u
+		where u.id = :userId
+		and m.forPay = 'J'
+		and m.payed = :payed
+		order by m.fullLevel desc
+	</query>
+	
+	<query name="deleteMenusByUser">
+		delete from Menu m
+		where m.user.id = :userId
+	</query>
+	
+	<query name="getCountMenusByUser">
+		select count(*)
+		from Menu m
+		where m.user.id = :userId
+	</query>
+	
+	<query name="getCountMenusByFullNameAndUser">
+		select count(*)
+		from Menu m
+		where m.fullName = :fullName
+		and m.user.id = :userId
+	</query>
 </hibernate-mapping>
