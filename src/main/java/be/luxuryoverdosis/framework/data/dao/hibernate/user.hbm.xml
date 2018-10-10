@@ -18,4 +18,47 @@
 		
 		<many-to-one name="role" column="Role_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Role" lazy="false"></many-to-one>
 	</class>
+	
+	<query name="getAllUsers">
+		from User u
+	</query>
+	
+	<query name="getAllUsersByName">
+		from User u
+		where u.name = :name
+	</query>
+	
+	<query name="getAllUsersDto">
+		select new be.luxuryoverdosis.framework.data.dto.UserDTO(
+			u.id,
+			u.name,
+			u.userName,
+			u.email
+		)
+		from User u
+	</query>
+	
+	<query name="getAllUsersDtoByName">
+		select new be.luxuryoverdosis.framework.data.dto.UserDTO(
+			u.id,
+			u.name,
+			u.userName,
+			u.email
+		)
+		from User u
+		where u.name like :name
+	</query>
+	
+	<query name="getCountUsersByName">
+		select count(*)
+		from User u
+		where u.name = :name
+		and u.id != :id
+	</query>
+	
+	<query name="getCountUsersByRole">
+		select count(*)
+		from User u
+		where u.role.id = :roleId
+	</query>
 </hibernate-mapping>

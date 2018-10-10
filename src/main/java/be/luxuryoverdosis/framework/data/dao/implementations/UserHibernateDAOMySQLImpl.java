@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
@@ -13,16 +14,20 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements UserHibernateDAO {
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String ROLE_ID = "roleId";
+
 	public User createOrUpdate(final User user) {
 		Logging.info(this, "Begin createUser");
-		getHibernateTemplate().saveOrUpdate(user);
+		getCurrentSession().saveOrUpdate(user);
 		Logging.info(this, "End createUser");
 		return user;
 	}
 
 	public User read(final int id) {
 		Logging.info(this, "Begin readUser");
-		User user = (User) getHibernateTemplate().load(User.class, id);
+		User user = (User) getCurrentSession().load(User.class, id);
 		Logging.info(this, "End readUser");
 		return user;
 	}
@@ -30,7 +35,11 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public User readName(final String name) {
 		Logging.info(this, "Begin readNameUser");
-		ArrayList<User> arrayList = (ArrayList<User>) getHibernateTemplate().find("from User u where u.name = ?", new Object[]{name});
+		
+		Query query = getCurrentSession().getNamedQuery("getAllUsersByName");
+		query.setString(NAME, name);
+		ArrayList<User> arrayList = (ArrayList<User>) query.list();
+		
 		User user = null;
 		if(!arrayList.isEmpty()) {
 			user = (User)arrayList.iterator().next();
@@ -41,47 +50,40 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteUser");
-		getHibernateTemplate().delete((User) getHibernateTemplate().load(User.class, id));
+		getCurrentSession().delete(this.read(id));
 		Logging.info(this, "End deleteUser");		
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<User> list() {
 		Logging.info(this, "Begin listUser");
-		ArrayList<User> arrayList = (ArrayList<User>) getHibernateTemplate().find("from User");
+		
+		Query query = getCurrentSession().getNamedQuery("getAllUsers");
+		ArrayList<User> arrayList = (ArrayList<User>) query.list();
+		
 		Logging.info(this, "End listUser");
 		return arrayList;
 	}
-	
-	private static final String listHql = "SELECT new be.luxuryoverdosis.framework.data.dto.UserDTO(" +
-			"u.id, " +
-			"u.name, " +
-			"u.userName, " +
-			"u.email " +
-			") " +
-			"from User u";
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<UserDTO> listDTO() {
 		Logging.info(this, "Begin listUser");
-		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) getHibernateTemplate().find(listHql);
+		
+		Query query = getCurrentSession().getNamedQuery("getAllUsersDto");
+		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) query.list();
+		
 		Logging.info(this, "End listUser");
 		return arrayList;
 	}
 	
-	private static final String listHql1 = "SELECT new be.luxuryoverdosis.framework.data.dto.UserDTO(" +
-			"u.id, " +
-			"u.name, " +
-			"u.userName, " +
-			"u.email " +
-			") " +
-			"from User u " +
-			"where u.name like ?";
-	
 	@SuppressWarnings("unchecked")
 	public ArrayList<UserDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listUser");
-		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) getHibernateTemplate().find(listHql1, new Object[]{SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT});
+		
+		Query query = getCurrentSession().getNamedQuery("getAllUsersDtoByName");
+		query.setString(NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) query.list();
+		
 		Logging.info(this, "End listUser");
 		return arrayList;
 	}
@@ -89,8 +91,13 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countUser(String, int)");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from User u where u.name = ? and u.id <> ?", new Object[]{name, id});
+		
+		Query query = getCurrentSession().getNamedQuery("getCountUsersByName");
+		query.setString(NAME, name);
+		query.setInteger(ID, id);
+		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
+		
 		Logging.info(this, "End countUser(String, int)");
 		return count;
 	}
@@ -98,8 +105,12 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	@SuppressWarnings("unchecked")
 	public long count(final int roleId) {
 		Logging.info(this, "Begin countUser(int)");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from User u where u.role.id = ?", new Object[]{roleId});
+
+		Query query = getCurrentSession().getNamedQuery("getCountUsersByRole");
+		query.setInteger(ROLE_ID, roleId);
+		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
+		
 		Logging.info(this, "End countUser(int)");
 		return count;
 	}

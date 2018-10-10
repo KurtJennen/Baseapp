@@ -108,7 +108,7 @@ public class UserServiceSpringImpl implements UserService {
 		User result = null;
 		result = userHibernateDAO.createOrUpdate(user);
 		if(result != null) {
-			//sendUserMail(result);
+			sendUserMail(result);
 		}
 		
 		Logging.info(this, "End createUser");
@@ -120,7 +120,7 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin readUser");
 		User result = null;
 		result = userHibernateDAO.read(id);
-		Logging.info(this, "End readUser)");
+		Logging.info(this, "End readUser");
 		return result;
 	}
 	
