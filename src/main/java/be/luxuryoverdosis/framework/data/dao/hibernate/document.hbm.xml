@@ -16,4 +16,29 @@
 		<property name="fileSize" column="Filesize" type="integer"></property>
 		<property name="contentType" column="Contenttype" type="string"></property>
 	</class>
+	
+	<query name="getAllDocuments">
+		select new be.luxuryoverdosis.framework.data.to.Document(
+			d.id,
+			d.type,
+			d.fileName,
+			d.fileSize,
+			d.contentType
+		)
+		from Document d
+	</query>
+	
+	<query name="getAllDocumentsByType">
+		from Document d
+		where d.type = :type
+		order by d.fileName asc
+	</query>
+	
+	<query name="getCountDocumentsByTypeAndFilename">
+		select count(*)
+		from Document d
+		where d.type = :type
+		and d.fileName = :fileName
+		and d.id != :id
+	</query>
 </hibernate-mapping>

@@ -3,6 +3,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 import java.sql.Blob;
 import java.util.ArrayList;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,10 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements DocumentHibernateDAO {
+	private static final String FILE_NAME = "fileName";
+	private static final String ID = "id";
+	private static final String TYPE = "type";
+	
 	public Document createOrUpdate(final Document document) {
 		Logging.info(this, "Begin createDocument");
 		try {
@@ -23,37 +28,31 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 		} catch (Exception e) {
 			Logging.error(this, "Blob error" + e.getMessage());
 		}
-		getHibernateTemplate().saveOrUpdate(document);
+		getCurrentSession().saveOrUpdate(document);
 		Logging.info(this, "End createDocument");
 		return document;
 	}
 
 	public Document read(final int id) {
 		Logging.info(this, "Begin readDocument");
-		Document document = (Document) getHibernateTemplate().load(Document.class, id);
+		Document document = (Document) getCurrentSession().load(Document.class, id);
 		Logging.info(this, "End readDocument");
 		return document;
 	}
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteDocument");
-		getHibernateTemplate().delete((Document) getHibernateTemplate().load(Document.class, id));
+		getCurrentSession().delete(this.read(id));
 		Logging.info(this, "End deleteDocument");		
 	}
 	
-	private static final String listHql = "SELECT new be.luxuryoverdosis.framework.data.to.Document(" +
-		"d.id, " +
-		"d.type, " +
-		"d.fileName, " +
-		"d.fileSize, " +
-		"d.contentType " +
-		") " +
-		"from Document d ";
-
 	@SuppressWarnings("unchecked")
 	public ArrayList<Document> list() {
 		Logging.info(this, "Begin listDocument");
-		ArrayList<Document> arrayList = (ArrayList<Document>) getHibernateTemplate().find(listHql);
+		
+		Query query = getCurrentSession().getNamedQuery("getAllDocuments");
+		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
+		
 		Logging.info(this, "End listDocument");
 		return arrayList;
 	}
@@ -61,7 +60,11 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	@SuppressWarnings("unchecked")
 	public ArrayList<Document> list(final String type) {
 		Logging.info(this, "Begin listDocument");
-		ArrayList<Document> arrayList = (ArrayList<Document>) getHibernateTemplate().find("from Document d where d.type = ? order by d.fileName asc", new Object[]{type});
+		
+		Query query = getCurrentSession().getNamedQuery("getAllDocumentsByType");
+		query.setString(TYPE, type);
+		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
+		
 		Logging.info(this, "End listDocument");
 		return arrayList;
 	}
@@ -69,7 +72,13 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	@SuppressWarnings("unchecked")
 	public long count(final String type, final String fileName, final int id) {
 		Logging.info(this, "Begin countDocument(String, String, int)");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Document d where d.type = ? and d.fileName = ? and d.id <> ?", new Object[]{type, fileName, id});
+		
+		Query query = getCurrentSession().getNamedQuery("getCountDocumentsByTypeAndFilename");
+		query.setString(TYPE, type);
+		query.setString(FILE_NAME, fileName);
+		query.setInteger(ID, id);
+		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
+		
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countDocument(String, String, int)");
 		return count;
