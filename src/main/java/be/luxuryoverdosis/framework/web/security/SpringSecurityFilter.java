@@ -26,11 +26,11 @@ public class SpringSecurityFilter implements Filter {
 	private static final String AUTHORIZATION = "authorization";
 	
 	public void init(FilterConfig filterConfig) throws ServletException {
-		System.out.println("SpringSecurityFilter Initialized");
+		//System.out.println("SpringSecurityFilter Initialized");
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
-		System.out.println("SpringSecurityFilter");
+		//System.out.println("SpringSecurityFilter");
 		
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -60,6 +60,6 @@ public class SpringSecurityFilter implements Filter {
 	}
 	
 	public void destroy() {
-		System.out.println("SpringSecurityFilter Destroyed");
+		//System.out.println("SpringSecurityFilter Destroyed");
 	}
 }
