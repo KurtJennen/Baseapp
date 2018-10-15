@@ -1,7 +1,7 @@
 package be.luxuryoverdosis.baseapp.business.service.interfaces;
 
-import be.luxuryoverdosis.framework.data.dao.DAOException;
 
-public interface SqlExecuterService {
-	public void execute() throws DAOException;
+import be.luxuryoverdosis.framework.business.service.interfaces.AbstractSqlExecuterService;
+
+public interface SqlExecuterService extends AbstractSqlExecuterService{
 }

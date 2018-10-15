@@ -4,10 +4,12 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import be.luxuryoverdosis.baseapp.business.service.SpringServiceConstants;
+import org.springframework.dao.DataAccessException;
+
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.baseapp.business.service.interfaces.SqlExecuterService;
 import be.luxuryoverdosis.framework.base.Config;
+import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public class AppListener implements ServletContextListener{
@@ -25,8 +27,11 @@ public class AppListener implements ServletContextListener{
 			
 			SpringServiceLocator.getSpringServiceLocator();
 			
-			SqlExecuterService sqlExecuterService = (SqlExecuterService)SpringServiceLocator.getBean(SpringServiceConstants.SQL_EXECUTER_SERVICE);
+			SqlExecuterService sqlExecuterService = BaseSpringServiceLocator.getBean(SqlExecuterService.class);
 			sqlExecuterService.execute();
+		} catch (DataAccessException e) {
+			Logging.error(this, "AppListener error" + e.getMessage());
+			throw e;
 		} catch (Exception e) {
 			Logging.error(this, "AppListener error" + e.getMessage());
 		}

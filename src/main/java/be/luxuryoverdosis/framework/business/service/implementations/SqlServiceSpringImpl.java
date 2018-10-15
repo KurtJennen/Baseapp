@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,5 +77,38 @@ public class SqlServiceSpringImpl implements SqlService {
 		countSql = sqlHibernateDAO.count(name, application);
 		Logging.info(this, "End countSql(String, String)");
 		return countSql.longValue();
+	}
+	
+	@Transactional
+	public void execute(final String sqlStatement, final String name, final String application) throws DataAccessException {
+		Logging.info(this, "Begin executeSqlExecuter");
+		
+		long count = 0;
+		
+		try {
+			count = sqlHibernateDAO.count(name, application);
+			Logging.info(this, "SQL Already Executed: " + sqlStatement);
+		} catch (Exception e) {
+			Logging.info(this, "SQL First Startup");
+		}
+		
+		if (count == 0) {
+			try {
+				sqlHibernateDAO.execute(sqlStatement);
+				
+				Sql sql = new Sql();
+				sql.setName(name);
+				sql.setContent(sqlStatement);
+				sql.setApplication(application);
+				sqlHibernateDAO.createOrUpdate(sql);
+				
+				Logging.info(this, "SQL Executed: " + sqlStatement);
+			} catch (DataAccessException e) {
+				Logging.info(this, "SQL NOT Executed: " + sqlStatement + " " + e.getMessage());
+				throw e;
+			}
+		}
+        
+		Logging.info(this, "Begin executeSqlExecuter");
 	}
 }

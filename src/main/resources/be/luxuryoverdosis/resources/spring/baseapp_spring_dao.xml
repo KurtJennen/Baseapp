@@ -10,7 +10,7 @@
     
     <context:annotation-config/>
        
-	<bean id="daoBase" class="be.luxuryoverdosis.framework.data.dao.DAOBase" />
+<!-- 	<bean id="daoBase" class="be.luxuryoverdosis.framework.data.dao.DAOBase" /> -->
 	
 <!--	<bean id="hibernateDaoSupport" abstract="true" class="org.springframework.orm.hibernate3.support.HibernateDaoSupport">-->
 <!--		<property name="sessionFactory" ref="sessionFactory" />-->
@@ -29,5 +29,5 @@
 <!--	<bean id="userHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.UserHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
 <!--	<bean id="documentHibernateDAO" class="be.luxuryoverdosis.framework.data.dao.implementations.DocumentHibernateDAOMySQLImpl" parent="hibernateDaoSupport" />-->
 	
-	<bean id="sqlExecuterDAO" class="be.luxuryoverdosis.baseapp.data.dao.implementations.SqlExecuterDAOMySQLImpl" parent="daoBase" />
+<!-- 	<bean id="sqlExecuterDAO" class="be.luxuryoverdosis.baseapp.data.dao.implementations.SqlExecuterDAOMySQLImpl" parent="daoBase" /> -->
 </beans>

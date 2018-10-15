@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -67,5 +68,13 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		long count = arrayList.iterator().next().longValue();
 		Logging.info(this, "End countSql(String, String)");
 		return count;
+	}
+	
+	public void execute(final String sqlStatement) throws DataAccessException {
+		Logging.info(this, "Begin countSql(String, String)");
+		
+		getJdbcTemplate().execute(sqlStatement);
+		
+		Logging.info(this, "End countSql(String, String)");
 	}
 }

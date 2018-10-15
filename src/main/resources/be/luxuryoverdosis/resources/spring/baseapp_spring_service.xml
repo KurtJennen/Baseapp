@@ -40,5 +40,5 @@
 <!--	<bean id="reportService" class="be.luxuryoverdosis.framework.business.service.implementations.ReportServiceSpringImpl" parent="baseService" />-->
 <!--	<bean id="documentService" class="be.luxuryoverdosis.framework.business.service.implementations.DocumentServiceSpringImpl" parent="baseService" />-->
 	
-	<bean id="sqlExecuterService" class="be.luxuryoverdosis.baseapp.business.service.implementations.SqlExecuterServiceSpringImpl" />
+<!-- 	<bean id="sqlExecuterService" class="be.luxuryoverdosis.framework.business.service.implementations.SqlExecuterServiceSpringImpl" /> -->
 </beans>

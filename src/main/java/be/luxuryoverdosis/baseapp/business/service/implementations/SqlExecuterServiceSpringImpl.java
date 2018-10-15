@@ -1,19 +1,21 @@
 package be.luxuryoverdosis.baseapp.business.service.implementations;
 
-import javax.annotation.Resource;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Service;
 
 import be.luxuryoverdosis.baseapp.business.service.interfaces.SqlExecuterService;
-import be.luxuryoverdosis.baseapp.data.dao.interfaces.SqlExecuterDAO;
-import be.luxuryoverdosis.framework.data.dao.DAOException;
+import be.luxuryoverdosis.framework.business.service.implementations.AbstractSqlExecuterServiceSpringImpl;
+import be.luxuryoverdosis.framework.business.service.interfaces.SqlService;
 import be.luxuryoverdosis.framework.logging.Logging;
 
-public class SqlExecuterServiceSpringImpl implements SqlExecuterService {
-	@Resource
-	SqlExecuterDAO sqlExecuterDAO;
+@Service
+public class SqlExecuterServiceSpringImpl extends AbstractSqlExecuterServiceSpringImpl implements SqlExecuterService {
 	
-	public void execute() throws DAOException {
-		Logging.info(this, "Begin executeSqlExecuter");
-		sqlExecuterDAO.execute();
-		Logging.info(this, "Begin executeSqlExecuter");
+	public void executeSql(SqlService sqlService) throws DataAccessException {
+		Logging.info(this, "Begin executeSql");
+		
+		//application sql's
+		
+		Logging.info(this, "Begin executeSql");
 	}
 }
