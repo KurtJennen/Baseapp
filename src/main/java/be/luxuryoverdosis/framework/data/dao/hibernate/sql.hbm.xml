@@ -14,4 +14,26 @@
 		<property name="content" column="Content" type="string" not-null="true"></property>
 		<property name="application" column="App" type="string" not-null="true"></property>
 	</class>
+	
+	<query name="getAllSqls">
+		from Sql s
+	</query>
+	
+	<query name="getAllSqlsByName">
+		from Sql s
+		where s.name = :name
+	</query>
+	
+	<query name="getCountSqlsByName">
+		select count(*)
+		from Sql s
+		where s.name = :name
+	</query>
+	
+	<query name="getCountSqlsByNameANdApplication">
+		select count(*)
+		from Sql s
+		where s.name = :name
+		and s.application = :application
+	</query>
 </hibernate-mapping>
