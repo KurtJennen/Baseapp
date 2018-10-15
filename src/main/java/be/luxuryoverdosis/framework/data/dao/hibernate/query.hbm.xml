@@ -16,4 +16,24 @@
 				
 		<many-to-one name="user" column="User_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.User" lazy="false"></many-to-one>
 	</class>
+	
+	<query name="getAllQueriesByNameAndType">
+		from Query q
+		where q.name = :name
+		and q.type = :type
+	</query>
+	
+	<query name="getAllQueriesByTypeAndUser">
+		from Query q
+		where q.type = :type
+		and q.user.id = :userId
+	</query>
+	
+	<query name="getCountQueriesByNameAndTypeAndUser">
+		select count(*)
+		from Query q
+		where q.name = :name
+		and q.type = :type
+		and q.user.id = :userId
+	</query>
 </hibernate-mapping>

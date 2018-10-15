@@ -11,16 +11,20 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements QueryHibernateDAO {
+	private static final String TYPE = "type";
+	private static final String NAME = "name";
+	private static final String USER_ID = "userId";
+	
 	public Query createOrUpdate(final Query query) {
 		Logging.info(this, "Begin createQuery");
-		getHibernateTemplate().saveOrUpdate(query);
+		getCurrentSession().saveOrUpdate(query);
 		Logging.info(this, "End createQuery");
 		return query;
 	}
 
 	public Query read(final int id) {
 		Logging.info(this, "Begin readQuery(id)");
-		Query query = (Query) getHibernateTemplate().load(Query.class, id);
+		Query query = (Query) getCurrentSession().load(Query.class, id);
 		Logging.info(this, "End readQuery(id)");
 		return query;
 	}
@@ -28,7 +32,12 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	@SuppressWarnings("unchecked")
 	public Query read(final String name, final String type) {
 		Logging.info(this, "Begin readQuery(name, type)");
-		ArrayList<Query> arrayList = (ArrayList<Query>) getHibernateTemplate().find("from Query q where q.name = ? and q.type = ?", new Object[]{name, type});
+		
+		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByNameAndType");
+		hibernateQuery.setString(NAME, name);
+		hibernateQuery.setString(TYPE, type);
+		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
+		
 		Query query = null;
 		if(!arrayList.isEmpty()) {
 			query = (Query)arrayList.iterator().next();
@@ -39,14 +48,19 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteQuery");
-		getHibernateTemplate().delete((Query) getHibernateTemplate().load(Query.class, id));
+		getCurrentSession().delete(this.read(id));
 		Logging.info(this, "End deleteQuery");		
 	}
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Query> list(final String type, final int userId) {
-		Logging.info(this, "Begin listQuery(");
-		ArrayList<Query> arrayList = (ArrayList<Query>) getHibernateTemplate().find("from Query q where q.type = ? and q.user.id = ?", new Object[]{type, userId});
+		Logging.info(this, "Begin listQuery");
+		
+		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByTypeAndUser");
+		hibernateQuery.setString(TYPE, type);
+		hibernateQuery.setInteger(USER_ID, userId);
+		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
+		
 		Logging.info(this, "End listQuery");
 		return arrayList;
 	}
@@ -54,8 +68,14 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	@SuppressWarnings("unchecked")
 	public long count(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin countQuery");
-		ArrayList<Long> arrayList = (ArrayList<Long>) getHibernateTemplate().find("select count(*) from Query q where q.name = ? and q.type = ? and q.user.id = ?", new Object[]{name, type, userId});
+		
+		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getCountQueriesByNameAndTypeAndUser");
+		hibernateQuery.setString(NAME, name);
+		hibernateQuery.setString(TYPE, type);
+		hibernateQuery.setInteger(USER_ID, userId);
+		ArrayList<Long> arrayList = (ArrayList<Long>) hibernateQuery.list();
 		long count = arrayList.iterator().next().longValue();
+		
 		Logging.info(this, "End countQuery");
 		return count;
 	}
