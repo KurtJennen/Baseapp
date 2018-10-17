@@ -10,4 +10,15 @@
 		<property name="longValue" column="Long_Val" type="long"></property>
 		<property name="doubleValue" column="Double_Val" type="double"></property>
 	</class>
+	
+	<query name="getAllJobParamsByJobInstance">
+		from BatchJobParams bjp
+		where bjp.id = :jobInstanceId
+	</query>
+	
+	<query name="getAllJobParamsByJobInstanceAndKeyName">
+		from BatchJobParams bjp
+		where bjp.id = :jobInstanceId
+		and bjp.keyName = :keyName
+	</query>
 </hibernate-mapping>
