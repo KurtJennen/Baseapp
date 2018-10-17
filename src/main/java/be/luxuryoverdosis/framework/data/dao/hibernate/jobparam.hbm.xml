@@ -14,6 +14,15 @@
 		<property name="value" column="Value" type="string"></property>
 		
 		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Job" lazy="false"></many-to-one>
-		
 	</class>
+	
+	<query name="getAllJobParamsByJob">
+		from JobParam jp
+		where jp.job.id = :jobId
+	</query>
+	
+	<query name="deleteJobParamsByJob">
+		delete JobParam jp
+		where jp.job.id = :jobId
+	</query>
 </hibernate-mapping>

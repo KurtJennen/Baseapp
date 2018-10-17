@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
-import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
+import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -28,14 +28,14 @@ public class BatchServiceSpringImpl implements BatchService {
 	org.springframework.batch.core.Job userImportJob;
 	
 	@Resource
-	JobHibernateDAO jobHibernateDAO;
+	JobService jobService;
 	
 	public void exportUserJob(FileDTO fileDTO) throws Exception {
 		Logging.info(this, "Begin exportUserJob");
 		
 		//Job
 		Job job = new Job(BaseConstants.JOB_EXPORT_USER, fileDTO);
-		job = jobHibernateDAO.createOrUpdate(job);
+		job = jobService.createOrUpdate(job);
 		
 		//JobParameters
 		JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
@@ -51,7 +51,7 @@ public class BatchServiceSpringImpl implements BatchService {
 		
 		//Job
 		Job job = new Job(BaseConstants.JOB_IMPORT_USER, fileDTO);
-		job = jobHibernateDAO.createOrUpdate(job);
+		job = jobService.createOrUpdate(job);
 		
 		//JobParameters
 		JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();

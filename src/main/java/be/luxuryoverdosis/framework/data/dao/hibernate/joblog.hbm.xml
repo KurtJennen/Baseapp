@@ -15,6 +15,15 @@
 		<property name="file" column="File" type="blob"></property>
 		
 		<many-to-one name="job" column="Job_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.Job" lazy="false"></many-to-one>
-		
 	</class>
+	
+	<query name="getAllJobLogsByJob">
+		from JobLog jl
+		where jl.job.id = :jobId
+	</query>
+	
+	<query name="deleteJobLogsByJob">
+		delete JobLog jl
+		where jl.job.id = :jobId
+	</query>
 </hibernate-mapping>

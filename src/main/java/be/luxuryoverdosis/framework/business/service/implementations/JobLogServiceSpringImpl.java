@@ -14,7 +14,6 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
-import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -105,13 +104,11 @@ public class JobLogServiceSpringImpl implements JobLogService {
 	}
 	
 	@Transactional(readOnly=true)
-	public ArrayList<JobLog> listForBatch(final int jobId) {
+	public ArrayList<JobLog> listForBatch(final int jobInstanceId) {
 		Logging.info(this, "Begin listJobLog");
 		ArrayList<JobLog> arrayList = null;
 		
-		BatchJobInstance batchJobInstance = batchJobInstanceHibernateDAO.readJobExecution(jobId);
-		
-		BatchJobParams  batchJobParams = batchJobParamsHibernateDAO.getJobParam(batchJobInstance.getId(), BaseConstants.JOB_ID);
+		BatchJobParams  batchJobParams = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, BaseConstants.JOB_ID);
 		
 		arrayList = jobLogHibernateDAO.list((int)batchJobParams.getLongValue());
 		Logging.info(this, "End listJobLog");

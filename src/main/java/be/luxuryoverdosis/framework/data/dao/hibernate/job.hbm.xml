@@ -20,4 +20,22 @@
 		<property name="ended" column="Ended" type="timestamp"></property>
 		<property name="status" column="Status" type="string" not-null="true"></property>
 	</class>
+	
+	<query name="getAllJobsByName">
+		from Job j
+		where j.name = :name
+		order by j.ended asc
+	</query>
+	
+	<query name="getAllStartedJobsByName">
+		from Job j
+		where j.name = :name
+		and j.started is not null
+	</query>
+	
+	<query name="getAllNotStartedJobsByName">
+		from Job j
+		where j.name = :name
+		and j.started is null
+	</query>
 </hibernate-mapping>

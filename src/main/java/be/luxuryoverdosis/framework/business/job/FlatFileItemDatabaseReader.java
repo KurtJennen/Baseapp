@@ -23,7 +23,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
-import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
+import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -32,7 +32,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	
 	//added by luxuryoverdosis
 	@Resource
-	private JobHibernateDAO jobHibernateDAO;
+	JobService jobService;
 	
 	//added by luxuryoverdosis
 	private int jobId;
@@ -251,7 +251,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 		Assert.notNull(recordSeparatorPolicy, "RecordSeparatorPolicy must be set");
 		
 		//added by luxuryoverdosis
-		Job job = jobHibernateDAO.read(jobId);
+		Job job = jobService.read(jobId);
 
 		//added by luxuryoverdosis
         resource = new InputStreamResource(job.getFile().getBinaryStream());
