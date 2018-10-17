@@ -7,4 +7,32 @@
 		<property name="jobName" column="Job_Name" type="string" not-null="true"></property>
 		<property name="jobKey" column="Job_Key" type="string" not-null="true"></property>
 	</class>
+	
+	<query name="getAllBatchJobInstanceByJobExecution">
+		select bji
+		from BatchJobExecution bje
+		inner join bje.batchJobInstance bji
+		where bje.id = :jobExecutionId
+		order by bje.createTime desc
+	</query>
+	
+	<query name="getAllBatchJobInstanceByJobName">
+		select new be.luxuryoverdosis.framework.data.to.BatchJobInstance(
+			bji.id,
+			bji.jobName,
+			bje.id,
+			bje.version,
+			bje.createTime,
+			bje.startTime,
+			bje.endTime,
+			bje.status,
+			bje.exitCode,
+			bje.exitMessage,
+			bje.lastUpdated
+		)
+		from BatchJobExecution bje
+		inner join bje.batchJobInstance bji
+		where bji.jobName = :jobName
+		order by bje.createTime desc
+	</query>
 </hibernate-mapping>
