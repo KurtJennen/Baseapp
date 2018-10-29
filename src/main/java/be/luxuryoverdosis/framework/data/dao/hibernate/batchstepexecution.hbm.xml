@@ -22,4 +22,12 @@
 		
 		<many-to-one name="batchJobExecution" column="Job_Execution_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.BatchJobExecution" lazy="false"></many-to-one>
 	</class>
+	
+	<query name="getAllBatchStepExecutionByJobInstance">
+		select bse
+		from BatchStepExecution bse
+		inner join bse.batchJobExecution bje
+		inner join bje.batchJobInstance jbi
+		where jbi.id = :jobInstanceId
+	</query>
 </hibernate-mapping>
