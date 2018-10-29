@@ -13,6 +13,8 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements SqlHibernateDAO {
+	private final static String COUNT_BASE_SQL = "select count(*) from base_sql where name = ? and app = ?";
+	private final static String INSERT_BASE_SQL = "insert into base_sql (Version, UserAdd, UserUpdate, DateAdd, DateUpdate, Name, Content, App) values (0, 'root', 'root', now(), now(), ?, ?, ?)";
 	private static final String APPLICATION = "application";
 	private static final String NAME = "name";
 	
@@ -84,9 +86,24 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		return count;
 	}
 	
-	public void execute(final String sqlStatement) throws DataAccessException {
-		Logging.info(this, "Begin countSql(String, String)");
+	public int countJdbc(final String name, final String application) throws DataAccessException {
+		Logging.info(this, "Begin countJdbc");
+		final Object[] paramsSelect = new Object[] {name, application};
+        int count = getJdbcTemplate().queryForObject(COUNT_BASE_SQL, paramsSelect, Integer.class);
+		Logging.info(this, "End countJdbc");
+		return count;
+	}
+	
+	public void executeJdbc(final String sqlStatement) throws DataAccessException {
+		Logging.info(this, "Begin executeJdbc");
 		getJdbcTemplate().execute(sqlStatement);
-		Logging.info(this, "End countSql(String, String)");
+		Logging.info(this, "End executeJdbc");
+	}
+	
+	public void insertJdbc(final String sqlStatement, final String name, final String application) throws DataAccessException {
+		Logging.info(this, "Begin insertJdbc");
+		final Object[] paramsInsert = new Object[] {name, sqlStatement, application};
+		getJdbcTemplate().update(INSERT_BASE_SQL, paramsInsert);
+		Logging.info(this, "End insertJdbc");
 	}
 }

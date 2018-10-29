@@ -16,6 +16,6 @@ public class SqlExecuterServiceSpringImpl extends AbstractSqlExecuterServiceSpri
 		
 		//application sql's
 		
-		Logging.info(this, "Begin executeSql");
+		Logging.info(this, "End executeSql");
 	}
 }

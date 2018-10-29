@@ -79,29 +79,21 @@ public class SqlServiceSpringImpl implements SqlService {
 		return countSql.longValue();
 	}
 	
-	@Transactional
 	public void execute(final String sqlStatement, final String name, final String application) throws DataAccessException {
-		Logging.info(this, "Begin executeSqlExecuter");
+		Logging.info(this, "Begin execute");
 		
 		long count = 0;
 		
 		try {
-			count = sqlHibernateDAO.count(name, application);
-			Logging.info(this, "SQL Already Executed: " + sqlStatement);
+			count = sqlHibernateDAO.countJdbc(name, application);
 		} catch (Exception e) {
 			Logging.info(this, "SQL First Startup");
 		}
 		
 		if (count == 0) {
 			try {
-				sqlHibernateDAO.execute(sqlStatement);
-				
-				Sql sql = new Sql();
-				sql.setName(name);
-				sql.setContent(sqlStatement);
-				sql.setApplication(application);
-				sqlHibernateDAO.createOrUpdate(sql);
-				
+				sqlHibernateDAO.executeJdbc(sqlStatement);
+				sqlHibernateDAO.insertJdbc(sqlStatement, name, application);
 				Logging.info(this, "SQL Executed: " + sqlStatement);
 			} catch (DataAccessException e) {
 				Logging.info(this, "SQL NOT Executed: " + sqlStatement + " " + e.getMessage());
@@ -109,6 +101,6 @@ public class SqlServiceSpringImpl implements SqlService {
 			}
 		}
         
-		Logging.info(this, "Begin executeSqlExecuter");
+		Logging.info(this, "End execute");
 	}
 }
