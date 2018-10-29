@@ -30,10 +30,10 @@ public class AppListener implements ServletContextListener{
 			SqlExecuterService sqlExecuterService = BaseSpringServiceLocator.getBean(SqlExecuterService.class);
 			sqlExecuterService.execute();
 		} catch (DataAccessException e) {
-			Logging.error(this, "AppListener error" + e.getMessage());
+			Logging.error(this, "AppListener error " + e.getMessage());
 			throw e;
 		} catch (Exception e) {
-			Logging.error(this, "AppListener error" + e.getMessage());
+			Logging.error(this, "AppListener error " + e.getMessage());
 		}
 	}
 
