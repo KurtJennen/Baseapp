@@ -16,8 +16,8 @@ public class BatchJobParamsHibernateDAOMySQLImpl extends AbstractHibernateDaoSup
 	private static final String KEY_NAME = "keyName";
 	
 	@SuppressWarnings("unchecked")
-	public BatchJobParams getJobParam(final long jobInstanceId, final String keyName) {
-		Logging.info(this, "Begin getJobParam");
+	public BatchJobParams read(final long jobInstanceId, final String keyName) {
+		Logging.info(this, "Begin readBatchJobParams");
 		
 		Query query = getCurrentSession().getNamedQuery("getAllJobParamsByJobInstanceAndKeyName");
 		query.setLong(JOB_INSTANCE_ID, jobInstanceId);
@@ -28,7 +28,7 @@ public class BatchJobParamsHibernateDAOMySQLImpl extends AbstractHibernateDaoSup
 		if(!arrayList.isEmpty()) {
 			batchJobParams = (BatchJobParams)arrayList.iterator().next();
 		}
-		Logging.info(this, "End getJobParam");
+		Logging.info(this, "End readBatchJobParams");
 		return batchJobParams;
 	}
 	

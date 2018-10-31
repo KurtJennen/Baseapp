@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
-import org.springframework.orm.hibernate3.HibernateOperations;
 
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
@@ -16,8 +16,8 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
-import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.Job;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -37,8 +37,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 		this.jobId = (int)jobId;
 	}
 
-	@Override
-	protected void doWrite(HibernateOperations hibernateOperations, List<? extends UserDTO> users) {
+	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
 		Job job = jobService.read(jobId);
 		try {
 			

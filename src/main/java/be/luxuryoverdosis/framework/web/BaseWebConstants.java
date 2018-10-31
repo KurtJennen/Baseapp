@@ -53,6 +53,7 @@ public class BaseWebConstants {
 	
 	public static final String BATCH_JOB_EXECUTION_LIST = "batchJobExecutionList";
 	public static final String BATCH_JOB_PARAMS_LIST = "batchJobParamsList";
+	public static final String BATCH_JOB_EXECUTION_PARAMS_LIST = "batchJobExecutionParamsList";
 	public static final String BATCH_JOB_STEP_EXECUTION_LIST = "batchJobStepExecutionList";
 	public static final String DOCUMENT_LIST = "documentList";
 	public static final String NUMBER_LIST = "numberList";

@@ -14,4 +14,12 @@
 		
 		<many-to-one name="batchJobInstance" column="Job_Instance_Id" not-null="true" class="be.luxuryoverdosis.framework.data.to.BatchJobInstance" lazy="false"></many-to-one>
 	</class>
+	
+	<query name="getAllBatchJobExecutionByJobInstance">
+		select bje
+		from BatchJobExecution bje
+		inner join bje.batchJobInstance bji
+		where bji.id = :jobInstanceId
+		order by bje.createTime desc
+	</query>
 </hibernate-mapping>

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.batch.item.database.HibernateItemWriter;
-import org.springframework.orm.hibernate3.HibernateOperations;
+import org.springframework.orm.hibernate5.HibernateOperations;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
@@ -34,7 +34,6 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 		this.jobId = (int)jobId;
 	}
 
-	@Override
 	protected void doWrite(HibernateOperations hibernateOperations, List<? extends User> users) {
 		Job job = jobService.read(jobId);
 		try {

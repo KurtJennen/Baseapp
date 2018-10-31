@@ -16,13 +16,13 @@ public class BatchStepExecutionHibernateDAOMySQLImpl extends AbstractHibernateDa
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<BatchStepExecution> list(long jobInstanceId) {
-		Logging.info(this, "Begin listBatchJobStepExecution");
+		Logging.info(this, "Begin listBatchStepExecution");
 		
 		Query query = getCurrentSession().getNamedQuery("getAllBatchStepExecutionByJobInstance");
 		query.setLong(JOB_INSTANCE_ID, jobInstanceId);
 		ArrayList<BatchStepExecution> arrayList = (ArrayList<BatchStepExecution>) query.list();
 		
-		Logging.info(this, "End listBatchJobStepExecution");
+		Logging.info(this, "End listBatchStepExecution");
 		return arrayList;
 	}
 }

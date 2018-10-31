@@ -12,28 +12,11 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements BatchJobInstanceHibernateDAO {
-	private static final String JOB_EXECUTION_ID = "jobExecutionId";
 	private static final String JOB_NAME = "jobName";
 	
 	public BatchJobInstance read(final long id) {
 		Logging.info(this, "Begin readBatchJobInstance");
 		BatchJobInstance batchJobInstance = (BatchJobInstance) getCurrentSession().load(BatchJobInstance.class, id);
-		Logging.info(this, "End readBatchJobInstance");
-		return batchJobInstance;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public BatchJobInstance readJobExecution(final long jobExecutionId) {
-		Logging.info(this, "Begin readBatchJobInstance");
-		
-		Query query = getCurrentSession().getNamedQuery("getAllBatchJobInstanceByJobExecution");
-		query.setLong(JOB_EXECUTION_ID, jobExecutionId);
-		ArrayList<BatchJobInstance> arrayList = (ArrayList<BatchJobInstance>) query.list();
-		
-		BatchJobInstance batchJobInstance = null;
-		if(!arrayList.isEmpty()) {
-			batchJobInstance = (BatchJobInstance)arrayList.iterator().next();
-		}
 		Logging.info(this, "End readBatchJobInstance");
 		return batchJobInstance;
 	}

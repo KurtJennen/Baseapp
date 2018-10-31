@@ -554,15 +554,15 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		private Writer getBufferedWriter(WritableByteChannel fileChannel, String encoding) {
 			try {
 				Writer writer = Channels.newWriter(fileChannel, encoding);
-				if (transactional) {
-					return new TransactionAwareBufferedWriter(writer, new Runnable() {
-						public void run() {
-							closeStream();
-						}
-					});
-				} else {
+//				if (transactional) {
+//					return new TransactionAwareBufferedWriter(fileChannel, new Runnable() {
+//						public void run() {
+//							closeStream();
+//						}
+//					});
+//				} else {
 					return new BufferedWriter(writer);
-				}
+//				}
 			}
 			catch (UnsupportedCharsetException ucse) {
 				throw new ItemStreamException("Bad encoding configuration for output file " + fileChannel, ucse);

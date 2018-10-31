@@ -11,9 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecution;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -23,9 +27,13 @@ public class JobLogServiceSpringImpl implements JobLogService {
 	@Resource
 	private JobLogHibernateDAO jobLogHibernateDAO;
 	@Resource
+	private BatchJobExecutionHibernateDAO batchJobExecutionHibernateDAO;
+	@Resource
 	private BatchJobInstanceHibernateDAO batchJobInstanceHibernateDAO;
 	@Resource
 	private BatchJobParamsHibernateDAO batchJobParamsHibernateDAO;
+	@Resource
+	private BatchJobExecutionParamsHibernateDAO batchJobExecutionParamsHibernateDAO;
 	
 	
 	private static final int LENGTH = 256;
@@ -108,9 +116,18 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		Logging.info(this, "Begin listJobLog");
 		ArrayList<JobLog> arrayList = null;
 		
-		BatchJobParams  batchJobParams = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, BaseConstants.JOB_ID);
+		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId, BaseConstants.JOB_ID);
 		
-		arrayList = jobLogHibernateDAO.list((int)batchJobParams.getLongValue());
+		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);
+		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
+		
+		if(batchJobParams != null) {
+			arrayList = jobLogHibernateDAO.list((int)batchJobParams.getLongValue());
+		}
+		if(batchJobExecutionParams != null) {
+			arrayList = jobLogHibernateDAO.list((int)batchJobExecutionParams.getLongValue());
+		}
+		
 		Logging.info(this, "End listJobLog");
 		return arrayList;
 	}

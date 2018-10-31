@@ -264,4 +264,46 @@ public class SqlStartup {
 	public final static String SQL_140531a = "ALTER TABLE base_job_log ADD (" +
 			"File longblob)";
 	
+	//Spring Batch Upgrade Begin
+	public final static String SQL_181019a = "ALTER TABLE batch_job_execution MODIFY COLUMN " +
+			"Exit_Code varchar(2500) DEFAULT NULL";
+	
+	public final static String SQL_181019b = "ALTER TABLE batch_job_execution ADD ( " +
+			"Job_Configuration_Location VARCHAR(2500) NULL)";
+			
+	
+	public final static String SQL_181019c = "ALTER TABLE batch_step_execution MODIFY COLUMN " +
+			"Exit_Code varchar(2500) DEFAULT NULL";
+	
+	public final static String SQL_181019d = "CREATE TABLE batch_job_execution_params ( " +
+			  "Job_Execution_Id bigint(20) NOT NULL, " +
+			  "Type_Cd varchar(6) NOT NULL, " +
+			  "Key_name varchar(100) NOT NULL, " +
+			  "String_Val varchar(250) DEFAULT NULL, " +
+			  "Date_Val datetime DEFAULT NULL, " +
+			  "Long_Val bigint(20) DEFAULT NULL, " +
+			  "Double_Val double DEFAULT NULL, " +
+			  "Identifying char(1) NOT NULL, " +
+			  "KEY JOB_EXEC_PARAMS_FK (Job_Execution_Id), " +
+			  "CONSTRAINT JOB_EXEC_PARAMS_FK FOREIGN KEY (Job_Execution_Id) REFERENCES batch_job_execution (Job_Execution_Id))";
+	
+	public final static String SQL_181019e = "ALTER TABLE batch_step_execution_seq ADD ( " +
+			"Unique_Key char(1) NOT NULL, " +
+			"UNIQUE KEY UNIQUE_KEY_UN(Unique_Key))";
+	
+	public final static String SQL_181019f = "ALTER TABLE batch_job_execution_seq ADD ( " +
+			"Unique_Key char(1) NOT NULL, " +
+			"UNIQUE KEY UNIQUE_KEY_UN(Unique_Key))";
+	
+	public final static String SQL_181019g = "ALTER TABLE batch_job_seq ADD ( " +
+			"Unique_Key char(1) NOT NULL, " +
+			"UNIQUE KEY UNIQUE_KEY_UN(Unique_Key))";
+	
+	public final static String SQL_181019h = "INSERT INTO BATCH_STEP_EXECUTION_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_STEP_EXECUTION_SEQ)";
+	
+	public final static String SQL_181019i = "INSERT INTO BATCH_JOB_EXECUTION_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_JOB_EXECUTION_SEQ)";
+	
+	public final static String SQL_181019j = "INSERT INTO BATCH_JOB_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_JOB_SEQ)";
+	//Spring Batch Upgrade End
+	
 }

@@ -20,11 +20,13 @@ import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobExecutionParamsService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobParamsService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchStepExecutionService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.BatchStepExecution;
@@ -33,6 +35,7 @@ import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.JobForm;
+import be.luxuryoverdosis.framework.web.jmesa.BatchJobExecutionParamsJmesaTemplate;
 import be.luxuryoverdosis.framework.web.jmesa.BatchJobParamsJmesaTemplate;
 import be.luxuryoverdosis.framework.web.jmesa.BatchJobStepExecutionJmesaTemplate;
 import be.luxuryoverdosis.framework.web.jmesa.JobLogJmesaTemplate;
@@ -82,6 +85,22 @@ public class DetailJobAction extends DispatchAction {
 		}
         request.setAttribute(BaseWebConstants.BATCH_JOB_PARAMS_LIST, html);
 		//JMesa End
+        
+        //begin
+        BatchJobExecutionParamsService batchJobExecutionParamsService = BaseSpringServiceLocator.getBean(BatchJobExecutionParamsService.class);
+		ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList = new ArrayList<BatchJobExecutionParams>();
+		batchJobExecutionParamsList = batchJobExecutionParamsService.list(id);
+		
+		//JMesa Start	
+		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, request, response);
+		BatchJobExecutionParamsJmesaTemplate batchJobExecutionParamsJmesaTemplate = new BatchJobExecutionParamsJmesaTemplate(tableFacade, batchJobExecutionParamsList, request);
+		html = batchJobExecutionParamsJmesaTemplate.render();
+		if(html == null) {
+			return null;
+		}
+        request.setAttribute(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, html);
+		//JMesa End
+        //end
         
         BatchStepExecutionService batchStepExecutionService = BaseSpringServiceLocator.getBean(BatchStepExecutionService.class);
 		ArrayList<BatchStepExecution> batchStepExecutionList = new ArrayList<BatchStepExecution>();

@@ -31,8 +31,9 @@
 	<div id="tabs">
 		<ul>
 			<li><a href="#tab1"><fmt:message key="job.parameters" /></a></li>
-			<li><a href="#tab2"><fmt:message key="job.steps" /></a></li>
-			<li><a href="#tab3"><fmt:message key="displayJobLog.title" /></a></li>
+			<li><a href="#tab2"><fmt:message key="job.execution.parameters" /></a></li>
+			<li><a href="#tab3"><fmt:message key="job.steps" /></a></li>
+			<li><a href="#tab4"><fmt:message key="displayJobLog.title" /></a></li>
 		</ul>
 		<div id="tab1">
 			<div>
@@ -41,10 +42,15 @@
 		</div>
 		<div id="tab2">
 			<div>
-				<%= request.getAttribute(WebConstants.BATCH_JOB_STEP_EXECUTION_LIST) %>
+				<%= request.getAttribute(WebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST) %>
 			</div>
 		</div>
 		<div id="tab3">
+			<div>
+				<%= request.getAttribute(WebConstants.BATCH_JOB_STEP_EXECUTION_LIST) %>
+			</div>
+		</div>
+		<div id="tab4">
 			<div>
 				<%= request.getAttribute(WebConstants.JOB_LOG_LIST) %>
 			</div>

@@ -13,10 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecution;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -28,9 +32,13 @@ public class JobServiceSpringImpl implements JobService {
 	@Resource
 	private JobLogHibernateDAO jobLogHibernateDAO;
 	@Resource
+	private BatchJobExecutionHibernateDAO batchJobExecutionHibernateDAO;
+	@Resource
 	private JobParamHibernateDAO jobParamHibernateDAO;
 	@Resource
 	private BatchJobParamsHibernateDAO batchJobParamsHibernateDAO;
+	@Resource
+	private BatchJobExecutionParamsHibernateDAO batchJobExecutionParamsHibernateDAO;
 	
 	@Transactional
 	public Job createOrUpdate(final Job job) {
@@ -67,10 +75,20 @@ public class JobServiceSpringImpl implements JobService {
 		
 		Job job = null;
 		
-		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.getJobParam(jobInstanceId, "jobId");
+		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId, BaseConstants.JOB_ID);
+		
+		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);
+		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
+		
 		
 		if(batchJobParams != null) {
 			job = jobHibernateDAO.read((int)batchJobParams.getLongValue());
+			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
+			job.setFileData(bytes);
+		}
+		
+		if(batchJobExecutionParams != null) {
+			job = jobHibernateDAO.read((int)batchJobExecutionParams.getLongValue());
 			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 			job.setFileData(bytes);
 		}
