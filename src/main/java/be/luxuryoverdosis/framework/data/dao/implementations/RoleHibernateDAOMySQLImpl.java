@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
@@ -35,8 +35,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public Role readName(final String name) {
 		Logging.info(this, "Begin readNameRole");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllRolesByName");
-		query.setString(NAME, name);
+		Query<Role> query = getCurrentSession().getNamedQuery("getAllRolesByName");
+		query.setParameter(NAME, name);
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Role role = null;
@@ -57,7 +57,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<Role> list() {
 		Logging.info(this, "Begin listRole");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllRoles");
+		Query<Role> query = getCurrentSession().getNamedQuery("getAllRoles");
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Logging.info(this, "End listRole");
@@ -68,8 +68,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<RoleDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listRole");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllRolesDtoByName");
-		query.setString(NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		Query<RoleDTO> query = getCurrentSession().getNamedQuery("getAllRolesDtoByName");
+		query.setParameter(NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
 		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) query.list();
 		
 		Logging.info(this, "End listRole");
@@ -80,9 +80,9 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountRolesByName");
-		query.setString(NAME, name);
-		query.setInteger(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountRolesByName");
+		query.setParameter(NAME, name);
+		query.setParameter(ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
