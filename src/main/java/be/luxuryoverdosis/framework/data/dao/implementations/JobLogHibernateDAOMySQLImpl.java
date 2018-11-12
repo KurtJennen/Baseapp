@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 import java.sql.Blob;
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -43,11 +43,12 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		Logging.info(this, "End deleteJobLog");		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void deleteForJob(final int jobId) {
 		Logging.info(this, "Begin deleteForJobJobLog");
 		
-		Query query = getCurrentSession().getNamedQuery("deleteJobLogsByJob");
-		query.setInteger(JOB_ID, jobId);
+		Query<Long> query = getCurrentSession().getNamedQuery("deleteJobLogsByJob");
+		query.setParameter(JOB_ID, jobId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForJobJobLog");		
@@ -57,8 +58,8 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public ArrayList<JobLog> list(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllJobLogsByJob");
-		query.setInteger(JOB_ID, jobId);
+		Query<JobLog> query = getCurrentSession().getNamedQuery("getAllJobLogsByJob");
+		query.setParameter(JOB_ID, jobId);
 		ArrayList<JobLog> arrayList = (ArrayList<JobLog>) query.list();
 		
 		Logging.info(this, "End listJobLog");

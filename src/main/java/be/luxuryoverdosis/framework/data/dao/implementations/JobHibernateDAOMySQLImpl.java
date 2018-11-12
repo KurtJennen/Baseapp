@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 import java.sql.Blob;
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -47,8 +47,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> list(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllJobsByName");
-		query.setString(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery("getAllJobsByName");
+		query.setParameter(NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");
@@ -59,8 +59,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> listStarted(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllStartedJobsByName");
-		query.setString(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery("getAllStartedJobsByName");
+		query.setParameter(NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");
@@ -71,8 +71,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> listNotStarted(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllNotStartedJobsByName");
-		query.setString(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery("getAllNotStartedJobsByName");
+		query.setParameter(NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");

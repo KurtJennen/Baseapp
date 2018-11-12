@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -34,11 +34,12 @@ public class JobParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 		Logging.info(this, "End deleteJobParam");		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void deleteForJob(final int jobId) {
 		Logging.info(this, "Begin deleteForJobJobParam");
 		
-		Query query = getCurrentSession().getNamedQuery("deleteJobParamsByJob");
-		query.setInteger(JOB_ID, jobId);
+		Query<Long> query = getCurrentSession().getNamedQuery("deleteJobParamsByJob");
+		query.setParameter(JOB_ID, jobId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForJobJobParam");		
@@ -48,8 +49,8 @@ public class JobParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public ArrayList<JobParam> list(final int jobId) {
 		Logging.info(this, "Begin listJobParam");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllJobParamsByJob");
-		query.setInteger(JOB_ID, jobId);
+		Query<JobParam> query = getCurrentSession().getNamedQuery("getAllJobParamsByJob");
+		query.setParameter(JOB_ID, jobId);
 		ArrayList<JobParam> arrayList = (ArrayList<JobParam>) query.list();
 		
 		Logging.info(this, "End listJobParam");
