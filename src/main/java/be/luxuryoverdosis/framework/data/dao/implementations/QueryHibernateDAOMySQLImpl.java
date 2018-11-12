@@ -33,9 +33,9 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public Query read(final String name, final String type) {
 		Logging.info(this, "Begin readQuery(name, type)");
 		
-		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByNameAndType");
-		hibernateQuery.setString(NAME, name);
-		hibernateQuery.setString(TYPE, type);
+		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByNameAndType");
+		hibernateQuery.setParameter(NAME, name);
+		hibernateQuery.setParameter(TYPE, type);
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Query query = null;
@@ -56,9 +56,9 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public ArrayList<Query> list(final String type, final int userId) {
 		Logging.info(this, "Begin listQuery");
 		
-		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByTypeAndUser");
-		hibernateQuery.setString(TYPE, type);
-		hibernateQuery.setInteger(USER_ID, userId);
+		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByTypeAndUser");
+		hibernateQuery.setParameter(TYPE, type);
+		hibernateQuery.setParameter(USER_ID, userId);
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Logging.info(this, "End listQuery");
@@ -69,10 +69,10 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public long count(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin countQuery");
 		
-		org.hibernate.Query hibernateQuery = getCurrentSession().getNamedQuery("getCountQueriesByNameAndTypeAndUser");
-		hibernateQuery.setString(NAME, name);
-		hibernateQuery.setString(TYPE, type);
-		hibernateQuery.setInteger(USER_ID, userId);
+		org.hibernate.query.Query<Long> hibernateQuery = getCurrentSession().getNamedQuery("getCountQueriesByNameAndTypeAndUser");
+		hibernateQuery.setParameter(NAME, name);
+		hibernateQuery.setParameter(TYPE, type);
+		hibernateQuery.setParameter(USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) hibernateQuery.list();
 		long count = arrayList.iterator().next().longValue();
 		

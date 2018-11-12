@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -34,11 +34,12 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 		Logging.info(this, "End deleteQueryParam");		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void deleteForQuery(final int queryId) {
 		Logging.info(this, "Begin deleteForQueryQueryParam");
 
-		Query query = getCurrentSession().getNamedQuery("deleteQueryParamsByQuery");
-		query.setInteger(QUERY_ID, queryId);
+		Query<Long> query = getCurrentSession().getNamedQuery("deleteQueryParamsByQuery");
+		query.setParameter(QUERY_ID, queryId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForQueryQueryParam");		
@@ -48,8 +49,8 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	public ArrayList<QueryParam> list(final int queryId) {
 		Logging.info(this, "Begin listQueryParam");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllQueryParamsByQuery");
-		query.setInteger(QUERY_ID, queryId);
+		Query<QueryParam> query = getCurrentSession().getNamedQuery("getAllQueryParamsByQuery");
+		query.setParameter(QUERY_ID, queryId);
 		ArrayList<QueryParam> arrayList = (ArrayList<QueryParam>) query.list();
 		
 		Logging.info(this, "End listQueryParam");
@@ -60,8 +61,8 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	public long count(final int queryId) {
 		Logging.info(this, "Begin countQueryParam");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountQueryParamsByQuery");
-		query.setInteger(QUERY_ID, queryId);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountQueryParamsByQuery");
+		query.setParameter(QUERY_ID, queryId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
