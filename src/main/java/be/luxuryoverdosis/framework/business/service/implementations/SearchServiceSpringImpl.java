@@ -44,7 +44,7 @@ public class SearchServiceSpringImpl implements SearchService {
 		String[] openBrackets = searchCriteria.getOpenBrackets();
 		String[] closeBrackets = searchCriteria.getCloseBrackets();
 		String[] addAndOrs = searchCriteria.getAddAndOrs();
-		String complexQuery = SearchQuery.ZERO;
+		String complexQuery = searchCriteria.getComplexQuery();
 		String addOnSelect = searchCriteria.getAddOnSelect();
 		
 		StringBuffer search = new StringBuffer();
