@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -35,10 +35,10 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public Number read(final String applicationCode, final String year, final String type) {
 		Logging.info(this, "Begin readNumber");
 		
-		Query query = getCurrentSession().getNamedQuery("getNumberByYearAndType");
-		query.setString(APPLICATION_CODE, applicationCode);
-		query.setString(YEAR, year);
-		query.setString(TYPE, type);
+		Query<Number> query = getCurrentSession().getNamedQuery("getNumberByYearAndType");
+		query.setParameter(APPLICATION_CODE, applicationCode);
+		query.setParameter(YEAR, year);
+		query.setParameter(TYPE, type);
 		ArrayList<Number> arrayList = (ArrayList<Number>) query.list();
 		
 		Number number = null;
@@ -58,10 +58,8 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	public ArrayList<Number> list() {
 		Logging.info(this, "Begin listNumber");
-		
-		Query query = getCurrentSession().getNamedQuery("getAllNumbers");
+		Query<Number> query = getCurrentSession().getNamedQuery("getAllNumbers");
 		ArrayList<Number> arrayList = (ArrayList<Number>) query.list();
-		
 		Logging.info(this, "End listNumber");
 		return arrayList;
 	}
@@ -70,11 +68,11 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public long count(final String applicationCode, final String year, final String type, final int id) {
 		Logging.info(this, "Begin countNumber");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountByApplicationCodeAndYearAndType");
-		query.setString(APPLICATION_CODE, applicationCode);
-		query.setString(YEAR, year);
-		query.setString(TYPE, type);
-		query.setInteger(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountByApplicationCodeAndYearAndType");
+		query.setParameter(APPLICATION_CODE, applicationCode);
+		query.setParameter(YEAR, year);
+		query.setParameter(TYPE, type);
+		query.setParameter(ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		
 		long count = arrayList.iterator().next().longValue();
