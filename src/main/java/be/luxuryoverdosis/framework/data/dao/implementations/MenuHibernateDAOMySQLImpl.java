@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -37,9 +37,9 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public Menu readFullName(final String fullName, final int userId) {
 		Logging.info(this, "Begin readFullName");
 		
-		Query query = getCurrentSession().getNamedQuery("getMenusByFullNameAndUser");
-		query.setString(FULL_NAME, fullName);
-		query.setInteger(USER_ID, userId);
+		Query<Menu> query = getCurrentSession().getNamedQuery("getMenusByFullNameAndUser");
+		query.setParameter(FULL_NAME, fullName);
+		query.setParameter(USER_ID, userId);
 		ArrayList<Menu> arrayList = (ArrayList<Menu>) query.list();
 		
 		Menu menu = null;
@@ -56,11 +56,12 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "End deleteMenu");		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void deleteForUser(int userId) {
 		Logging.info(this, "Begin deleteForUserMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("deleteMenusByUser");
-		query.setInteger(USER_ID, userId);
+		Query<Long> query = getCurrentSession().getNamedQuery("deleteMenusByUser");
+		query.setParameter(USER_ID, userId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForUserMenu");	
@@ -70,8 +71,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<MenuDTO> list(final int userId) {
 		Logging.info(this, "Begin listMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("getMenusByUserDto");
-		query.setInteger(USER_ID, userId);
+		Query<MenuDTO> query = getCurrentSession().getNamedQuery("getMenusByUserDto");
+		query.setParameter(USER_ID, userId);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listMenu");
@@ -82,9 +83,9 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<MenuDTO> listHidden(final int userId, final String hidden) {
 		Logging.info(this, "Begin listHiddenMenu");
 
-		Query query = getCurrentSession().getNamedQuery("getHiddenMenusDtoByUser");
-		query.setInteger(USER_ID, userId);
-		query.setString(HIDDEN, hidden);
+		Query<MenuDTO> query = getCurrentSession().getNamedQuery("getHiddenMenusDtoByUser");
+		query.setParameter(USER_ID, userId);
+		query.setParameter(HIDDEN, hidden);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listHiddenMenu");
@@ -95,9 +96,9 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<MenuDTO> listDisabled(final int userId, final String disabled) {
 		Logging.info(this, "Begin listDisabledMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("getDisabledMenusDtoByUser");
-		query.setInteger(USER_ID, userId);
-		query.setString(DISABLED, disabled);
+		Query<MenuDTO> query = getCurrentSession().getNamedQuery("getDisabledMenusDtoByUser");
+		query.setParameter(USER_ID, userId);
+		query.setParameter(DISABLED, disabled);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listDisabledMenu");
@@ -108,9 +109,9 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<MenuDTO> listForPayAndPayed(final int userId, final String payed) {
 		Logging.info(this, "Begin listForPayAndPayedMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("getForPayMenusDtoByUserAndPayed");
-		query.setInteger(USER_ID, userId);
-		query.setString(PAYED, payed);
+		Query<MenuDTO> query = getCurrentSession().getNamedQuery("getForPayMenusDtoByUserAndPayed");
+		query.setParameter(USER_ID, userId);
+		query.setParameter(PAYED, payed);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listForPayAndPayedMenu");
@@ -121,8 +122,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final int userId) {
 		Logging.info(this, "Begin countMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountMenusByUser");
-		query.setInteger(USER_ID, userId);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountMenusByUser");
+		query.setParameter(USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -134,9 +135,9 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final String fullName, final int userId) {
 		Logging.info(this, "Begin countMenu");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountMenusByFullNameAndUser");
-		query.setString(FULL_NAME, fullName);
-		query.setInteger(USER_ID, userId);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountMenusByFullNameAndUser");
+		query.setParameter(FULL_NAME, fullName);
+		query.setParameter(USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
