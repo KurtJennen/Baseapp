@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
@@ -36,8 +36,8 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public Sql readName(final String name) {
 		Logging.info(this, "Begin readNameSql");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllSqlsByName");
-		query.setString(NAME, name);
+		Query<Sql> query = getCurrentSession().getNamedQuery("getAllSqlsByName");
+		query.setParameter(NAME, name);
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		
 		Sql sql = null;
@@ -57,7 +57,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	@SuppressWarnings("unchecked")
 	public ArrayList<Sql> list() {
 		Logging.info(this, "Begin listSql");
-		Query query = getCurrentSession().getNamedQuery("getAllSqls");
+		Query<Sql> query = getCurrentSession().getNamedQuery("getAllSqls");
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		Logging.info(this, "End listSql");
 		return arrayList;
@@ -66,10 +66,12 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	@SuppressWarnings("unchecked")
 	public long count(final String name) {
 		Logging.info(this, "Begin countSql(String)");
-		Query query = getCurrentSession().getNamedQuery("getCountSqlsByName");
-		query.setString(NAME, name);
+		
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountSqlsByName");
+		query.setParameter(NAME, name);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
+		
 		Logging.info(this, "End countSql(String)");
 		return count;
 	}
@@ -77,11 +79,13 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	@SuppressWarnings("unchecked")
 	public long count(final String name, final String application) {
 		Logging.info(this, "Begin countSql(String, String)");
-		Query query = getCurrentSession().getNamedQuery("getCountSqlsByNameANdApplication");
-		query.setString(NAME, name);
-		query.setString(APPLICATION, application);
+		
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountSqlsByNameANdApplication");
+		query.setParameter(NAME, name);
+		query.setParameter(APPLICATION, application);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
+		
 		Logging.info(this, "End countSql(String, String)");
 		return count;
 	}
