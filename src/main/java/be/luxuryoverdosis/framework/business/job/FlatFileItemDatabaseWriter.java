@@ -530,7 +530,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 
 			outputBufferedWriter = getBufferedWriter(fileChannel, encoding);
 
-			Assert.state(outputBufferedWriter != null);
+			Assert.state(outputBufferedWriter != null, "Object outputBufferedWriter is empty");
 			
 			//commented by luxury overdosis
 			// in case of restarting reset position to last committed point
