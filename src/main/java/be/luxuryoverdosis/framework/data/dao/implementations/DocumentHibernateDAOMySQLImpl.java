@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 import java.sql.Blob;
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -50,7 +50,7 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public ArrayList<Document> list() {
 		Logging.info(this, "Begin listDocument");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllDocuments");
+		Query<Document> query = getCurrentSession().getNamedQuery("getAllDocuments");
 		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
 		
 		Logging.info(this, "End listDocument");
@@ -61,8 +61,8 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public ArrayList<Document> list(final String type) {
 		Logging.info(this, "Begin listDocument");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllDocumentsByType");
-		query.setString(TYPE, type);
+		Query<Document> query = getCurrentSession().getNamedQuery("getAllDocumentsByType");
+		query.setParameter(TYPE, type);
 		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
 		
 		Logging.info(this, "End listDocument");
@@ -73,10 +73,10 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public long count(final String type, final String fileName, final int id) {
 		Logging.info(this, "Begin countDocument(String, String, int)");
 		
-		Query query = getCurrentSession().getNamedQuery("getCountDocumentsByTypeAndFilename");
-		query.setString(TYPE, type);
-		query.setString(FILE_NAME, fileName);
-		query.setInteger(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery("getCountDocumentsByTypeAndFilename");
+		query.setParameter(TYPE, type);
+		query.setParameter(FILE_NAME, fileName);
+		query.setParameter(ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		
 		long count = arrayList.iterator().next().longValue();
