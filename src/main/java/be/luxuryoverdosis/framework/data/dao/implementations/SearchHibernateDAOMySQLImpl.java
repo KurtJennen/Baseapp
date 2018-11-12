@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -13,7 +14,13 @@ public class SearchHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	public ArrayList<Object> search(final String select, final Object[] objects) {
 		Logging.info(this, "Begin searchSearch");
-		ArrayList<Object> arrayList = (ArrayList<Object>) getHibernateTemplate().find(select, objects);
+		
+		Query<Object> query = getCurrentSession().createQuery(select);
+		for (int position = 0; position < objects.length; position++) {
+			query.setParameter(position, objects[position]);
+		}
+		ArrayList<Object> arrayList = (ArrayList<Object>) query.list();
+		
 		Logging.info(this, "End searchSearch");
 		return arrayList;
 	}
