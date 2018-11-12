@@ -2,13 +2,12 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
-import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
@@ -20,9 +19,9 @@ public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibern
 	public BatchJobExecutionParams read(final long jobExecutionId, final String keyName) {
 		Logging.info(this, "Begin readBatchJobExecutionParams");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecutionAndKeyName");
-		query.setLong(JOB_EXECUTION_ID, jobExecutionId);
-		query.setString(KEY_NAME, keyName);
+		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecutionAndKeyName");
+		query.setParameter(JOB_EXECUTION_ID, jobExecutionId);
+		query.setParameter(KEY_NAME, keyName);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		BatchJobExecutionParams batchJobExecutionParams = null;
@@ -38,8 +37,8 @@ public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibern
 	public ArrayList<BatchJobExecutionParams> list(final long jobExecutionId) {
 		Logging.info(this, "Begin listBatchJobExecutionParams");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecution");
-		query.setLong(JOB_EXECUTION_ID, jobExecutionId);
+		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecution");
+		query.setParameter(JOB_EXECUTION_ID, jobExecutionId);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		Logging.info(this, "End listBatchJobExecutionParams");

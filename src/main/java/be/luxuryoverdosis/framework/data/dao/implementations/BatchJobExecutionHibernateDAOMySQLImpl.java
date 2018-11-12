@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 
 import java.util.ArrayList;
 
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
@@ -18,8 +18,8 @@ public class BatchJobExecutionHibernateDAOMySQLImpl extends AbstractHibernateDao
 	public BatchJobExecution read(final long jobInstanceId) {
 		Logging.info(this, "Begin readBatchJobExecution");
 		
-		Query query = getCurrentSession().getNamedQuery("getAllBatchJobExecutionByJobInstance");
-		query.setLong(JOB_INSTANCE_ID, jobInstanceId);
+		Query<BatchJobExecution> query = getCurrentSession().getNamedQuery("getAllBatchJobExecutionByJobInstance");
+		query.setParameter(JOB_INSTANCE_ID, jobInstanceId);
 		ArrayList<BatchJobExecution> arrayList = (ArrayList<BatchJobExecution>) query.list();
 		
 		BatchJobExecution batchJobExecution = null;
