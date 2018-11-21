@@ -1,41 +1,38 @@
 package be.luxuryoverdosis.framework.data.to;
 
-import java.util.Date;
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
+@Entity
+@Table(name="batch_job_instance")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME)
+})
+@Proxy(lazy=false)
 public class BatchJobInstance {
+	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "selectBatchJobInstancesByJobName";
+	
+	@Id
+	@Column(name="Job_Instance_Id")
 	private long id;
+	
+	@Column(name="Version")
 	private long version;
+	
+	@Column(name="Job_Name")
 	private String jobName;
+	
+	@Column(name="Job_Key")
 	private String jobKey;
-	
-	long batchJobExecutionId;
-	long batchJobExecutionVersion;
-	Date batchJobExecutionCreateTime;
-	Date batchJobExecutionStartTime; 
-	Date batchJobExecutionEndTime;
-	String batchJobExecutionStatus;
-	String batchJobExecutionExitCode;
-	String batchJobExecutionExitMessage;
-	Date batchJobExecutionLastUpdated;
-	
-	public BatchJobInstance() {
-	}
-	
-	public BatchJobInstance(long id, String jobName, long batchJobExecutionId, long batchJobExecutionVersion, Date batchJobExecutionCreateTime, Date batchJobExecutionStartTime, 
-			Date batchJobExecutionEndTime, String batchJobExecutionStatus, String batchJobExecutionExitCode, String batchJobExecutionExitMessage, Date batchJobExecutionLastUpdated) {
-		super();
-		this.id = id;
-		this.jobName = jobName;
-		this.batchJobExecutionId = batchJobExecutionId;
-		this.batchJobExecutionVersion = batchJobExecutionVersion;
-		this.batchJobExecutionCreateTime = batchJobExecutionCreateTime;
-		this.batchJobExecutionStartTime = batchJobExecutionStartTime;
-		this.batchJobExecutionEndTime = batchJobExecutionEndTime;
-		this.batchJobExecutionStatus = batchJobExecutionStatus;
-		this.batchJobExecutionExitCode = batchJobExecutionExitCode;
-		this.batchJobExecutionExitMessage = batchJobExecutionExitMessage;
-		this.batchJobExecutionLastUpdated = batchJobExecutionLastUpdated;
-	}
 	
 	public long getId() {
 		return id;
@@ -61,60 +58,24 @@ public class BatchJobInstance {
 	public void setJobKey(String jobKey) {
 		this.jobKey = jobKey;
 	}
-
-	public long getBatchJobExecutionId() {
-		return batchJobExecutionId;
-	}
-	public void setBatchJobExecutionId(long batchJobExecutionId) {
-		this.batchJobExecutionId = batchJobExecutionId;
-	}
-	public long getBatchJobExecutionVersion() {
-		return batchJobExecutionVersion;
-	}
-	public void setBatchJobExecutionVersion(long batchJobExecutionVersion) {
-		this.batchJobExecutionVersion = batchJobExecutionVersion;
-	}
-	public Date getBatchJobExecutionCreateTime() {
-		return batchJobExecutionCreateTime;
-	}
-	public void setBatchJobExecutionCreateTime(Date batchJobExecutionCreateTime) {
-		this.batchJobExecutionCreateTime = batchJobExecutionCreateTime;
-	}
-	public Date getBatchJobExecutionStartTime() {
-		return batchJobExecutionStartTime;
-	}
-	public void setBatchJobExecutionStartTime(Date batchJobExecutionStartTime) {
-		this.batchJobExecutionStartTime = batchJobExecutionStartTime;
-	}
-	public Date getBatchJobExecutionEndTime() {
-		return batchJobExecutionEndTime;
-	}
-	public void setBatchJobExecutionEndTime(Date batchJobExecutionEndTime) {
-		this.batchJobExecutionEndTime = batchJobExecutionEndTime;
-	}
-	public String getBatchJobExecutionStatus() {
-		return batchJobExecutionStatus;
-	}
-	public void setBatchJobExecutionStatus(String batchJobExecutionStatus) {
-		this.batchJobExecutionStatus = batchJobExecutionStatus;
-	}
-	public String getBatchJobExecutionExitCode() {
-		return batchJobExecutionExitCode;
-	}
-	public void setBatchJobExecutionExitCode(String batchJobExecutionExitCode) {
-		this.batchJobExecutionExitCode = batchJobExecutionExitCode;
-	}
-	public String getBatchJobExecutionExitMessage() {
-		return batchJobExecutionExitMessage;
-	}
-	public void setBatchJobExecutionExitMessage(String batchJobExecutionExitMessage) {
-		this.batchJobExecutionExitMessage = batchJobExecutionExitMessage;
-	}
-	public Date getBatchJobExecutionLastUpdated() {
-		return batchJobExecutionLastUpdated;
-	}
-	public void setBatchJobExecutionLastUpdated(Date batchJobExecutionLastUpdated) {
-		this.batchJobExecutionLastUpdated = batchJobExecutionLastUpdated;
-	}
 	
+	public static final class Queries {
+		public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "select new be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO( "
+				+ "bji.id, "
+				+ "bji.jobName, "
+				+ "bje.id, "
+				+ "bje.version, "
+				+ "bje.createTime, "
+				+ "bje.startTime, "
+				+ "bje.endTime, "
+				+ "bje.status, "
+				+ "bje.exitCode, "
+				+ "bje.exitMessage, "
+				+ "bje.lastUpdated "
+				+ ") "
+				+ "from BatchJobExecution bje "
+				+ "inner join bje.batchJobInstance bji "
+				+ "where bji.jobName = :jobName "
+				+ "order by bje.createTime desc";
+	}
 }
