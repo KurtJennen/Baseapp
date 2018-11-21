@@ -2,31 +2,61 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlType;
 
+import org.hibernate.annotations.Proxy;
+
+@Entity
+@Table(name="base_user")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name=User.SELECT_USERS, query=User.Queries.SELECT_USERS),
+	@NamedQuery(name=User.SELECT_USERS_BY_NAME, query=User.Queries.SELECT_USERS_BY_NAME),
+	@NamedQuery(name=User.SELECT_USERS_DTO, query=User.Queries.SELECT_USERS_DTO),
+	@NamedQuery(name=User.SELECT_USERS_DTO_BY_NAME, query=User.Queries.SELECT_USERS_DTO_BY_NAME),
+	@NamedQuery(name=User.COUNT_USERS_BY_NAME, query=User.Queries.COUNT_USERS_BY_NAME),
+	@NamedQuery(name=User.COUNT_USERS_BY_ROLE, query=User.Queries.COUNT_USERS_BY_ROLE)
+})
+@Proxy(lazy=false)
 @XmlType
 public class User extends BaseTO {
-	private String name;
-	private String userName;
-	private String encryptedPassword;
-	private String email;
-	private Date dateExpiration;
-	private Role role;
+	public static final String SELECT_USERS = "selectUsers";
+	public static final String SELECT_USERS_BY_NAME = "selectUsersByName";
+	public static final String SELECT_USERS_DTO = "selectUsersDto";
+	public static final String SELECT_USERS_DTO_BY_NAME = "selectUsersDtoByName";
+	public static final String COUNT_USERS_BY_NAME = "countUsersByName";
+	public static final String COUNT_USERS_BY_ROLE = "countUsersByRole";
 	
-	private String roleName;
+	@Column(name="Name")
+	private String name;
+	
+	@Column(name="UserName")
+	private String userName;
+	
+	@Column(name="Password")
+	private String encryptedPassword;
+	
+	@Column(name="Email")
+	private String email;
+	
+	@Column(name="DateExp")
+	private Date dateExpiration;
+	
+	@ManyToOne
+	@JoinColumn(name="Role_Id")
+	private Role role;
 	
 	public User() {
 		super();
-	}
-	
-	public User(int id, String name, String userName, String email, Date dateExpiration, String roleName) {
-		super();
-		setId(id);
-		this.name = name;
-		this.userName = userName;
-		this.email = email;
-		this.dateExpiration = dateExpiration;
-		this.roleName = roleName;
 	}
 	
 	public String getName() {
@@ -65,11 +95,44 @@ public class User extends BaseTO {
 	public void setRole(Role role) {
 		this.role = role;
 	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
 	
+	public static final class Queries {
+		public static final String SELECT_USERS = "from User u";
+		
+		public static final String SELECT_USERS_BY_NAME = "from User u "
+				+ "where u.name = :name";
+		
+		public static final String SELECT_USERS_DTO = "select new be.luxuryoverdosis.framework.data.dto.UserDTO("
+				+ "u.id, "
+				+ "u.name, "
+				+ "u.userName, "
+				+ "u.email, "
+				+ "r.id, "
+				+ "r.name "
+				+ ") "
+				+ "from User u "
+				+ "inner join u.role r";
+		
+		public static final String SELECT_USERS_DTO_BY_NAME = "select new be.luxuryoverdosis.framework.data.dto.UserDTO("
+				+ "u.id, "
+				+ "u.name, "
+				+ "u.userName, "
+				+ "u.email, "
+				+ "r.id, "
+				+ "r.name "
+				+ ") "
+				+ "from User u "
+				+ "inner join u.role r "
+				+ "where u.name like :name";
+		
+		public static final String COUNT_USERS_BY_NAME = "select count(*) "
+				+ "from User u "
+				+ "where u.name = :name "
+				+ "and u.id != :id";
+		
+		public static final String COUNT_USERS_BY_ROLE = "select count(*) "
+				+ "from User u "
+				+ "where u.role.id = :roleId";
+	}
+
 }

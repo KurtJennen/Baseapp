@@ -160,7 +160,7 @@ public class GetUserEndpoint {
 		userWs.setEmail(user.getEmail());
 		userWs.setEncryptedPassword(user.getEncryptedPassword());
 		userWs.setName(user.getName());
-		userWs.setRole(user.getRoleName());
+		userWs.setRole(user.getRole().getName());
 		userWs.setUserName(user.getUserName());
 		return userWs;
 	}

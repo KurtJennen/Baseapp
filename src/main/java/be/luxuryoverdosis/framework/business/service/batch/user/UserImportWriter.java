@@ -47,10 +47,9 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 				if(user == null) {
 					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
 					
-					user = new User();
-					UserFactory.produceUser(user, userDTO);
+					user = UserFactory.produceUser(user, userDTO);
 					
-					userService.createOrUpdateDTO(userDTO);
+					userService.createOrUpdate(user);
 					
 					JobLog jobLog = new JobLog();
 					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.success"), getOutput(userDTO));

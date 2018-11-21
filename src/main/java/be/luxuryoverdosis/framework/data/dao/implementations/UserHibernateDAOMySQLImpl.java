@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.User;
@@ -14,9 +15,6 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements UserHibernateDAO {
-	private static final String ID = "id";
-	private static final String NAME = "name";
-	private static final String ROLE_ID = "roleId";
 
 	public User createOrUpdate(final User user) {
 		Logging.info(this, "Begin createUser");
@@ -36,8 +34,8 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public User readName(final String name) {
 		Logging.info(this, "Begin readNameUser");
 		
-		Query<User> query = getCurrentSession().getNamedQuery("getAllUsersByName");
-		query.setParameter(NAME, name);
+		Query<User> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<User> arrayList = (ArrayList<User>) query.list();
 		
 		User user = null;
@@ -58,7 +56,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<User> list() {
 		Logging.info(this, "Begin listUser");
 		
-		Query<User> query = getCurrentSession().getNamedQuery("getAllUsers");
+		Query<User> query = getCurrentSession().getNamedQuery(User.SELECT_USERS);
 		ArrayList<User> arrayList = (ArrayList<User>) query.list();
 		
 		Logging.info(this, "End listUser");
@@ -69,7 +67,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<UserDTO> listDTO() {
 		Logging.info(this, "Begin listUser");
 		
-		Query<UserDTO> query = getCurrentSession().getNamedQuery("getAllUsersDto");
+		Query<UserDTO> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_DTO);
 		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) query.list();
 		
 		Logging.info(this, "End listUser");
@@ -80,8 +78,8 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<UserDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listUser");
 		
-		Query<UserDTO> query = getCurrentSession().getNamedQuery("getAllUsersDtoByName");
-		query.setParameter(NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		Query<UserDTO> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_DTO_BY_NAME);
+		query.setParameter(QueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
 		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) query.list();
 		
 		Logging.info(this, "End listUser");
@@ -92,9 +90,9 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countUser(String, int)");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountUsersByName");
-		query.setParameter(NAME, name);
-		query.setParameter(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery(User.COUNT_USERS_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(QueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -106,8 +104,8 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final int roleId) {
 		Logging.info(this, "Begin countUser(int)");
 
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountUsersByRole");
-		query.setParameter(ROLE_ID, roleId);
+		Query<Long> query = getCurrentSession().getNamedQuery(User.COUNT_USERS_BY_ROLE);
+		query.setParameter(QueryParameters.ROLE_ID, roleId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

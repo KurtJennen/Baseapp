@@ -1,32 +1,41 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class UserDTO {
-	private int id;
+import java.util.Date;
+
+public class UserDTO extends BaseDTO {
 	private String name;
 	private String userName;
 	private String password;
 	private String email;
+	private Date dateExpiration;
 	private String dateExpirationAsString;
 	private int roleId;
+	private String roleName;
 	
 	public UserDTO() {
 		super();
 	}
 	
-	public UserDTO(int id, String name, String userName, String email) {
+	public UserDTO(int id, String name, String userName, String email, int roleId, String roleName) {
 		super();
-		this.id = id;
+		setId(id);
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
+		this.roleId = roleId;
+		this.roleName = roleName;
 	}
 	
-	public int getId() {
-		return id;
+	public UserDTO(int id, String name, String userName, String email, Date dateExpiration, String roleName) {
+		super();
+		setId(id);
+		this.name = name;
+		this.userName = userName;
+		this.email = email;
+		this.dateExpiration = dateExpiration;
+		this.roleName = roleName;
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}
@@ -51,6 +60,12 @@ public class UserDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public Date getDateExpiration() {
+		return dateExpiration;
+	}
+	public void setDateExpiration(Date dateExpiration) {
+		this.dateExpiration = dateExpiration;
+	}
 	public String getDateExpirationAsString() {
 		return dateExpirationAsString;
 	}
@@ -63,5 +78,10 @@ public class UserDTO {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 }

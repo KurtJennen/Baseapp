@@ -5,7 +5,7 @@
 		
 		<bean id="searchUser" class="be.luxuryoverdosis.framework.business.query.SearchSelect">
 			<property name="select">
-				<value>SELECT new be.luxuryoverdosis.framework.data.to.User(u.id, u.name, u.userName, u.email, u.dateExpiration, r.name)
+				<value>SELECT new be.luxuryoverdosis.framework.data.dto.UserDTO(u.id, u.name, u.userName, u.email, u.dateExpiration, r.name)
 				FROM User u
 				INNER JOIN u.role r
 				</value>
