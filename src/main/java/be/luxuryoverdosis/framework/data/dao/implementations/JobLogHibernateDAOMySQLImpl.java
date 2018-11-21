@@ -47,7 +47,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public void deleteForJob(final int jobId) {
 		Logging.info(this, "Begin deleteForJobJobLog");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("deleteJobLogsByJob");
+		Query<Long> query = getCurrentSession().getNamedQuery(JobLog.DELETE_JOBLOGS_BY_JOB);
 		query.setParameter(JOB_ID, jobId);
 		query.executeUpdate();
 		
@@ -58,7 +58,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public ArrayList<JobLog> list(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
 		
-		Query<JobLog> query = getCurrentSession().getNamedQuery("getAllJobLogsByJob");
+		Query<JobLog> query = getCurrentSession().getNamedQuery(JobLog.SELECT_JOBLOGS_BY_JOB);
 		query.setParameter(JOB_ID, jobId);
 		ArrayList<JobLog> arrayList = (ArrayList<JobLog>) query.list();
 		
