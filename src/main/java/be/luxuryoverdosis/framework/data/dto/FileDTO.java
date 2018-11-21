@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class FileDTO {
+public class FileDTO extends BaseDTO {
 	private byte[] fileData;
 	private String fileName;
 	private int fileSize;

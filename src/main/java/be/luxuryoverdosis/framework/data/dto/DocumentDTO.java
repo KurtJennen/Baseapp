@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class DocumentDTO {
-	private int id;
+public class DocumentDTO extends BaseDTO {
 	private String type;
 	private FileDTO fileDTO;
 	
@@ -10,12 +9,6 @@ public class DocumentDTO {
 		fileDTO = new FileDTO();
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getType() {
 		return type;
 	}
