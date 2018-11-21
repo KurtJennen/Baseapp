@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class RoleDTO {
-	private int id;
+public class RoleDTO extends BaseDTO {
 	private String name;
 	
 	public RoleDTO() {
@@ -10,16 +9,10 @@ public class RoleDTO {
 	
 	public RoleDTO(int id, String name) {
 		super();
-		this.id = id;
+		setId(id);
 		this.name = name;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
@@ -14,9 +15,6 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements RoleHibernateDAO {
-	private static final String ID = "id";
-	private static final String NAME = "name";
-
 	public Role createOrUpdate(final Role role) {
 		Logging.info(this, "Begin createRole");
 		getCurrentSession().saveOrUpdate(role);
@@ -35,8 +33,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public Role readName(final String name) {
 		Logging.info(this, "Begin readNameRole");
 		
-		Query<Role> query = getCurrentSession().getNamedQuery("getAllRolesByName");
-		query.setParameter(NAME, name);
+		Query<Role> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Role role = null;
@@ -57,7 +55,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<Role> list() {
 		Logging.info(this, "Begin listRole");
 		
-		Query<Role> query = getCurrentSession().getNamedQuery("getAllRoles");
+		Query<Role> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES);
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Logging.info(this, "End listRole");
@@ -68,8 +66,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public ArrayList<RoleDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listRole");
 		
-		Query<RoleDTO> query = getCurrentSession().getNamedQuery("getAllRolesDtoByName");
-		query.setParameter(NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		Query<RoleDTO> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_DTO_BY_NAME);
+		query.setParameter(QueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
 		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) query.list();
 		
 		Logging.info(this, "End listRole");
@@ -80,9 +78,9 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountRolesByName");
-		query.setParameter(NAME, name);
-		query.setParameter(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery(Role.COUNT_ROLES_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(QueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

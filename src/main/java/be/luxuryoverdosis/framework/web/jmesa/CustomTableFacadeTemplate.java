@@ -30,6 +30,7 @@ import org.jmesa.view.html.event.RowEvent;
 import org.jmesa.view.html.toolbar.Toolbar;
 
 import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.data.dto.BaseDTO;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -181,9 +182,16 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		int teller = 0;
 		
 		for (Iterator<?> iterator = items.iterator(); iterator.hasNext();) {
-			BaseTO record = (BaseTO) iterator.next();
+			Object record = iterator.next();
+			if (record instanceof BaseTO) {
+				BaseTO baseTO = (BaseTO) record;
+				ids[teller] = baseTO.getId();
+			}
+			if (record instanceof BaseDTO) {
+				BaseDTO baseDTO = (BaseDTO) record;
+				ids[teller] = baseDTO.getId();
+			}
 			
-			ids[teller] = record.getId();
 			teller++;
 		}
 	
