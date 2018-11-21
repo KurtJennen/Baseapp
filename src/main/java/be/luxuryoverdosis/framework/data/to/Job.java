@@ -3,19 +3,66 @@ package be.luxuryoverdosis.framework.data.to;
 import java.sql.Blob;
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Proxy;
+
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 
+@Entity
+@Table(name="base_job")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name=Job.SELECT_JOBS_BY_NAME, query=Job.Queries.SELECT_JOBS_BY_NAME),
+	@NamedQuery(name=Job.SELECT_JOBS_STARTED_BY_NAME, query=Job.Queries.SELECT_JOBS_STARTED_BY_NAME),
+	@NamedQuery(name=Job.SELECT_JOBS_NOT_STARTED_BY_NAME, query=Job.Queries.SELECT_JOBS_NOT_STARTED_BY_NAME)
+})
+@Proxy(lazy=false)
 public class Job extends BaseTO {
+	public static final String SELECT_JOBS_BY_NAME = "selectJobsByName";
+	public static final String SELECT_JOBS_STARTED_BY_NAME = "selectJobsStartedByName";
+	public static final String SELECT_JOBS_NOT_STARTED_BY_NAME = "selectJobsNotStartedByName";
+	
+	@Column(name="Name")
 	private String name;
+	
+	@Column(name="Filename")
 	private String fileName;
+	
+	@Column(name="File")
 	private Blob file;
+	
+	@Transient
 	private byte[] fileData;
+	
+	@Column(name="Filesize")
 	private int fileSize;
+	
+	@Column(name="Contenttype")
 	private String contentType;
+	
+	@Column(name="Executed")
 	private boolean executed;
+	
+	@Column(name="Started")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date started;
+	
+	@Column(name="Ended")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date ended;
+	
+	@Column(name="Status")
 	private String status;
 	
 	public Job() {
@@ -100,6 +147,20 @@ public class Job extends BaseTO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	
+	public static final class Queries {
+		public static final String SELECT_JOBS_BY_NAME = "from Job j "
+				+ " where j.name = :name "
+				+ "order by j.ended asc";
+		
+		public static final String SELECT_JOBS_STARTED_BY_NAME = "from Job j "
+				+ "where j.name = :name "
+				+ "and j.started is not null";
+		
+		public static final String SELECT_JOBS_NOT_STARTED_BY_NAME = "from Job j "
+				+ "where j.name = :name "
+				+ "and j.started is null";
 	}
 	
 }

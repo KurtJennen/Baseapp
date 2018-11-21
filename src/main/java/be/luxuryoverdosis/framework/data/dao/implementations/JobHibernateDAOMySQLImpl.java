@@ -7,14 +7,13 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements JobHibernateDAO {
-	private static final String NAME = "name";
-	
 	public Job createOrUpdate(final Job job) {
 		Logging.info(this, "Begin createJob");
 		try {
@@ -47,8 +46,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> list(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query<Job> query = getCurrentSession().getNamedQuery("getAllJobsByName");
-		query.setParameter(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery(Job.SELECT_JOBS_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");
@@ -59,8 +58,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> listStarted(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query<Job> query = getCurrentSession().getNamedQuery("getAllStartedJobsByName");
-		query.setParameter(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery(Job.SELECT_JOBS_STARTED_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");
@@ -71,8 +70,8 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public ArrayList<Job> listNotStarted(final String name) {
 		Logging.info(this, "Begin listJob");
 		
-		Query<Job> query = getCurrentSession().getNamedQuery("getAllNotStartedJobsByName");
-		query.setParameter(NAME, name);
+		Query<Job> query = getCurrentSession().getNamedQuery(Job.SELECT_JOBS_NOT_STARTED_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Job> arrayList = (ArrayList<Job>) query.list();
 		
 		Logging.info(this, "End listJob");
