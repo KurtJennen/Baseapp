@@ -6,17 +6,13 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.NumberHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Number;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements NumberHibernateDAO {
-	private static final String APPLICATION_CODE = "applicationCode";
-	private static final String ID = "id";
-	private static final String TYPE = "type";
-	private static final String YEAR = "year";
-	
 	public Number createOrUpdate(final Number number) {
 		Logging.info(this, "Begin createNumber");
 		getCurrentSession().saveOrUpdate(number);
@@ -35,10 +31,10 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public Number read(final String applicationCode, final String year, final String type) {
 		Logging.info(this, "Begin readNumber");
 		
-		Query<Number> query = getCurrentSession().getNamedQuery("getNumberByYearAndType");
-		query.setParameter(APPLICATION_CODE, applicationCode);
-		query.setParameter(YEAR, year);
-		query.setParameter(TYPE, type);
+		Query<Number> query = getCurrentSession().getNamedQuery(Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE);
+		query.setParameter(QueryParameters.APPLICATION_CODE, applicationCode);
+		query.setParameter(QueryParameters.YEAR, year);
+		query.setParameter(QueryParameters.TYPE, type);
 		ArrayList<Number> arrayList = (ArrayList<Number>) query.list();
 		
 		Number number = null;
@@ -58,7 +54,7 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	@SuppressWarnings("unchecked")
 	public ArrayList<Number> list() {
 		Logging.info(this, "Begin listNumber");
-		Query<Number> query = getCurrentSession().getNamedQuery("getAllNumbers");
+		Query<Number> query = getCurrentSession().getNamedQuery(Number.SELECT_NUMBERS);
 		ArrayList<Number> arrayList = (ArrayList<Number>) query.list();
 		Logging.info(this, "End listNumber");
 		return arrayList;
@@ -68,11 +64,11 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public long count(final String applicationCode, final String year, final String type, final int id) {
 		Logging.info(this, "Begin countNumber");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountByApplicationCodeAndYearAndType");
-		query.setParameter(APPLICATION_CODE, applicationCode);
-		query.setParameter(YEAR, year);
-		query.setParameter(TYPE, type);
-		query.setParameter(ID, id);
+		Query<Long> query = getCurrentSession().getNamedQuery(Number.COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE);
+		query.setParameter(QueryParameters.APPLICATION_CODE, applicationCode);
+		query.setParameter(QueryParameters.YEAR, year);
+		query.setParameter(QueryParameters.TYPE, type);
+		query.setParameter(QueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		
 		long count = arrayList.iterator().next().longValue();
@@ -80,14 +76,23 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		return count;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public int nextNumber(String applicationCode, String year, String type) {
-        final Object[] paramsSelect = new Object[] {applicationCode, year, type};
-        int volgnummer = getJdbcTemplate().queryForObject("select number from base_number where appcode = ? and year = ? and type = ? for update", paramsSelect, Integer.class);
-
+        Query<Integer> query = getCurrentSession().getNamedNativeQuery(Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE);
+        query.setParameter(QueryParameters.APPLICATION_CODE, applicationCode);
+        query.setParameter(QueryParameters.YEAR, year);
+        query.setParameter(QueryParameters.TYPE, type);
+        ArrayList<Integer> arrayList = (ArrayList<Integer>) query.list();
+        int volgnummer = arrayList.iterator().next().intValue();
+        
         volgnummer++;
 
-        final Object[] paramsUpdate = new Object[] {volgnummer, applicationCode, year, type };
-        getJdbcTemplate().update("update base_number set number = ? where appcode = ? and year = ? and type = ?", paramsUpdate);
+        Query<Integer> queryUpdate = getCurrentSession().getNamedNativeQuery(Number.UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE);
+        queryUpdate.setParameter(QueryParameters.NUMBER, volgnummer);
+        queryUpdate.setParameter(QueryParameters.APPLICATION_CODE, applicationCode);
+        queryUpdate.setParameter(QueryParameters.YEAR, year);
+        queryUpdate.setParameter(QueryParameters.TYPE, type);
+        queryUpdate.executeUpdate();
 
         return volgnummer;
 	}

@@ -1,18 +1,11 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class NumberDTO {
-	private int id;
+public class NumberDTO extends BaseDTO {
 	private String applicationCode;
 	private String year;
 	private int number;
 	private String type;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getApplicationCode() {
 		return applicationCode;
 	}
