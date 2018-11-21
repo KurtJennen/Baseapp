@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class QueryDTO {
-	private int id;
+public class QueryDTO extends BaseDTO {
 	private String name;
 	private String type;
 	public String complex;
@@ -12,12 +11,6 @@ public class QueryDTO {
 	public String[] openBrackets;
 	public String[] closeBrackets;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getName() {
 		return name;
 	}

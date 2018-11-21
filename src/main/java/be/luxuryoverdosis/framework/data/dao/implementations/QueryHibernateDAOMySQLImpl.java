@@ -5,16 +5,13 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Query;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements QueryHibernateDAO {
-	private static final String TYPE = "type";
-	private static final String NAME = "name";
-	private static final String USER_ID = "userId";
-	
 	public Query createOrUpdate(final Query query) {
 		Logging.info(this, "Begin createQuery");
 		getCurrentSession().saveOrUpdate(query);
@@ -33,9 +30,9 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public Query read(final String name, final String type) {
 		Logging.info(this, "Begin readQuery(name, type)");
 		
-		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByNameAndType");
-		hibernateQuery.setParameter(NAME, name);
-		hibernateQuery.setParameter(TYPE, type);
+		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery(Query.SELECT_QUERIES_BY_NAME_AND_TYPE);
+		hibernateQuery.setParameter(QueryParameters.NAME, name);
+		hibernateQuery.setParameter(QueryParameters.TYPE, type);
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Query query = null;
@@ -56,9 +53,9 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public ArrayList<Query> list(final String type, final int userId) {
 		Logging.info(this, "Begin listQuery");
 		
-		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery("getAllQueriesByTypeAndUser");
-		hibernateQuery.setParameter(TYPE, type);
-		hibernateQuery.setParameter(USER_ID, userId);
+		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery(Query.SELECT_QUERIES_BY_TYPE_AND_USER);
+		hibernateQuery.setParameter(QueryParameters.TYPE, type);
+		hibernateQuery.setParameter(QueryParameters.USER_ID, userId);
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Logging.info(this, "End listQuery");
@@ -69,10 +66,10 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	public long count(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin countQuery");
 		
-		org.hibernate.query.Query<Long> hibernateQuery = getCurrentSession().getNamedQuery("getCountQueriesByNameAndTypeAndUser");
-		hibernateQuery.setParameter(NAME, name);
-		hibernateQuery.setParameter(TYPE, type);
-		hibernateQuery.setParameter(USER_ID, userId);
+		org.hibernate.query.Query<Long> hibernateQuery = getCurrentSession().getNamedQuery(Query.COUNT_QUERIES_BY_NAME_AND_TYPE_AND_USER);
+		hibernateQuery.setParameter(QueryParameters.NAME, name);
+		hibernateQuery.setParameter(QueryParameters.TYPE, type);
+		hibernateQuery.setParameter(QueryParameters.USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) hibernateQuery.list();
 		long count = arrayList.iterator().next().longValue();
 		
