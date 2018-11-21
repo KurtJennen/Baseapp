@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-public class MenuDTO {
-	private int id;
+public class MenuDTO extends BaseDTO {
 	private String fullName;
 	private String name;
 	private String title;
@@ -31,12 +30,6 @@ public class MenuDTO {
 		this.userId = userId;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getFullName() {
 		return fullName;
 	}
