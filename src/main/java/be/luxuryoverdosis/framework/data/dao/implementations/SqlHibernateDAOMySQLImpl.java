@@ -7,17 +7,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.SqlHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Sql;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements SqlHibernateDAO {
-	private final static String COUNT_BASE_SQL = "select count(*) from base_sql where name = ? and app = ?";
-	private final static String INSERT_BASE_SQL = "insert into base_sql (Version, UserAdd, UserUpdate, DateAdd, DateUpdate, Name, Content, App) values (0, 'root', 'root', now(), now(), ?, ?, ?)";
-	private static final String APPLICATION = "application";
-	private static final String NAME = "name";
-	
 	public Sql createOrUpdate(final Sql sql) {
 		Logging.info(this, "Begin createSql");
 		getCurrentSession().saveOrUpdate(sql);
@@ -36,8 +32,8 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public Sql readName(final String name) {
 		Logging.info(this, "Begin readNameSql");
 		
-		Query<Sql> query = getCurrentSession().getNamedQuery("getAllSqlsByName");
-		query.setParameter(NAME, name);
+		Query<Sql> query = getCurrentSession().getNamedQuery(Sql.SELECT_SQLS_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		
 		Sql sql = null;
@@ -57,7 +53,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	@SuppressWarnings("unchecked")
 	public ArrayList<Sql> list() {
 		Logging.info(this, "Begin listSql");
-		Query<Sql> query = getCurrentSession().getNamedQuery("getAllSqls");
+		Query<Sql> query = getCurrentSession().getNamedQuery(Sql.SELECT_SQLS);
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		Logging.info(this, "End listSql");
 		return arrayList;
@@ -67,8 +63,8 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public long count(final String name) {
 		Logging.info(this, "Begin countSql(String)");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountSqlsByName");
-		query.setParameter(NAME, name);
+		Query<Long> query = getCurrentSession().getNamedQuery(Sql.COUNT_SQLS_BY_NAME);
+		query.setParameter(QueryParameters.NAME, name);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -80,9 +76,9 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public long count(final String name, final String application) {
 		Logging.info(this, "Begin countSql(String, String)");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountSqlsByNameANdApplication");
-		query.setParameter(NAME, name);
-		query.setParameter(APPLICATION, application);
+		Query<Long> query = getCurrentSession().getNamedQuery(Sql.COUNT_SQLS_BY_NAME_AND_APPLICATION);
+		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(QueryParameters.APPLICATION, application);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -93,7 +89,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public int countJdbc(final String name, final String application) throws DataAccessException {
 		Logging.info(this, "Begin countJdbc");
 		final Object[] paramsSelect = new Object[] {name, application};
-        int count = getJdbcTemplate().queryForObject(COUNT_BASE_SQL, paramsSelect, Integer.class);
+        int count = getJdbcTemplate().queryForObject(Sql.COUNT_BASE_SQL, paramsSelect, Integer.class);
 		Logging.info(this, "End countJdbc");
 		return count;
 	}
@@ -107,7 +103,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public void insertJdbc(final String sqlStatement, final String name, final String application) throws DataAccessException {
 		Logging.info(this, "Begin insertJdbc");
 		final Object[] paramsInsert = new Object[] {name, sqlStatement, application};
-		getJdbcTemplate().update(INSERT_BASE_SQL, paramsInsert);
+		getJdbcTemplate().update(Sql.INSERT_BASE_SQL, paramsInsert);
 		Logging.info(this, "End insertJdbc");
 	}
 }
