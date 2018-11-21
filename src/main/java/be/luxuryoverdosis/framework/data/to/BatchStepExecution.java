@@ -2,24 +2,88 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Proxy;
+
+@Entity
+@Table(name="batch_step_execution")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name=BatchStepExecution.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query=BatchStepExecution.Queries.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE)
+})
+@Proxy(lazy=false)
 public class BatchStepExecution {
+	public static final String SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchStepExecutionByJobInstance";
+	
+	@Id
+	@Column(name="Step_Execution_Id")
 	private long id;
+	
+	@Column(name="Version")
 	private long version;
+	
+	@Column(name="Step_Name")
 	private String stepName;
+	
+	@Column(name="Start_Time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
+	
+	@Column(name="End_Time")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
+	
+	@Column(name="Status")
 	private String status;
+	
+	@Column(name="Commit_Count")
 	private long commitCount;
+	
+	@Column(name="Read_Count")
 	private long readCount;
+	
+	@Column(name="Filter_Count")
 	private long filterCount;
+	
+	@Column(name="Write_Count")
 	private long writeCount;
+	
+	@Column(name="Read_Skip_Count")
 	private long readSkipCount;
+	
+	@Column(name="Write_Skip_Count")
 	private long writeSkipCount;
+	
+	@Column(name="Process_Skip_Count")
 	private long processSkipCount;
+	
+	@Column(name="Rollback_Count")
 	private long rollbackCount;
+	
+	@Column(name="Exit_Code")
 	private String exitCode;
+	
+	@Column(name="Exit_Message")
 	private String exitMessage;
+	
+	@Column(name="Last_Updated")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
+	
+	@ManyToOne
+	@JoinColumn(name="Job_Execution_Id")
 	private BatchJobExecution batchJobExecution;
 	
 	public long getId() {
@@ -131,4 +195,11 @@ public class BatchStepExecution {
 		this.batchJobExecution = batchJobExecution;
 	}
 	
+	public static final class Queries {
+		public static final String SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "select bse "
+				+ "from BatchStepExecution bse "
+				+ "inner join bse.batchJobExecution bje "
+				+ "inner join bje.batchJobInstance jbi "
+				+ "where jbi.id = :jobInstanceId";
+	}
 }
