@@ -2,14 +2,55 @@ package be.luxuryoverdosis.framework.data.to;
 
 import java.util.Date;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Proxy;
+
+@Entity
+@Table(name="batch_job_execution_params")
+@Access(AccessType.FIELD)
+@NamedQueries({
+	@NamedQuery(name=BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION, query=BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION),
+	@NamedQuery(name=BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME, query=BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME)
+})
+@Proxy(lazy=false)
 public class BatchJobExecutionParams {
+	public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION = "selectJobExecutionParamsByJobExecution";
+	public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME = "selectJobExecutionParamsByJobExecutionAndKeyName";
+	
+	@Id
+	@Column(name="Job_Execution_Id")
 	private long id;
+	
+	@Column(name="Type_Cd")
 	private String typeCode;
+	
+	@Column(name="Key_name")
 	private String keyName;
+	
+	@Column(name="String_Val")
 	private String stringValue;
+	
+	@Column(name="Date_Val")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateValue;
+	
+	@Column(name="Long_Val")
 	private long longValue;
+	
+	@Column(name="Double_Val")
 	private double doubleValue;
+	
+	@Column(name="Identifying")
 	private String identifying;
 	
 	public long getId() {
@@ -61,4 +102,12 @@ public class BatchJobExecutionParams {
 		this.identifying = identifying;
 	}
 	
+	public static final class Queries {
+		public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION = "from BatchJobExecutionParams bep "
+				+ "where bep.id = :jobExecutionId";
+		
+		public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME = "from BatchJobExecutionParams bep "
+				+ "where bep.id = :jobExecutionId "
+				+ "and bep.keyName = :keyName";
+	}
 }

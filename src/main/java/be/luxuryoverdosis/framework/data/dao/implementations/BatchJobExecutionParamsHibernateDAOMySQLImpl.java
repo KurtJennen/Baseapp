@@ -6,22 +6,20 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.QueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements BatchJobExecutionParamsHibernateDAO {
-	private static final String JOB_EXECUTION_ID = "jobExecutionId";
-	private static final String KEY_NAME = "keyName";
-	
 	@SuppressWarnings("unchecked")
 	public BatchJobExecutionParams read(final long jobExecutionId, final String keyName) {
 		Logging.info(this, "Begin readBatchJobExecutionParams");
 		
-		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecutionAndKeyName");
-		query.setParameter(JOB_EXECUTION_ID, jobExecutionId);
-		query.setParameter(KEY_NAME, keyName);
+		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery(BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME);
+		query.setParameter(QueryParameters.JOB_EXECUTION_ID, jobExecutionId);
+		query.setParameter(QueryParameters.KEY_NAME, keyName);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		BatchJobExecutionParams batchJobExecutionParams = null;
@@ -37,8 +35,8 @@ public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibern
 	public ArrayList<BatchJobExecutionParams> list(final long jobExecutionId) {
 		Logging.info(this, "Begin listBatchJobExecutionParams");
 		
-		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery("getAllJobExecutionParamsByJobExecution");
-		query.setParameter(JOB_EXECUTION_ID, jobExecutionId);
+		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery(BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION);
+		query.setParameter(QueryParameters.JOB_EXECUTION_ID, jobExecutionId);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		Logging.info(this, "End listBatchJobExecutionParams");
