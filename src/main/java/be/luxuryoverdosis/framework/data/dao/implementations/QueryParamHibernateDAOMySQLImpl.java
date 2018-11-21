@@ -38,7 +38,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	public void deleteForQuery(final int queryId) {
 		Logging.info(this, "Begin deleteForQueryQueryParam");
 
-		Query<Long> query = getCurrentSession().getNamedQuery("deleteQueryParamsByQuery");
+		Query<Long> query = getCurrentSession().getNamedQuery(QueryParam.DELETE_QUERYPARAMS_BY_QUERY);
 		query.setParameter(QUERY_ID, queryId);
 		query.executeUpdate();
 		
@@ -49,7 +49,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	public ArrayList<QueryParam> list(final int queryId) {
 		Logging.info(this, "Begin listQueryParam");
 		
-		Query<QueryParam> query = getCurrentSession().getNamedQuery("getAllQueryParamsByQuery");
+		Query<QueryParam> query = getCurrentSession().getNamedQuery(QueryParam.SELECT_QUERYPARAMS_BY_QUERY);
 		query.setParameter(QUERY_ID, queryId);
 		ArrayList<QueryParam> arrayList = (ArrayList<QueryParam>) query.list();
 		
@@ -61,7 +61,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 	public long count(final int queryId) {
 		Logging.info(this, "Begin countQueryParam");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("getCountQueryParamsByQuery");
+		Query<Long> query = getCurrentSession().getNamedQuery(QueryParam.COUNT_QUERYPARAMS_BY_QUERY);
 		query.setParameter(QUERY_ID, queryId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
