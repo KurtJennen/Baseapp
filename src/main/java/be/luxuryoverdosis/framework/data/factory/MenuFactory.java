@@ -1,10 +1,10 @@
 package be.luxuryoverdosis.framework.data.factory;
 
-import net.sf.navigator.menu.MenuComponent;
-import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
+import net.sf.navigator.menu.MenuComponent;
 
 public class MenuFactory {
 	private MenuFactory() {
@@ -18,10 +18,10 @@ public class MenuFactory {
 		menuDTO.setTitle(BaseSpringServiceLocator.getMessage(menuComponent.getTitle()));
 		menuDTO.setFullLevel(fullLevel);
 		menuDTO.setLevel(level);
-		menuDTO.setHidden(BaseConstants.CODE_NEE);
-		menuDTO.setDisabled(BaseConstants.CODE_NEE);
-		menuDTO.setForPay(BaseConstants.CODE_NEE);
-		menuDTO.setPayed(BaseConstants.CODE_NEE);
+		menuDTO.setHidden(JaNeeType.NEE);
+		menuDTO.setDisabled(JaNeeType.NEE);
+		menuDTO.setForPay(JaNeeType.NEE);
+		menuDTO.setPayed(JaNeeType.NEE);
 		
 		return menuDTO;
 	}

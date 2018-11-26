@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -30,11 +31,17 @@ public class MenuForm extends BaseForm {
 	public String[] getHidden() {
 		return hidden;
 	}
+	public JaNeeType[] getJaNeeTypeHidden() {
+		return JaNeeType.convert(hidden);
+	}
 	public void setHidden(String[] hidden) {
 		this.hidden = hidden;
 	}
 	public String[] getDisabled() {
 		return disabled;
+	}
+	public JaNeeType[] getJaNeeTypeDisabled() {
+		return JaNeeType.convert(disabled);
 	}
 	public void setDisabled(String[] disabled) {
 		this.disabled = disabled;
@@ -42,11 +49,17 @@ public class MenuForm extends BaseForm {
 	public String[] getForPay() {
 		return forPay;
 	}
+	public JaNeeType[] getJaNeeTypeForPay() {
+		return JaNeeType.convert(forPay);
+	}
 	public void setForPay(String[] forPay) {
 		this.forPay = forPay;
 	}
 	public String[] getPayed() {
 		return payed;
+	}
+	public JaNeeType[] getJaNeeTypePayed() {
+		return JaNeeType.convert(payed);
 	}
 	public void setPayed(String[] payed) {
 		this.payed = payed;

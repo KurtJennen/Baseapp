@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.navigator.menu.MenuRepository;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -24,6 +22,7 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.MenuForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
+import net.sf.navigator.menu.MenuRepository;
 
 public class MenuAction extends DispatchAction {
 	
@@ -96,7 +95,7 @@ public class MenuAction extends DispatchAction {
 		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
 		
 		MenuForm menuForm = (MenuForm) form;
-		menuService.updateMenu(menuRepository, menuForm.getIds(), menuForm.getHidden(), menuForm.getDisabled(), menuForm.getForPay(), menuForm.getPayed(), menuForm.getUserId());
+		menuService.updateMenu(menuRepository, menuForm.getIds(), menuForm.getJaNeeTypeHidden(), menuForm.getJaNeeTypeDisabled(), menuForm.getJaNeeTypeForPay(), menuForm.getJaNeeTypePayed(), menuForm.getUserId());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.menu")));
 		saveMessages(request, actionMessages);

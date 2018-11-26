@@ -3,6 +3,7 @@ package be.luxuryoverdosis.framework.data.to;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -11,6 +12,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
+
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.data.convertor.JaNeeConvertor;
 
 @Entity
 @Table(name="base_menu")
@@ -52,16 +56,20 @@ public class Menu extends BaseTO {
 	private int level;
 	
 	@Column(name="Hidden")
-	private String hidden;
+	@Convert(converter=JaNeeConvertor.class)
+	private JaNeeType hidden;
 	
 	@Column(name="Disabled")
-	private String disabled;
+	@Convert(converter=JaNeeConvertor.class)
+	private JaNeeType disabled;
 	
 	@Column(name="ForPay")
-	private String forPay;
+	@Convert(converter=JaNeeConvertor.class)
+	private JaNeeType forPay;
 	
 	@Column(name="Payed")
-	private String payed;
+	@Convert(converter=JaNeeConvertor.class)
+	private JaNeeType payed;
 	
 	@ManyToOne
 	@JoinColumn(name="User_Id")
@@ -97,28 +105,28 @@ public class Menu extends BaseTO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public String getHidden() {
+	public JaNeeType getHidden() {
 		return hidden;
 	}
-	public void setHidden(String hidden) {
+	public void setHidden(JaNeeType hidden) {
 		this.hidden = hidden;
 	}
-	public String getDisabled() {
+	public JaNeeType getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(String disabled) {
+	public void setDisabled(JaNeeType disabled) {
 		this.disabled = disabled;
 	}
-	public String getForPay() {
+	public JaNeeType getForPay() {
 		return forPay;
 	}
-	public void setForPay(String forPay) {
+	public void setForPay(JaNeeType forPay) {
 		this.forPay = forPay;
 	}
-	public String getPayed() {
+	public JaNeeType getPayed() {
 		return payed;
 	}
-	public void setPayed(String payed) {
+	public void setPayed(JaNeeType payed) {
 		this.payed = payed;
 	}
 	public User getUser() {

@@ -6,6 +6,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -16,7 +17,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
 
-import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.data.convertor.JobStatusConvertor;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 
 @Entity
@@ -63,7 +65,8 @@ public class Job extends BaseTO {
 	private Date ended;
 	
 	@Column(name="Status")
-	private String status;
+	@Convert(converter=JobStatusConvertor.class)
+	private JobStatusType status;
 	
 	public Job() {
 		super();
@@ -74,7 +77,7 @@ public class Job extends BaseTO {
 		
 		this.setName(name);
 		this.setExecuted(false);
-		this.setStatus(BaseConstants.JOB_STATUS_NOT_STARTED);
+		this.setStatus(JobStatusType.NOT_STARTED);
 	}
 	
 	public Job(String name, FileDTO fileDTO) {
@@ -85,7 +88,7 @@ public class Job extends BaseTO {
 		this.setFileSize(fileDTO.getFileSize());
 		this.setContentType(fileDTO.getContentType());
 		this.setExecuted(false);
-		this.setStatus(BaseConstants.JOB_STATUS_NOT_STARTED);
+		this.setStatus(JobStatusType.NOT_STARTED);
 	}
 	
 	public String getName() {
@@ -142,10 +145,10 @@ public class Job extends BaseTO {
 	public void setEnded(Date ended) {
 		this.ended = ended;
 	}
-	public String getStatus() {
+	public JobStatusType getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(JobStatusType status) {
 		this.status = status;
 	}
 	

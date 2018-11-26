@@ -1,3 +1,4 @@
+<%@page import="be.luxuryoverdosis.framework.business.enumeration.JaNeeType"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -52,62 +53,38 @@
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<html:select property="hidden" value="${item.hidden}" tabindex="2">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
-						<html:hidden property="hidden" value="${item.hidden}"/>
-						<html:select property="hidden" value="${item.hidden}" tabindex="2" disabled="true">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<html:hidden property="hidden" value="${item.hidden.code}"/>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<html:select property="disabled" value="${item.disabled}" tabindex="3">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
-						<html:hidden property="disabled" value="${item.disabled}"/>
-						<html:select property="disabled" value="${item.disabled}" tabindex="3" disabled="true">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<html:hidden property="disabled" value="${item.disabled.code}"/>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<html:select property="forPay" value="${item.forPay}" tabindex="4">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
-						<html:hidden property="forPay" value="${item.forPay}"/>
-						<html:select property="forPay" value="${item.forPay}" tabindex="4" disabled="true">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<html:hidden property="forPay" value="${item.forPay.code}"/>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<html:select property="payed" value="${item.payed}" tabindex="5">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
 						<html:hidden property="payed" value="${item.payed}"/>
-						<html:select property="payed" value="${item.payed}" tabindex="5" disabled="true">
-							<html:option value="<%= Constants.CODE_JA %>"><fmt:message key="yes" /></html:option>
-							<html:option value="<%= Constants.CODE_NEE %>"><fmt:message key="no" /></html:option>
-						</html:select>
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 			</tr>

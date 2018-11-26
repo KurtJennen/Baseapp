@@ -1,21 +1,23 @@
 package be.luxuryoverdosis.framework.data.dto;
 
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+
 public class MenuDTO extends BaseDTO {
 	private String fullName;
 	private String name;
 	private String title;
 	private String fullLevel;
 	private int level;
-	private String hidden;
-	private String disabled;
-	private String forPay;
-	private String payed;
+	private JaNeeType hidden;
+	private JaNeeType disabled;
+	private JaNeeType forPay;
+	private JaNeeType payed;
 	private int userId;
 	
 	public MenuDTO() {
 	}
 	
-	public MenuDTO(int id, String fullName, String name, String title, String fullLevel, int level, String hidden, String disabled, String forPay, String payed,int userId) {
+	public MenuDTO(int id, String fullName, String name, String title, String fullLevel, int level, JaNeeType hidden, JaNeeType disabled, JaNeeType forPay, JaNeeType payed,int userId) {
 		super();
 		setId(id);
 		this.fullLevel = fullLevel;
@@ -60,28 +62,28 @@ public class MenuDTO extends BaseDTO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public String getHidden() {
+	public JaNeeType getHidden() {
 		return hidden;
 	}
-	public void setHidden(String hidden) {
+	public void setHidden(JaNeeType hidden) {
 		this.hidden = hidden;
 	}
-	public String getDisabled() {
+	public JaNeeType getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(String disabled) {
+	public void setDisabled(JaNeeType disabled) {
 		this.disabled = disabled;
 	}
-	public String getForPay() {
+	public JaNeeType getForPay() {
 		return forPay;
 	}
-	public void setForPay(String forPay) {
+	public void setForPay(JaNeeType forPay) {
 		this.forPay = forPay;
 	}
-	public String getPayed() {
+	public JaNeeType getPayed() {
 		return payed;
 	}
-	public void setPayed(String payed) {
+	public void setPayed(JaNeeType payed) {
 		this.payed = payed;
 	}
 	public int getUserId() {

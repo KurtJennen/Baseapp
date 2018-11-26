@@ -32,6 +32,5 @@ public class MessageLocator {
 	
 	public static String getMessage(HttpServletRequest request, String messageKey) {
 		return getMessage(request, messageKey, null, null);
-	}
-	
+	}	
 }

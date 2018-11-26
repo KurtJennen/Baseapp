@@ -213,4 +213,34 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+		<name>enumSelect</name>
+		<tag-class>be.luxuryoverdosis.framework.web.tag.EnumSelect</tag-class>
+		<attribute>
+			<name>clazz</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>method</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>property</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
 </taglib>

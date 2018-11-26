@@ -10,15 +10,15 @@ import javax.annotation.Resource;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.BaseService;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
 import be.luxuryoverdosis.framework.business.service.interfaces.AbstractJobService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
+import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.JobParam;
-import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public abstract class AbstractJobServiceSpringImpl extends BaseService implements AbstractJobService {
@@ -64,7 +64,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 			Job job = (Job) jobsIterator.next();
 			
 			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(BaseConstants.JOB_STATUS_STARTED);
+			job.setStatus(JobStatusType.STARTED);
 			jobHibernateDAO.createOrUpdate(job);
 		}
 		
@@ -81,7 +81,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 			Job job = (Job) jobsIterator.next();
 			
 			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(BaseConstants.JOB_STATUS_EXECUTED);
+			job.setStatus(JobStatusType.EXECUTED);
 			job.setExecuted(true);
 			jobHibernateDAO.createOrUpdate(job);
 		}

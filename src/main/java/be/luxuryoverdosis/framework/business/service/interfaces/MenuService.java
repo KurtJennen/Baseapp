@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.sf.navigator.menu.MenuRepository;
 import net.sf.navigator.util.LoadableResourceException;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
 
@@ -19,7 +20,7 @@ public interface MenuService {
 	public ArrayList<MenuDTO> list(int userId);
 	
 	public ArrayList<MenuDTO> produceMenu(MenuRepository menuRepository, int userId) throws LoadableResourceException;
-	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, String[] hidden, String[] disabled, String[] forPay, String[] payed, int userId) throws LoadableResourceException;
+	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeType[] hidden, JaNeeType[] disabled, JaNeeType[] forPay, JaNeeType[] payed, int userId) throws LoadableResourceException;
 	
 	public MenuRepository produceAlterredMenu(MenuRepository menuRepository);
 }

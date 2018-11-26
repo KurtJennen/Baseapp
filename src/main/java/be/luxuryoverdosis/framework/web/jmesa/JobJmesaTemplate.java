@@ -16,8 +16,8 @@ import org.jmesa.view.editor.BasicCellEditor;
 import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.DateCellEditor;
 
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
@@ -60,14 +60,14 @@ public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 		    	String status = null;
 		        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 		        
-		        if(BaseConstants.JOB_STATUS_NOT_STARTED.equals(value)) {
-		        	status = BaseSpringServiceLocator.getMessage("job.status.not.started");
+		        if(JobStatusType.NOT_STARTED.getCode().equals(value)) {
+		        	status = BaseSpringServiceLocator.getMessage("JobStatusType.N");
 				}
-				if(BaseConstants.JOB_STATUS_STARTED.equals(value)) {
-					status = BaseSpringServiceLocator.getMessage("job.status.started");
+				if(JobStatusType.STARTED.getCode().equals(value)) {
+					status = BaseSpringServiceLocator.getMessage("JobStatusType.Y");
 				}
-				if(BaseConstants.JOB_STATUS_EXECUTED.equals(value)) {
-					status = BaseSpringServiceLocator.getMessage("job.status.executed");
+				if(JobStatusType.EXECUTED.getCode().equals(value)) {
+					status = BaseSpringServiceLocator.getMessage("JobStatusType.E");
 				}
 				
 				return status;

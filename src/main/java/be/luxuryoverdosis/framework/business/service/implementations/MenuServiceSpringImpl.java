@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.MenuLevel;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
@@ -159,7 +160,7 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	@Transactional
-	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, String[] hidden, String[] disabled, String[] forPay, String[] payed, int userId) throws LoadableResourceException {
+	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeType[] hidden, JaNeeType[] disabled, JaNeeType[] forPay, JaNeeType[] payed, int userId) throws LoadableResourceException {
 		menuRepository.reload();
 		ArrayList<MenuDTO> defaulMenuList = produceDefaultMenu(menuRepository);
 		
@@ -191,7 +192,7 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	private void disableMenuItems(MenuRepository menuRepository, int userId) {
-		ArrayList<MenuDTO> disabledMenuList = menuHibernateDAO.listDisabled(userId, BaseConstants.CODE_JA);
+		ArrayList<MenuDTO> disabledMenuList = menuHibernateDAO.listDisabled(userId, JaNeeType.JA);
 		
 		for (MenuDTO menuDTO : disabledMenuList) {
 			MenuComponent menuComponent = menuRepository.getMenu(menuDTO.getFullName(), BaseConstants.SLASH);
@@ -200,7 +201,7 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	private void forPayMenuItems(MenuRepository menuRepository, int userId) {
-		ArrayList<MenuDTO> forPayMenuList = menuHibernateDAO.listForPayAndPayed(userId, BaseConstants.CODE_NEE);
+		ArrayList<MenuDTO> forPayMenuList = menuHibernateDAO.listForPayAndPayed(userId, JaNeeType.NEE);
 		
 		for (MenuDTO menuDTO : forPayMenuList) {
 			MenuComponent menuComponent = menuRepository.getMenu(menuDTO.getFullName(), BaseConstants.SLASH);
@@ -210,7 +211,7 @@ public class MenuServiceSpringImpl implements MenuService {
 
 	@SuppressWarnings("rawtypes")
 	private void hiddenMenuItems(MenuRepository menuRepository, int userId) {
-		ArrayList<MenuDTO> hiddenMenuList = menuHibernateDAO.listHidden(userId, BaseConstants.CODE_JA);
+		ArrayList<MenuDTO> hiddenMenuList = menuHibernateDAO.listHidden(userId, JaNeeType.JA);
 		
 		for (MenuDTO menuDTO : hiddenMenuList) {
 			MenuComponent menuComponent = menuRepository.getMenu(menuDTO.getFullName(), BaseConstants.SLASH);
