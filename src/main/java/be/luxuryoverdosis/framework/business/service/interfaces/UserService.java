@@ -4,8 +4,14 @@ import java.io.File;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import be.luxuryoverdosis.framework.business.query.SearchCriteria;
+import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
+import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
+import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
+import net.sf.navigator.menu.MenuRepository;
 
 public interface UserService {
 	public static final int YEAR = 0;
@@ -25,6 +31,10 @@ public interface UserService {
 	public ArrayList<User> list();
 	public ArrayList<UserDTO> listDTO();
 	public ArrayList<UserDTO> listDTO(String searchValue);
+	
+	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository);
+	public SearchUserWrapperDTO getSearchUserWrapperDTO();
+	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria);
 	
 	public long count(String name, int id);
 	

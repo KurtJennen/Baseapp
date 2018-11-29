@@ -12,17 +12,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
-import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.Document;
-import be.luxuryoverdosis.framework.data.to.Role;
+import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.search.SearchAction;
@@ -39,19 +35,23 @@ public class SearchUserAction extends SearchAction {
 	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages) {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
+		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
+		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
+		SearchUserWrapperDTO searchUserWrapperDTO = userService.getSearchUserWrapperDTO();
+		
 		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		ArrayList<Role> roleList = new ArrayList<Role>();
-		roleList = roleService.list();
+		//RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
+		//ArrayList<Role> roleList = new ArrayList<Role>();
+		//roleList = roleService.list();
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.role")));
-		SessionManager.putInSession(request, BaseWebConstants.ROLE_LIST, roleList);
+		SessionManager.putInSession(request, BaseWebConstants.ROLE_LIST, searchUserWrapperDTO.getRoleList());
 		
 		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		ArrayList<Document> documentList = new ArrayList<Document>();
-		documentList = documentService.list(BaseConstants.DOCUMENTYPE_USER);
+		//DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
+		//ArrayList<Document> documentList = new ArrayList<Document>();
+		//documentList = documentService.list(BaseConstants.DOCUMENTYPE_USER);
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
-		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, documentList);
+		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, searchUserWrapperDTO.getDocumentList());
 	}
 		
 	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

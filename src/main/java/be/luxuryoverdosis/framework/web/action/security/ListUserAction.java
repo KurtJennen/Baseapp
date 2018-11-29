@@ -1,7 +1,5 @@
 package be.luxuryoverdosis.framework.web.action.security;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,11 +19,10 @@ import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
-import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
+import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
-import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
+import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.ListUserForm;
@@ -47,13 +44,15 @@ public class ListUserAction extends DispatchAction {
 		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute("searchUserForm");
 		
 		//SearchService searchService = (SearchService)SpringServiceLocator.getBean(SpringServiceConstants.SEARCH_SERVICE);
-		SearchService searchService = BaseSpringServiceLocator.getBean(SearchService.class);
+		//SearchService searchService = BaseSpringServiceLocator.getBean(SearchService.class);
+		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
 		SearchSelect searchSelect = (SearchSelect)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
-		ArrayList<Object> searchUserList = searchService.search(searchSelect, searchForm.getSearchCriteria());
+		//ArrayList<Object> searchUserList = searchService.search(searchSelect, searchForm.getSearchCriteria());
+		ListUserWrapperDTO listUserWrapperDTO = userService.getListUserWrapperDTO(searchSelect, searchForm.getSearchCriteria());
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_LIST, request, response);
-		UserJmesaTemplate userJmesaTemplate = new UserJmesaTemplate(tableFacade, searchUserList, request);
+		UserJmesaTemplate userJmesaTemplate = new UserJmesaTemplate(tableFacade, listUserWrapperDTO.getSearchUserList(), request);
 		String html = userJmesaTemplate.render();
 		if(html == null) {
 			return null;
@@ -63,13 +62,13 @@ public class ListUserAction extends DispatchAction {
 		
 		//SessionManager.putInSession(request, WebConstants.USER_LIST, searchUserList);
         
-		BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		ArrayList<BatchJobInstance> batchJobInstanceList = new ArrayList<BatchJobInstance>();
-		batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_EXPORT_USER);
+		//BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
+		//ArrayList<BatchJobInstance> batchJobInstanceList = new ArrayList<BatchJobInstance>();
+		//batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_EXPORT_USER);
 		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
-		BatchJobExecutionJmesaTemplate batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, batchJobInstanceList, request);
+		BatchJobExecutionJmesaTemplate batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceExportList(), request);
 		html = batchJobExecutionJmesaTemplate.render();
 		if(html == null) {
 			return null;
@@ -77,12 +76,12 @@ public class ListUserAction extends DispatchAction {
         request.getSession().setAttribute(BaseWebConstants.USER_EXPORT_LIST, html);
 		//JMesa End
         
-        batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_IMPORT_USER);
+        //batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
+		//batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_IMPORT_USER);
 		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_IMPORT_LIST, request, response);
-		batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, batchJobInstanceList, request);
+		batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceImportList(), request);
 		html = batchJobExecutionJmesaTemplate.render();
 		if(html == null) {
 			return null;

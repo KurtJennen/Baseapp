@@ -16,11 +16,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
+import be.luxuryoverdosis.framework.business.query.SearchCriteria;
+import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
+import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
+import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
-import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.document.UserDocument;
@@ -28,8 +32,12 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
+import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
+import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
+import net.sf.navigator.menu.MenuRepository;
 
 @Service
 public class UserServiceSpringImpl implements UserService {
@@ -38,9 +46,13 @@ public class UserServiceSpringImpl implements UserService {
 	@Resource
 	private RoleHibernateDAO roleHibernateDAO;
 	@Resource
-	private MenuHibernateDAO menuHibernateDAO;
+	private BatchJobInstanceHibernateDAO batchJobInstanceHibernateDAO;
+	@Resource
+	private MenuService menuService;
 	@Resource
 	private DocumentService documentService;
+	@Resource
+	private SearchService searchService;
 	
 	@Transactional
 	public UserDTO createOrUpdateDTO(final UserDTO userDTO) {
@@ -136,7 +148,7 @@ public class UserServiceSpringImpl implements UserService {
 	@Transactional
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteUser");
-		menuHibernateDAO.deleteForUser(id);
+		menuService.deleteForUser(id);
 		userHibernateDAO.delete(id);
 		Logging.info(this, "End deleteUser");
 	}
@@ -166,6 +178,46 @@ public class UserServiceSpringImpl implements UserService {
 		arrayList = userHibernateDAO.listDTO(searchValue);
 		Logging.info(this, "End listUser");
 		return arrayList;
+	}
+	
+	@Transactional
+	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository) {
+		Logging.info(this, "Begin getLoginWrapperDTO");
+		LoginWrapperDTO loginWrapperDTO = new LoginWrapperDTO();
+		User user = userHibernateDAO.readName(name);
+		loginWrapperDTO.setUser(user);
+		
+		int days = daysBeforeDeactivate(user);
+		loginWrapperDTO.setDays(days);
+		if(days == 0) {
+			deactivate(user.getId());
+		}
+		
+		loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, user.getId()));
+		
+		Logging.info(this, "End getLoginWrapperDTO");
+		return loginWrapperDTO;
+	}
+	
+	@Transactional(readOnly=true)
+	public SearchUserWrapperDTO getSearchUserWrapperDTO() {
+		Logging.info(this, "Begin getSearchUserWrapperDTO");
+		SearchUserWrapperDTO searchUserWrapperDTO = new SearchUserWrapperDTO();
+		searchUserWrapperDTO.setRoleList(roleHibernateDAO.list());
+		searchUserWrapperDTO.setDocumentList(documentService.list(BaseConstants.DOCUMENTYPE_USER));
+		Logging.info(this, "End getSearchUserDTO");
+		return searchUserWrapperDTO;
+	}
+	
+	@Transactional(readOnly=true)
+	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria) {
+		Logging.info(this, "Begin getListUserDTO");
+		ListUserWrapperDTO listUserWrapperDTO = new ListUserWrapperDTO();
+		listUserWrapperDTO.setSearchUserList(searchService.search(searchSelect, searchCriteria));
+		listUserWrapperDTO.setBatchJobInstanceExportList(batchJobInstanceHibernateDAO.list(BaseConstants.JOB_EXPORT_USER));
+		listUserWrapperDTO.setBatchJobInstanceImportList(batchJobInstanceHibernateDAO.list(BaseConstants.JOB_IMPORT_USER));
+		Logging.info(this, "End getListUserDTO");
+		return listUserWrapperDTO;
 	}
 	
 	@Transactional(readOnly=true)
@@ -253,7 +305,7 @@ public class UserServiceSpringImpl implements UserService {
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
-		calendar.set(2100, 0, 1);
+		calendar.set(2000, 0, 1);
 		user.setDateExpiration(calendar.getTime());
 		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
 		
