@@ -6,10 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.sf.navigator.menu.MenuComponent;
-import net.sf.navigator.menu.MenuRepository;
-import net.sf.navigator.util.LoadableResourceException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,14 +13,16 @@ import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.MenuLevel;
 import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
-import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.factory.MenuFactory;
 import be.luxuryoverdosis.framework.data.to.Menu;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.wrapperdto.MenuWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
+import net.sf.navigator.menu.MenuComponent;
+import net.sf.navigator.menu.MenuRepository;
+import net.sf.navigator.util.LoadableResourceException;
 
 @Service
 public class MenuServiceSpringImpl implements MenuService {
@@ -98,6 +96,13 @@ public class MenuServiceSpringImpl implements MenuService {
 		menuHibernateDAO.delete(id);
 		Logging.info(this, "End deleteMenu");
 	}
+	
+	@Transactional
+	public void deleteForUser(int userId) {
+		Logging.info(this, "Begin deleteForUserMenu");
+		menuHibernateDAO.deleteForUser(userId);
+		Logging.info(this, "End deleteForUserMenu");	
+	}
 
 	@Transactional(readOnly=true)
 	public ArrayList<MenuDTO> list(int userId) {
@@ -106,6 +111,16 @@ public class MenuServiceSpringImpl implements MenuService {
 		arrayList = menuHibernateDAO.list(userId);
 		Logging.info(this, "End listMenu");
 		return arrayList;
+	}
+	
+	@Transactional(readOnly=true)
+	public MenuWrapperDTO getMenuWrapperDTO(MenuRepository menuRepository, int userId) throws LoadableResourceException {
+		Logging.info(this, "Begin geMenuWrapperDTO");
+		MenuWrapperDTO menuWrapperDTO = new MenuWrapperDTO();
+		menuWrapperDTO.setUserList(userHibernateDAO.list());
+		menuWrapperDTO.setMenuDTOList(produceMenu(menuRepository, userId));
+		Logging.info(this, "End geMenuWrapperDTO");
+		return menuWrapperDTO;
 	}
 	
 	@Transactional(readOnly=true)
@@ -120,7 +135,7 @@ public class MenuServiceSpringImpl implements MenuService {
 			}
 		}
 		
-		produceAlterredMenu(menuRepository);
+		produceAlterredMenu(menuRepository, userId);
 		
 		return defaultMenuList;
 	}
@@ -180,9 +195,9 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	@Transactional(readOnly=true)
-	public MenuRepository produceAlterredMenu(MenuRepository menuRepository) {
-		User user = ThreadManager.getUserFromThread();
-		int userId = user.getId();
+	public MenuRepository produceAlterredMenu(MenuRepository menuRepository, int userId) {
+		//User user = ThreadManager.getUserFromThread();
+		//int userId = user.getId();
 		
 		disableMenuItems(menuRepository, userId);
 		forPayMenuItems(menuRepository, userId);

@@ -3,9 +3,6 @@ package be.luxuryoverdosis.framework.web.action.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.navigator.menu.MenuRepository;
-import net.sf.navigator.util.LoadableResourceException;
-
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -15,16 +12,17 @@ import org.apache.struts.actions.DispatchAction;
 
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.LoginForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.message.MessageManager;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
+import net.sf.navigator.menu.MenuRepository;
 
 public class LoginAction extends DispatchAction {
 	public ActionForward index(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -48,17 +46,21 @@ public class LoginAction extends DispatchAction {
 		
 		String encryptedPassword = Encryption.encode(loginForm.getPassword());
 		
+		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
+		menuRepository.reload();
+		
 		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
 		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
+		LoginWrapperDTO loginWrapperDTO = userService.getLoginWrapperDTO(loginForm.getName(), menuRepository);
 		
-		User user = userService.readName(loginForm.getName());
+		//User user = userService.readName(loginForm.getName());
+		User user = loginWrapperDTO.getUser();
 		if(user != null && loginForm.getName().equals(user.getName()) && encryptedPassword.equals(user.getEncryptedPassword())) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
 			saveMessages(request, actionMessages);
 			
-			int days = userService.daysBeforeDeactivate(user);
+			int days = loginWrapperDTO.getDays();
 			if(days == 0) {
-				user = userService.deactivate(user.getId());
 				loginForm.setDeactivation(true);
 				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.reset"));
 			}	
@@ -71,7 +73,10 @@ public class LoginAction extends DispatchAction {
 			ThreadManager.setUserOnThread(user);
 			request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
 			
-			alterMenu(request);
+			//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
+			//MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
+			//menuRepository = menuService.produceAlterredMenu(menuRepository);
+			request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
 						
 			Logging.info(this, "End Login Success");
 			return (mapping.findForward("success"));
@@ -84,15 +89,15 @@ public class LoginAction extends DispatchAction {
 		}
 	}
 
-	private void alterMenu(HttpServletRequest request) throws LoadableResourceException {
-		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
-		menuRepository.reload();
-		
-		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
-		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
-		menuRepository = menuService.produceAlterredMenu(menuRepository);
-		request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, menuRepository);
-	}
+//	private void alterMenu(HttpServletRequest request) throws LoadableResourceException {
+//		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
+//		menuRepository.reload();
+//		
+//		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
+//		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
+//		menuRepository = menuService.produceAlterredMenu(menuRepository);
+//		request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, menuRepository);
+//	}
 	
 	public ActionForward logout(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Logout");
