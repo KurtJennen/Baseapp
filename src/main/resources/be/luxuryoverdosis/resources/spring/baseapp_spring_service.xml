@@ -6,7 +6,9 @@
        						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
        						
     <context:component-scan base-package="be.luxuryoverdosis.framework.business.service.implementations" />
+    <context:component-scan base-package="be.luxuryoverdosis.framework.business.webservice.implementations" />
     <context:component-scan base-package="be.luxuryoverdosis.baseapp.business.service.implementations" />
+    <context:component-scan base-package="be.luxuryoverdosis.baseapp.business.webservice.implementations" />
     
     <context:annotation-config/>
     
