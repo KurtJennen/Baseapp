@@ -13,17 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobParamsHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.BatchStepExecutionHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
-import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobExecution;
 import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 import be.luxuryoverdosis.framework.data.to.Job;
+import be.luxuryoverdosis.framework.data.wrapperdto.DetailJobWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -31,9 +35,13 @@ public class JobServiceSpringImpl implements JobService {
 	@Resource
 	private JobHibernateDAO jobHibernateDAO;
 	@Resource
-	private JobLogHibernateDAO jobLogHibernateDAO;
+	private JobLogService jobLogService;
+	@Resource
+	private BatchJobInstanceHibernateDAO batchJobInstanceHibernateDAO;
 	@Resource
 	private BatchJobExecutionHibernateDAO batchJobExecutionHibernateDAO;
+	@Resource
+	private BatchStepExecutionHibernateDAO batchStepExecutionHibernateDAO;
 	@Resource
 	private JobParamHibernateDAO jobParamHibernateDAO;
 	@Resource
@@ -64,7 +72,7 @@ public class JobServiceSpringImpl implements JobService {
 		Logging.info(this, "Begin deleteJob");
 		
 		jobParamHibernateDAO.deleteForJob(id);
-		jobLogHibernateDAO.deleteForJob(id);		
+		jobLogService.deleteForJob(id);		
 		jobHibernateDAO.delete(id);
 		
 		Logging.info(this, "End deleteJob");
@@ -80,7 +88,6 @@ public class JobServiceSpringImpl implements JobService {
 		
 		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);
 		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
-		
 		
 		if(batchJobParams != null) {
 			job = jobHibernateDAO.read((int)batchJobParams.getLongValue());
@@ -121,6 +128,23 @@ public class JobServiceSpringImpl implements JobService {
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
+	
+	@Transactional(readOnly=true)
+	public DetailJobWrapperDTO getDetailJobWrapperDTO(final int jobInstanceId) {
+		Logging.info(this, "Begin getDetailJobWrapperDTO(int)");
+		DetailJobWrapperDTO detailJobWrapperDTO = new DetailJobWrapperDTO();
+		
+		BatchJobInstance batchJobInstance = batchJobInstanceHibernateDAO.read(jobInstanceId);
+		detailJobWrapperDTO.setJobName(batchJobInstance.getJobName());
+		
+		detailJobWrapperDTO.setBatchJobParamsList(batchJobParamsHibernateDAO.list(jobInstanceId));
+		detailJobWrapperDTO.setBatchJobExecutionParamsList(batchJobExecutionParamsHibernateDAO.list(jobInstanceId));
+		detailJobWrapperDTO.setBatchStepExecutionList(batchStepExecutionHibernateDAO.list(jobInstanceId));
+		detailJobWrapperDTO.setJobLogList(jobLogService.listForBatch(jobInstanceId));
+		
+		Logging.info(this, "End getDetailJobWrapperDTO(int)");
+		return detailJobWrapperDTO;
+	};
 	
 	@Transactional
 	public void startJobs(final ArrayList<Job> jobs) {
