@@ -39,36 +39,13 @@ public class DetailJobAction extends DispatchAction {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_ID, jobInstanceId);
 	}
 	
-//	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin Search");
-//		Logging.info(this, "End Search Success");
-//		
-//		return (mapping.findForward("search"));
-//	}
-//	
-//	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin List");
-//		Logging.info(this, "End List Success");
-//		
-//		return (mapping.findForward("list"));
-//	}
-	
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
+		DetailJobWrapperDTO detailJobWrapperDTO = getJobService().getDetailJobWrapperDTO(jobInstanceId);
+
 		JobForm jobForm = (JobForm) form;
-		
-		JobService jobService = BaseSpringServiceLocator.getBean(JobService.class);
-		DetailJobWrapperDTO detailJobWrapperDTO = jobService.getDetailJobWrapperDTO(jobInstanceId);
-		
-		//BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		//BatchJobInstance batchJobInstance = batchJobInstanceService.read(jobInstanceId);
-		
 		jobForm.setJobName(detailJobWrapperDTO.getJobName());
-		
-		//BatchJobParamsService batchJobParamsService = BaseSpringServiceLocator.getBean(BatchJobParamsService.class);
-		//ArrayList<BatchJobParams> batchJobParamsList = new ArrayList<BatchJobParams>();
-		//batchJobParamsList = batchJobParamsService.list(jobInstanceId);
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_PARAMS_LIST, request, response);
@@ -80,11 +57,6 @@ public class DetailJobAction extends DispatchAction {
         request.setAttribute(BaseWebConstants.BATCH_JOB_PARAMS_LIST, html);
 		//JMesa End
         
-        //begin
-        //BatchJobExecutionParamsService batchJobExecutionParamsService = BaseSpringServiceLocator.getBean(BatchJobExecutionParamsService.class);
-		//ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList = new ArrayList<BatchJobExecutionParams>();
-		//batchJobExecutionParamsList = batchJobExecutionParamsService.list(jobInstanceId);
-		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, request, response);
 		BatchJobExecutionParamsJmesaTemplate batchJobExecutionParamsJmesaTemplate = new BatchJobExecutionParamsJmesaTemplate(tableFacade, detailJobWrapperDTO.getBatchJobExecutionParamsList(), request);
@@ -94,11 +66,6 @@ public class DetailJobAction extends DispatchAction {
 		}
         request.setAttribute(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, html);
 		//JMesa End
-        //end
-        
-        //BatchStepExecutionService batchStepExecutionService = BaseSpringServiceLocator.getBean(BatchStepExecutionService.class);
-		//ArrayList<BatchStepExecution> batchStepExecutionList = new ArrayList<BatchStepExecution>();
-		//batchStepExecutionList = batchStepExecutionService.list(jobInstanceId);
 		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_STEP_EXECUTION_LIST, request, response);
@@ -109,10 +76,6 @@ public class DetailJobAction extends DispatchAction {
 		}
         request.setAttribute(BaseWebConstants.BATCH_JOB_STEP_EXECUTION_LIST, html);
 		//JMesa End
-        
-        //JobLogService jobLogService = BaseSpringServiceLocator.getBean(JobLogService.class);
-        //ArrayList<JobLog> jobLogList = new ArrayList<JobLog>();
-        //jobLogList = jobLogService.listForBatch(jobInstanceId);
         
         //JMesa Start	
   		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.JOB_LOG_LIST, request, response);
@@ -170,8 +133,7 @@ public class DetailJobAction extends DispatchAction {
 		
 		listJmesa(mapping, form, request, response);
 		
-		JobService jobService = BaseSpringServiceLocator.getBean(JobService.class);
-		Job job = jobService.downloadFile(jobInstanceId);
+		Job job = getJobService().downloadFile(jobInstanceId);
 		byte[] bytes = job.getFileData();
 		
 		ResponseTool.writeResponseForDownload(response, job.getFileName(), FileContentType.TEXT_PLAIN, bytes);
@@ -186,12 +148,19 @@ public class DetailJobAction extends DispatchAction {
 
 		listJmesa(mapping, form, request, response);
 		
-		JobLogService jobLogService = BaseSpringServiceLocator.getBean(JobLogService.class);
-		JobLog jobLog = jobLogService.downloadFile(jobLogId);
+		JobLog jobLog = getJobLogService().downloadFile(jobLogId);
 		byte[] bytes = jobLog.getFileData();
 		
 		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + "." + FileType.TXT, FileContentType.TEXT_PLAIN, bytes);
 		
 		Logging.info(this, "End downloadFileLog");
+	}
+	
+	private JobService getJobService() {
+		return BaseSpringServiceLocator.getBean(JobService.class);
+	}
+	
+	private JobLogService getJobLogService() {
+		return BaseSpringServiceLocator.getBean(JobLogService.class);
 	}
 }

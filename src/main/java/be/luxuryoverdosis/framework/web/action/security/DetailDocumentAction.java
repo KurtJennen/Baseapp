@@ -27,7 +27,6 @@ public class DetailDocumentAction extends DispatchAction {
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward("list"));
-		//return new ActionRedirect(mapping.findForward("list"));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -37,9 +36,7 @@ public class DetailDocumentAction extends DispatchAction {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
-		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		DocumentDTO documentDTO = documentService.readDTO(id);
+		DocumentDTO documentDTO = getDocumentService().readDTO(id);
 		DetailDocumentForm documentForm = (DetailDocumentForm) form;
 		documentForm.setId(documentDTO.getId());
 		documentForm.setType(documentDTO.getType());
@@ -81,12 +78,9 @@ public class DetailDocumentAction extends DispatchAction {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("read"));
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		DetailDocumentForm documentForm = (DetailDocumentForm) form;
 		
-		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
 		FormFile formFile = documentForm.getFormFile();
 		FileDTO fileDTO = new FileDTO(formFile.getFileData(), formFile.getFileName(), formFile.getFileSize(), formFile.getContentType());
 		
@@ -95,24 +89,14 @@ public class DetailDocumentAction extends DispatchAction {
 		documentDTO.setType(documentForm.getType());
 		documentDTO.setFileDTO(fileDTO);
 		
-		documentDTO = documentService.createOrUpdateDTO(documentDTO);
+		documentDTO = getDocumentService().createOrUpdateDTO(documentDTO);
 		if(documentForm.getId() < 0) {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.document")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.document")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//documentForm.setId(documentDTO.getId());
-		//documentForm.setType(documentDTO.getType());
-		//documentForm.setFileName(documentDTO.getFileDTO().getFileName());
-		//documentForm.setFileSize(documentDTO.getFileDTO().getFileSize());
-		//documentForm.setContentType(documentDTO.getFileDTO().getContentType());
-		
 		actionRedirect.addParameter("id", documentDTO.getId());
-		
-		//saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Update Success");
 		
@@ -121,22 +105,20 @@ public class DetailDocumentAction extends DispatchAction {
 	
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
-		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		documentService.delete(id);
+		getDocumentService().delete(id);
 		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.document")));
-		//saveMessages(request, actionMessages);
-		
-		Logging.info(this, "End Delete Success");
-		
-		//return list(mapping, form, request, response);
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
+		
+		Logging.info(this, "End Delete Success");
+
 		return actionRedirect;
+	}
+	
+	private DocumentService getDocumentService() {
+		return BaseSpringServiceLocator.getBean(DocumentService.class);
 	}
 }

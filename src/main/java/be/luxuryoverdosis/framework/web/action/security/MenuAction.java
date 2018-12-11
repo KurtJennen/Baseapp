@@ -28,23 +28,17 @@ public class MenuAction extends DispatchAction {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
 		User user = ThreadManager.getUserFromThread();
-		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		
 		MenuForm menuForm = (MenuForm) form;
 		if(menuForm.getUserId() < 0) {
 			menuForm.setUserId(user.getId());
 		}
 		
-		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
-		MenuWrapperDTO menuWrapperDTO = menuService.getMenuWrapperDTO(menuRepository, menuForm.getUserId());
+		MenuWrapperDTO menuWrapperDTO = getMenuService().getMenuWrapperDTO(getMenuRepository(request), menuForm.getUserId());
 		
 		menuForm.setMenus(menuWrapperDTO.getMenuDTOList());
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.menu")));
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		//UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		//ArrayList<User> userList = new ArrayList<User>();
-		//userList = userService.list();
 		SessionManager.putInSession(request, BaseWebConstants.USER_LIST, menuWrapperDTO.getUserList());
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.user")));
 	}
@@ -57,21 +51,6 @@ public class MenuAction extends DispatchAction {
 		
 		storeListsInSession(request, actionMessages, form);
 		
-		//User user = ThreadManager.getUserFromThread();
-		
-		//MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
-		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
-		//MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
-		
-		//MenuForm menuForm = (MenuForm) form;
-		//if(menuForm.getUserId() < 0) {
-		//	menuForm.setUserId(user.getId());
-		//}
-		//menuForm.setMenus(menuService.produceMenu(menuRepository, menuForm.getUserId()));
-		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.menu")));
-		//saveMessages(request, actionMessages);
-		
 		Logging.info(this, "End List Success");
 		
 		return mapping.getInputForward();
@@ -83,16 +62,6 @@ public class MenuAction extends DispatchAction {
 		
 		storeListsInSession(request, actionMessages, form);
 		
-		//MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
-		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
-		//MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
-		
-		//MenuForm menuForm = (MenuForm) form;
-		//menuForm.setMenus(menuService.produceMenu(menuRepository, menuForm.getUserId()));
-		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.menu")));
-		//saveMessages(request, actionMessages);
-		
 		Logging.info(this, "End ChangeUser Success");
 		
 		return mapping.getInputForward();
@@ -103,11 +72,9 @@ public class MenuAction extends DispatchAction {
 		ActionMessages actionMessages = new ActionMessages();
 		
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
-		//MenuService menuService = (MenuService)SpringServiceLocator.getBean(SpringServiceConstants.MENU_SERVICE);
-		MenuService menuService = BaseSpringServiceLocator.getBean(MenuService.class);
 		
 		MenuForm menuForm = (MenuForm) form;
-		menuService.updateMenu(menuRepository, menuForm.getIds(), menuForm.getJaNeeTypeHidden(), menuForm.getJaNeeTypeDisabled(), menuForm.getJaNeeTypeForPay(), menuForm.getJaNeeTypePayed(), menuForm.getUserId());
+		getMenuService().updateMenu(menuRepository, menuForm.getIds(), menuForm.getJaNeeTypeHidden(), menuForm.getJaNeeTypeDisabled(), menuForm.getJaNeeTypeForPay(), menuForm.getJaNeeTypePayed(), menuForm.getUserId());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.menu")));
 		saveMessages(request, actionMessages);
@@ -131,5 +98,12 @@ public class MenuAction extends DispatchAction {
 		return mapping.findForward("forPay");
 	}
 
+	private MenuService getMenuService() {
+		return BaseSpringServiceLocator.getBean(MenuService.class);
+	}
+	
+	private MenuRepository getMenuRepository(HttpServletRequest request) {
+		return (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
+	}
 
 }

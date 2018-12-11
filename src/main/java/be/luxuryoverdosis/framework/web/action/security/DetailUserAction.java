@@ -41,7 +41,6 @@ public class DetailUserAction extends NavigationAction {
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward("list"));
-		//return new ActionRedirect(mapping.findForward("list"));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -52,9 +51,7 @@ public class DetailUserAction extends NavigationAction {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		UserDTO userDTO = userService.readDTO(id);
+		UserDTO userDTO = getUserService().readDTO(id);
 		DetailUserForm userForm = (DetailUserForm) form;
 		userForm.setId(userDTO.getId());
 		userForm.setName(userDTO.getName());
@@ -98,9 +95,7 @@ public class DetailUserAction extends NavigationAction {
 	
 	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
-		//ActionMessages actionMessages = new ActionMessages();
 		
-		//ActionForward actionForward = mapping.getInputForward();
 		ActionRedirect actionRedirect = null;
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -119,26 +114,14 @@ public class DetailUserAction extends NavigationAction {
 			actionRedirect = new ActionRedirect(mapping.findForward("read"));
 		}
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		userDTO = userService.createOrUpdateDTO(userDTO);
+		userDTO = getUserService().createOrUpdateDTO(userDTO);
 		if(userForm.getId() < 0) {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.user")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
-//			if(userForm.getRoleId() == 0) {
-//				actionForward = mapping.findForward("login");
-//			}
 		} else {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.user")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//userForm.setId(userDTO.getId());
-		//userForm.setDateExpirationAsString(userDTO.getDateExpirationAsString());
-		
 		actionRedirect.addParameter("id", userDTO.getId());
-		
-		//saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Update Success");
 		
@@ -147,22 +130,17 @@ public class DetailUserAction extends NavigationAction {
 	
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		userService.delete(id);
+		getUserService().delete(id);
 		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.user")));
-		//saveMessages(request, actionMessages);
+		
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		
 		Logging.info(this, "End Delete Success");
 		
-		//return list(mapping, form, request, response);
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
-		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		return actionRedirect;
 	}
 	
@@ -171,14 +149,13 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.activate(userForm.getId(), UserService.YEAR);
+		User user = getUserService().activate(userForm.getId(), UserService.YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateYear");
+		
 		return mapping.getInputForward();
 	}
 	
@@ -187,14 +164,13 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.activate(userForm.getId(), UserService.HALF_YEAR);
+		User user = getUserService().activate(userForm.getId(), UserService.HALF_YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateHalfYear");
+		
 		return mapping.getInputForward();
 	}
 	
@@ -203,14 +179,13 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		User user = userService.deactivate(userForm.getId());
+		User user = getUserService().deactivate(userForm.getId());
 		
 		userForm.setRoleId(user.getRole().getId());
 		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End Deactivate");
+		
 		return mapping.getInputForward();
 	}
 	
@@ -226,8 +201,7 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		ArrayList<RoleDTO> roleList = roleService.listDTO(userForm.getRoleIdValue());
+		ArrayList<RoleDTO> roleList = getRoleService().listDTO(userForm.getRoleIdValue());
 		if (roleList.size() > 0) {
 			super.sendAsJson(response, roleList);
 		}
@@ -242,8 +216,7 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		RoleDTO roleDTO = roleService.readDTO(userForm.getRoleId());
+		RoleDTO roleDTO = getRoleService().readDTO(userForm.getRoleId());
 		
 		super.sendAsJson(response, roleDTO);
 		
@@ -252,4 +225,11 @@ public class DetailUserAction extends NavigationAction {
 		return null;
 	}
 	
+	private UserService getUserService() {
+		return BaseSpringServiceLocator.getBean(UserService.class);
+	}
+	
+	private RoleService getRoleService() {
+		return BaseSpringServiceLocator.getBean(RoleService.class);
+	}
 }

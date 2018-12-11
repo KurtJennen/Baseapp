@@ -43,12 +43,7 @@ public class ListUserAction extends DispatchAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute("searchUserForm");
 		
-		//SearchService searchService = (SearchService)SpringServiceLocator.getBean(SpringServiceConstants.SEARCH_SERVICE);
-		//SearchService searchService = BaseSpringServiceLocator.getBean(SearchService.class);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		SearchSelect searchSelect = (SearchSelect)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
-		//ArrayList<Object> searchUserList = searchService.search(searchSelect, searchForm.getSearchCriteria());
-		ListUserWrapperDTO listUserWrapperDTO = userService.getListUserWrapperDTO(searchSelect, searchForm.getSearchCriteria());
+		ListUserWrapperDTO listUserWrapperDTO = getUserService().getListUserWrapperDTO(getSearchSelect(), searchForm.getSearchCriteria());
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_LIST, request, response);
@@ -60,12 +55,6 @@ public class ListUserAction extends DispatchAction {
         request.getSession().setAttribute(BaseWebConstants.USER_LIST, html);
 		//JMesa End
 		
-		//SessionManager.putInSession(request, WebConstants.USER_LIST, searchUserList);
-        
-		//BatchJobInstanceService batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		//ArrayList<BatchJobInstance> batchJobInstanceList = new ArrayList<BatchJobInstance>();
-		//batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_EXPORT_USER);
-		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
 		BatchJobExecutionJmesaTemplate batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceExportList(), request);
@@ -76,9 +65,6 @@ public class ListUserAction extends DispatchAction {
         request.getSession().setAttribute(BaseWebConstants.USER_EXPORT_LIST, html);
 		//JMesa End
         
-        //batchJobInstanceService = BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
-		//batchJobInstanceList = batchJobInstanceService.list(BaseConstants.JOB_IMPORT_USER);
-		
 		//JMesa Start	
 		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_IMPORT_LIST, request, response);
 		batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceImportList(), request);
@@ -97,8 +83,6 @@ public class ListUserAction extends DispatchAction {
 		ActionMessages actionMessages = new ActionMessages();
 		
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
-		
-		//storeListsInSession(request, actionMessages);
 		
 		if(listJmesa(mapping, form, request, response) == null) {
 			return null;
@@ -147,14 +131,13 @@ public class ListUserAction extends DispatchAction {
 		
 		FileDTO fileDTO = new FileDTO(null, BaseConstants.JOB_EXPORT_USER_FILENAME, 0, FileContentType.TEXT_PLAIN);
 		
-		BatchService batchService = BaseSpringServiceLocator.getBean(BatchService.class);
-		batchService.exportUserJob(fileDTO);
+		getBatchService().exportUserJob(fileDTO);
+		
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
 		Logging.info(this, "End ExportUserJob Success");
 		
-		//return list(mapping, form, request, response);
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
-		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		return actionRedirect;
 	}
 	
@@ -166,15 +149,26 @@ public class ListUserAction extends DispatchAction {
 		FormFile formFile = listUserForm.getFormFile();
 		FileDTO fileDTO = new FileDTO(formFile.getFileData(), formFile.getFileName(), formFile.getFileSize(), formFile.getContentType());
 		
-		BatchService batchService = BaseSpringServiceLocator.getBean(BatchService.class);
-		batchService.importUserJob(fileDTO);
+		getBatchService().importUserJob(fileDTO);
+		
+		
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
 		Logging.info(this, "End ImportUserJob Success");
 		
-		//return list(mapping, form, request, response);
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
-		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		return actionRedirect;
 	}
 	
+	private UserService getUserService() {
+		return BaseSpringServiceLocator.getBean(UserService.class);
+	}
+	
+	private BatchService getBatchService() {
+		return BaseSpringServiceLocator.getBean(BatchService.class);
+	}
+	
+	private SearchSelect getSearchSelect() {
+		return (SearchSelect)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
+	}
 }

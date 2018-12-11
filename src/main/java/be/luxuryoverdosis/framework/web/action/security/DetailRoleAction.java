@@ -28,7 +28,6 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward("list"));
-		//return new ActionRedirect(mapping.findForward("list"));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -38,9 +37,7 @@ public class DetailRoleAction extends NavigationAction {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
-		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		RoleDTO roleDTO = roleService.readDTO(id);
+		RoleDTO roleDTO = getRoleService().readDTO(id);
 		DetailRoleForm roleForm = (DetailRoleForm) form;
 		roleForm.setId(roleDTO.getId());
 		roleForm.setName(roleDTO.getName());
@@ -74,14 +71,12 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "End Create Success");
 		
 		return mapping.getInputForward();
-
 	}
 	
 	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("read"));
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		DetailRoleForm roleForm = (DetailRoleForm) form;
 		
@@ -89,23 +84,14 @@ public class DetailRoleAction extends NavigationAction {
 		roleDTO.setId(roleForm.getId());
 		roleDTO.setName(roleForm.getName());
 		
-		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		
-		roleDTO = roleService.createOrUpdateDTO(roleDTO);
+		roleDTO = getRoleService().createOrUpdateDTO(roleDTO);
 		if(roleForm.getId() < 0) {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.role")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.role")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//roleForm.setId(roleDTO.getId());
-		
 		actionRedirect.addParameter("id", roleDTO.getId());
-		
-		//saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Update Success");
 		
@@ -114,22 +100,21 @@ public class DetailRoleAction extends NavigationAction {
 	
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
-		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		roleService.delete(id);
+		getRoleService().delete(id);
 		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.role")));
-		//saveMessages(request, actionMessages);
+		
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		
 		Logging.info(this, "End Delete Success");
 		
-		//return list(mapping, form, request, response);
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
-		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		return actionRedirect;
+	}
+	
+	private RoleService getRoleService() {
+		return BaseSpringServiceLocator.getBean(RoleService.class);
 	}
 }

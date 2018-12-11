@@ -80,9 +80,6 @@ public abstract class SearchAction extends AjaxAction {
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
-		QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
-		
 		QueryDTO queryDTO = new QueryDTO();
 		queryDTO.setName(searchForm.getQueryName());
 		queryDTO.setType(this.getSearchService());
@@ -94,7 +91,7 @@ public abstract class SearchAction extends AjaxAction {
 		queryDTO.setOpenBrackets(searchForm.getSearchCriteria().getOpenBrackets());
 		queryDTO.setCloseBrackets(searchForm.getSearchCriteria().getCloseBrackets());
 		
-		long count = queryService.countAndCreateOrUpdateDTO(searchForm.getQueryName(), this.getSearchService(), queryDTO);
+		long count = getQueryService().countAndCreateOrUpdateDTO(searchForm.getQueryName(), this.getSearchService(), queryDTO);
 		if(count == 0) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
@@ -117,12 +114,9 @@ public abstract class SearchAction extends AjaxAction {
 		SearchForm searchForm = (SearchForm) form;
 		
 		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
-			//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
-			QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
-			
 			Integer id = Integer.valueOf(searchForm.getSelectQuery());
 			
-			QueryDTO queryDTO = queryService.readDTO(id);
+			QueryDTO queryDTO = getQueryService().readDTO(id);
 			
 			searchForm.setComplexQuery(queryDTO.getComplex());
 			searchForm.setParameters(queryDTO.getParameters());
@@ -149,17 +143,13 @@ public abstract class SearchAction extends AjaxAction {
 		SearchForm searchForm = (SearchForm) form;
 		
 		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
-			//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
-			QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
-			queryService.delete(Integer.valueOf(searchForm.getSelectQuery()));
+			getQueryService().delete(Integer.valueOf(searchForm.getSelectQuery()));
 		}
 		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.query")));
 		saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Delete Success");
 		
-		//return mapping.getInputForward();
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("search"));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		return actionRedirect;
@@ -190,4 +180,7 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
+	private QueryService getQueryService() {
+		return BaseSpringServiceLocator.getBean(QueryService.class);
+	}
 }

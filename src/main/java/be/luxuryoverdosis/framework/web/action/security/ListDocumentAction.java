@@ -29,10 +29,7 @@ public class ListDocumentAction extends DispatchAction {
 	}
 	
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		ArrayList<Document> documentList = new ArrayList<Document>();
-		documentList = documentService.list();
+		ArrayList<Document> documentList = getDocumentService().list();
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.DOCUMENT_LIST, request, response);
@@ -84,5 +81,9 @@ public class ListDocumentAction extends DispatchAction {
 		Logging.info(this, "End Read Success");
 		
 		return (mapping.findForward("read"));
+	}
+	
+	private DocumentService getDocumentService() {
+		return BaseSpringServiceLocator.getBean(DocumentService.class);
 	}
 }

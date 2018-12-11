@@ -55,7 +55,6 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		int id = getId(baseForm, request);
 		
-//		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read&nameIds=" + getNameIds());
 		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read");
 		redirect.addParameter("id", id);
 		
@@ -122,12 +121,9 @@ public abstract class NavigationAction extends AjaxAction {
 	}
 	
 	private void loadIds(BaseForm baseForm, HttpServletRequest request) {
-//		String nameIds = getNameIds(request);
 		int[] ids = (int[])SessionManager.getFromSession(request, getNameIds());
 		
 		baseForm.setIds(ids);
-		
-//		return nameIds;
 	}
 	
 	private int saveIds(BaseForm baseForm, HttpServletRequest request) {
@@ -139,10 +135,5 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		return ArrayTool.positionValueInArray(baseForm.getIds(), baseForm.getId());
 	}
-
-//	private String getNameIds(HttpServletRequest request) {
-//		String nameIds = request.getParameter("nameIds");
-//		return nameIds;
-//	}
 	
 }

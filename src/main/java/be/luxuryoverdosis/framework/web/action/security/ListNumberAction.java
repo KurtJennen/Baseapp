@@ -25,10 +25,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class ListNumberAction extends DispatchAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
-		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
-		ArrayList<Number> numberList = new ArrayList<Number>();
-		numberList = numberService.list();
+		ArrayList<Number> numberList = getNumberService().list();
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.NUMBER_LIST, request, response);
@@ -78,5 +75,9 @@ public class ListNumberAction extends DispatchAction {
 		Logging.info(this, "End Read Success");
 		
 		return (mapping.findForward("read"));
+	}
+	
+	private NumberService getNumberService() {
+		return BaseSpringServiceLocator.getBean(NumberService.class);
 	}
 }

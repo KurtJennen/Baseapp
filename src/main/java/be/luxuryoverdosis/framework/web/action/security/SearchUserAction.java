@@ -35,22 +35,11 @@ public class SearchUserAction extends SearchAction {
 	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages) {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		SearchUserWrapperDTO searchUserWrapperDTO = userService.getSearchUserWrapperDTO();
+		SearchUserWrapperDTO searchUserWrapperDTO = getUserService().getSearchUserWrapperDTO();
 		
-		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		//RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		//ArrayList<Role> roleList = new ArrayList<Role>();
-		//roleList = roleService.list();
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.role")));
 		SessionManager.putInSession(request, BaseWebConstants.ROLE_LIST, searchUserWrapperDTO.getRoleList());
 		
-		//DocumentService documentService = (DocumentService)SpringServiceLocator.getBean(SpringServiceConstants.DOCUMENT_SERVICE);
-		//DocumentService documentService = BaseSpringServiceLocator.getBean(DocumentService.class);
-		//ArrayList<Document> documentList = new ArrayList<Document>();
-		//documentList = documentService.list(BaseConstants.DOCUMENTYPE_USER);
-		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
 		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, searchUserWrapperDTO.getDocumentList());
 	}
 		
@@ -93,16 +82,13 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "Begin CreateDocument");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		//SearchForm searchForm = (SearchForm) form;
 		SearchUserForm searchUserForm = (SearchUserForm) form;
 		
-		//UserService userService = (UserService)SpringServiceLocator.getBean(SpringServiceConstants.USER_SERVICE);
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		File file = userService.createDocument(searchUserForm.getDocumentId());
+		File file = getUserService().createDocument(searchUserForm.getDocumentId());
 		
 		ResponseTool.initializeResponseForDownload(response, file.getName(), FileContentType.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT, Long.valueOf(file.length()).intValue());
 		
-		userService.writeDocument(file, response.getOutputStream());
+		getUserService().writeDocument(file, response.getOutputStream());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("reset.success", MessageLocator.getMessage(request, "table.query")));
 		saveMessages(request, actionMessages);
@@ -115,8 +101,7 @@ public class SearchUserAction extends SearchAction {
 		
 		SearchUserForm searchUserForm = (SearchUserForm) form;
 		
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		ArrayList<UserDTO> userList = userService.listDTO(searchUserForm.getNameIdValue());
+		ArrayList<UserDTO> userList = getUserService().listDTO(searchUserForm.getNameIdValue());
 		if (userList.size() > 0) {
 			super.sendAsJson(response, userList);
 		}
@@ -131,13 +116,16 @@ public class SearchUserAction extends SearchAction {
 		
 		SearchUserForm searchUserForm = (SearchUserForm) form;
 		
-		UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-		UserDTO userDTO = userService.readDTO(searchUserForm.getNameId());
+		UserDTO userDTO = getUserService().readDTO(searchUserForm.getNameId());
 		
 		super.sendAsJson(response, userDTO);
 		
 		Logging.info(this, "End Ajax Success");
 		
 		return null;
+	}
+	
+	private UserService getUserService() {
+		return BaseSpringServiceLocator.getBean(UserService.class);
 	}
 }

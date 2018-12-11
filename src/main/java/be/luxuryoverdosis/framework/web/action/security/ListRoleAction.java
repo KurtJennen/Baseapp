@@ -25,10 +25,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class ListRoleAction extends DispatchAction {
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		//RoleService roleService = (RoleService)SpringServiceLocator.getBean(SpringServiceConstants.ROLE_SERVICE);
-		RoleService roleService = BaseSpringServiceLocator.getBean(RoleService.class);
-		ArrayList<Role> roleList = new ArrayList<Role>();
-		roleList = roleService.list();
+		ArrayList<Role> roleList = getRoleService().list();
 		
 		//JMesa Start	
 		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.ROLE_LIST, request, response);
@@ -78,5 +75,9 @@ public class ListRoleAction extends DispatchAction {
 		Logging.info(this, "End Read Success");
 		
 		return (mapping.findForward("read"));
+	}
+	
+	private RoleService getRoleService() {
+		return BaseSpringServiceLocator.getBean(RoleService.class);
 	}
 }

@@ -25,7 +25,6 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward("list"));
-		//return new ActionRedirect(mapping.findForward("list"));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -35,9 +34,7 @@ public class DetailNumberAction extends DispatchAction {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
-		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
-		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
-		NumberDTO numberDTO = numberService.readDTO(id);
+		NumberDTO numberDTO = getNumberService().readDTO(id);
 		DetailNumberForm numberForm = (DetailNumberForm) form;
 		numberForm.setId(numberDTO.getId());
 		numberForm.setApplicationCode(numberDTO.getApplicationCode());
@@ -79,7 +76,6 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("read"));
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		DetailNumberForm numberForm = (DetailNumberForm) form;
 		
@@ -90,23 +86,14 @@ public class DetailNumberAction extends DispatchAction {
 		numberDTO.setNumber(numberForm.getNumber());
 		numberDTO.setType(numberForm.getType());
 		
-		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
-		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
-		
-		numberDTO = numberService.createOrUpdateDTO(numberDTO);
+		numberDTO = getNumberService().createOrUpdateDTO(numberDTO);
 		if(numberForm.getId() < 0) {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.number")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
-			//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.number")));
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		//numberForm.setId(numberDTO.getId());
-		
 		actionRedirect.addParameter("id", numberDTO.getId());
-		
-		//saveMessages(request, actionMessages);
 		
 		Logging.info(this, "End Update Success");
 		
@@ -115,22 +102,20 @@ public class DetailNumberAction extends DispatchAction {
 	
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
-		//ActionMessages actionMessages = new ActionMessages();
 		
 		int id = Integer.parseInt(request.getParameter("id"));
 		
-		//NumberService numberService = (NumberService)SpringServiceLocator.getBean(SpringServiceConstants.NUMBER_SERVICE);
-		NumberService numberService = BaseSpringServiceLocator.getBean(NumberService.class);
-		numberService.delete(id);
+		getNumberService().delete(id);
 		
-		//actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.number")));
-		//saveMessages(request, actionMessages);
-		
-		Logging.info(this, "End Delete Success");
-		
-		//return list(mapping, form, request, response);
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
+
+		Logging.info(this, "End Delete Success");
+		
 		return actionRedirect;
+	}
+	
+	private NumberService getNumberService() {
+		return BaseSpringServiceLocator.getBean(NumberService.class);
 	}
 }
