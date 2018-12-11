@@ -7,14 +7,14 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointService;
-import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserRequest;
-import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserResponse;
-import be.luxuryoverdosis.user.schema.v1.DeleteUserRequest;
-import be.luxuryoverdosis.user.schema.v1.DeleteUserResponse;
-import be.luxuryoverdosis.user.schema.v1.ReadAllUsersRequest;
-import be.luxuryoverdosis.user.schema.v1.ReadAllUsersResponse;
-import be.luxuryoverdosis.user.schema.v1.ReadUserRequest;
-import be.luxuryoverdosis.user.schema.v1.ReadUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 
 @Endpoint
 public class GetUserEndpoint {

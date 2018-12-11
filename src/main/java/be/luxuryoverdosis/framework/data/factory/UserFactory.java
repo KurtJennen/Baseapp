@@ -3,6 +3,7 @@ package be.luxuryoverdosis.framework.data.factory;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
 
 public class UserFactory {
@@ -18,7 +19,9 @@ public class UserFactory {
 		userDTO.setEmail(user.getEmail());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 		if(user.getRole() != null) {
-			userDTO.setRoleId(user.getRole().getId());
+			Role role = user.getRole();
+			userDTO.setRoleId(role.getId());
+			userDTO.setRoleName(role.getName());
 		}
 		
 		return userDTO;

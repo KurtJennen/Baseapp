@@ -1,5 +1,5 @@
 
-package be.luxuryoverdosis.user.schema.v1;
+package be.luxuryoverdosis.generated.user.schema.v1;
 
 import java.util.ArrayList;
 import java.util.List;

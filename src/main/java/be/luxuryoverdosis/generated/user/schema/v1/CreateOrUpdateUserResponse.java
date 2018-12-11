@@ -1,9 +1,9 @@
 
-package be.luxuryoverdosis.user.schema.v1;
+package be.luxuryoverdosis.generated.user.schema.v1;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -17,7 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute ref="{http://www.luxuryoverdosis.be/user/schema/v1}Name use="required""/>
+ *       &lt;sequence>
+ *         &lt;element name="Message" type="{http://www.luxuryoverdosis.be/user/schema/v1}Message"/>
+ *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -26,35 +28,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(name = "DeleteUserRequest")
-public class DeleteUserRequest {
+@XmlType(name = "", propOrder = {
+    "message"
+})
+@XmlRootElement(name = "CreateOrUpdateUserResponse")
+public class CreateOrUpdateUserResponse {
 
-    @XmlAttribute(name = "Name", namespace = "http://www.luxuryoverdosis.be/user/schema/v1", required = true)
-    protected String name;
+    @XmlElement(name = "Message", required = true)
+    protected Message message;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the message property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Message }
      *     
      */
-    public String getName() {
-        return name;
+    public Message getMessage() {
+        return message;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the message property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Message }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setMessage(Message value) {
+        this.message = value;
     }
 
 }

@@ -1,8 +1,10 @@
 package be.luxuryoverdosis.framework.business.webservice.interfaces;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 public interface UserRestService {
-	public String readUserRequest(String name);
-	public String readAllUsersRequest();
-	public String createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName);
-	public String deleteUserRequest(String name);
+	public String readUserRequest(String name) throws JsonProcessingException;
+	public String readAllUsersRequest() throws JsonProcessingException;
+	public String createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName) throws JsonProcessingException;
+	public String deleteUserRequest(String name) throws JsonProcessingException;
 }

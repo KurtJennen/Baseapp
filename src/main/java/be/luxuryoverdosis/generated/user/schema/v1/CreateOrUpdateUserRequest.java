@@ -1,9 +1,9 @@
 
-package be.luxuryoverdosis.user.schema.v1;
+package be.luxuryoverdosis.generated.user.schema.v1;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -17,7 +17,9 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;attribute ref="{http://www.luxuryoverdosis.be/user/schema/v1}Name use="required""/>
+ *       &lt;sequence>
+ *         &lt;element name="User" type="{http://www.luxuryoverdosis.be/user/schema/v1}User"/>
+ *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -26,35 +28,37 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
-@XmlRootElement(name = "ReadUserRequest")
-public class ReadUserRequest {
+@XmlType(name = "", propOrder = {
+    "user"
+})
+@XmlRootElement(name = "CreateOrUpdateUserRequest")
+public class CreateOrUpdateUserRequest {
 
-    @XmlAttribute(name = "Name", namespace = "http://www.luxuryoverdosis.be/user/schema/v1", required = true)
-    protected String name;
+    @XmlElement(name = "User", required = true)
+    protected User user;
 
     /**
-     * Gets the value of the name property.
+     * Gets the value of the user property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
     /**
-     * Sets the value of the name property.
+     * Sets the value of the user property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link User }
      *     
      */
-    public void setName(String value) {
-        this.name = value;
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }

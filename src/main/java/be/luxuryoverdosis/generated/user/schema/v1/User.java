@@ -1,5 +1,5 @@
 
-package be.luxuryoverdosis.user.schema.v1;
+package be.luxuryoverdosis.generated.user.schema.v1;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

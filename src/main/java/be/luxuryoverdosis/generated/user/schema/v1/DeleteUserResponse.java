@@ -1,23 +1,24 @@
 
-package be.luxuryoverdosis.user.schema.v1;
+package be.luxuryoverdosis.generated.user.schema.v1;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for Message complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="Message">
+ * &lt;complexType>
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="message" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="Message" type="{http://www.luxuryoverdosis.be/user/schema/v1}Message"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,23 +28,24 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "Message", propOrder = {
+@XmlType(name = "", propOrder = {
     "message"
 })
-public class Message {
+@XmlRootElement(name = "DeleteUserResponse")
+public class DeleteUserResponse {
 
-    @XmlElement(required = true)
-    protected String message;
+    @XmlElement(name = "Message", required = true)
+    protected Message message;
 
     /**
      * Gets the value of the message property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Message }
      *     
      */
-    public String getMessage() {
+    public Message getMessage() {
         return message;
     }
 
@@ -52,10 +54,10 @@ public class Message {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Message }
      *     
      */
-    public void setMessage(String value) {
+    public void setMessage(Message value) {
         this.message = value;
     }
 

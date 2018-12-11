@@ -23,5 +23,4 @@ public class AjaxAction extends DispatchAction {
 		
 		return null;
 	}
-	
 }

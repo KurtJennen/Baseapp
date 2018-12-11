@@ -13,6 +13,7 @@ repositories {
 
 dependencies {
     compile group: 'org.springframework.ws', name: 'spring-ws-core', version: '3.0.4.RELEASE'
+	compile group: 'org.springframework.ws', name: 'spring-ws-security', version: '3.0.4.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '5.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-context-support', version: '5.1.1.RELEASE'
     compile group: 'org.springframework', name: 'spring-tx', version: '5.1.1.RELEASE'

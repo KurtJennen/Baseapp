@@ -6,6 +6,9 @@ public class BaseConstants {
 	
 	public static final String TEMP_MAP = "c:\\temp\\";
 	
+	public static final String AUTHORIZATION = "Authorization";
+	public static final String BASIC = "Basic";
+	
 	public static final String ZERO = "0";
 	public static final String SPACE = " ";
 	public static final String SLASH = "/";

@@ -16,15 +16,15 @@ import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
-import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserRequest;
-import be.luxuryoverdosis.user.schema.v1.CreateOrUpdateUserResponse;
-import be.luxuryoverdosis.user.schema.v1.DeleteUserRequest;
-import be.luxuryoverdosis.user.schema.v1.DeleteUserResponse;
-import be.luxuryoverdosis.user.schema.v1.Message;
-import be.luxuryoverdosis.user.schema.v1.ReadAllUsersRequest;
-import be.luxuryoverdosis.user.schema.v1.ReadAllUsersResponse;
-import be.luxuryoverdosis.user.schema.v1.ReadUserRequest;
-import be.luxuryoverdosis.user.schema.v1.ReadUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.Message;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadUserRequest;
+import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 
 @Service
 public class UserEndpointServiceSpringImpl implements UserEndpointService {
@@ -48,7 +48,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		
 		User user = userService.readName(request.getName());
 		if(user != null) {
-			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(user);
+			be.luxuryoverdosis.generated.user.schema.v1.User userWs = createUser(user);
 			
 			readUserResponse.setUser(userWs);
 			
@@ -78,7 +78,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		
 		ArrayList<User> userList = userService.list();
 		for (User user : userList) {
-			be.luxuryoverdosis.user.schema.v1.User userWs = createUser(user);
+			be.luxuryoverdosis.generated.user.schema.v1.User userWs = createUser(user);
 			
 			readAllUsersResponse.getUser().add(userWs);
 		}
@@ -105,7 +105,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		
 		boolean isNew = false;
 		
-		be.luxuryoverdosis.user.schema.v1.User userWs = request.getUser();
+		be.luxuryoverdosis.generated.user.schema.v1.User userWs = request.getUser();
 		
 		User user = userService.readName(userWs.getName());
 		if(user == null) {
@@ -168,8 +168,8 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		return deleteUserResponse;
 	}
 	
-	private be.luxuryoverdosis.user.schema.v1.User createUser(User user) {
-		be.luxuryoverdosis.user.schema.v1.User userWs = new be.luxuryoverdosis.user.schema.v1.User();
+	private be.luxuryoverdosis.generated.user.schema.v1.User createUser(User user) {
+		be.luxuryoverdosis.generated.user.schema.v1.User userWs = new be.luxuryoverdosis.generated.user.schema.v1.User();
 		//userWs.setDateExpiration(user.getDateExpiration());
 		userWs.setEmail(user.getEmail());
 		userWs.setEncryptedPassword(user.getEncryptedPassword());
