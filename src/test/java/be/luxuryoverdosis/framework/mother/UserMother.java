@@ -21,24 +21,14 @@ public class UserMother {
 	}
 	
 	public static User produceUserDate() {
-		User user = new User();
-		user.setId(0);
-		user.setName("Kurt Jennen");
-		user.setUserName("kj");
-		user.setEncryptedPassword(Encryption.encode("kj"));
-		user.setEmail("kurt.jennen@skynet.be");
+		User user = produceUser();
 		user.setDateExpiration(new Date());
 		
 		return user;
 	}
 	
 	public static User produceUserDateSpecific() {
-		User user = new User();
-		user.setId(0);
-		user.setName("Kurt Jennen");
-		user.setUserName("kj");
-		user.setEncryptedPassword(Encryption.encode("kj"));
-		user.setEmail("kurt.jennen@skynet.be");
+		User user = produceUser();
 		
 		Calendar defaultCalendar = Calendar.getInstance();
 		defaultCalendar.clear();
@@ -50,12 +40,7 @@ public class UserMother {
 	}
 	
 	public static User produceUserRole() {
-		User user = new User();
-		user.setId(0);
-		user.setName("Kurt Jennen");
-		user.setUserName("kj");
-		user.setEncryptedPassword(Encryption.encode("kj"));
-		user.setEmail("kurt.jennen@skynet.be");
+		User user = produceUser();
 		user.setDateExpiration(new Date());
 		user.setRole(RoleMother.produceRole());
 		

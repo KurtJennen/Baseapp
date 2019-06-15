@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 
 public abstract class AbstractHibernateDaoSupport extends HibernateDaoSupport {
@@ -28,11 +27,11 @@ public abstract class AbstractHibernateDaoSupport extends HibernateDaoSupport {
 	@PostConstruct
 	public void doAfter() {
 		setSessionFactory(sessionFactory);
-		setHibernateTemplate(new HibernateTemplate(sessionFactory));
+		//setHibernateTemplate(new HibernateTemplate(sessionFactory));
 	}
 	
 	public Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
+		return getSessionFactory().getCurrentSession();
 	}
 	
 }

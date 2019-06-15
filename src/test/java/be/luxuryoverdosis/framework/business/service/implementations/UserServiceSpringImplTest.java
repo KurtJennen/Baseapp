@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.business.service.implementations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
@@ -19,13 +20,15 @@ import org.mockito.runners.MockitoJUnitRunner;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.Config;
+import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
-import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.mother.RoleMother;
+import be.luxuryoverdosis.framework.mother.UserDTOMother;
 import be.luxuryoverdosis.framework.mother.UserMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -42,7 +45,7 @@ public class UserServiceSpringImplTest {
 	private RoleHibernateDAO roleHibernateDAO;
 	
 	@Mock
-	private MenuHibernateDAO menuHibernateDAO;
+	private MenuService menuService;
 	
 	@Before
 	public void before() {
@@ -53,14 +56,45 @@ public class UserServiceSpringImplTest {
 	}
 	
 	@Test
+	public void testCreateOrUpdateDTOUserNotExists() {
+		Role role = RoleMother.produceRole();
+		User user = UserMother.produceUserRole();
+		UserDTO userDTO = UserDTOMother.produceUserDTO();
+		
+		when(roleHibernateDAO.read(anyInt())).thenReturn(role);
+		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(userHibernateDAO.read(anyInt())).thenReturn(user);
+		
+		userServiceSpringImpl.createOrUpdateDTO(userDTO);
+		
+		verify(roleHibernateDAO).read(anyInt());
+		verify(userHibernateDAO).count(anyString(), anyInt());
+		verify(userHibernateDAO).createOrUpdate(anyObject());
+		verify(userHibernateDAO).read(anyInt());
+	}
+	
+	@Test
+	public void testReadDTO() {
+		User user = UserMother.produceUser();
+		
+		when(userHibernateDAO.read(anyInt())).thenReturn(user);
+		
+		UserDTO userDTO = userServiceSpringImpl.readDTO(anyInt());
+		
+		verify(userHibernateDAO).read(anyInt());
+		
+		assertThat(userDTO.getId()).isEqualTo(0);
+	}
+	
+	@Test
 	public void testCreateOrUpdate() {
 		Role role = RoleMother.produceRole();
-		
 		User user = UserMother.produceUser();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		
 		userServiceSpringImpl.createOrUpdate(user);
 		
@@ -93,7 +127,7 @@ public class UserServiceSpringImplTest {
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		
 		userServiceSpringImpl.createOrUpdate(user);
 		
@@ -107,7 +141,7 @@ public class UserServiceSpringImplTest {
 		User user = UserMother.produceUserRole();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(userHibernateDAO.createOrUpdate(user)).thenReturn(user);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		
 		userServiceSpringImpl.createOrUpdate(user);
 		
@@ -122,7 +156,7 @@ public class UserServiceSpringImplTest {
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
-		when(userHibernateDAO.createOrUpdate(user)).thenReturn(null);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(null);
 		
 		userServiceSpringImpl.createOrUpdate(user);
 		
@@ -155,7 +189,7 @@ public class UserServiceSpringImplTest {
 	
 	@Test
 	public void testDelete() {
-		doNothing().when(menuHibernateDAO).deleteForUser(anyInt());
+		doNothing().when(menuService).deleteForUser(anyInt());
 		doNothing().when(userHibernateDAO).delete(anyInt());
 		
 		userServiceSpringImpl.delete(anyInt());
