@@ -41,7 +41,7 @@ public class ListUserAction extends DispatchAction {
 	}
 		
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute("searchUserForm");
+		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
 		
 		ListUserWrapperDTO listUserWrapperDTO = getUserService().getListUserWrapperDTO(getSearchSelect(), searchForm.getSearchCriteria());
 		
