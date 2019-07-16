@@ -259,6 +259,15 @@ public class SqlStartup {
 	
 	public final static String SQL_130311i = "CREATE TABLE batch_step_execution_seq ( " +
 		"Id bigint(20) NOT NULL)";
+	
+	public final static String SQL_190710a = "INSERT INTO batch_job_seq (Id) values " +
+		"(0)";
+	
+	public final static String SQL_190710b = "INSERT INTO batch_job_execution_seq (Id) values " +
+		"(0)";
+	
+	public final static String SQL_190710c = "INSERT INTO batch_step_execution_seq (Id) values " +
+		"(0)";
 	//Spring Batch End
 	
 	public final static String SQL_140531a = "ALTER TABLE base_job_log ADD (" +
