@@ -68,14 +68,14 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
-		return (mapping.findForward("list"));
+		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
 	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
-		return (mapping.findForward("create"));
+		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
 	public void createDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

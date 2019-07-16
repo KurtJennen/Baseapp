@@ -88,14 +88,14 @@ public class MenuAction extends DispatchAction {
 		Logging.info(this, "Begin Disabled");
 		Logging.info(this, "End Disabled");
 		
-		return mapping.findForward("disabled");
+		return mapping.findForward(BaseWebConstants.DISABLED);
 	}
 	
 	public ActionForward forPay(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ForPay");
 		Logging.info(this, "End ForPay");
 		
-		return mapping.findForward("forPay");
+		return mapping.findForward(BaseWebConstants.FOR_PAY);
 	}
 
 	private MenuService getMenuService() {

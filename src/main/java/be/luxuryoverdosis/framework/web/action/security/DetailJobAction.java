@@ -118,7 +118,7 @@ public class DetailJobAction extends DispatchAction {
 		
 		String jobNiveau = (String)SessionManager.getFromSession(request, BaseWebConstants.JOB_NIVEAU);
 		if(BaseConstants.JOB_NIVEAU_USER.equals(jobNiveau)) {
-			redirect = new ActionRedirect(mapping.findForward("back" + jobNiveau.charAt(0) + jobNiveau.substring(1).toLowerCase()));
+			redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + jobNiveau.charAt(0) + jobNiveau.substring(1).toLowerCase()));
 		}
 			
 		Logging.info(this, "End Back Success");

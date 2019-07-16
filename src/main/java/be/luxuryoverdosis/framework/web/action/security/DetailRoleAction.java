@@ -27,7 +27,7 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
-		return (mapping.findForward("list"));
+		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -76,7 +76,7 @@ public class DetailRoleAction extends NavigationAction {
 	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("read"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
 		
 		DetailRoleForm roleForm = (DetailRoleForm) form;
 		
@@ -106,7 +106,7 @@ public class DetailRoleAction extends NavigationAction {
 		getRoleService().delete(id);
 		
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		
 		Logging.info(this, "End Delete Success");

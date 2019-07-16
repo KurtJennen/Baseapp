@@ -37,7 +37,7 @@ public class ListUserAction extends DispatchAction {
 		Logging.info(this, "Begin Search");
 		Logging.info(this, "End Search Success");
 		
-		return (mapping.findForward("search"));
+		return (mapping.findForward(BaseWebConstants.SEARCH));
 	}
 		
 	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -107,14 +107,14 @@ public class ListUserAction extends DispatchAction {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
-		return (mapping.findForward("create"));
+		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		Logging.info(this, "End Read Success");
 		
-		return (mapping.findForward("read"));
+		return (mapping.findForward(BaseWebConstants.READ));
 	}
 	
 	public ActionForward readJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -123,7 +123,7 @@ public class ListUserAction extends DispatchAction {
 		
 		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, BaseConstants.JOB_NIVEAU_USER);
 		
-		return (mapping.findForward("readJob"));
+		return (mapping.findForward(BaseWebConstants.READ_JOB));
 	}
 	
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -133,7 +133,7 @@ public class ListUserAction extends DispatchAction {
 		
 		getBatchService().exportUserJob(fileDTO);
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
 		Logging.info(this, "End ExportUserJob Success");
@@ -152,7 +152,7 @@ public class ListUserAction extends DispatchAction {
 		getBatchService().importUserJob(fileDTO);
 		
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
 		Logging.info(this, "End ImportUserJob Success");

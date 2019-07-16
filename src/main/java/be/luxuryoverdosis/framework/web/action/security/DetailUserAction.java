@@ -33,14 +33,14 @@ public class DetailUserAction extends NavigationAction {
 		Logging.info(this, "Begin Search");
 		Logging.info(this, "End Search Success");
 		
-		return (mapping.findForward("search"));
+		return (mapping.findForward(BaseWebConstants.SEARCH));
 	}
 	
 	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
-		return (mapping.findForward("list"));
+		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -109,9 +109,9 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setRoleId(userForm.getRoleId());
 		
 		if(userForm.getRoleId() == 0) {
-			actionRedirect = new ActionRedirect(mapping.findForward("login"));
+			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 		} else {
-			actionRedirect = new ActionRedirect(mapping.findForward("read"));
+			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
 		}
 		
 		userDTO = getUserService().createOrUpdateDTO(userDTO);
@@ -136,7 +136,7 @@ public class DetailUserAction extends NavigationAction {
 		getUserService().delete(id);
 		
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		
 		Logging.info(this, "End Delete Success");
@@ -193,7 +193,7 @@ public class DetailUserAction extends NavigationAction {
 		Logging.info(this, "Begin ReadJob");
 		Logging.info(this, "End Read Success");
 		
-		return mapping.findForward("readJob");
+		return mapping.findForward(BaseWebConstants.READ_JOB);
 	}
 	
 	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -150,7 +150,7 @@ public abstract class SearchAction extends AjaxAction {
 		
 		Logging.info(this, "End Delete Success");
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("search"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.SEARCH));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		return actionRedirect;
 	}

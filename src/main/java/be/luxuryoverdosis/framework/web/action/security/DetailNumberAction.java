@@ -24,7 +24,7 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
-		return (mapping.findForward("list"));
+		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -75,7 +75,7 @@ public class DetailNumberAction extends DispatchAction {
 	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("read"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
 		
 		DetailNumberForm numberForm = (DetailNumberForm) form;
 		
@@ -107,7 +107,7 @@ public class DetailNumberAction extends DispatchAction {
 		
 		getNumberService().delete(id);
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward("list"));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 
 		Logging.info(this, "End Delete Success");

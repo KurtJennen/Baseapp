@@ -73,13 +73,13 @@ public class LoginAction extends DispatchAction {
 			request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
 						
 			Logging.info(this, "End Login Success");
-			return (mapping.findForward("success"));
+			return (mapping.findForward(BaseWebConstants.SUCCESS));
 		} else {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.failed", MessageLocator.getMessage(request, "login")));
 			saveMessages(request, actionMessages);
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 			Logging.error(this, "End Login Failed");
-			return (mapping.findForward("failed"));
+			return (mapping.findForward(BaseWebConstants.FAILED));
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class LoginAction extends DispatchAction {
 		Logging.info(this, "Begin Register");
 		Logging.info(this, "End Register Success");
 		
-		return (mapping.findForward("register"));
+		return (mapping.findForward(BaseWebConstants.REGISTER));
 	}
 	
 	private UserService getUserService() {

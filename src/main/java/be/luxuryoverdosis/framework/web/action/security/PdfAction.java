@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.actions.DispatchAction;
 
 import be.luxuryoverdosis.framework.logging.Logging;
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
@@ -27,6 +28,6 @@ public class PdfAction extends DispatchAction {
 			
 		Logging.info(this, "End List Success");
 		
-		return (mapping.findForward("list"));
+		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 }

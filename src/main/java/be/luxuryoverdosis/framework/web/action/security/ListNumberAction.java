@@ -67,14 +67,14 @@ public class ListNumberAction extends DispatchAction {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
-		return (mapping.findForward("create"));
+		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		Logging.info(this, "End Read Success");
 		
-		return (mapping.findForward("read"));
+		return (mapping.findForward(BaseWebConstants.READ));
 	}
 	
 	private NumberService getNumberService() {

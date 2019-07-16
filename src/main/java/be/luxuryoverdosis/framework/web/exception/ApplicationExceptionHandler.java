@@ -22,7 +22,7 @@ public class ApplicationExceptionHandler extends ExceptionHandler {
 		ActionMessages actionMessages = new ActionMessages();
 		
 		String destination = Globals.ERROR_KEY;
-		ActionForward actionForward = mapping.findForward("failed");
+		ActionForward actionForward = mapping.findForward(BaseWebConstants.FAILED);
 				
 		
 		if(ex instanceof ServiceException) {
