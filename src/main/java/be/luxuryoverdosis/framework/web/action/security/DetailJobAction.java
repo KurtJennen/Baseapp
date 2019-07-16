@@ -95,7 +95,7 @@ public class DetailJobAction extends DispatchAction {
 		
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int jobInstanceId = Integer.parseInt(request.getParameter("id"));
+		int jobInstanceId = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		
 		storeDetailListsInSession(request, response, jobInstanceId);
 		
@@ -144,7 +144,7 @@ public class DetailJobAction extends DispatchAction {
 	public void downloadFileLog(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin downloadFileLog");
 
-		int jobLogId = Integer.parseInt(request.getParameter("id"));
+		int jobLogId = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 
 		listJmesa(mapping, form, request, response);
 		

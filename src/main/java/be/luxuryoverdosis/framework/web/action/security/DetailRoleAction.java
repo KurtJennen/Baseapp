@@ -34,7 +34,7 @@ public class DetailRoleAction extends NavigationAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		RoleDTO roleDTO = getRoleService().readDTO(id);
@@ -101,7 +101,7 @@ public class DetailRoleAction extends NavigationAction {
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		
 		getRoleService().delete(id);
 		

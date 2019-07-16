@@ -40,6 +40,7 @@ public class BaseWebConstants {
 	public static final String USER = "user";
 	public static final String DETAIL = "detail";
 	
+	public static final String ID = "id";
 	public static final String JOB_ID = "jobId";
 	
 	public static final String DOCUMENT_IDS = "documentIds";

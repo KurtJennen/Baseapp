@@ -31,7 +31,7 @@ public class DetailNumberAction extends DispatchAction {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		NumberDTO numberDTO = getNumberService().readDTO(id);
@@ -103,7 +103,7 @@ public class DetailNumberAction extends DispatchAction {
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		
 		getNumberService().delete(id);
 		

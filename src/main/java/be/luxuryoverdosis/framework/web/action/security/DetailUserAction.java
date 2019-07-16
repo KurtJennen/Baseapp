@@ -48,7 +48,7 @@ public class DetailUserAction extends NavigationAction {
 
 		ActionMessages actionMessages = new ActionMessages();
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		UserDTO userDTO = getUserService().readDTO(id);
@@ -131,7 +131,7 @@ public class DetailUserAction extends NavigationAction {
 	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
-		int id = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 		
 		getUserService().delete(id);
 		
