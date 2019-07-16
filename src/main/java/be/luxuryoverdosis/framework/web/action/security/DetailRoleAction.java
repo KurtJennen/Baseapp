@@ -91,7 +91,7 @@ public class DetailRoleAction extends NavigationAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		actionRedirect.addParameter("id", roleDTO.getId());
+		actionRedirect.addParameter(BaseWebConstants.ID, roleDTO.getId());
 		
 		Logging.info(this, "End Update Success");
 		

@@ -96,7 +96,7 @@ public class DetailDocumentAction extends DispatchAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		actionRedirect.addParameter("id", documentDTO.getId());
+		actionRedirect.addParameter(BaseWebConstants.ID, documentDTO.getId());
 		
 		Logging.info(this, "End Update Success");
 		

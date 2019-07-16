@@ -56,7 +56,7 @@ public abstract class NavigationAction extends AjaxAction {
 		int id = getId(baseForm, request);
 		
 		ActionRedirect redirect = new ActionRedirect(mapping.getPath() + ".do?method=read");
-		redirect.addParameter("id", id);
+		redirect.addParameter(BaseWebConstants.ID, id);
 		
 		Logging.info(this, "End Navigate Success");
 		

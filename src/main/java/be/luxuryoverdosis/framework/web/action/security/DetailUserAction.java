@@ -121,7 +121,7 @@ public class DetailUserAction extends NavigationAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		actionRedirect.addParameter("id", userDTO.getId());
+		actionRedirect.addParameter(BaseWebConstants.ID, userDTO.getId());
 		
 		Logging.info(this, "End Update Success");
 		

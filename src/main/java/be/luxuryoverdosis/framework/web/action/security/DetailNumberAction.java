@@ -93,7 +93,7 @@ public class DetailNumberAction extends DispatchAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		actionRedirect.addParameter("id", numberDTO.getId());
+		actionRedirect.addParameter(BaseWebConstants.ID, numberDTO.getId());
 		
 		Logging.info(this, "End Update Success");
 		
