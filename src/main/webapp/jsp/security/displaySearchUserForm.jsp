@@ -10,6 +10,7 @@
 	</div>
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
+	<lo:button image="report.png" method="report" key="button.report"></lo:button>
 	<html:select property="documentId" tabindex="1">
 		<html:option value="-1"><fmt:message key="select" /></html:option>
 		<html:optionsCollection name="documentList" label="fileName" value="id" />

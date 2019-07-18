@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2019-07-17T09:29:37 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Users" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09cd0ef1-899e-476a-9df9-c53c834799e5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Baseapp"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<queryString>
+		<![CDATA[select base_user.name, base_user.username, base_user.email, base_user.dateexp, base_role.name as rol
+from base_user, base_role
+where base_user.role_id = base_role.id]]>
+	</queryString>
+	<field name="name" class="java.lang.String"/>
+	<field name="username" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="dateexp" class="java.sql.Date"/>
+	<field name="rol" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement key="staticText-1" x="2" y="3" width="548" height="40" uuid="d8eadc89-76a3-4499-8937-e046004df5e1"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="24"/>
+				</textElement>
+				<text><![CDATA[Gebruikers]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="41" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="4" width="100" height="18" uuid="3696804a-0079-4685-b4ea-4bb5b3a64ab2"/>
+				<text><![CDATA[Naam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="102" y="4" width="100" height="18" uuid="bd0554d4-c44d-4dbe-b4db-e7c1990513ff"/>
+				<text><![CDATA[Gebruikersnaam]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="4" width="144" height="18" uuid="82431f72-522d-4dc2-9a6f-9d229b032e60"/>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="348" y="5" width="100" height="18" uuid="b2ace16f-6385-4306-bba2-f8879cd25f90"/>
+				<text><![CDATA[Vervaldatum]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="448" y="5" width="120" height="18" uuid="2df0987a-56c4-4172-94fc-097f7a9fde6d">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Rol]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="9" width="100" height="22" uuid="913413c2-dea3-4896-8082-207b0d96d795"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="9" width="100" height="22" uuid="4dbd437e-d034-485a-94bd-c3616526af40"/>
+				<textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="200" y="9" width="146" height="22" uuid="2a834c8d-dfe7-4a15-90c6-74208e142404"/>
+				<textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="347" y="9" width="100" height="22" uuid="e2a6a6ad-fe8a-4ffc-a3e0-857945c96949"/>
+				<textFieldExpression><![CDATA[$F{dateexp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="447" y="8" width="120" height="22" uuid="79ef983b-9ad2-43f0-a479-6fa668414970">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{rol}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="371" y="1" width="100" height="30" uuid="95d043ef-e7d2-49f1-9f0a-370e19937068"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="471" y="1" width="100" height="30" uuid="13c3182a-87c0-434a-b03f-e867306f9edc"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

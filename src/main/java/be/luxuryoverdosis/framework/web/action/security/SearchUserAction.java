@@ -12,10 +12,13 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import be.luxuryoverdosis.baseapp.Constants;
+import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.ReportService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
@@ -76,6 +79,21 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "End Create Success");
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
+	}
+	
+	public void report(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Report");
+		
+		//ReportService reportService = (ReportService)SpringServiceLocator.getBean(SpringServiceConstants.REPORT_SERVICE);
+		ReportService reportService = SpringServiceLocator.getBean(ReportService.class);
+		String realPathReport = request.getSession().getServletContext().getRealPath(Constants.REPORT_USERS);
+		byte[] pdfByteArray = reportService.create(realPathReport);
+		
+		ResponseTool.writeResponseForDownload(response, Constants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
+		
+		response.flushBuffer();
+		
+		Logging.info(this, "End Report");
 	}
 	
 	public void createDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
