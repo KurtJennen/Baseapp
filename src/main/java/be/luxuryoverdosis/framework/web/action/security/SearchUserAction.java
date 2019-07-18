@@ -86,7 +86,7 @@ public class SearchUserAction extends SearchAction {
 		
 		//ReportService reportService = (ReportService)SpringServiceLocator.getBean(SpringServiceConstants.REPORT_SERVICE);
 		ReportService reportService = SpringServiceLocator.getBean(ReportService.class);
-		String realPathReport = request.getSession().getServletContext().getRealPath(Constants.REPORT_USERS);
+		String realPathReport = request.getSession().getServletContext().getRealPath(Constants.REPORT_USERS_PATH);
 		byte[] pdfByteArray = reportService.create(realPathReport);
 		
 		ResponseTool.writeResponseForDownload(response, Constants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
