@@ -17,7 +17,7 @@
 			</field>
 		</form>
 		
-		<form name="numberForm">
+		<form name="detailNumberForm">
 			<field property="applicationCode" depends="required">
 				<arg key="security.number.application.code" />
 			</field>

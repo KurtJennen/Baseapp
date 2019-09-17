@@ -10,7 +10,7 @@
 	<lo:button image="table.png" method="list" key="button.list"></lo:button>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
-	<logic:notEqual name="numberForm" property="id" value="-1">
+	<logic:notEqual name="detailNumberForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	</logic:notEqual>
 	<hr />
