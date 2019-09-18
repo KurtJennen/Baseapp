@@ -10,7 +10,6 @@
 		<form-bean name="detailNumberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
 		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
 		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
-		<form-bean name="searchForm" type="be.luxuryoverdosis.framework.web.form.SearchForm" />
 		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
 		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
 		<form-bean name="searchUserForm" type="be.luxuryoverdosis.framework.web.form.SearchUserForm" />
@@ -173,7 +172,7 @@
 				<forward name="failed" path="display.error.form" />
 				<forward name="search" path="/searchUser.do?method=search" />
 				<forward name="list" path="/listUser.do?method=list" />
-				<forward name="read" path="/listUser.do?method=read" />
+				<forward name="read" path="/detailUser.do?method=read" />
 		</action>
 		
 		<action path="/detailJob"
