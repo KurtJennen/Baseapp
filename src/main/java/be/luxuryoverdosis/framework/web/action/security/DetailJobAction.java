@@ -151,7 +151,7 @@ public class DetailJobAction extends DispatchAction {
 		JobLog jobLog = getJobLogService().downloadFile(jobLogId);
 		byte[] bytes = jobLog.getFileData();
 		
-		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + "." + FileType.TXT, FileContentType.TEXT_PLAIN, bytes);
+		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + FileType.TXT, FileContentType.TEXT_PLAIN, bytes);
 		
 		Logging.info(this, "End downloadFileLog");
 	}
