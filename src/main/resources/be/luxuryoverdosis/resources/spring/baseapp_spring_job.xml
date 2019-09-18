@@ -3,11 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 		
-<!--	<bean id="job" class="org.springframework.scheduling.quartz.JobDetailBean">-->
+<!--	<bean id="job" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">-->
 <!--		<property name="jobClass" value="be.luxuryoverdosis.lotto.business.job.ReadLottoResultJob" />-->
 <!--	</bean>-->
 <!--	-->
-<!--	<bean id="trigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">-->
+<!--	<bean id="trigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
 <!--		<property name="jobDetail" ref="job" />-->
 <!--		<property name="startDelay" value="60000" />-->
 <!--		<property name="repeatInterval" value="600000" />-->

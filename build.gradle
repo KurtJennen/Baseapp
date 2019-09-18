@@ -22,7 +22,7 @@ dependencies {
     compile group: 'org.springframework.batch', name: 'spring-batch-core', version: '4.0.1.RELEASE'
     compile group: 'org.springframework.batch', name: 'spring-batch-infrastructure', version: '4.0.1.RELEASE'
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
-    compile group: 'org.quartz-scheduler', name: 'quartz', version: '1.7.2'
+    compile group: 'org.quartz-scheduler', name: 'quartz', version: '2.3.1'
     compile group: 'joda-time', name: 'joda-time', version: '2.10'
     compile group: 'javax.mail', name: 'mail', version: '1.4.7'
     compile group: 'commons-codec', name: 'commons-codec', version: '1.3'
