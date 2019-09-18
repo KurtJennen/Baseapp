@@ -189,13 +189,6 @@ public class DetailUserAction extends NavigationAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward readJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin ReadJob");
-		Logging.info(this, "End Read Success");
-		
-		return mapping.findForward(BaseWebConstants.READ_JOB);
-	}
-	
 	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
