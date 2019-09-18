@@ -189,11 +189,13 @@ public class UserServiceSpringImpl implements UserService {
 		
 		int days = daysBeforeDeactivate(user);
 		loginWrapperDTO.setDays(days);
-		if(days == 0) {
+		if(user != null && days == 0) {
 			deactivate(user.getId());
 		}
 		
-		loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, user.getId()));
+		if(user != null) {
+			loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, user.getId()));
+		}
 		
 		Logging.info(this, "End getLoginWrapperDTO");
 		return loginWrapperDTO;
@@ -319,6 +321,10 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin daysBeforeDeactivate");
 		
 		int days = -1;
+		
+		if(user == null) {
+			return 0;
+		}
 		
 		Calendar defaultCalendar = Calendar.getInstance();
 		defaultCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_WARNING);
