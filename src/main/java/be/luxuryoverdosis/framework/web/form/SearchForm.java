@@ -200,6 +200,12 @@ public class SearchForm extends BaseForm {
 			}
 		}
 		
+		if(this.getMethod().equals(BaseWebConstants.DELETE_SEARCH)) {
+			if(SearchQuery.MINUS_ONE.equals(selectQuery)) {
+				errors.add("queryName", new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.query.name")));
+			}
+		}
+		
 		if(errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
