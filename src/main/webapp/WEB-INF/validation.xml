@@ -11,7 +11,7 @@
 			</field>
 		</form>
 		
-		<form name="documentForm">
+		<form name="detailDocumentForm">
 			<field property="formFile" depends="required">
 				<arg key="file" />
 			</field>
@@ -38,7 +38,7 @@
 			</field>
 		</form>
 	
-		<form name="roleForm">
+		<form name="detailRoleForm">
 			<field property="name" depends="required">
 				<arg key="security.name" />
 			</field>
