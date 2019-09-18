@@ -34,7 +34,6 @@ import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
-import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import net.sf.navigator.menu.MenuRepository;
@@ -199,16 +198,6 @@ public class UserServiceSpringImpl implements UserService {
 		
 		Logging.info(this, "End getLoginWrapperDTO");
 		return loginWrapperDTO;
-	}
-	
-	@Transactional(readOnly=true)
-	public SearchUserWrapperDTO getSearchUserWrapperDTO() {
-		Logging.info(this, "Begin getSearchUserWrapperDTO");
-		SearchUserWrapperDTO searchUserWrapperDTO = new SearchUserWrapperDTO();
-		searchUserWrapperDTO.setRoleList(roleHibernateDAO.list());
-		searchUserWrapperDTO.setDocumentList(documentService.list(BaseConstants.DOCUMENTYPE_USER));
-		Logging.info(this, "End getSearchUserDTO");
-		return searchUserWrapperDTO;
 	}
 	
 	@Transactional(readOnly=true)

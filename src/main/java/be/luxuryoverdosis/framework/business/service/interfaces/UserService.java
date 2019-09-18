@@ -10,7 +10,6 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
-import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
 import net.sf.navigator.menu.MenuRepository;
 
 public interface UserService {
@@ -33,7 +32,6 @@ public interface UserService {
 	public ArrayList<UserDTO> listDTO(String searchValue);
 	
 	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository);
-	public SearchUserWrapperDTO getSearchUserWrapperDTO();
 	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria);
 	
 	public long count(String name, int id);

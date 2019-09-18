@@ -14,14 +14,15 @@ import org.apache.struts.action.ActionMessages;
 
 import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.service.interfaces.ReportService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.wrapperdto.SearchUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.search.SearchAction;
@@ -38,12 +39,8 @@ public class SearchUserAction extends SearchAction {
 	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages) {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
-		SearchUserWrapperDTO searchUserWrapperDTO = getUserService().getSearchUserWrapperDTO();
-		
-		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.role")));
-		SessionManager.putInSession(request, BaseWebConstants.ROLE_LIST, searchUserWrapperDTO.getRoleList());
-		
-		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, searchUserWrapperDTO.getDocumentList());
+		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
+		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, getDocumentService().list(BaseConstants.DOCUMENTYPE_USER));
 	}
 		
 	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -146,4 +143,8 @@ public class SearchUserAction extends SearchAction {
 	private UserService getUserService() {
 		return BaseSpringServiceLocator.getBean(UserService.class);
 	}
+	
+	private DocumentService getDocumentService() {
+        return BaseSpringServiceLocator.getBean(DocumentService.class);
+    }
 }
