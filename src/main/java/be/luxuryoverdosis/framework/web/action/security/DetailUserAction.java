@@ -85,6 +85,8 @@ public class DetailUserAction extends NavigationAction {
 		DetailUserForm userForm = (DetailUserForm) form;
 		userForm.reset(mapping, request);
 		
+        super.setNavigationButtons(form, request);
+		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("create.success", MessageLocator.getMessage(request, "table.user")));
 		saveMessages(request, actionMessages);
 		

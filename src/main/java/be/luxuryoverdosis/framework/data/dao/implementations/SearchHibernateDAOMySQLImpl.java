@@ -16,9 +16,13 @@ public class SearchHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		Logging.info(this, "Begin searchSearch");
 		
 		Query<Object> query = getCurrentSession().createQuery(select);
-		for (int position = 0; position < objects.length; position++) {
-			query.setParameter(position, objects[position]);
+		
+		if(objects != null) {
+			for (int position = 0; position < objects.length; position++) {
+				query.setParameter(position, objects[position]);
+			}
 		}
+		
 		ArrayList<Object> arrayList = (ArrayList<Object>) query.list();
 		
 		Logging.info(this, "End searchSearch");

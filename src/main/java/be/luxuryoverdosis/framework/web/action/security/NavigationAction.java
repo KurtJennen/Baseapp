@@ -75,14 +75,14 @@ public abstract class NavigationAction extends AjaxAction {
 		
 		int position = getCurrentPosition(baseForm, request);
 		
-		if(position == -1) {
+		if(baseForm.getId() > 0 && position == -1) {
 			position = saveIds(baseForm, request);
 		}
-		if(position == 0) {
+		if(baseForm.getIds() == null || position == 0) {
 			baseForm.setFirstVisible(false);
 			baseForm.setPreviousVisible(false);
 		}
-		if(position == baseForm.getIds().length - 1) {
+		if(baseForm.getIds() == null || position == baseForm.getIds().length - 1) {
 			baseForm.setNextVisible(false);
 			baseForm.setLastVisible(false);
 		}
@@ -103,12 +103,18 @@ public abstract class NavigationAction extends AjaxAction {
 			return 0;
 		}
 		if(BaseWebConstants.PREVIOUS.equals(baseForm.getMethod())) {
+			if(position < 0) {
+				return baseForm.getIds().length - 1;
+			}
 			if(position != 0) {
 				position--;
 			}
 			return position;
 		}
 		if(BaseWebConstants.NEXT.equals(baseForm.getMethod())) {
+			if(position < 0) {
+				return 0;
+			}
 			if(position != baseForm.getIds().length - 1) {
 				position++;
 			}
