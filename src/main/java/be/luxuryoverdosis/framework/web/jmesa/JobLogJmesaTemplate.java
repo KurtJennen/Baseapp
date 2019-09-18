@@ -15,7 +15,8 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 public class JobLogJmesaTemplate extends CustomTableFacadeTemplate {
 	public JobLogJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJobLog.title", BaseWebConstants.JOB_LOG_IDS);
-		setActionMethod(BaseWebConstants.DOWNLOAD_FILE_LOG);
+		setClickable(false);
+		//setActionMethod(BaseWebConstants.DOWNLOAD_FILE_LOG);
 	}
 
 	@Override
