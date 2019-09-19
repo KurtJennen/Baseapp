@@ -18,7 +18,7 @@ public class DetailUserForm extends BaseForm {
 	private String password;
 	private String passwordConfirm;
 	private String email;
-	private String dateExpirationAsString;
+	private String date;
 	private int roleId;
 	private String roleIdValue;
 
@@ -52,11 +52,11 @@ public class DetailUserForm extends BaseForm {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getDateExpirationAsString() {
-		return dateExpirationAsString;
+	public String getDate() {
+		return date;
 	}
-	public void setDateExpirationAsString(String dateExpirationAsString) {
-		this.dateExpirationAsString = dateExpirationAsString;
+	public void setDate(String date) {
+		this.date = date;
 	}
 	public int getRoleId() {
 		return roleId;
@@ -78,7 +78,7 @@ public class DetailUserForm extends BaseForm {
 		this.setPassword("");
 		this.setPasswordConfirm("");
 		this.setEmail("");
-		this.setDateExpirationAsString("00/00/0000");
+		this.setDate("00/00/0000");
 		this.setRoleId(-1);
 		this.setRoleIdValue("");
 	}

@@ -21,7 +21,7 @@
 	<lo:navigation nameIds="userIds" firstVisible="${detailUserForm.firstVisible}" previousVisible="${detailUserForm.previousVisible}" nextVisible="${detailUserForm.nextVisible}" lastVisible="${detailUserForm.lastVisible}"/>
 	<hr />
 	<html:hidden property="id" />
-	<html:hidden property="dateExpirationAsString" />
+	<html:hidden property="date" />
 	<table>
 		<tr>
 			<td><fmt:message key="security.name.unique" />*:</td>
@@ -45,7 +45,7 @@
 		</tr>
 		<tr>
 			<td><fmt:message key="security.date.expiration" />*:</td>
-			<td><c:out value="${detailUserForm.dateExpirationAsString}"/></td>
+			<td><c:out value="${detailUserForm.date}"/></td>
 		</tr>
 		<tr>
 			<td><fmt:message key="security.role" />*:</td>

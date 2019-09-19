@@ -59,7 +59,7 @@ public class DetailUserAction extends NavigationAction {
 		userForm.setPassword(userDTO.getPassword());
 		userForm.setPasswordConfirm(userDTO.getPassword());
 		userForm.setEmail(userDTO.getEmail());
-		userForm.setDateExpirationAsString(userDTO.getDateExpirationAsString());
+		userForm.setDate(userDTO.getDateExpirationAsString());
 		userForm.setRoleId(userDTO.getRoleId());
 		
 		super.setNavigationButtons(form, request);
@@ -154,7 +154,7 @@ public class DetailUserAction extends NavigationAction {
 		User user = getUserService().activate(userForm.getId(), UserService.YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
+		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateYear");
 		
@@ -169,7 +169,7 @@ public class DetailUserAction extends NavigationAction {
 		User user = getUserService().activate(userForm.getId(), UserService.HALF_YEAR);
 		
 		userForm.setRoleId(user.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
+		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End ActivateHalfYear");
 		
@@ -184,7 +184,7 @@ public class DetailUserAction extends NavigationAction {
 		User user = getUserService().deactivate(userForm.getId());
 		
 		userForm.setRoleId(user.getRole().getId());
-		userForm.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
+		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		Logging.info(this, "End Deactivate");
 		
