@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -25,7 +25,7 @@ public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoS
 		Logging.info(this, "Begin listBatchJobInstance");
 		
 		Query<BatchJobInstance> query = getCurrentSession().getNamedQuery(BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME);
-		query.setParameter(QueryParameters.JOB_NAME, jobName);
+		query.setParameter(BaseQueryParameters.JOB_NAME, jobName);
 		ArrayList<BatchJobInstance> arrayList = (ArrayList<BatchJobInstance>) query.list();
 		
 		Logging.info(this, "End listBatchJobInstance");

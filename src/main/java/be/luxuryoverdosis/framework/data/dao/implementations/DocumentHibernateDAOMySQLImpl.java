@@ -8,7 +8,7 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.DocumentHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -59,7 +59,7 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 		Logging.info(this, "Begin listDocument");
 		
 		Query<Document> query = getCurrentSession().getNamedQuery(Document.SELECT_DOCUMENTS_BY_TYPE);
-		query.setParameter(QueryParameters.TYPE, type);
+		query.setParameter(BaseQueryParameters.TYPE, type);
 		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
 		
 		Logging.info(this, "End listDocument");
@@ -71,9 +71,9 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 		Logging.info(this, "Begin countDocument(String, String, int)");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Document.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME);
-		query.setParameter(QueryParameters.TYPE, type);
-		query.setParameter(QueryParameters.FILE_NAME, fileName);
-		query.setParameter(QueryParameters.ID, id);
+		query.setParameter(BaseQueryParameters.TYPE, type);
+		query.setParameter(BaseQueryParameters.FILE_NAME, fileName);
+		query.setParameter(BaseQueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		
 		long count = arrayList.iterator().next().longValue();

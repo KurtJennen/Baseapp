@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
@@ -34,7 +34,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin readNameRole");
 		
 		Query<Role> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.NAME, name);
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Role role = null;
@@ -67,7 +67,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listRole");
 		
 		Query<RoleDTO> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_DTO_BY_NAME);
-		query.setParameter(QueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		query.setParameter(BaseQueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
 		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) query.list();
 		
 		Logging.info(this, "End listRole");
@@ -79,8 +79,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin countRole");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Role.COUNT_ROLES_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
-		query.setParameter(QueryParameters.ID, id);
+		query.setParameter(BaseQueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -38,7 +38,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 		Logging.info(this, "Begin deleteForQueryQueryParam");
 
 		Query<Long> query = getCurrentSession().getNamedQuery(QueryParam.DELETE_QUERYPARAMS_BY_QUERY);
-		query.setParameter(QueryParameters.QUERY_ID, queryId);
+		query.setParameter(BaseQueryParameters.QUERY_ID, queryId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForQueryQueryParam");		
@@ -49,7 +49,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 		Logging.info(this, "Begin listQueryParam");
 		
 		Query<QueryParam> query = getCurrentSession().getNamedQuery(QueryParam.SELECT_QUERYPARAMS_BY_QUERY);
-		query.setParameter(QueryParameters.QUERY_ID, queryId);
+		query.setParameter(BaseQueryParameters.QUERY_ID, queryId);
 		ArrayList<QueryParam> arrayList = (ArrayList<QueryParam>) query.list();
 		
 		Logging.info(this, "End listQueryParam");
@@ -61,7 +61,7 @@ public class QueryParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport
 		Logging.info(this, "Begin countQueryParam");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(QueryParam.COUNT_QUERYPARAMS_BY_QUERY);
-		query.setParameter(QueryParameters.QUERY_ID, queryId);
+		query.setParameter(BaseQueryParameters.QUERY_ID, queryId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

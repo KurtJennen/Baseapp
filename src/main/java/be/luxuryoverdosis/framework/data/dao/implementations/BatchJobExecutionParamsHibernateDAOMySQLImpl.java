@@ -6,7 +6,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionParamsHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -18,8 +18,8 @@ public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibern
 		Logging.info(this, "Begin readBatchJobExecutionParams");
 		
 		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery(BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME);
-		query.setParameter(QueryParameters.JOB_EXECUTION_ID, jobExecutionId);
-		query.setParameter(QueryParameters.KEY_NAME, keyName);
+		query.setParameter(BaseQueryParameters.JOB_EXECUTION_ID, jobExecutionId);
+		query.setParameter(BaseQueryParameters.KEY_NAME, keyName);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		BatchJobExecutionParams batchJobExecutionParams = null;
@@ -36,7 +36,7 @@ public class BatchJobExecutionParamsHibernateDAOMySQLImpl extends AbstractHibern
 		Logging.info(this, "Begin listBatchJobExecutionParams");
 		
 		Query<BatchJobExecutionParams> query = getCurrentSession().getNamedQuery(BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION);
-		query.setParameter(QueryParameters.JOB_EXECUTION_ID, jobExecutionId);
+		query.setParameter(BaseQueryParameters.JOB_EXECUTION_ID, jobExecutionId);
 		ArrayList<BatchJobExecutionParams> arrayList = (ArrayList<BatchJobExecutionParams>) query.list();
 		
 		Logging.info(this, "End listBatchJobExecutionParams");

@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.SqlHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Sql;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -33,7 +33,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		Logging.info(this, "Begin readNameSql");
 		
 		Query<Sql> query = getCurrentSession().getNamedQuery(Sql.SELECT_SQLS_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.NAME, name);
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		
 		Sql sql = null;
@@ -64,7 +64,7 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		Logging.info(this, "Begin countSql(String)");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Sql.COUNT_SQLS_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.NAME, name);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -77,8 +77,8 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		Logging.info(this, "Begin countSql(String, String)");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Sql.COUNT_SQLS_BY_NAME_AND_APPLICATION);
-		query.setParameter(QueryParameters.NAME, name);
-		query.setParameter(QueryParameters.APPLICATION, application);
+		query.setParameter(BaseQueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.APPLICATION, application);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

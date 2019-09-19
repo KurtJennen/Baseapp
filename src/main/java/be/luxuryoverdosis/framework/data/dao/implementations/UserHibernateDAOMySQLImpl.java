@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.User;
@@ -35,7 +35,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin readNameUser");
 		
 		Query<User> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.NAME, name);
 		ArrayList<User> arrayList = (ArrayList<User>) query.list();
 		
 		User user = null;
@@ -79,7 +79,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listUser");
 		
 		Query<UserDTO> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_DTO_BY_NAME);
-		query.setParameter(QueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
+		query.setParameter(BaseQueryParameters.NAME, SearchQuery.PROCENT + searchValue + SearchQuery.PROCENT);
 		ArrayList<UserDTO> arrayList = (ArrayList<UserDTO>) query.list();
 		
 		Logging.info(this, "End listUser");
@@ -91,8 +91,8 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin countUser(String, int)");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(User.COUNT_USERS_BY_NAME);
-		query.setParameter(QueryParameters.NAME, name);
-		query.setParameter(QueryParameters.ID, id);
+		query.setParameter(BaseQueryParameters.NAME, name);
+		query.setParameter(BaseQueryParameters.ID, id);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -105,7 +105,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin countUser(int)");
 
 		Query<Long> query = getCurrentSession().getNamedQuery(User.COUNT_USERS_BY_ROLE);
-		query.setParameter(QueryParameters.ROLE_ID, roleId);
+		query.setParameter(BaseQueryParameters.ROLE_ID, roleId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		

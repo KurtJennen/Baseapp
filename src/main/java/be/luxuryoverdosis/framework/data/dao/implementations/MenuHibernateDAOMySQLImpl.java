@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
-import be.luxuryoverdosis.framework.data.dao.QueryParameters;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
@@ -34,8 +34,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin readFullName");
 		
 		Query<Menu> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_BY_FULL_NAME_AND_USER);
-		query.setParameter(QueryParameters.FULL_NAME, fullName);
-		query.setParameter(QueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.FULL_NAME, fullName);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		ArrayList<Menu> arrayList = (ArrayList<Menu>) query.list();
 		
 		Menu menu = null;
@@ -57,7 +57,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin deleteForUserMenu");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Menu.DELETE_MENUS_BY_USER);
-		query.setParameter(QueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForUserMenu");	
@@ -68,7 +68,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listMenu");
 		
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_DTO_BY_USER);
-		query.setParameter(QueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listMenu");
@@ -80,8 +80,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listHiddenMenu");
 
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_HIDDEN_DTO_BY_USER);
-		query.setParameter(QueryParameters.USER_ID, userId);
-		query.setParameter(QueryParameters.HIDDEN, hidden);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.HIDDEN, hidden);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listHiddenMenu");
@@ -93,8 +93,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listDisabledMenu");
 		
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_DISABLED_DTO_BY_USER);
-		query.setParameter(QueryParameters.USER_ID, userId);
-		query.setParameter(QueryParameters.DISABLED, disabled);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.DISABLED, disabled);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listDisabledMenu");
@@ -106,8 +106,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin listForPayAndPayedMenu");
 		
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED);
-		query.setParameter(QueryParameters.USER_ID, userId);
-		query.setParameter(QueryParameters.PAYED, payed);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.PAYED, payed);
 		ArrayList<MenuDTO> arrayList = (ArrayList<MenuDTO>) query.list();
 		
 		Logging.info(this, "End listForPayAndPayedMenu");
@@ -119,7 +119,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin countMenu");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Menu.COUNT_MENUS_BY_USER);
-		query.setParameter(QueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
@@ -132,8 +132,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		Logging.info(this, "Begin countMenu");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Menu.COUNT_MENUS_BY_FULL_NAME_AND_USER);
-		query.setParameter(QueryParameters.FULL_NAME, fullName);
-		query.setParameter(QueryParameters.USER_ID, userId);
+		query.setParameter(BaseQueryParameters.FULL_NAME, fullName);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
 		long count = arrayList.iterator().next().longValue();
 		
