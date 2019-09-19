@@ -16,6 +16,7 @@ public final class QueryParameters {
 	public static final String NAME = "name";
 	public static final String NUMBER = "number";
 	public static final String PAYED = "payed";
+	public static final String QUERY_ID = "queryId";
 	public static final String ROLE_ID = "roleId";
 	public static final String SQL_STATEMENT = "sqlStatement";
 	public static final String TYPE = "type";
