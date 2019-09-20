@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +51,8 @@ public class UserServiceSpringImpl implements UserService {
 	private DocumentService documentService;
 	@Resource
 	private SearchService searchService;
+	@Resource(name=BaseSpringServiceConstants.SENDER_SERVICE)
+	private JavaMailSender javaMailSender;
 	
 	@Transactional
 	public UserDTO createOrUpdateDTO(final UserDTO userDTO) {
@@ -221,9 +223,7 @@ public class UserServiceSpringImpl implements UserService {
 	
 	private void sendUserMail(final User user) {
 		try {
-			JavaMailSenderImpl sender = (JavaMailSenderImpl)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SENDER_SERVICE);
-			
-			MimeMessage msg = sender.createMimeMessage();
+			MimeMessage msg = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(msg);
 			
 			StringBuffer text = new StringBuffer();
@@ -238,7 +238,7 @@ public class UserServiceSpringImpl implements UserService {
 			helper.setSubject(BaseSpringServiceLocator.getMessage("mail.user.subject.create", new Object[]{user.getName()}));
 			helper.setText(text.toString(), true);
 			
-			//sender.send(msg);
+			//javaMailSender.send(msg);
 		} catch (Exception e) {
 			throw new ServiceException("mail.send.error");
 		}
@@ -345,5 +345,9 @@ public class UserServiceSpringImpl implements UserService {
 		
 		return documentService.createDocument(document, userDocument, UserDocument.class);
 	}
+	
+//	private JavaMailSenderImpl getJavaMailSenderImpl() {
+//		return (JavaMailSenderImpl)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SENDER_SERVICE);
+//	}
 	
 }

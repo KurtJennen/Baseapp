@@ -27,8 +27,7 @@ public class AppListener implements ServletContextListener{
 			
 			SpringServiceLocator.getSpringServiceLocator();
 			
-			SqlExecuterService sqlExecuterService = BaseSpringServiceLocator.getBean(SqlExecuterService.class);
-			sqlExecuterService.execute();
+			getSqlExecuterService().execute();
 		} catch (DataAccessException e) {
 			Logging.error(this, "AppListener error " + e.getMessage());
 			throw e;
@@ -39,4 +38,9 @@ public class AppListener implements ServletContextListener{
 
 	public void contextDestroyed(ServletContextEvent sce) {
 	}
+	
+	private SqlExecuterService getSqlExecuterService() {
+		return BaseSpringServiceLocator.getBean(SqlExecuterService.class);
+	}
+	
 }

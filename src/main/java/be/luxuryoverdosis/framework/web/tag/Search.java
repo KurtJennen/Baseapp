@@ -50,19 +50,13 @@ public class Search implements Tag {
 			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 			
-			SearchSelect searchSelect = (SearchSelect)BaseSpringServiceLocator.getBean(searchService);
-			//QueryService queryService = (QueryService)SpringServiceLocator.getBean(SpringServiceConstants.QUERY_SERVICE);
-			QueryService queryService = BaseSpringServiceLocator.getBean(QueryService.class);
-			
-			//ActionErrors actionErrors = (ActionErrors)request.getAttribute("org.apache.struts.action.ERROR");
-			//SearchForm searchForm = (SearchForm)request.getSession().getAttribute("searchForm");
 			SearchForm searchForm = (SearchForm)request.getSession().getAttribute(searchName);
 			
 			if(!searchName.equals(searchForm.getSearchName())) {
 				searchForm.setDefaultLines(2);
 			}
 			
-			ArrayList<Query> queries = queryService.list(searchService);
+			ArrayList<Query> queries = getQueryService().list(searchService);
 			
 			//hidden
 			out.print("<input type=\"hidden\" name=\"searchName\" value=\"" + searchName + "\" />");
@@ -178,8 +172,8 @@ public class Search implements Tag {
 				out.print("<td>");
 				out.print("<select name=\"parameters\">");
 				out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
-				for(int j = 0; j < searchSelect.getSearchParameters().length; j++) {
-					SearchParameter searchParameter = searchSelect.getSearchParameter(j);
+				for(int j = 0; j < getSearchSelect().getSearchParameters().length; j++) {
+					SearchParameter searchParameter = getSearchSelect().getSearchParameter(j);
 					if(searchForm.getParameters() != null && i < searchForm.getParameters().length && searchForm.getParameters()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
 						out.print("<option value=\"" + j + "\" selected=\"selected\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
 					} else {
@@ -262,6 +256,14 @@ public class Search implements Tag {
 
 	public int doEndTag() throws JspException {
 		return EVAL_PAGE;
+	}
+	
+	private QueryService getQueryService() {
+		return BaseSpringServiceLocator.getBean(QueryService.class);
+	}
+	
+	private SearchSelect getSearchSelect() {
+		return (SearchSelect)BaseSpringServiceLocator.getBean(searchService);
 	}
 	
 }

@@ -10,12 +10,8 @@ public class UserRestClient {
 	public static void main(String[] args) {
 		SpringServiceLocator.getSpringServiceLocator();
 		
-		//REST webservice
-		UserRestServiceClient userRestServiceClient = SpringServiceLocator.getBean(UserRestServiceClient.class);
-		
-		
 		//ReadUserRequest (GET)
-		UserRestWrapperDTO userRestWrapperDTO  = userRestServiceClient.readUserRequest("root");
+		UserRestWrapperDTO userRestWrapperDTO  = getUserRestServiceClient().readUserRequest("root");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getUserDTO() != null) {
@@ -24,7 +20,7 @@ public class UserRestClient {
 		
 		
 		//ReadAllUsersRequest (GET)
-		userRestWrapperDTO  = userRestServiceClient.readAllUsersRequest();
+		userRestWrapperDTO  = getUserRestServiceClient().readAllUsersRequest();
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getUserDTOList() != null) {
@@ -34,7 +30,7 @@ public class UserRestClient {
 		}
 		
 		//CreateOrUpdateUserRequest (POST)
-		userRestWrapperDTO  = userRestServiceClient.createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
+		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getUserDTO() != null) {
@@ -42,7 +38,7 @@ public class UserRestClient {
 		}
 		
 		//DeleteUserRequest (DELETE)
-		userRestWrapperDTO  = userRestServiceClient.deleteUserRequest("tst");
+		userRestWrapperDTO  = getUserRestServiceClient().deleteUserRequest("tst");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getUserDTO() != null) {
@@ -69,6 +65,11 @@ public class UserRestClient {
 		for(String message : userRestWrapperDTO.getMessages()) {
 			System.out.println("Boodschap: " + message);
 		}
+	}
+	
+	//REST webservice
+	private static UserRestServiceClient getUserRestServiceClient() {
+		return SpringServiceLocator.getBean(UserRestServiceClient.class);
 	}
 	
 }

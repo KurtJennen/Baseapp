@@ -14,16 +14,13 @@ public class UserEndpointClient {
 	public static void main(String[] args) {
 		SpringServiceLocator.getSpringServiceLocator();
 		
-		//SOAP webservice
-		UserEndpointServiceClient userEndpointClientService = SpringServiceLocator.getBean(UserEndpointServiceClient.class);
-		
 		//ReadUserRequest
-		ReadUserResponse readUserResponse = userEndpointClientService.readUserRequest("root");
+		ReadUserResponse readUserResponse = getUserEndpointServiceClient().readUserRequest("root");
 		printMessage(readUserResponse.getMessage());
 		print(readUserResponse.getUser());
 		
 		//ReadAllUsersRequest
-		ReadAllUsersResponse readAllUsersResponse = userEndpointClientService.readAllUsersRequest();
+		ReadAllUsersResponse readAllUsersResponse = getUserEndpointServiceClient().readAllUsersRequest();
 		printMessage(readAllUsersResponse.getMessage());
 		if(readAllUsersResponse.getUser() != null) {
 			for(User user : readAllUsersResponse.getUser()) {
@@ -32,11 +29,11 @@ public class UserEndpointClient {
 		}
 		
 		//CreateOrUpdateUserRequest
-		CreateOrUpdateUserResponse createOrUpdateUserResponse = userEndpointClientService.createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
+		CreateOrUpdateUserResponse createOrUpdateUserResponse = getUserEndpointServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
 		printMessage(createOrUpdateUserResponse.getMessage());
 		
 		//DeleteUserResponse
-		DeleteUserResponse deleteUserResponse = userEndpointClientService.deleteUserRequest("tst");
+		DeleteUserResponse deleteUserResponse = getUserEndpointServiceClient().deleteUserRequest("tst");
 		printMessage(deleteUserResponse.getMessage());
 		
 	}
@@ -54,6 +51,9 @@ public class UserEndpointClient {
 		System.out.println(message.getMessage());
 	}
 	
-	
+	//SOAP webservice
+	private static UserEndpointServiceClient getUserEndpointServiceClient() {
+		return SpringServiceLocator.getBean(UserEndpointServiceClient.class);
+	}
 
 }

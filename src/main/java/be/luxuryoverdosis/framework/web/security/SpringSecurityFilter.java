@@ -36,8 +36,7 @@ public class SpringSecurityFilter implements Filter {
 	        String credentials = Encryption.decode(base64Credentials);
 	        final String[] values = credentials.split(":",2);
 	        
-	        UserService userService = BaseSpringServiceLocator.getBean(UserService.class);
-	        User user = userService.readName(values[0]);
+	        User user = getUserService().readName(values[0]);
 	        if(user != null && user.getEncryptedPassword().equals(Encryption.encode(values[1]))) {
 	        	ThreadManager.setUserOnThread(user);
 	        	filterChain.doFilter(request, response);
@@ -59,4 +58,9 @@ public class SpringSecurityFilter implements Filter {
 	public void destroy() {
 		//System.out.println("SpringSecurityFilter Destroyed");
 	}
+	
+	private UserService getUserService() {
+		return BaseSpringServiceLocator.getBean(UserService.class);
+	}
+	
 }

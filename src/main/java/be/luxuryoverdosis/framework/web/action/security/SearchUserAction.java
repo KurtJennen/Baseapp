@@ -13,7 +13,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
 import be.luxuryoverdosis.baseapp.Constants;
-import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
@@ -81,10 +80,8 @@ public class SearchUserAction extends SearchAction {
 	public void report(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Report");
 		
-		//ReportService reportService = (ReportService)SpringServiceLocator.getBean(SpringServiceConstants.REPORT_SERVICE);
-		ReportService reportService = SpringServiceLocator.getBean(ReportService.class);
 		String realPathReport = request.getSession().getServletContext().getRealPath(Constants.REPORT_USERS_PATH);
-		byte[] pdfByteArray = reportService.create(realPathReport);
+		byte[] pdfByteArray = getReportService().create(realPathReport);
 		
 		ResponseTool.writeResponseForDownload(response, Constants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
 		
@@ -144,5 +141,9 @@ public class SearchUserAction extends SearchAction {
 	
 	private DocumentService getDocumentService() {
         return BaseSpringServiceLocator.getBean(DocumentService.class);
+    }
+	
+	private ReportService getReportService() {
+        return BaseSpringServiceLocator.getBean(ReportService.class);
     }
 }
