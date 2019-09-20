@@ -32,7 +32,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class SearchUserAction extends SearchAction {
 	@Override
-	public String getSearchService() {
+	public String getSearchServiceName() {
 		return BaseSpringServiceConstants.SEARCH_USER;
 	}
 	

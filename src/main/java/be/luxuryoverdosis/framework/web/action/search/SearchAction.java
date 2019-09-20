@@ -21,7 +21,7 @@ import be.luxuryoverdosis.framework.web.form.SearchForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public abstract class SearchAction extends AjaxAction {
-	public abstract String getSearchService();
+	public abstract String getSearchServiceName();
 	
 	public ActionForward createLine(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateLine");
@@ -82,7 +82,7 @@ public abstract class SearchAction extends AjaxAction {
 		
 		QueryDTO queryDTO = new QueryDTO();
 		queryDTO.setName(searchForm.getQueryName());
-		queryDTO.setType(this.getSearchService());
+		queryDTO.setType(this.getSearchServiceName());
 		queryDTO.setComplex(searchForm.getComplexQuery());
 		queryDTO.setParameters(searchForm.getSearchCriteria().getParameters());
 		queryDTO.setOperators(searchForm.getSearchCriteria().getOperators());
@@ -91,7 +91,7 @@ public abstract class SearchAction extends AjaxAction {
 		queryDTO.setOpenBrackets(searchForm.getSearchCriteria().getOpenBrackets());
 		queryDTO.setCloseBrackets(searchForm.getSearchCriteria().getCloseBrackets());
 		
-		long count = getQueryService().countAndCreateOrUpdateDTO(searchForm.getQueryName(), this.getSearchService(), queryDTO);
+		long count = getQueryService().countAndCreateOrUpdateDTO(searchForm.getQueryName(), this.getSearchServiceName(), queryDTO);
 		if(count == 0) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
