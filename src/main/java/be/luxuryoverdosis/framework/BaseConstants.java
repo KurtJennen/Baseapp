@@ -1,5 +1,7 @@
 package be.luxuryoverdosis.framework;
 
+import be.luxuryoverdosis.framework.base.FileType;
+
 public class BaseConstants {
 	//Application Base
 	public static final String NAME = "BASEAPP";
@@ -33,4 +35,9 @@ public class BaseConstants {
 	public static final String JOB_IMPORT_USER = "userImportJob";
 	
 	public static final String DOCUMENTYPE_USER = "USER";
+	
+	public static final String REPORT_PATH = "/files/reports/";
+	public static final String REPORT_USERS = "Users";
+	public static final String REPORT_USERS_PATH = REPORT_PATH + REPORT_USERS + FileType.JRXML;
+	public static final String FILE_USERS = REPORT_USERS + FileType.PDF;
 }
