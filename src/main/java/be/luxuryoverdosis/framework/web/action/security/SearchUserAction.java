@@ -101,9 +101,7 @@ public class SearchUserAction extends SearchAction {
 		
 		File file = getUserService().createDocument(searchUserForm.getDocumentId());
 		
-		ResponseTool.initializeResponseForDownload(response, file.getName(), FileContentType.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT, Long.valueOf(file.length()).intValue());
-		
-		getUserService().writeDocument(file, response.getOutputStream());
+        ResponseTool.writeResponseForDownloadDocument(response, file);
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("reset.success", MessageLocator.getMessage(request, "table.query")));
 		saveMessages(request, actionMessages);

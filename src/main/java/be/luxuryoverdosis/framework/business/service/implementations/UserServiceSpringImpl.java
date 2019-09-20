@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -347,8 +346,4 @@ public class UserServiceSpringImpl implements UserService {
 		return documentService.createDocument(document, userDocument, UserDocument.class);
 	}
 	
-	@Transactional(readOnly=true)
-	public void writeDocument(final File file, final OutputStream outputStream) {
-		documentService.writeDocument(file, outputStream);
-	}
 }

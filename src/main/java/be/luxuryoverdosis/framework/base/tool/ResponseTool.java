@@ -1,5 +1,9 @@
 package be.luxuryoverdosis.framework.base.tool;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +11,7 @@ import org.springframework.http.HttpStatus;
 
 import be.luxuryoverdosis.framework.base.Encoding;
 import be.luxuryoverdosis.framework.base.FileContentType;
+import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 public class ResponseTool {
 	
@@ -43,5 +48,23 @@ public class ResponseTool {
 		
 		response.flushBuffer();
 	}
+	
+    public static void writeResponseForDownloadDocument(final HttpServletResponse response, final File file) {
+        initializeResponseForDownload(response, file.getName(), FileContentType.APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT, Long.valueOf(file.length()).intValue());
+        
+        try {
+            ServletOutputStream out = response.getOutputStream();
+            
+            InputStream inputStream = new FileInputStream(file);
+            byte[] buffer = new byte[1024];
+            int lengte;
+            while((lengte = inputStream.read(buffer)) > 0) {
+                out.write(buffer, 0, lengte);
+            }
+            inputStream.close();
+        } catch (Exception e) {
+            throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
+        }
+    }
 	
 }

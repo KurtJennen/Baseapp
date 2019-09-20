@@ -1,16 +1,11 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
-
-import net.sf.jooreports.templates.DocumentTemplate;
-import net.sf.jooreports.templates.DocumentTemplateFactory;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,6 +22,8 @@ import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 import freemarker.ext.dom.NodeModel;
+import net.sf.jooreports.templates.DocumentTemplate;
+import net.sf.jooreports.templates.DocumentTemplateFactory;
 
 @Service
 public class DocumentServiceSpringImpl implements DocumentService {
@@ -140,20 +137,6 @@ public class DocumentServiceSpringImpl implements DocumentService {
 			template.createDocument(model, fileOutputStream);
 			
 			return file;
-		} catch (Exception e) {
-			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
-		}
-	}
-	
-	public void writeDocument(final File outputFile, final OutputStream outputStream) {
-		try {
-			InputStream inputStream = new FileInputStream(outputFile);
-			byte[] buffer = new byte[1024];
-			int lengte;
-			while((lengte = inputStream.read(buffer)) > 0) {
-				outputStream.write(buffer, 0, lengte);
-			}
-			inputStream.close();
 		} catch (Exception e) {
 			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
 		}

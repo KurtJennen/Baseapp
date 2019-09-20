@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.business.service.interfaces;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
@@ -37,7 +36,6 @@ public interface UserService {
 	public long count(String name, int id);
 	
 	public File createDocument(int documentId);
-	public void writeDocument(final File file, final OutputStream outputStream);
 	
 	public User activate(int id, int period);
 	public User deactivate(int id);

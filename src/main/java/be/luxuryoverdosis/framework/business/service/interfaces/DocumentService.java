@@ -1,7 +1,6 @@
 package be.luxuryoverdosis.framework.business.service.interfaces;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
@@ -20,5 +19,4 @@ public interface DocumentService {
 
 	@SuppressWarnings("rawtypes")
 	public File createDocument(final Document document, Object data, Class clazz);
-	public void writeDocument(File file, OutputStream outputStream);
 }
