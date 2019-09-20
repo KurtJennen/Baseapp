@@ -238,7 +238,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>disabled</name>
+			<name>roles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -268,9 +268,9 @@
 	        <rtexprvalue>true</rtexprvalue>
 	    </attribute>
 	    <attribute>
-	        <name>disabled</name>
-	        <required>false</required>
-	        <rtexprvalue>true</rtexprvalue>
-	    </attribute>
+			<name>roles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 </taglib>

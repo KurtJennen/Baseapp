@@ -12,6 +12,8 @@ import javax.servlet.jsp.tagext.Tag;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class EnumRadio implements Tag {
@@ -21,7 +23,7 @@ public class EnumRadio implements Tag {
 	private String property;
 	private String tabindex;
 	private String value;
-	private boolean disabled;
+	private String roles;
 	
 	public void setClazz(String clazz) {
 		this.clazz = clazz;
@@ -43,8 +45,8 @@ public class EnumRadio implements Tag {
 		this.value = value;
 	}
 
-	public void setDisabled(boolean disabled) {
-		this.disabled = disabled;
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 	public void setParent(Tag t) {
@@ -65,27 +67,40 @@ public class EnumRadio implements Tag {
 		try {
 			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			//User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
+			User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
 			
-			
-//			<input type="radio" name="level" tabindex="6" value="R" checked="checked">Stijgend niveau
-//			<input type="radio" name="level" tabindex="7" value="S">Zelfde niveau
+			boolean enabled = false;
+			if(user != null) {
+				if(roles != null) {
+					String[] seperatedRoles = roles.split(",");
+					for(int i = 0; i < seperatedRoles.length; i++) {
+						if(seperatedRoles[i].equals(user.getRole().getName())) {
+							enabled = true;
+						}
+					}
+					//pos1 = roles.indexOf(user.getRole().getName());
+				} else {
+					enabled = true;
+				}
+			} else {
+				enabled = true;
+			}
 			
 			List<String> keyList = getKeysForClass();
 			
 			for(String key : keyList) {
 				String keyMessage = getKeyMessage(request, key);
-				if(disabled) {
-					if(key.equals(value)) {
-						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" checked=\"checked\" disabled=\"disabled\">" + keyMessage);
-					} else {
-						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" disabled=\"disabled\">" + keyMessage);
-					}
-				} else {
+				if(enabled) {
 					if(key.equals(value)) {
 						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" checked=\"checked\">" + keyMessage);
 					} else {
 						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\">" + keyMessage);
+					}
+				} else {
+					if(key.equals(value)) {
+						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" checked=\"checked\" disabled=\"disabled\">" + keyMessage);
+					} else {
+						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" disabled=\"disabled\">" + keyMessage);
 					}
 				}
 			}

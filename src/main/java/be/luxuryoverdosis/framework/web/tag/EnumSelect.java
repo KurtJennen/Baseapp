@@ -12,6 +12,8 @@ import javax.servlet.jsp.tagext.Tag;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class EnumSelect implements Tag {
@@ -21,7 +23,7 @@ public class EnumSelect implements Tag {
 	private String property;
 	private String tabindex;
 	private String value;
-	private boolean disabled;
+	private String roles;
 	
 	public void setClazz(String clazz) {
 		this.clazz = clazz;
@@ -43,8 +45,8 @@ public class EnumSelect implements Tag {
 		this.value = value;
 	}
 
-	public void setDisabled(boolean disabled) {
-		this.disabled = disabled;
+	public void setRoles(String roles) {
+		this.roles = roles;
 	}
 
 	public void setParent(Tag t) {
@@ -65,23 +67,31 @@ public class EnumSelect implements Tag {
 		try {
 			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			//User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
+			User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
 			
-			
-//			<select name="hidden" tabindex="2" disabled="disabled">
-//				<option value="J">Ja</option>
-//				<option value="N" selected="selected">Nee</option>
-//			</select>
-			
-				
-//		<html:select property="hidden" value="${Nee}" tabindex="2"<html:option value="J"><fmt:message key="(J) Ja" /></html:option><html:option value="N"><fmt:message key="(N) Nee" /></html:option></html:select>
+			boolean enabled = false;
+			if(user != null) {
+				if(roles != null) {
+					String[] seperatedRoles = roles.split(",");
+					for(int i = 0; i < seperatedRoles.length; i++) {
+						if(seperatedRoles[i].equals(user.getRole().getName())) {
+							enabled = true;
+						}
+					}
+					//pos1 = roles.indexOf(user.getRole().getName());
+				} else {
+					enabled = true;
+				}
+			} else {
+				enabled = true;
+			}
 			
 			List<String> keyList = getKeysForClass();
 			
-			if(disabled) {
-				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" disabled=\"disabled\">");
-			} else {
+			if(enabled) {
 				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\">");
+			} else {
+				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" disabled=\"disabled\">");
 			}
 	    	
 			for(String key : keyList) {
