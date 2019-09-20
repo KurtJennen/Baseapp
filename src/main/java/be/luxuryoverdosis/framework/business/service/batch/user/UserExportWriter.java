@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
-import org.springframework.orm.hibernate5.HibernateOperations;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
@@ -16,8 +16,8 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
-import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.Job;
+import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -34,7 +34,7 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 		this.jobId = (int)jobId;
 	}
 
-	protected void doWrite(HibernateOperations hibernateOperations, List<? extends User> users) {
+	protected void doWrite(SessionFactory sessionFactory, List<? extends User> users) {
 		Job job = jobService.read(jobId);
 		try {
 			StringBuffer exportBuffer = new StringBuffer();
