@@ -23,6 +23,7 @@ public class EnumRadio implements Tag {
 	private String property;
 	private String tabindex;
 	private String value;
+	private boolean disabled;
 	private String roles;
 	
 	public void setClazz(String clazz) {
@@ -43,6 +44,10 @@ public class EnumRadio implements Tag {
 	
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	public void setRoles(String roles) {
@@ -90,7 +95,7 @@ public class EnumRadio implements Tag {
 			
 			for(String key : keyList) {
 				String keyMessage = getKeyMessage(request, key);
-				if(enabled) {
+				if(enabled && !disabled) {
 					if(key.equals(value)) {
 						out.print("<input type=\"radio\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + key + "\" checked=\"checked\">" + keyMessage);
 					} else {

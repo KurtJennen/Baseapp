@@ -238,6 +238,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+	        <name>disabled</name>
+	        <required>false</required>
+	        <rtexprvalue>true</rtexprvalue>
+	    </attribute>
+		<attribute>
 			<name>roles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -265,6 +270,11 @@
 	    <attribute>
 	        <name>value</name>
 	        <required>true</required>
+	        <rtexprvalue>true</rtexprvalue>
+	    </attribute>
+	    <attribute>
+	        <name>disabled</name>
+	        <required>false</required>
 	        <rtexprvalue>true</rtexprvalue>
 	    </attribute>
 	    <attribute>

@@ -23,6 +23,7 @@ public class EnumSelect implements Tag {
 	private String property;
 	private String tabindex;
 	private String value;
+	private boolean disabled;
 	private String roles;
 	
 	public void setClazz(String clazz) {
@@ -43,6 +44,10 @@ public class EnumSelect implements Tag {
 	
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	public void setRoles(String roles) {
@@ -88,7 +93,7 @@ public class EnumSelect implements Tag {
 			
 			List<String> keyList = getKeysForClass();
 			
-			if(enabled) {
+			if(enabled && !disabled) {
 				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\">");
 			} else {
 				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" disabled=\"disabled\">");
