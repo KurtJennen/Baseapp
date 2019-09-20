@@ -1,7 +1,7 @@
 function doPosition(sMethod) {
 	var iPosition =  window.document.forms[0].action.indexOf("?method=");
 	if(iPosition != -1 ) {
-		window.document.forms[0].action = window.document.forms[0].action.substr(0, iPosition) +'?method=' + sMethod;
+		window.document.forms[0].action = window.document.forms[0].action.substr(0, iPosition) + '?method=' + sMethod;
 	} else {
 		window.document.forms[0].action += '?method=' + sMethod;
 	}
@@ -70,10 +70,20 @@ function colorTableRow(sId, sColumnNumber, sValue, sColor) {
 function onInvokeAction(id) {
 	setExportToLimit(id, '');
 	var parameterString = createParameterStringForLimit(id);
-	location.href = window.document.forms[0].action + '?method=listJmesa&' + parameterString;
+	var iPosition =  window.document.forms[0].action.indexOf("?method=");
+	if(iPosition != -1 ) {
+		location.href = window.document.forms[0].action.substr(0, iPosition) + '?method=listJmesa&' + parameterString;
+	} else {
+		location.href = window.document.forms[0].action + '?method=listJmesa&' + parameterString;
+	}
 }
 	
 function onInvokeExportAction(id) {
 	var parameterString = createParameterStringForLimit(id);
-    location.href = window.document.forms[0].action + '?method=listJmesa&' + parameterString;
+	var iPosition =  window.document.forms[0].action.indexOf("?method=");
+	if(iPosition != -1 ) {
+		location.href = window.document.forms[0].action.substr(0, iPosition) + '?method=listJmesa&' + parameterString;
+	} else {
+		location.href = window.document.forms[0].action + '?method=listJmesa&' + parameterString;
+	}
 }
