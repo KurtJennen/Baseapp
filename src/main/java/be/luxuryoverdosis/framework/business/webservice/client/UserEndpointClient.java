@@ -1,7 +1,7 @@
 package be.luxuryoverdosis.framework.business.webservice.client;
 
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
-import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointClientService;
+import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointServiceClient;
 import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.Message;
@@ -15,7 +15,7 @@ public class UserEndpointClient {
 		SpringServiceLocator.getSpringServiceLocator();
 		
 		//SOAP webservice
-		UserEndpointClientService userEndpointClientService = SpringServiceLocator.getBean(UserEndpointClientService.class);
+		UserEndpointServiceClient userEndpointClientService = SpringServiceLocator.getBean(UserEndpointServiceClient.class);
 		
 		//ReadUserRequest
 		ReadUserResponse readUserResponse = userEndpointClientService.readUserRequest("root");

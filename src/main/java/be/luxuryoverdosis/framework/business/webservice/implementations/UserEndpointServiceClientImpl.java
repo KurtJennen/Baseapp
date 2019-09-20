@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
-import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointClientService;
+import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointServiceClient;
 import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserRequest;
 import be.luxuryoverdosis.generated.user.schema.v1.CreateOrUpdateUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserRequest;
@@ -19,7 +19,7 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.User;
 
 @Service
-public class UserEndpointClientServiceImpl implements UserEndpointClientService {
+public class UserEndpointServiceClientImpl implements UserEndpointServiceClient {
 	@Resource(name="webServiceTemplate")
 	private WebServiceTemplate webServiceTemplate;
 	@Resource
