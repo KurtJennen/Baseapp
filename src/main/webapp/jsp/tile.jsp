@@ -9,14 +9,12 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<script type="text/javascript" src="client/luxuryOverdosis.js"></script>
 	<script type="text/javascript" src="client/luxuryOverdosisAjax.js"></script>
-	<script type="text/javascript" src="client/datePicker.js"></script>
 	<script type="text/javascript" src="client/menuDropdown.js"></script>
 	<script type="text/javascript" src="client/jquery.js"></script>
 	<script type="text/javascript" src="client/jquery.tmpl.js"></script>
 	<script type="text/javascript" src="client/jquery.jmesa.js"></script>
 	<script type="text/javascript" src="client/jquery-ui.js"></script>
 	<script type="text/javascript" src="client/jmesa.js"></script>
-	<link type="text/css" rel="stylesheet" href="css/datePicker.css" />
 	<link type="text/css" rel="stylesheet" href="css/menuDropdown.css" />
 	<link type="text/css" rel="stylesheet" href="css/jmesa.css" />
 	<link type="text/css" rel="stylesheet" href="css/jquery-ui.css" />

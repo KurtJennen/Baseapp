@@ -8,27 +8,31 @@ import javax.servlet.jsp.tagext.Tag;
 
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class DateButton implements Tag {
 	PageContext pageContext;
-	private String image;
-	private String key;
 	private String property;
+	private String tabindex;
+	private String value;
+	private boolean disabled;
 	private String roles;
 
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-	
 	public void setProperty(String property) {
 		this.property = property;
 	}
 	
+	public void setTabindex(String tabindex) {
+		this.tabindex = tabindex;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+	
+	public void setValue(String value) {
+		this.value = value;
+	}
+
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
@@ -70,21 +74,18 @@ public class DateButton implements Tag {
 				enabled = true;
 			}
 			
-			if(enabled) {
-				//out.print("<button onclick=\"javascript:displayDatePicker('" + property + "');\">");
-				out.print("<img src=\"images/" + image + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" onclick=\"javascript:displayDatePicker('" + property + "');\" />");
-				//out.println("</button>");
+			//<input type="text" name="date" tabindex="1" value="11/07/2007" id="date">
+			
+			if(enabled && !disabled) {
+				out.print("<input type=\"text\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + value + "\" id=\"" + property +  "\">");
 			} else {
-//				int pos = image.indexOf(".");
-//				StringBuffer newImage = new StringBuffer();
-//				newImage.append(image.substring(0, pos)); 
-//				newImage.append("_disabled");
-//				newImage.append(image.substring(pos)); 
-//				
-//				out.print("<button>");
-//				out.print("<img src=\"images/" + newImage.toString() + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" />");
-//				out.println("</button>");
+				out.print("<input type=\"text\" name=\"" + property + "\" tabindex=\"" + tabindex + "\" value=\"" + value + "\" id=\"" + property + "\" disabled=\"disabled\">");
 			}
+			
+			out.print("<script>");
+			out.print("doJQueryUiDatepicker('" + property + "');");
+			out.print("</script>");
+			
 		}
 		catch (Exception e) {
 		}
