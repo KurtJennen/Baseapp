@@ -69,3 +69,7 @@ function doAjaxBlurNoResult(sProperty) {
 	$('#' + sProperty + 'Value').val("");
 	$('#' + sProperty).val(-1);
 };
+
+function doJQueryUiDatepicker(sProperty) {
+	$( "#" + sProperty ).datepicker({ dateFormat: 'dd/mm/yy' });
+};
