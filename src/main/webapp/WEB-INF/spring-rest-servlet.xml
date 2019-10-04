@@ -10,6 +10,9 @@
 	<context:component-scan base-package="be.luxuryoverdosis.baseapp.business.webservice.rest" />
 	<context:component-scan base-package="be.luxuryoverdosis.framework.business.webservice.rest" />
 	
+	<context:component-scan base-package="be.luxuryoverdosis.baseapp.web.action.controller" />
+	<context:component-scan base-package="be.luxuryoverdosis.framework.web.action.controller" />
+	
 	<mvc:annotation-driven/>
 	
 </beans> 

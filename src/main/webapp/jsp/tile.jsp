@@ -8,6 +8,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<script type="text/javascript" src="client/luxuryOverdosis.js"></script>
+	<script type="text/javascript" src="client/luxuryOverdosisPq.js"></script>
 	<script type="text/javascript" src="client/luxuryOverdosisAjax.js"></script>
 	<script type="text/javascript" src="client/menuDropdown.js"></script>
 	<script type="text/javascript" src="client/jquery.js"></script>
@@ -15,9 +16,13 @@
 	<script type="text/javascript" src="client/jquery.jmesa.js"></script>
 	<script type="text/javascript" src="client/jquery-ui.js"></script>
 	<script type="text/javascript" src="client/jmesa.js"></script>
+	<script type="text/javascript" src="client/pqgrid.dev.js"></script>
+	<script type="text/javascript" src="client/localize/pq-localize-nl.js"></script>
+	<script type="text/javascript" src="client/localize/pq-localize-en.js"></script>
 	<link type="text/css" rel="stylesheet" href="css/menuDropdown.css" />
 	<link type="text/css" rel="stylesheet" href="css/jmesa.css" />
 	<link type="text/css" rel="stylesheet" href="css/jquery-ui.css" />
+	<link type="text/css" rel="stylesheet" href="css/pqgrid.dev.css" />
 	<link type="text/css" rel="stylesheet" href="css/layout.css" />
 	<title><fmt:message key="title.name" /></title>
 </head>
