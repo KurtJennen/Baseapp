@@ -1,18 +1,26 @@
 package be.luxuryoverdosis.framework.web.tag;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.pq.PqGridObject;
+import be.luxuryoverdosis.framework.web.sessionmanager.UrlManager;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 
 public class PqGrid implements Tag {
 	PageContext pageContext;
 	private String id;
-	private String title;
+	private String titleKey;
 	private String selectedIds;
 	private String url;
 	private String width = "99%";
@@ -25,8 +33,8 @@ public class PqGrid implements Tag {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTitleKey(String titleKey) {
+		this.titleKey = titleKey;
 	}
 	public void setSelectedIds(String selectedIds) {
 		this.selectedIds = selectedIds;
@@ -66,30 +74,47 @@ public class PqGrid implements Tag {
 	}
 	
 	public int doStartTag() throws JspException {
+		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 		
 		pqGridObject = new PqGridObject();
 		pqGridObject.setId(id);
-		pqGridObject.setTitle(title);
+		pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
 		pqGridObject.setSelectedIds(selectedIds);
-		pqGridObject.setUrl(url);
+		pqGridObject.setUrl(UrlManager.composeUrl(request, url));
 		pqGridObject.setWidth(width);
 		pqGridObject.setHeight(height);
 		pqGridObject.setFreezeCols(freezeCols);
 		pqGridObject.setrPP(rPP);
+		pqGridObject.setExportUrl(UrlManager.composeUrl(request, "/rest/export"));
+		pqGridObject.setExportLabelCsv(MessageLocator.getMessage(request, "export.csv"));
+		pqGridObject.setExportLabelExcel(MessageLocator.getMessage(request, "export.excel"));
+		pqGridObject.setLocale(MessageLocator.getLocale(request).getLanguage());
 		
 		return EVAL_BODY_INCLUDE;
 	}
 
 	public int doEndTag() throws JspException {
-//		try {
-//			JspWriter out = pageContext.getOut();
-//			
-//		}
-//		catch (Exception e) {
-//		}
+		try {
+			JspWriter out = pageContext.getOut();
+			
+			Configuration configuration = new Configuration();
+			configuration.setClassForTemplateLoading(this.getClass(), "templates");
+			configuration.setDefaultEncoding("UTF-8");
+			configuration.setLocale(Locale.US);
+			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+			
+			Map<String, Object> templateData = new HashMap<String, Object>();
+			templateData.put("templateData", pqGridObject);
+			
+			Template template = configuration.getTemplate("pqTemplate.ftl");
+			template.process(templateData, out);
+			
+		}
+		catch (Exception e) {
+		}
 		
-		Map<String, Object> templateData = new HashMap<String, Object>();
-		templateData.put("templateData", pqGridObject);
+		
+		
 		
 		return EVAL_PAGE;
 	}

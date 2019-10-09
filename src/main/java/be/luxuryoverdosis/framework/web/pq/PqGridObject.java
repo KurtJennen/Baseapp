@@ -11,7 +11,11 @@ public class PqGridObject {
 	private String height = "500";
 	private int freezeCols = 1;
 	private int rPP = 15;
-	private ArrayList<PqGridColumnObject> pqGridColumnObjects;
+	private String exportUrl;
+	private String exportLabelCsv;
+	private String exportLabelExcel;
+	private String locale;
+	private ArrayList<PqGridColumnObject> pqGridColumnObjects = new ArrayList<PqGridColumnObject>();
 	
 	public String getId() {
 		return id;
@@ -64,8 +68,31 @@ public class PqGridObject {
 	public ArrayList<PqGridColumnObject> getPqGridColumnObjects() {
 		return pqGridColumnObjects;
 	}
+	public String getExportUrl() {
+		return exportUrl;
+	}
+	public void setExportUrl(String exportUrl) {
+		this.exportUrl = exportUrl;
+	}
+	public String getExportLabelCsv() {
+		return exportLabelCsv;
+	}
+	public void setExportLabelCsv(String exportLabelCsv) {
+		this.exportLabelCsv = exportLabelCsv;
+	}
+	public String getExportLabelExcel() {
+		return exportLabelExcel;
+	}
+	public void setExportLabelExcel(String exportLabelExcel) {
+		this.exportLabelExcel = exportLabelExcel;
+	}
+	public String getLocale() {
+		return locale;
+	}
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
 	public void setPqGridColumnObjects(ArrayList<PqGridColumnObject> pqGridColumnObjects) {
 		this.pqGridColumnObjects = pqGridColumnObjects;
 	}
-	
 }

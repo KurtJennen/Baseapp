@@ -297,7 +297,7 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
-			<name>title</name>
+			<name>titleKey</name>
 			<required>true</required>
 		</attribute>
 		<attribute>
@@ -331,7 +331,7 @@
 		<name>pqGridColumn</name>
 		<tag-class>be.luxuryoverdosis.framework.web.tag.PqGridColumn</tag-class>
 		<attribute>
-			<name>title</name>
+			<name>titleKey</name>
 			<required>true</required>
 		</attribute>
 		<attribute>
