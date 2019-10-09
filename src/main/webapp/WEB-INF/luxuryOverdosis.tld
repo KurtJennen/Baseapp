@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
 <taglib>
 	<tlib-version>1.0</tlib-version>
@@ -287,6 +287,86 @@
 			<name>roles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>pqGrid</name>
+		<tag-class>be.luxuryoverdosis.framework.web.tag.PqGrid</tag-class>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>titleKey</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>selectedIds</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>url</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>freezeCols</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+		<attribute>
+			<name>rPP</name>
+			<required>false</required>
+			<type>java.lang.Integer</type>
+		</attribute>
+	</tag>
+	<tag>
+		<name>pqGridColumn</name>
+		<tag-class>be.luxuryoverdosis.framework.web.tag.PqGridColumn</tag-class>
+		<attribute>
+			<name>titleKey</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>dataType</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>dataIndx</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>sortable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>resizable</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>filterType</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>filterCondition</name>
+			<required>false</required>
 		</attribute>
 	</tag>
 </taglib>

@@ -14,6 +14,7 @@ public class BaseForm extends ValidatorForm {
 	private static final long serialVersionUID = 1L;
 	private String method;
 	private int[] ids;
+    private int[] selectedIds;
 	private int id;
 	private int version;
 	private int documentId;
@@ -28,6 +29,12 @@ public class BaseForm extends ValidatorForm {
 	public void setIds(int[] ids) {
 		this.ids = ids;
 	}
+    public int[] getSelectedIds() {
+        return selectedIds;
+    }
+    public void setSelectedIds(int[] selectedIds) {
+        this.selectedIds = selectedIds;
+    }
 	public String getMethod() {
 		return method;
 	}
