@@ -14107,8 +14107,7 @@
 			ui = {
 				column: column,
 				dataIndx: dataIndx,
-				source: "header",
-				data: data
+				source: "header"
 			},
 			inpT = $(evt.target).is("input") ? true : false,
 			inpChk = $inp.is(":checked"),

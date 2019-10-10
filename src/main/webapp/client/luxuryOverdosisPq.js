@@ -13,10 +13,11 @@ function cellDblClickPq(ui, sSelectedIdsName) {
 	doActionIdPqGrid("read", ui.rowData.id);
 }
 
-function checkPq(ui, sSelectedIdsName) {
+function checkPq(ui, sId, sSelectedIdsName) {
 	if (ui.source == "header") {
-		for (var i = 0, len = ui.data.length; i < len; i++) {
-			createHiddenInputTag(ui.data[i].id, sSelectedIdsName);
+		var data = $("#" + sId).pqGrid("option", "dataModel.data");
+		for (var i = 0, len = data.length; i < len; i++) {
+			createHiddenInputTag(data[i].id, sSelectedIdsName);
 		}
 	}
     if (ui.dataIndx == 'selectedRow' && ui.rowData != null ) {
@@ -24,13 +25,13 @@ function checkPq(ui, sSelectedIdsName) {
     }
 }
 
-function unCheckPq(ui) {
+function unCheckPq(ui, sSelectedIdsName) {
 	if (ui.source == "header") {
-		var unSelectedRows = "input:hidden";
+		var unSelectedRows = "input:hidden[name=" + sSelectedIdsName + "]";
 		$(unSelectedRows).remove();
 	}
     if (ui.dataIndx == 'selectedRow' && ui.rowData != null ) {
-        var unSelectedRow = "input:hidden[value=" + ui.rowData.id + "]";
+        var unSelectedRow = "input:hidden[name=" + sSelectedIdsName + "][value=" + ui.rowData.id + "]";
         $(unSelectedRow).remove();
     }
 }
