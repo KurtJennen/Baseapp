@@ -41,10 +41,10 @@
             sorting: "local",
             filterModel: { on: true, mode: "AND", header: true, type: "local" },
             check: function (evt, ui) {
-            	checkPq(ui, "${templateData.selectedIds}");
+            	checkPq(ui, "${templateData.id}Grid", "${templateData.selectedIds}");
             },
             unCheck: function (evt, ui) {
-            	unCheckPq(ui);
+            	unCheckPq(ui, "${templateData.selectedIds}");
             },
             cellDblClick: function (evt, ui) {
             	cellDblClickPq(ui, "${templateData.selectedIds}");

@@ -16,13 +16,13 @@
 	<script type="text/javascript" src="client/jquery.jmesa.js"></script>
 	<script type="text/javascript" src="client/jquery-ui.js"></script>
 	<script type="text/javascript" src="client/jmesa.js"></script>
-	<script type="text/javascript" src="client/pqgrid.dev.js"></script>
+	<script type="text/javascript" src="client/pqgrid.min.js"></script>
 	<script type="text/javascript" src="client/localize/pq-localize-nl.js"></script>
 	<script type="text/javascript" src="client/localize/pq-localize-en.js"></script>
 	<link type="text/css" rel="stylesheet" href="css/menuDropdown.css" />
 	<link type="text/css" rel="stylesheet" href="css/jmesa.css" />
 	<link type="text/css" rel="stylesheet" href="css/jquery-ui.css" />
-	<link type="text/css" rel="stylesheet" href="css/pqgrid.dev.css" />
+	<link type="text/css" rel="stylesheet" href="css/pqgrid.min.css" />
 	<link type="text/css" rel="stylesheet" href="css/layout.css" />
 	<title><fmt:message key="title.name" /></title>
 </head>
