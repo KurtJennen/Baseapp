@@ -2,6 +2,8 @@ package be.luxuryoverdosis.framework.data.dto;
 
 import java.util.Date;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
+
 public class UserDTO extends BaseDTO {
 	private String name;
 	private String userName;
@@ -33,6 +35,7 @@ public class UserDTO extends BaseDTO {
 		this.userName = userName;
 		this.email = email;
 		this.dateExpiration = dateExpiration;
+		this.dateExpirationAsString = DateTool.formatUtilDate(dateExpiration);
 		this.roleName = roleName;
 	}
 	
