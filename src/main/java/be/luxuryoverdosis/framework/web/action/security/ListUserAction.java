@@ -20,10 +20,12 @@ import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -162,21 +164,34 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	 public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	        Logging.info(this, "Begin Ajax");
-	        
-	        SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
-	        
-	        ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
-	        if (userList.size() > 0) {
-	        	super.setIds(request, userList, BaseWebConstants.USER_IDS);
-	            super.sendAsJson(response, userList);
-	        }
-	        
-	        Logging.info(this, "End Ajax Success");
-	        
-	        return null;
-	    }
+	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+	
+		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
+	
+		ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
+		if (userList.size() > 0) {
+			super.setIds(request, userList, BaseWebConstants.USER_IDS);
+			super.sendAsJson(response, userList);
+		}
+	
+		Logging.info(this, "End Ajax Success");
+	    
+	    return null;
+	}
+	
+	public ActionForward ajaxListJobExport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		ArrayList<BatchJobInstance> userListJobExport = getBatchJobInstanceService().list(BaseConstants.JOB_EXPORT_USER);
+		if (userListJobExport.size() > 0) {
+			super.sendAsJson(response, userListJobExport);
+		}
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
 	
 	private UserService getUserService() {
 		return BaseSpringServiceLocator.getBean(UserService.class);
@@ -188,6 +203,10 @@ public class ListUserAction extends AjaxAction {
 	
 	private SearchService getSearchService() {
 		return BaseSpringServiceLocator.getBean(SearchService.class);
+	}
+	
+	private BatchJobInstanceService getBatchJobInstanceService() {
+		return BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
 	}
 	
 	private SearchSelect getSearchSelect() {

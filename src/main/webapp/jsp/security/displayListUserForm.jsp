@@ -6,6 +6,14 @@
 $(document).ready(function() {
 	$('#tabs').tabs({
 // 		heightStyle: "fill"
+	activate: function(event, ui) {
+			if(ui.newPanel.selector="#tab1") {
+				$( "#usersGrid" ).pqGrid( "refresh" );
+			}
+			if(ui.newPanel.selector="#tab2") {
+				$( "#usersJobExportGrid" ).pqGrid( "refresh" );
+			}
+		}
 	});
 	
 // 	function resizeUi() {
@@ -42,9 +50,17 @@ $(document).ready(function() {
 		<div id="tab2">
 			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>
 			<hr />
-			<div>
-				<%= request.getSession().getAttribute(WebConstants.USER_EXPORT_LIST) %>
-			</div>
+			<lo:pqGrid selectedIds="selectedIdsJobExport" url="/listUser.do?method=ajaxListJobExport" titleKey="displayJob.title" id="usersJobExport" rPP="15" rowClickMethod="readJob">
+				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCode" dataType="string" titleKey="batchjobexecution.create.exit.code"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.create.exit.message"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
+			</lo:pqGrid>
 		</div>
 		<div id="tab3">
 			<fmt:message key="file" />*:

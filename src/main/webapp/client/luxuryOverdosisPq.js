@@ -4,13 +4,13 @@ function doActionIdPqGrid(sMethod, sId) {
     window.document.forms[0].submit();
 }
 
-function cellDblClickPq(ui, sSelectedIdsName) {
+function cellDblClickPq(ui, sSelectedIdsName, sMethod) {
 	var unSelectedRows = "input:hidden";
 	$(unSelectedRows).remove();
 
 	createHiddenInputTag(ui.rowData.id, sSelectedIdsName)
 
-	doActionIdPqGrid("read", ui.rowData.id);
+	doActionIdPqGrid(sMethod, ui.rowData.id);
 }
 
 function checkPq(ui, sId, sSelectedIdsName) {
