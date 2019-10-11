@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
@@ -46,6 +47,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 				
 				if(user == null) {
 					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
+					userDTO.setDateExpiration(DateTool.parseSqlDate(userDTO.getDateExpirationAsString()));
 					
 					user = UserFactory.produceUser(user, userDTO);
 					

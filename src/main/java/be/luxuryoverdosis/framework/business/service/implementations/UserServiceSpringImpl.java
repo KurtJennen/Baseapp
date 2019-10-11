@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.BaseConstants;
+import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
@@ -107,10 +108,7 @@ public class UserServiceSpringImpl implements UserService {
 		//user.setEncryptedPassword(Encryption.encode(user.getEncryptedPassword()));
 		
 		if(user.getDateExpiration() == null) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.clear();
-			calendar.set(2100, 0, 1);
-			user.setDateExpiration(calendar.getTime());
+			user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
 		}
 		
 		if(user.getRole() == null) {
@@ -257,13 +255,9 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin activate");
 		User user = userHibernateDAO.read(id);
 		
-		Calendar defaultCalendar = Calendar.getInstance();
-		defaultCalendar.clear();
-		defaultCalendar.set(2100, 0, 1);
+		Calendar defaultCalendar = DateTool.getDefaultCalendar();
 		
-		Calendar expCalendar = Calendar.getInstance();
-		expCalendar.clear();
-		expCalendar.setTime(user.getDateExpiration());
+		Calendar expCalendar = DateTool.getCalendar(user.getDateExpiration());
 		
 		if(defaultCalendar.compareTo(expCalendar) == 0) {
 			Calendar calendar = Calendar.getInstance();
@@ -293,10 +287,7 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin deactivate");
 		User user = userHibernateDAO.read(id);
 		
-		Calendar calendar = Calendar.getInstance();
-		calendar.clear();
-		calendar.set(2000, 0, 1);
-		user.setDateExpiration(calendar.getTime());
+		user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
 		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
 		
 		Logging.info(this, "Begin deactivate");

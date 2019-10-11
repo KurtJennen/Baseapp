@@ -6,6 +6,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -78,7 +79,7 @@ public class DetailUserForm extends BaseForm {
 		this.setPassword("");
 		this.setPasswordConfirm("");
 		this.setEmail("");
-		this.setDate("00/00/0000");
+		this.setDate(DateTool.formatUtilDate(DateTool.getDefaultDateFromCalendar()));
 		this.setRoleId(-1);
 		this.setRoleIdValue("");
 	}
