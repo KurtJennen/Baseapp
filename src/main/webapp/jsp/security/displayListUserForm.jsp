@@ -31,9 +31,13 @@ $(document).ready(function() {
 			<lo:button image="zoom.png" method="search" key="button.search"></lo:button>
 			<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 			<hr />
-			<div>
-				<%= request.getSession().getAttribute(WebConstants.USER_LIST) %>
-			</div>
+			<lo:pqGrid selectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
+				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="email" dataType="string" titleKey="security.email"></lo:pqGridColumn>
+				<lo:pqGridColumn width="100" dataIndx="dateExpirationAsString" dataType="string" titleKey="security.date.expiration"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="roleName" dataType="string" titleKey="security.role"></lo:pqGridColumn>
+			</lo:pqGrid>
 		</div>
 		<div id="tab2">
 			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>

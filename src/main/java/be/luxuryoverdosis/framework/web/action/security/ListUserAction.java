@@ -1,5 +1,7 @@
 package be.luxuryoverdosis.framework.web.action.security;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,7 +11,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.upload.FormFile;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.facade.TableFacadeFactory;
@@ -20,19 +21,20 @@ import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
+import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.ListUserForm;
 import be.luxuryoverdosis.framework.web.form.SearchUserForm;
 import be.luxuryoverdosis.framework.web.jmesa.BatchJobExecutionJmesaTemplate;
-import be.luxuryoverdosis.framework.web.jmesa.UserJmesaTemplate;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
-public class ListUserAction extends DispatchAction {
+public class ListUserAction extends AjaxAction {
 	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Search");
 		Logging.info(this, "End Search Success");
@@ -45,20 +47,20 @@ public class ListUserAction extends DispatchAction {
 		
 		ListUserWrapperDTO listUserWrapperDTO = getUserService().getListUserWrapperDTO(getSearchSelect(), searchForm.getSearchCriteria());
 		
-		//JMesa Start	
-		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_LIST, request, response);
-		UserJmesaTemplate userJmesaTemplate = new UserJmesaTemplate(tableFacade, listUserWrapperDTO.getSearchUserList(), request);
-		String html = userJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.getSession().setAttribute(BaseWebConstants.USER_LIST, html);
-		//JMesa End
+//		//JMesa Start	
+//		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_LIST, request, response);
+//		UserJmesaTemplate userJmesaTemplate = new UserJmesaTemplate(tableFacade, listUserWrapperDTO.getSearchUserList(), request);
+//		String html = userJmesaTemplate.render();
+//		if(html == null) {
+//			return null;
+//		}
+//        request.getSession().setAttribute(BaseWebConstants.USER_LIST, html);
+//		//JMesa End
 		
 		//JMesa Start	
-		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
+		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
 		BatchJobExecutionJmesaTemplate batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceExportList(), request);
-		html = batchJobExecutionJmesaTemplate.render();
+		String html = batchJobExecutionJmesaTemplate.render();
 		if(html == null) {
 			return null;
 		}
@@ -160,12 +162,32 @@ public class ListUserAction extends DispatchAction {
 		return actionRedirect;
 	}
 	
+	 public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	        Logging.info(this, "Begin Ajax");
+	        
+	        SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
+	        
+	        ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
+	        if (userList.size() > 0) {
+	        	super.setIds(request, userList, BaseWebConstants.USER_IDS);
+	            super.sendAsJson(response, userList);
+	        }
+	        
+	        Logging.info(this, "End Ajax Success");
+	        
+	        return null;
+	    }
+	
 	private UserService getUserService() {
 		return BaseSpringServiceLocator.getBean(UserService.class);
 	}
 	
 	private BatchService getBatchService() {
 		return BaseSpringServiceLocator.getBean(BatchService.class);
+	}
+	
+	private SearchService getSearchService() {
+		return BaseSpringServiceLocator.getBean(SearchService.class);
 	}
 	
 	private SearchSelect getSearchSelect() {

@@ -37,6 +37,7 @@ public class UserFactory {
 		//user.setEncryptedPassword(userDTO.getPassword());
 		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		user.setEmail(userDTO.getEmail());
+		user.setDateExpiration(userDTO.getDateExpiration());
 		
 		return user;
 	}
