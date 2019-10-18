@@ -115,19 +115,44 @@ public class ListUserAction extends AjaxAction {
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin Read");
-		Logging.info(this, "End Read Success");
-		
-		return (mapping.findForward(BaseWebConstants.READ));
-	}
+        Logging.info(this, "Begin Read");
+        
+        ListUserForm userForm = (ListUserForm) form;
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
+        actionRedirect.addParameter(BaseWebConstants.ID, userForm.getSelectedIds()[0]);
+        
+        Logging.info(this, "End Read Success");
+        
+        return actionRedirect;
+    }
 	
-	public ActionForward readJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward readExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ReadJob");
 		Logging.info(this, "End ReadJob Success");
 		
+		ListUserForm userForm = (ListUserForm) form;
+		int jobId = userForm.getSelectedIdsExportJob()[0];
+		
+		return readJob(mapping, request, jobId);
+	}
+	
+	public ActionForward readImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin ReadJob");
+		Logging.info(this, "End ReadJob Success");
+		
+		ListUserForm userForm = (ListUserForm) form;
+		int jobId = userForm.getSelectedIdsImportJob()[0];
+		
+		return readJob(mapping, request, jobId);
+	}
+
+	private ActionForward readJob(ActionMapping mapping, HttpServletRequest request, int jobId) {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, BaseConstants.JOB_NIVEAU_USER);
 		
-		return (mapping.findForward(BaseWebConstants.READ_JOB));
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ_JOB));
+        actionRedirect.addParameter(BaseWebConstants.ID, jobId);
+		
+		return actionRedirect;
 	}
 	
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -155,7 +180,6 @@ public class ListUserAction extends AjaxAction {
 		
 		getBatchService().importUserJob(fileDTO);
 		
-		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
@@ -180,17 +204,31 @@ public class ListUserAction extends AjaxAction {
 	    return null;
 	}
 	
-	public ActionForward ajaxListJobExport(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxListExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
-		ArrayList<BatchJobInstance> userListJobExport = getBatchJobInstanceService().list(BaseConstants.JOB_EXPORT_USER);
-		if (userListJobExport.size() > 0) {
-			super.sendAsJson(response, userListJobExport);
-		}
+		ajaxListJob(response, BaseConstants.JOB_EXPORT_USER);
 		
 		Logging.info(this, "End Ajax Success");
 		
 		return null;
+	}
+	
+	public ActionForward ajaxListImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		ajaxListJob(response, BaseConstants.JOB_IMPORT_USER);
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+
+	private void ajaxListJob(HttpServletResponse response, String jobName) throws Exception {
+		ArrayList<BatchJobInstance> userListJobExport = getBatchJobInstanceService().list(jobName);
+		if (userListJobExport.size() > 0) {
+			super.sendAsJson(response, userListJobExport);
+		}
 	}
 	
 	private UserService getUserService() {

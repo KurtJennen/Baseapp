@@ -15,6 +15,7 @@ public class BaseForm extends ValidatorForm {
 	private String method;
 	private int[] ids;
     private int[] selectedIds;
+    private int selectedTab = 1;
 	private int id;
 	private int version;
 	private int documentId;
@@ -35,6 +36,12 @@ public class BaseForm extends ValidatorForm {
     public void setSelectedIds(int[] selectedIds) {
         this.selectedIds = selectedIds;
     }
+	public int getSelectedTab() {
+		return selectedTab;
+	}
+	public void setSelectedTab(int selectedTab) {
+		this.selectedTab = selectedTab;
+	}
 	public String getMethod() {
 		return method;
 	}
@@ -107,5 +114,24 @@ public class BaseForm extends ValidatorForm {
 		}
 		
 		return errors;
+	}
+	
+	public void checkOnlyOneSelected(ActionMapping mapping, HttpServletRequest request, ActionErrors errors, String method, int[] ids) {
+		if(this.getMethod().equals(method)) {
+			if(ids == null || ids.length == 0) {
+				errors.add("", new ActionMessage("errors.selected.one"));
+			}
+			if(ids != null && ids.length > 1) {
+				errors.add("", new ActionMessage("errors.selected.more"));
+			}
+		}
+	}
+	
+	public void checkOnlyOneOrMoreSelected(ActionMapping mapping, HttpServletRequest request, ActionErrors errors, String method, int[] ids) {
+		if(this.getMethod().equals(method)) {
+			if(ids == null || ids.length == 0) {
+				errors.add("", new ActionMessage("errors.selected.one.more"));
+			}
+		}
 	}
 }

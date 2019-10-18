@@ -16,13 +16,26 @@ public class ListUserForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 	
 	private FormFile formFile;
-	
+	private int[] selectedIdsExportJob;
+	private int[] selectedIdsImportJob;
 	
 	public FormFile getFormFile() {
 		return formFile;
 	}
 	public void setFormFile(FormFile formFile) {
 		this.formFile = formFile;
+	}
+	public int[] getSelectedIdsExportJob() {
+		return selectedIdsExportJob;
+	}
+	public void setSelectedIdsExportJob(int[] selectedIdsExportJob) {
+		this.selectedIdsExportJob = selectedIdsExportJob;
+	}
+	public int[] getSelectedIdsImportJob() {
+		return selectedIdsImportJob;
+	}
+	public void setSelectedIdsImportJob(int[] selectedIdsImportJob) {
+		this.selectedIdsImportJob = selectedIdsImportJob;
 	}
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
@@ -33,15 +46,50 @@ public class ListUserForm extends BaseForm {
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
-		ActionErrors errors = new ActionErrors();
+		ActionErrors errors = super.validate(mapping, request);
 		
 		if(this.getMethod().equals(BaseWebConstants.IMPORT_USER_JOB)) {
-			errors = super.validate(mapping, request);
-			
 			if(this.getFormFile() == null || StringUtils.isEmpty(this.getFormFile().getFileName())) {
 				errors.add("formFile", new ActionMessage("errors.required", MessageLocator.getMessage(request, "file")));
 			}
 		}
+		
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_JOB, getSelectedIdsExportJob());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_JOB, getSelectedIdsImportJob());
+		
+//		if(this.getMethod().equals(BaseWebConstants.READ)) {
+//            errors = super.validate(mapping, request);
+//            
+//            if(this.getSelectedIds() == null || this.getSelectedIds().length == 0) {
+//                errors.add("", new ActionMessage("errors.selected.one"));
+//            }
+//            if(this.getSelectedIds() != null && this.getSelectedIds().length > 1) {
+//                errors.add("", new ActionMessage("errors.selected.more"));
+//            }
+//        }
+		
+//		if(this.getMethod().equals(BaseWebConstants.READ_EXPORT_JOB)) {
+//			errors = super.validate(mapping, request);
+//			
+//			if(this.getSelectedIdsExportJob() == null || this.getSelectedIdsExportJob().length == 0) {
+//				errors.add("", new ActionMessage("errors.selected.one"));
+//			}
+//			if(this.getSelectedIdsExportJob() != null && this.getSelectedIdsExportJob().length > 1) {
+//				errors.add("", new ActionMessage("errors.selected.more"));
+//			}
+//		}
+		
+//		if(this.getMethod().equals(BaseWebConstants.READ_IMPORT_JOB)) {
+//			errors = super.validate(mapping, request);
+//			
+//			if(this.getSelectedIdsImportJob() == null || this.getSelectedIdsImportJob().length == 0) {
+//				errors.add("", new ActionMessage("errors.selected.one"));
+//			}
+//			if(this.getSelectedIdsImportJob() != null && this.getSelectedIdsImportJob().length > 1) {
+//				errors.add("", new ActionMessage("errors.selected.more"));
+//			}
+//		}
 		
 		if(errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);

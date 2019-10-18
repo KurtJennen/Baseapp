@@ -6,12 +6,19 @@
 $(document).ready(function() {
 	$('#tabs').tabs({
 // 		heightStyle: "fill"
+	active: ${listUserForm.selectedTab},
 	activate: function(event, ui) {
-			if(ui.newPanel.selector="#tab1") {
-				$( "#usersGrid" ).pqGrid( "refresh" );
+			if(ui.newPanel.selector=="#tab1") {
+				$("#usersGrid").pqGrid("refresh");
+				$("#selectedTab").prop("value", 0);
 			}
-			if(ui.newPanel.selector="#tab2") {
-				$( "#usersJobExportGrid" ).pqGrid( "refresh" );
+			if(ui.newPanel.selector=="#tab2") {
+				$("#usersExportJobGrid").pqGrid("refresh");
+				$("#selectedTab").prop("value", 1);
+			}
+			if(ui.newPanel.selector=="#tab3") {
+				$("#usersImportJobGrid").pqGrid("refresh");
+				$("#selectedTab").prop("value", 2);
 			}
 		}
 	});
@@ -26,6 +33,7 @@ $(document).ready(function() {
 </script>
 
 <html:form action="/listUser.do" enctype="multipart/form-data">
+	<html:hidden property="selectedTab" styleId="selectedTab"/>
 	<div align="center">
 		<h2><i><fmt:message key="displayList.title" />&nbsp;<fmt:message key="displayUser.title" /></i></h2>
 	</div>
@@ -38,6 +46,7 @@ $(document).ready(function() {
 		<div id="tab1">
 			<lo:button image="zoom.png" method="search" key="button.search"></lo:button>
 			<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
+			<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 			<hr />
 			<lo:pqGrid selectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
@@ -48,9 +57,10 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab2">
+			<lo:button image="table_edit.png" method="readExportJob" key="button.edit"></lo:button>
 			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>
 			<hr />
-			<lo:pqGrid selectedIds="selectedIdsJobExport" url="/listUser.do?method=ajaxListJobExport" titleKey="displayJob.title" id="usersJobExport" rPP="15" rowClickMethod="readJob">
+			<lo:pqGrid selectedIds="selectedIdsExportJob" url="/listUser.do?method=ajaxListExportJob" titleKey="displayJob.title" id="usersExportJob" rPP="15" rowClickMethod="readExportJob">
 				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
@@ -63,13 +73,22 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab3">
+			<lo:button image="table_edit.png" method="readImportJob" key="button.edit"></lo:button>
 			<fmt:message key="file" />*:
 			<html:file property="formFile" size="100" maxlength="256" tabindex="1"></html:file>
 			<lo:button image="cog.png" method="importUserJob" key="button.import"></lo:button>
 			<hr />
-			<div>
-				<%= request.getSession().getAttribute(WebConstants.USER_IMPORT_LIST) %>
-			</div>
+			<lo:pqGrid selectedIds="selectedIdsImportJob" url="/listUser.do?method=ajaxListImportJob" titleKey="displayJob.title" id="usersImportJob" rPP="15" rowClickMethod="readImportJob">
+				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCode" dataType="string" titleKey="batchjobexecution.create.exit.code"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.create.exit.message"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
+			</lo:pqGrid>
 		</div>
 	</div>
 </html:form>
