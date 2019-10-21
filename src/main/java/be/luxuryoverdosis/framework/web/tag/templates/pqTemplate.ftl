@@ -1,7 +1,7 @@
 <div id="${templateData.id}Grid"></div>
 
 <script>
-	$(function () {
+	$(document).ready(function () {
 		var ${templateData.id}ColModel = [
 			{ title: "", dataIndx: "selectedRow", maxWidth: 30, minWidth: 30, align: "center", resizable: false,
                 type: 'checkBoxSelection', cls: 'ui-state-default', sortable: false, editable: false,
@@ -47,7 +47,7 @@
             	unCheckPq(ui, "${templateData.selectedIds}");
             },
             cellDblClick: function (evt, ui) {
-            	cellDblClickPq(ui, "${templateData.selectedIds}");
+            	cellDblClickPq(ui, "${templateData.selectedIds}", "${templateData.rowClickMethod}");
             },
             toolbar: {
                 cls: 'pq-toolbar-export',

@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
 
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -21,16 +20,7 @@ public class ListRoleForm extends BaseForm {
         
         ActionErrors errors = new ActionErrors();
         
-        if(this.getMethod().equals(BaseWebConstants.READ)) {
-            errors = super.validate(mapping, request);
-            
-            if(this.getSelectedIds() == null || this.getSelectedIds().length == 0) {
-                errors.add("", new ActionMessage("errors.selected.one"));
-            }
-            if(this.getSelectedIds() != null && this.getSelectedIds().length > 1) {
-                errors.add("", new ActionMessage("errors.selected.more"));
-            }
-        }
+        super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
         
         if(errors.size() > 0) {
             request.setAttribute(BaseWebConstants.ERROR, 1);

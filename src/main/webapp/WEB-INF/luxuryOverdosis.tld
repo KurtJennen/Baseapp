@@ -305,6 +305,10 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
+			<name>rowClickMethod</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
 			<name>url</name>
 			<required>true</required>
 		</attribute>

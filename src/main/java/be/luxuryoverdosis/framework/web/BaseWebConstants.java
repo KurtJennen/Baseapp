@@ -28,6 +28,8 @@ public class BaseWebConstants {
 	public static final String UPDATE = "update";
 	public static final String READ = "read";
 	public static final String READ_JOB = "readJob";
+	public static final String READ_EXPORT_JOB = "readExportJob";
+	public static final String READ_IMPORT_JOB = "readImportJob";
 	public static final String REGISTER = "register";
 	public static final String RESET = "reset";
 	public static final String SAVE = "save";

@@ -2,10 +2,13 @@ package be.luxuryoverdosis.framework.web.pq;
 
 import java.util.ArrayList;
 
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
+
 public class PqGridObject {
 	private String id;
 	private String title;
 	private String selectedIds;
+	private String rowClickMethod = BaseWebConstants.READ;
 	private String url;
 	private String width = "99%";
 	private String height = "500";
@@ -64,6 +67,12 @@ public class PqGridObject {
 	}
 	public void setSelectedIds(String selectedIds) {
 		this.selectedIds = selectedIds;
+	}
+	public String getRowClickMethod() {
+		return rowClickMethod;
+	}
+	public void setRowClickMethod(String rowClickMethod) {
+		this.rowClickMethod = rowClickMethod;
 	}
 	public ArrayList<PqGridColumnObject> getPqGridColumnObjects() {
 		return pqGridColumnObjects;

@@ -10,6 +10,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.pq.PqGridObject;
 import be.luxuryoverdosis.framework.web.sessionmanager.UrlManager;
@@ -22,11 +23,12 @@ public class PqGrid implements Tag {
 	private String id;
 	private String titleKey;
 	private String selectedIds;
+	private String rowClickMethod = BaseWebConstants.READ;
 	private String url;
 	private String width = "99%";
-	private String height = "500";
+	private String height = "520";
 	private int freezeCols = 1;
-	private int rPP = 15;
+	private int rPP = 14;
 	
 	private PqGridObject pqGridObject;
 
@@ -38,6 +40,12 @@ public class PqGrid implements Tag {
 	}
 	public void setSelectedIds(String selectedIds) {
 		this.selectedIds = selectedIds;
+	}
+	public void setRowClickMethod(String rowClickMethod) {
+		this.rowClickMethod = rowClickMethod;
+	}
+	public void setPqGridObject(PqGridObject pqGridObject) {
+		this.pqGridObject = pqGridObject;
 	}
 	public void setUrl(String url) {
 		this.url = url;
@@ -80,6 +88,7 @@ public class PqGrid implements Tag {
 		pqGridObject.setId(id);
 		pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
 		pqGridObject.setSelectedIds(selectedIds);
+		pqGridObject.setRowClickMethod(rowClickMethod);
 		pqGridObject.setUrl(UrlManager.composeUrl(request, url));
 		pqGridObject.setWidth(width);
 		pqGridObject.setHeight(height);

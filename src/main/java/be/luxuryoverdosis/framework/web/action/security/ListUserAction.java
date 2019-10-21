@@ -12,25 +12,22 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.upload.FormFile;
-import org.jmesa.facade.TableFacade;
-import org.jmesa.facade.TableFacadeFactory;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
-import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
-import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.ListUserForm;
 import be.luxuryoverdosis.framework.web.form.SearchUserForm;
-import be.luxuryoverdosis.framework.web.jmesa.BatchJobExecutionJmesaTemplate;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
@@ -42,53 +39,11 @@ public class ListUserAction extends AjaxAction {
 		return (mapping.findForward(BaseWebConstants.SEARCH));
 	}
 		
-	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
-		
-		ListUserWrapperDTO listUserWrapperDTO = getUserService().getListUserWrapperDTO(getSearchSelect(), searchForm.getSearchCriteria());
-		
-//		//JMesa Start	
-//		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_LIST, request, response);
-//		UserJmesaTemplate userJmesaTemplate = new UserJmesaTemplate(tableFacade, listUserWrapperDTO.getSearchUserList(), request);
-//		String html = userJmesaTemplate.render();
-//		if(html == null) {
-//			return null;
-//		}
-//        request.getSession().setAttribute(BaseWebConstants.USER_LIST, html);
-//		//JMesa End
-		
-		//JMesa Start	
-		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_EXPORT_LIST, request, response);
-		BatchJobExecutionJmesaTemplate batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceExportList(), request);
-		String html = batchJobExecutionJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.getSession().setAttribute(BaseWebConstants.USER_EXPORT_LIST, html);
-		//JMesa End
-        
-		//JMesa Start	
-		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.USER_IMPORT_LIST, request, response);
-		batchJobExecutionJmesaTemplate = new BatchJobExecutionJmesaTemplate(tableFacade, listUserWrapperDTO.getBatchJobInstanceImportList(), request);
-		html = batchJobExecutionJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.getSession().setAttribute(BaseWebConstants.USER_IMPORT_LIST, html);
-		//JMesa End
-        
-        return mapping.getInputForward();
-	}
-	
 	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
-		
-		if(listJmesa(mapping, form, request, response) == null) {
-			return null;
-		}
 		
 		if(BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.user")));
@@ -113,19 +68,44 @@ public class ListUserAction extends AjaxAction {
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin Read");
-		Logging.info(this, "End Read Success");
-		
-		return (mapping.findForward(BaseWebConstants.READ));
-	}
+        Logging.info(this, "Begin Read");
+        
+        ListUserForm userForm = (ListUserForm) form;
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
+        actionRedirect.addParameter(BaseWebConstants.ID, userForm.getSelectedIds()[0]);
+        
+        Logging.info(this, "End Read Success");
+        
+        return actionRedirect;
+    }
 	
-	public ActionForward readJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward readExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ReadJob");
 		Logging.info(this, "End ReadJob Success");
 		
+		ListUserForm userForm = (ListUserForm) form;
+		int jobId = userForm.getSelectedIdsExportJob()[0];
+		
+		return readJob(mapping, request, jobId);
+	}
+	
+	public ActionForward readImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin ReadJob");
+		Logging.info(this, "End ReadJob Success");
+		
+		ListUserForm userForm = (ListUserForm) form;
+		int jobId = userForm.getSelectedIdsImportJob()[0];
+		
+		return readJob(mapping, request, jobId);
+	}
+
+	private ActionForward readJob(ActionMapping mapping, HttpServletRequest request, int jobId) {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, BaseConstants.JOB_NIVEAU_USER);
 		
-		return (mapping.findForward(BaseWebConstants.READ_JOB));
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ_JOB));
+        actionRedirect.addParameter(BaseWebConstants.ID, jobId);
+		
+		return actionRedirect;
 	}
 	
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -153,7 +133,6 @@ public class ListUserAction extends AjaxAction {
 		
 		getBatchService().importUserJob(fileDTO);
 		
-		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		
@@ -162,24 +141,47 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	 public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-	        Logging.info(this, "Begin Ajax");
-	        
-	        SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
-	        
-	        ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
-	        if (userList.size() > 0) {
-	        	super.setIds(request, userList, BaseWebConstants.USER_IDS);
-	            super.sendAsJson(response, userList);
-	        }
-	        
-	        Logging.info(this, "End Ajax Success");
-	        
-	        return null;
-	    }
+	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
 	
-	private UserService getUserService() {
-		return BaseSpringServiceLocator.getBean(UserService.class);
+		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
+	
+		ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
+		if (userList.size() > 0) {
+			super.setIds(request, userList, BaseWebConstants.USER_IDS);
+			super.sendAsJson(response, userList);
+		}
+	
+		Logging.info(this, "End Ajax Success");
+	    
+	    return null;
+	}
+	
+	public ActionForward ajaxListExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		ajaxListJob(response, BaseConstants.JOB_EXPORT_USER);
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
+	public ActionForward ajaxListImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		ajaxListJob(response, BaseConstants.JOB_IMPORT_USER);
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+
+	private void ajaxListJob(HttpServletResponse response, String jobName) throws Exception {
+		ArrayList<BatchJobInstance> userListJob = getBatchJobInstanceService().list(jobName);
+		if (userListJob.size() > 0) {
+			super.sendAsJson(response, userListJob);
+		}
 	}
 	
 	private BatchService getBatchService() {
@@ -188,6 +190,10 @@ public class ListUserAction extends AjaxAction {
 	
 	private SearchService getSearchService() {
 		return BaseSpringServiceLocator.getBean(SearchService.class);
+	}
+	
+	private BatchJobInstanceService getBatchJobInstanceService() {
+		return BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
 	}
 	
 	private SearchSelect getSearchSelect() {

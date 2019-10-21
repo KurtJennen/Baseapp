@@ -14,6 +14,7 @@ import org.jmesa.view.editor.DateCellEditor;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
+@Deprecated
 public class UserJmesaTemplate extends CustomTableFacadeTemplate {
 	public UserJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
 		super(tableFacade, items, request, "displayUser.title", BaseWebConstants.USER_IDS);
