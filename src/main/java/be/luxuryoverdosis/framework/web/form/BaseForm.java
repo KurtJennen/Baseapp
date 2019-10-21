@@ -15,7 +15,7 @@ public class BaseForm extends ValidatorForm {
 	private String method;
 	private int[] ids;
     private int[] selectedIds;
-    private int selectedTab = 1;
+    private int selectedTab = 0;
 	private int id;
 	private int version;
 	private int documentId;

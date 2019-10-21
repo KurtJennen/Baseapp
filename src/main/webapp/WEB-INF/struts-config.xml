@@ -8,6 +8,7 @@
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
 		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
 		<form-bean name="detailNumberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
+		<form-bean name="listNumberForm" type="be.luxuryoverdosis.framework.web.form.ListNumberForm" />
 		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
 		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
 		<form-bean name="listlRoleForm" type="be.luxuryoverdosis.framework.web.form.ListRoleForm" />
@@ -81,7 +82,7 @@
 		</action>
 		
 		<action path="/listNumber"
-				name="baseForm"
+				name="listNumberForm"
 				validate="true"
 				scope="request"
 				input="display.list.number.form"

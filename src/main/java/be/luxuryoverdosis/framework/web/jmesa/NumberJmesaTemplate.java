@@ -14,6 +14,7 @@ import org.jmesa.view.component.Row;
 import be.luxuryoverdosis.framework.base.tool.IntegerTool;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
+@Deprecated
 public class NumberJmesaTemplate extends CustomTableFacadeTemplate {
 
 	public NumberJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
