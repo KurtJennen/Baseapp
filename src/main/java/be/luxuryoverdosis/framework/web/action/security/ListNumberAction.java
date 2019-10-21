@@ -10,7 +10,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.action.ActionRedirect;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.NumberService;
@@ -18,7 +17,6 @@ import be.luxuryoverdosis.framework.data.to.Number;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
-import be.luxuryoverdosis.framework.web.form.ListNumberForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
@@ -48,18 +46,6 @@ public class ListNumberAction extends AjaxAction {
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
-	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Logging.info(this, "Begin Read");
-        
-        ListNumberForm numberForm = (ListNumberForm) form;
-        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
-        actionRedirect.addParameter(BaseWebConstants.ID, numberForm.getSelectedIds()[0]);
-        
-        Logging.info(this, "End Read Success");
-        
-        return actionRedirect;
-    }
 	
 	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Logging.info(this, "Begin Ajax");

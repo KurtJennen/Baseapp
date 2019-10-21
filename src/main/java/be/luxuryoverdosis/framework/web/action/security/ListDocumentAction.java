@@ -10,38 +10,19 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
-import org.apache.struts.actions.DispatchAction;
-import org.jmesa.facade.TableFacade;
-import org.jmesa.facade.TableFacadeFactory;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.jmesa.DocumentJmesaTemplate;
+import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
-public class ListDocumentAction extends DispatchAction {
+public class ListDocumentAction extends AjaxAction {
 	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages) {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
-	}
-	
-	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ArrayList<Document> documentList = getDocumentService().list();
-		
-		//JMesa Start	
-		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.DOCUMENT_LIST, request, response);
-		DocumentJmesaTemplate documentJmesaTemplate = new DocumentJmesaTemplate(tableFacade, documentList, request);
-		String html = documentJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.setAttribute(BaseWebConstants.DOCUMENT_LIST, html);
-		//JMesa End
-        
-        return mapping.getInputForward();
 	}
 	
 	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -54,10 +35,6 @@ public class ListDocumentAction extends DispatchAction {
 		
 		storeListsInSession(request, actionMessages);
 				
-		if(listJmesa(mapping, form, request, response) == null) {
-			return null;
-		}
-		
 		if(BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.document")));
 		}
@@ -76,12 +53,18 @@ public class ListDocumentAction extends DispatchAction {
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin Read");
-		Logging.info(this, "End Read Success");
-		
-		return (mapping.findForward(BaseWebConstants.READ));
-	}
+	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Logging.info(this, "Begin Ajax");
+        
+        ArrayList<Document> documentList = getDocumentService().list();
+        if (documentList.size() > 0) {
+            super.sendAsJson(response, documentList);
+        }
+        
+        Logging.info(this, "End Ajax Success");
+        
+        return null;
+    }
 	
 	private DocumentService getDocumentService() {
 		return BaseSpringServiceLocator.getBean(DocumentService.class);

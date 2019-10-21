@@ -3,19 +3,18 @@
 <struts-config>
 	<form-beans>
 		<form-bean name="baseForm" type="be.luxuryoverdosis.framework.web.form.BaseForm" />
+		<form-bean name="listForm" type="be.luxuryoverdosis.framework.web.form.ListForm" />
+		<form-bean name="jobForm" type="be.luxuryoverdosis.framework.web.form.JobForm" />
 		
-		<form-bean name="detailDocumentForm" type="be.luxuryoverdosis.framework.web.form.DetailDocumentForm" />
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
-		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
-		<form-bean name="detailNumberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
-		<form-bean name="listNumberForm" type="be.luxuryoverdosis.framework.web.form.ListNumberForm" />
-		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
 		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
-		<form-bean name="listlRoleForm" type="be.luxuryoverdosis.framework.web.form.ListRoleForm" />
 		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
 		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
 		<form-bean name="searchUserForm" type="be.luxuryoverdosis.framework.web.form.SearchUserForm" />
-		<form-bean name="jobForm" type="be.luxuryoverdosis.framework.web.form.JobForm" />
+		<form-bean name="menuForm" type="be.luxuryoverdosis.framework.web.form.MenuForm" />
+		<form-bean name="detailNumberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
+		<form-bean name="detailDocumentForm" type="be.luxuryoverdosis.framework.web.form.DetailDocumentForm" />
+		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
 	</form-beans>
 	
 	<global-exceptions>
@@ -59,7 +58,7 @@
 		</action>
 		
 		<action path="/listDocument"
-				name="baseForm"
+				name="listForm"
 				validate="true"
 				scope="request"
 				input="display.list.document.form"
@@ -82,7 +81,7 @@
 		</action>
 		
 		<action path="/listNumber"
-				name="listNumberForm"
+				name="listForm"
 				validate="true"
 				scope="request"
 				input="display.list.number.form"
@@ -116,7 +115,7 @@
 		</action>
 		
 		<action path="/listRole"
-				name="listlRoleForm"
+				name="listForm"
 				validate="true"
 				scope="request"
 				input="display.list.role.form"
