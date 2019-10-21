@@ -67,18 +67,6 @@ public class ListUserAction extends AjaxAction {
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        Logging.info(this, "Begin Read");
-        
-        ListUserForm userForm = (ListUserForm) form;
-        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
-        actionRedirect.addParameter(BaseWebConstants.ID, userForm.getSelectedIds()[0]);
-        
-        Logging.info(this, "End Read Success");
-        
-        return actionRedirect;
-    }
-	
 	public ActionForward readExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ReadJob");
 		Logging.info(this, "End ReadJob Success");

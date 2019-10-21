@@ -12,7 +12,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
-public class ListUserForm extends BaseForm {
+public class ListUserForm extends ListForm {
 	private static final long serialVersionUID = 1L;
 	
 	private FormFile formFile;
@@ -54,7 +54,7 @@ public class ListUserForm extends BaseForm {
 			}
 		}
 		
-		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
+		//super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
 		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_JOB, getSelectedIdsExportJob());
 		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_JOB, getSelectedIdsImportJob());
 		

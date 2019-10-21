@@ -8,7 +8,7 @@ import org.apache.struts.action.ActionMapping;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
-public class ListRoleForm extends BaseForm {
+public class ListForm extends BaseForm {
     private static final long serialVersionUID = 1L;
     
     public void reset(ActionMapping mapping, HttpServletRequest request) {

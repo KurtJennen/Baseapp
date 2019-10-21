@@ -4,11 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
 import be.luxuryoverdosis.framework.data.dto.BaseDTO;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
+import be.luxuryoverdosis.framework.logging.Logging;
+import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.form.ListForm;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class BaseAction extends DispatchAction {
@@ -38,4 +46,16 @@ public class BaseAction extends DispatchAction {
 		
 		return ids;
 	}
+	
+	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Logging.info(this, "Begin Read");
+        
+        ListForm listForm = (ListForm) form;
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
+        actionRedirect.addParameter(BaseWebConstants.ID, listForm.getSelectedIds()[0]);
+        
+        Logging.info(this, "End Read Success");
+        
+        return actionRedirect;
+    }
 }
