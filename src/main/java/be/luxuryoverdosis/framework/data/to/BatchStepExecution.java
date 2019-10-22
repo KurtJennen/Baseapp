@@ -17,6 +17,9 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Proxy;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
+import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
+
 @Entity
 @Table(name="batch_step_execution")
 @Access(AccessType.FIELD)
@@ -107,6 +110,9 @@ public class BatchStepExecution {
 	public Date getStartTime() {
 		return startTime;
 	}
+	public String getStartTimeAsString() {
+		return DateTool.formatUtilDateTime(startTime);
+	}
 	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
@@ -116,11 +122,17 @@ public class BatchStepExecution {
 	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
+	public String getEndTimeAsString() {
+		return DateTool.formatUtilDateTime(endTime);
+	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getStatusTranslated() {
+		return BatchJobTranslater.getTranslatedBatchJobStatus(status);
 	}
 	public long getCommitCount() {
 		return commitCount;
@@ -187,6 +199,9 @@ public class BatchStepExecution {
 	}
 	public void setLastUpdated(Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
+	}
+	public String getLastUpdatedAsString() {
+		return DateTool.formatUtilDateTime(lastUpdated);
 	}
 	public BatchJobExecution getBatchJobExecution() {
 		return batchJobExecution;

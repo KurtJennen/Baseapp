@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
 <html:form action="/detailUser.do">
 	<div align="center">
 		<h2><i><fmt:message key="displayDetail.title" />&nbsp;<fmt:message key="table.user" /></i></h2>

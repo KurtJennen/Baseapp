@@ -24,7 +24,6 @@ public class JobForm extends BaseForm {
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setJobName("");
-		
 	}
 	
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {

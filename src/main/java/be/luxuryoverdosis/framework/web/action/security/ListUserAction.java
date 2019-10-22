@@ -43,6 +43,8 @@ public class ListUserAction extends AjaxAction {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
+		setSelectedTab(form, request);
+		
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
 		if(BaseWebConstants.DELETE.equals(previous)) {
@@ -99,12 +101,15 @@ public class ListUserAction extends AjaxAction {
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ExportUserJob");
 		
+		ListUserForm listUserForm = (ListUserForm) form;
+		
 		FileDTO fileDTO = new FileDTO(null, BaseConstants.JOB_EXPORT_USER_FILENAME, 0, FileContentType.TEXT_PLAIN);
 		
 		getBatchService().exportUserJob(fileDTO);
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
+		actionRedirect.addParameter(BaseWebConstants.SELECTED_TAB, listUserForm.getSelectedTab());
 		
 		Logging.info(this, "End ExportUserJob Success");
 		
@@ -123,6 +128,7 @@ public class ListUserAction extends AjaxAction {
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
+		actionRedirect.addParameter(BaseWebConstants.SELECTED_TAB, listUserForm.getSelectedTab());
 		
 		Logging.info(this, "End ImportUserJob Success");
 		

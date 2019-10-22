@@ -35,6 +35,7 @@
             title: "${templateData.title}",
             freezeCols: ${templateData.freezeCols},
             scrollModel: {horizontal: true, autoFit: false},
+            selectionModel: { type: null },
             dataModel: ${templateData.id}DataModel,
             colModel: ${templateData.id}ColModel,
             pageModel: { type: "local", rPP: ${templateData.rPP}, strRpp: "", rPPOptions: "" },
@@ -46,9 +47,11 @@
             unCheck: function (evt, ui) {
             	unCheckPq(ui, "${templateData.selectedIds}");
             },
-            cellDblClick: function (evt, ui) {
-            	cellDblClickPq(ui, "${templateData.selectedIds}", "${templateData.rowClickMethod}");
-            },
+            <#if templateData.rowClickMethod != "">
+	            cellDblClick: function (evt, ui) {
+	            	cellDblClickPq(ui, "${templateData.selectedIds}", "${templateData.rowClickMethod}");
+	            },
+            </#if>
             toolbar: {
                 cls: 'pq-toolbar-export',
                 items: [{

@@ -14,6 +14,7 @@ import org.jmesa.view.component.Row;
 
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 
+@Deprecated
 public class BatchJobExecutionParamsJmesaTemplate extends CustomTableFacadeTemplate {
 
 	public BatchJobExecutionParamsJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
