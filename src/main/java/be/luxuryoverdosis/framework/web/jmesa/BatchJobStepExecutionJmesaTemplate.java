@@ -19,6 +19,7 @@ import org.springframework.batch.core.ExitStatus;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 
+@Deprecated
 public class BatchJobStepExecutionJmesaTemplate extends CustomTableFacadeTemplate {
 
 	public BatchJobStepExecutionJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {

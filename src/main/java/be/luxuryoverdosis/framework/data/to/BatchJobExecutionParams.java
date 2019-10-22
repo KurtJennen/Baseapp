@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Proxy;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
+
 @Entity
 @Table(name="batch_job_execution_params")
 @Access(AccessType.FIELD)
@@ -82,6 +84,9 @@ public class BatchJobExecutionParams {
 	}
 	public void setDateValue(Date dateValue) {
 		this.dateValue = dateValue;
+	}
+	public String getDateValueAsString() {
+		return DateTool.formatUtilDateTime(dateValue);
 	}
 	public long getLongValue() {
 		return longValue;

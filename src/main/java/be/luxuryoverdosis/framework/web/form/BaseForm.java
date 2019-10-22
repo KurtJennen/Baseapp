@@ -93,6 +93,7 @@ public class BaseForm extends ValidatorForm {
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setMethod("");
+		this.setSelectedTab(0);
 		this.setId(-1);
 		this.setVersion(-1);
 		this.setDocumentId(-1);

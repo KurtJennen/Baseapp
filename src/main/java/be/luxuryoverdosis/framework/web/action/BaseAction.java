@@ -16,6 +16,7 @@ import be.luxuryoverdosis.framework.data.dto.BaseDTO;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.form.BaseForm;
 import be.luxuryoverdosis.framework.web.form.ListForm;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
@@ -45,6 +46,15 @@ public class BaseAction extends DispatchAction {
 		SessionManager.putInSession(request, nameIds, ids);
 		
 		return ids;
+	}
+	
+	public void setSelectedTab(ActionForm form, HttpServletRequest request) throws Exception {
+		BaseForm baseForm = (BaseForm) form;
+		
+		String selectedTab = request.getParameter(BaseWebConstants.SELECTED_TAB);
+		if(selectedTab != null) {
+			baseForm.setSelectedTab(Integer.parseInt(selectedTab));
+		}
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

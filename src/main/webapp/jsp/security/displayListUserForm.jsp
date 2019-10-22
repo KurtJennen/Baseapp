@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
 <script>
 $(document).ready(function() {
 	$('#tabs').tabs({

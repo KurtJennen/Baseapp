@@ -9,7 +9,7 @@ import org.apache.commons.lang.StringUtils;
 public class DateTool {
 	public static final String UTIL_DATE_PATTERN = "dd/MM/yyyy";
 	public static final String UTIL_DATE_PATTERN_DAY_NAME = "EE";
-	public static final String UTIL_DATETIME_PATTERN = "dd/MM/yyyy hh:mm:ss";
+	public static final String UTIL_DATETIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
 	public static final String SQL_DATE_PATTERN = "yyyy-MM-dd";
 	
 	public static final int YEAR = 2100;

@@ -1,5 +1,7 @@
 package be.luxuryoverdosis.framework.web.action.security;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -9,85 +11,35 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
-import org.apache.struts.actions.DispatchAction;
-import org.jmesa.facade.TableFacade;
-import org.jmesa.facade.TableFacadeFactory;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobExecutionParamsService;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobParamsService;
+import be.luxuryoverdosis.framework.business.service.interfaces.BatchStepExecutionService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
+import be.luxuryoverdosis.framework.data.to.BatchJobExecutionParams;
+import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
+import be.luxuryoverdosis.framework.data.to.BatchJobParams;
+import be.luxuryoverdosis.framework.data.to.BatchStepExecution;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.wrapperdto.DetailJobWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.JobForm;
-import be.luxuryoverdosis.framework.web.jmesa.BatchJobExecutionParamsJmesaTemplate;
-import be.luxuryoverdosis.framework.web.jmesa.BatchJobParamsJmesaTemplate;
-import be.luxuryoverdosis.framework.web.jmesa.BatchJobStepExecutionJmesaTemplate;
-import be.luxuryoverdosis.framework.web.jmesa.JobLogJmesaTemplate;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
-public class DetailJobAction extends DispatchAction {	
+public class DetailJobAction extends AjaxAction {	
 	
 	private void storeDetailListsInSession(HttpServletRequest request, HttpServletResponse response, int jobInstanceId) {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_ID, jobInstanceId);
-	}
-	
-	public ActionForward listJmesa(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
-		
-		DetailJobWrapperDTO detailJobWrapperDTO = getJobService().getDetailJobWrapperDTO(jobInstanceId);
-
-		JobForm jobForm = (JobForm) form;
-		jobForm.setJobName(detailJobWrapperDTO.getJobName());
-		
-		//JMesa Start	
-		TableFacade tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_PARAMS_LIST, request, response);
-		BatchJobParamsJmesaTemplate batchJobParamsJmesaTemplate = new BatchJobParamsJmesaTemplate(tableFacade, detailJobWrapperDTO.getBatchJobParamsList(), request);
-		String html = batchJobParamsJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.setAttribute(BaseWebConstants.BATCH_JOB_PARAMS_LIST, html);
-		//JMesa End
-        
-		//JMesa Start	
-		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, request, response);
-		BatchJobExecutionParamsJmesaTemplate batchJobExecutionParamsJmesaTemplate = new BatchJobExecutionParamsJmesaTemplate(tableFacade, detailJobWrapperDTO.getBatchJobExecutionParamsList(), request);
-		html = batchJobExecutionParamsJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.setAttribute(BaseWebConstants.BATCH_JOB_EXECUTION_PARAMS_LIST, html);
-		//JMesa End
-		
-		//JMesa Start	
-		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.BATCH_JOB_STEP_EXECUTION_LIST, request, response);
-		BatchJobStepExecutionJmesaTemplate batchJobStepExecutionJmesaTemplate = new BatchJobStepExecutionJmesaTemplate(tableFacade, detailJobWrapperDTO.getBatchStepExecutionList(), request);
-		html = batchJobStepExecutionJmesaTemplate.render();
-		if(html == null) {
-			return null;
-		}
-        request.setAttribute(BaseWebConstants.BATCH_JOB_STEP_EXECUTION_LIST, html);
-		//JMesa End
-        
-        //JMesa Start	
-  		tableFacade = TableFacadeFactory.createTableFacade(BaseWebConstants.JOB_LOG_LIST, request, response);
-  		JobLogJmesaTemplate jobLogJmesaTemplate = new JobLogJmesaTemplate(tableFacade, detailJobWrapperDTO.getJobLogList(), request);
-  		html = jobLogJmesaTemplate.render();
-  		if(html == null) {
-  			return null;
-  		}
-        request.setAttribute(BaseWebConstants.JOB_LOG_LIST, html);
-  		//JMesa End
-        
-        return mapping.getInputForward();
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -96,12 +48,11 @@ public class DetailJobAction extends DispatchAction {
 		ActionMessages actionMessages = new ActionMessages();
 		
 		int jobInstanceId = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
-		
 		storeDetailListsInSession(request, response, jobInstanceId);
 		
-		if(listJmesa(mapping, form, request, response) == null) {
-			return null;
-		}
+		BatchJobInstance batchJobInstance = getBatchJobInstanceService().read(jobInstanceId);
+		JobForm jobForm = (JobForm)form;
+		jobForm.setJobName(batchJobInstance.getJobName());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.job")));
 		saveMessages(request, actionMessages);
@@ -131,8 +82,6 @@ public class DetailJobAction extends DispatchAction {
 		
 		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
-		listJmesa(mapping, form, request, response);
-		
 		Job job = getJobService().downloadFile(jobInstanceId);
 		byte[] bytes = job.getFileData();
 		
@@ -146,8 +95,6 @@ public class DetailJobAction extends DispatchAction {
 
 		int jobLogId = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
 
-		listJmesa(mapping, form, request, response);
-		
 		JobLog jobLog = getJobLogService().downloadFile(jobLogId);
 		byte[] bytes = jobLog.getFileData();
 		
@@ -156,11 +103,87 @@ public class DetailJobAction extends DispatchAction {
 		Logging.info(this, "End downloadFileLog");
 	}
 	
+	public ActionForward ajaxBatchJobParamsList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        Logging.info(this, "Begin Ajax");
+        
+        int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+        
+        ArrayList<BatchJobParams> batchJobParamsList = getBatchJobParamsService().list(jobInstanceId);
+        if (batchJobParamsList.size() > 0) {
+            super.sendAsJson(response, batchJobParamsList);
+        }
+        
+        Logging.info(this, "End Ajax Success");
+        
+        return null;
+    }
+	
+	public ActionForward ajaxBatchJobExecutionParamsList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		
+		ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList = getBatchJobExecutionParamsService().list(jobInstanceId);
+		if (batchJobExecutionParamsList.size() > 0) {
+			super.sendAsJson(response, batchJobExecutionParamsList);
+		}
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
+	public ActionForward ajaxBatchJobStepExecutionList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		
+		ArrayList<BatchStepExecution> batchJobStepExecutionList = getBatchStepExecutionService().list(jobInstanceId);
+		if (batchJobStepExecutionList.size() > 0) {
+			super.sendAsJson(response, batchJobStepExecutionList);
+		}
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
+	public ActionForward ajaxJobLogList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		
+		ArrayList<JobLog> joblogList = getJobLogService().listForBatch(jobInstanceId);
+		if (joblogList.size() > 0) {
+			super.sendAsJson(response, joblogList);
+		}
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
 	private JobService getJobService() {
 		return BaseSpringServiceLocator.getBean(JobService.class);
 	}
 	
 	private JobLogService getJobLogService() {
 		return BaseSpringServiceLocator.getBean(JobLogService.class);
+	}
+	
+	private BatchJobInstanceService getBatchJobInstanceService() {
+		return BaseSpringServiceLocator.getBean(BatchJobInstanceService.class);
+	}
+	
+	private BatchJobParamsService getBatchJobParamsService() {
+		return BaseSpringServiceLocator.getBean(BatchJobParamsService.class);
+	}
+	
+	private BatchJobExecutionParamsService getBatchJobExecutionParamsService() {
+		return BaseSpringServiceLocator.getBean(BatchJobExecutionParamsService.class);
+	}
+	
+	private BatchStepExecutionService getBatchStepExecutionService() {
+		return BaseSpringServiceLocator.getBean(BatchStepExecutionService.class);
 	}
 }

@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Proxy;
 
+import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
+
 @Entity
 @Table(name="batch_job_execution")
 @Access(AccessType.FIELD)
@@ -97,6 +99,9 @@ public class BatchJobExecution {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getStatusTranslated() {
+		return BatchJobTranslater.getTranslatedBatchJobStatus(status);
 	}
 	public String getExitCode() {
 		return exitCode;

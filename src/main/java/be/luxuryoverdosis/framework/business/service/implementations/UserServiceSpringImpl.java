@@ -199,6 +199,7 @@ public class UserServiceSpringImpl implements UserService {
 		return loginWrapperDTO;
 	}
 	
+	@Deprecated
 	@Transactional(readOnly=true)
 	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria) {
 		Logging.info(this, "Begin getListUserDTO");

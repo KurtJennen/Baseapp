@@ -3,6 +3,7 @@ package be.luxuryoverdosis.framework.web.jmesa;
 import org.jmesa.view.html.toolbar.AbstractToolbar;
 import org.jmesa.view.html.toolbar.ToolbarItemType;
 
+@Deprecated
 public class CustomToolbar extends AbstractToolbar {
 
 	@Override
