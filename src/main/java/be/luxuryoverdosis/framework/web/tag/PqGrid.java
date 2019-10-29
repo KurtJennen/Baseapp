@@ -107,7 +107,7 @@ public class PqGrid implements Tag {
 			JspWriter out = pageContext.getOut();
 			
 			Configuration configuration = new Configuration();
-			configuration.setClassForTemplateLoading(this.getClass(), "templates");
+			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
 			configuration.setDefaultEncoding("UTF-8");
 			configuration.setLocale(Locale.US);
 			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
