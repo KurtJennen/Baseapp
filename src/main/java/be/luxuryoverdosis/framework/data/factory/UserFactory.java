@@ -5,6 +5,7 @@ import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 public class UserFactory {
 	private UserFactory() {
@@ -37,7 +38,11 @@ public class UserFactory {
 		//user.setEncryptedPassword(userDTO.getPassword());
 		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		user.setEmail(userDTO.getEmail());
-		user.setDateExpiration(userDTO.getDateExpiration());
+		try {
+			user.setDateExpiration(DateTool.parseUtilDate(userDTO.getDateExpirationAsString()));
+		} catch (Exception e) {
+			throw new ServiceException("errors.date", new String[] {"date"});
+		}
 		
 		return user;
 	}

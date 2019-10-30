@@ -108,6 +108,7 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setUserName(userForm.getUserName());
 		userDTO.setPassword(userForm.getPassword());
 		userDTO.setEmail(userForm.getEmail());
+		userDTO.setDateExpirationAsString(userForm.getDate());
 		userDTO.setRoleId(userForm.getRoleId());
 		
 		if(userForm.getRoleId() == 0) {

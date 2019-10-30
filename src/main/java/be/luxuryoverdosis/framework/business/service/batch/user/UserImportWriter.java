@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.business.service.batch.user;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -47,7 +48,8 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 				
 				if(user == null) {
 					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
-					userDTO.setDateExpiration(DateTool.parseSqlDate(userDTO.getDateExpirationAsString()));
+					Date dateExpiration = DateTool.parseSqlDate(userDTO.getDateExpirationAsString());
+					userDTO.setDateExpirationAsString(DateTool.formatUtilDate(dateExpiration));
 					
 					user = UserFactory.produceUser(user, userDTO);
 					
