@@ -21,7 +21,6 @@ import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
-@Deprecated
 public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 	public JobJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJob.title", BaseWebConstants.JOB_IDS);

@@ -12,7 +12,6 @@ import org.jmesa.view.component.Row;
 
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
-@Deprecated
 public class DocumentJmesaTemplate extends CustomTableFacadeTemplate {
 
 	public DocumentJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {

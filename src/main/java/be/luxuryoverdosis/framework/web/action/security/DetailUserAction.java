@@ -138,7 +138,6 @@ public class DetailUserAction extends NavigationAction {
 		
 		getUserService().delete(id);
 		
-		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.DELETE);
 		

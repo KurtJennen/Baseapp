@@ -13,8 +13,6 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class JobParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements JobParamHibernateDAO {
-	
-	
 	public JobParam createOrUpdate(final JobParam jobParam) {
 		Logging.info(this, "Begin createJobParam");
 		getCurrentSession().saveOrUpdate(jobParam);
@@ -39,7 +37,7 @@ public class JobParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public void deleteForJob(final int jobId) {
 		Logging.info(this, "Begin deleteForJobJobParam");
 		
-		Query<Long> query = getCurrentSession().getNamedQuery("deleteJobParamsByJob");
+		Query<Long> query = getCurrentSession().getNamedQuery(JobParam.DELETE_JOBPARAMS_BY_JOB);
 		query.setParameter(BaseQueryParameters.JOB_ID, jobId);
 		query.executeUpdate();
 		
@@ -50,7 +48,7 @@ public class JobParamHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public ArrayList<JobParam> list(final int jobId) {
 		Logging.info(this, "Begin listJobParam");
 		
-		Query<JobParam> query = getCurrentSession().getNamedQuery("getAllJobParamsByJob");
+		Query<JobParam> query = getCurrentSession().getNamedQuery(JobParam.SELECT_JOBPARAMS_BY_JOB);
 		query.setParameter(BaseQueryParameters.JOB_ID, jobId);
 		ArrayList<JobParam> arrayList = (ArrayList<JobParam>) query.list();
 		

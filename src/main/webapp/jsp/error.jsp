@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <html:form action="/login.do">
 	<div class="error" align="center">
-<%-- 		<html:img src="images/application.gif" altKey="title.name" /> --%>
+		<html:img src="images/application.gif" altKey="title.name" />
 		<h3>
 			<fmt:message key="error" /><br/>
 			<fmt:message key="errors" /><br/>

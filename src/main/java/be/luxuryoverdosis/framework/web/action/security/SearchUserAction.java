@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
@@ -80,10 +79,10 @@ public class SearchUserAction extends SearchAction {
 	public void report(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Report");
 		
-		String realPathReport = request.getSession().getServletContext().getRealPath(Constants.REPORT_USERS_PATH);
+		String realPathReport = request.getSession().getServletContext().getRealPath(BaseConstants.REPORT_USERS_PATH);
 		byte[] pdfByteArray = getReportService().create(realPathReport);
 		
-		ResponseTool.writeResponseForDownload(response, Constants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
+		ResponseTool.writeResponseForDownload(response, BaseConstants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
 		
 		response.flushBuffer();
 		

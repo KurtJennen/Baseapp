@@ -3,7 +3,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-
 <script type="text/javascript">
     function PreviewImage() {
         pdffile=document.getElementById("formFileId").files[0];

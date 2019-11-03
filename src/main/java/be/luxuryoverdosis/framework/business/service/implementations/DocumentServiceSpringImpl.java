@@ -141,5 +141,4 @@ public class DocumentServiceSpringImpl implements DocumentService {
 			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
 		}
 	}
-	
 }

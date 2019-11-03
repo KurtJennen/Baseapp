@@ -25,7 +25,6 @@ public enum JaNeeType {
 		this.code = code;
 	}
 	
-	
 	public static List<String> getAllCodes() {
 		return JA_NEE_CODES;
 	}

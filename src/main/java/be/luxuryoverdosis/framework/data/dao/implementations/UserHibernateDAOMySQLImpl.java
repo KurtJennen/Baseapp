@@ -15,7 +15,6 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements UserHibernateDAO {
-
 	public User createOrUpdate(final User user) {
 		Logging.info(this, "Begin createUser");
 		getCurrentSession().saveOrUpdate(user);

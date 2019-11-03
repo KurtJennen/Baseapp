@@ -36,7 +36,6 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
-@Deprecated
 public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 	private final int MAX_ROWS = 15;
 	

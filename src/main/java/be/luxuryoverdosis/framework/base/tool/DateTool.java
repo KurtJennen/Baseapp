@@ -67,6 +67,7 @@ public class DateTool {
 		return parseDate;
 	}
 	
+	
 	public static Calendar getDefaultCalendar() {
 		return getCalendar(YEAR, Calendar.JANUARY, DAY);
 	}

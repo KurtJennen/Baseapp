@@ -1,10 +1,8 @@
-<%@page import="be.luxuryoverdosis.framework.business.enumeration.JaNeeType"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<%@page import="be.luxuryoverdosis.baseapp.Constants"%>
 <html:form action="/detailMenu.do">
 	<div align="center">
 		<h2><i><fmt:message key="displayDetail.title" />&nbsp;<fmt:message key="table.menu" /></i></h2>

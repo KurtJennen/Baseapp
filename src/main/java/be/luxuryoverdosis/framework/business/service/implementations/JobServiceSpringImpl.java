@@ -129,7 +129,6 @@ public class JobServiceSpringImpl implements JobService {
 		return arrayList;
 	}
 	
-	@Deprecated
 	@Transactional(readOnly=true)
 	public DetailJobWrapperDTO getDetailJobWrapperDTO(final int jobInstanceId) {
 		Logging.info(this, "Begin getDetailJobWrapperDTO(int)");

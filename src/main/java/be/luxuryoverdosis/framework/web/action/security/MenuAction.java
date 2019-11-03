@@ -79,7 +79,7 @@ public class MenuAction extends DispatchAction {
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.menu")));
 		saveMessages(request, actionMessages);
 		
-		Logging.info(this, "End pdate Success");
+		Logging.info(this, "End Update Success");
 		
 		return list(mapping, menuForm, request, response);
 	}

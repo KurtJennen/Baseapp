@@ -7,14 +7,13 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
+import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Repository
 public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements JobLogHibernateDAO {
-	private static final String JOB_ID = "jobId";
-	
 	public JobLog createOrUpdate(final JobLog jobLog) {
 		Logging.info(this, "Begin createJobLog");
 		try {
@@ -48,7 +47,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		Logging.info(this, "Begin deleteForJobJobLog");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(JobLog.DELETE_JOBLOGS_BY_JOB);
-		query.setParameter(JOB_ID, jobId);
+		query.setParameter(BaseQueryParameters.JOB_ID, jobId);
 		query.executeUpdate();
 		
 		Logging.info(this, "End deleteForJobJobLog");		
@@ -59,7 +58,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		Logging.info(this, "Begin listJobLog");
 		
 		Query<JobLog> query = getCurrentSession().getNamedQuery(JobLog.SELECT_JOBLOGS_BY_JOB);
-		query.setParameter(JOB_ID, jobId);
+		query.setParameter(BaseQueryParameters.JOB_ID, jobId);
 		ArrayList<JobLog> arrayList = (ArrayList<JobLog>) query.list();
 		
 		Logging.info(this, "End listJobLog");

@@ -12,7 +12,6 @@ import org.jmesa.view.component.Row;
 
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
-@Deprecated
 public class JobLogJmesaTemplate extends CustomTableFacadeTemplate {
 	public JobLogJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJobLog.title", BaseWebConstants.JOB_LOG_IDS);

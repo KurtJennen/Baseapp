@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionRedirect;
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
+import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -178,6 +179,10 @@ public abstract class SearchAction extends AjaxAction {
 		Logging.info(this, "End Reset Success");
 		
 		return mapping.getInputForward();
+	}
+	
+	public SearchService getSearchService() {
+		return BaseSpringServiceLocator.getBean(SearchService.class);
 	}
 	
 	private QueryService getQueryService() {

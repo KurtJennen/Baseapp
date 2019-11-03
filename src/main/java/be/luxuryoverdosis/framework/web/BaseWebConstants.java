@@ -13,8 +13,8 @@ public class BaseWebConstants {
 	public static final String DELETE = "delete";
 	public static final String DISABLED = "disabled";
 	public static final String DOWNLOAD_FILE_LOG = "downloadFileLog";
-	public static final String FIRST = "first";
 	public static final String FAILED = "failed";
+	public static final String FIRST = "first";
 	public static final String FOR_PAY = "forPay";
 	public static final String INDEX = "index";
 	public static final String JOB = "job";
@@ -39,10 +39,10 @@ public class BaseWebConstants {
 	
 	public static final String IMPORT_USER_JOB = "importUserJob";
 	
-	public static final String READ_SEARCH = "readSearch";
-	public static final String UPDATE_SEARCH = "updateSearch";
 	public static final String DELETE_SEARCH = "deleteSearch";
+	public static final String READ_SEARCH = "readSearch";
 	public static final String RESET_SEARCH = "resetSearch";
+	public static final String UPDATE_SEARCH = "updateSearch";
 	
 	//Session objects
 	public static final String DETAIL = "detail";
@@ -55,10 +55,11 @@ public class BaseWebConstants {
 	public static final String DOCUMENT_IDS = "documentIds";
 	public static final String JOB_IDS = "jobIds";
 	public static final String JOB_LOG_IDS = "jobLogIds";
-	public static final String JOB_NIVEAU = "jobNiveau";
 	public static final String NUMBER_IDS = "numberIds";
 	public static final String ROLE_IDS = "roleIds";
 	public static final String USER_IDS = "userIds";
+	
+	public static final String JOB_NIVEAU = "jobNiveau";
 	
 	public static final String BATCH_JOB_EXECUTION_LIST = "batchJobExecutionList";
 	public static final String BATCH_JOB_PARAMS_LIST = "batchJobParamsList";
