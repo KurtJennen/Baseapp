@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.base.tool;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -48,15 +49,17 @@ public class DateTool {
 	}
 	
 	
-	
+	@Deprecated
 	public static java.util.Date parseUtilDate(String date) throws ParseException {
 		return parseDate(date, UTIL_DATE_PATTERN);
 	}
 	
+	@Deprecated
 	public static java.util.Date parseSqlDate(String date) throws ParseException {
 		return parseDate(date, SQL_DATE_PATTERN);
 	}
 	
+	@Deprecated
 	public static java.util.Date parseDate(String date, String datePattern) throws ParseException {
 		if(date.equals(StringUtils.EMPTY)) {
 			return null;
@@ -65,6 +68,25 @@ public class DateTool {
 		dateFormat.setLenient(false);
 		java.util.Date parseDate = dateFormat.parse(date);
 		return parseDate;
+	}
+	
+	
+	public static Timestamp parseUtilTimeStamp(String date) throws ParseException {
+		return parseTimestamp(date, UTIL_DATE_PATTERN);
+	}
+	
+	public static Timestamp parseSqlTimeStamp(String date) throws ParseException {
+		return parseTimestamp(date, SQL_DATE_PATTERN);
+	}
+	
+	public static Timestamp parseTimestamp(String date, String datePattern) throws ParseException {
+		if(date.equals(StringUtils.EMPTY)) {
+			return null;
+		}
+		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
+		dateFormat.setLenient(false);
+		java.util.Date parseDate = dateFormat.parse(date);
+		return new Timestamp(parseDate.getTime());
 	}
 	
 	
