@@ -48,6 +48,17 @@
 							<value>java.lang.String</value>
 						</property>
 					</bean>
+					<bean class="be.luxuryoverdosis.framework.business.query.SearchParameter">
+						<property name="name">
+							<value>u.dateExpiration</value>
+						</property>
+						<property name="key">
+							<value>security.date.expiration</value>
+						</property>
+						<property name="type">
+							<value>java.util.Date</value>
+						</property>
+					</bean>
 				</list>
 			</property>
 		</bean>
