@@ -71,11 +71,11 @@ public class DateTool {
 	}
 	
 	
-	public static Timestamp parseUtilTimeStamp(String date) throws ParseException {
+	public static Timestamp parseUtilTimestamp(String date) throws ParseException {
 		return parseTimestamp(date, UTIL_DATE_PATTERN);
 	}
 	
-	public static Timestamp parseSqlTimeStamp(String date) throws ParseException {
+	public static Timestamp parseSqlTimestamp(String date) throws ParseException {
 		return parseTimestamp(date, SQL_DATE_PATTERN);
 	}
 	
