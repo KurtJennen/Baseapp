@@ -39,7 +39,7 @@ public class UserFactory {
 		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		user.setEmail(userDTO.getEmail());
 		try {
-			user.setDateExpiration(DateTool.parseUtilDate(userDTO.getDateExpirationAsString()));
+			user.setDateExpiration(DateTool.parseUtilTimeStamp(userDTO.getDateExpirationAsString()));
 		} catch (Exception e) {
 			throw new ServiceException("errors.date", new String[] {"date"});
 		}
