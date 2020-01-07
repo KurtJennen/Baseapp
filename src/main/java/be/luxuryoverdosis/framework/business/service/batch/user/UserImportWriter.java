@@ -48,7 +48,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 				
 				if(user == null) {
 					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
-					Date dateExpiration = DateTool.parseSqlTimeStamp(userDTO.getDateExpirationAsString());
+					Date dateExpiration = DateTool.parseSqlTimestamp(userDTO.getDateExpirationAsString());
 					userDTO.setDateExpirationAsString(DateTool.formatUtilDate(dateExpiration));
 					
 					user = UserFactory.produceUser(user, userDTO);

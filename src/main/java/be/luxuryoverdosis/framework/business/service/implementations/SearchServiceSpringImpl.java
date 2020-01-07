@@ -181,7 +181,7 @@ public class SearchServiceSpringImpl implements SearchService {
 						}
 					} else if (searchParameter.getType().equals("java.util.Date")) {
 						try {
-							objects[teller] = DateTool.parseUtilTimeStamp(values[i]);
+							objects[teller] = DateTool.parseUtilTimestamp(values[i]);
 						} catch (Exception e) {
 							throw new ServiceException("errors.date", new String[] {searchParameter.getKey()});
 						}
