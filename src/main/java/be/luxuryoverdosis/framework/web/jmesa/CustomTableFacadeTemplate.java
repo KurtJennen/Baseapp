@@ -240,12 +240,13 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
 		if(!isExporting()) {
-			column.getCellRenderer().setCellEditor(new CellEditor() {
+			HtmlColumn htmlColumn = (HtmlColumn) column;
+			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
 			    public Object getValue(Object item, String property, int rowcount) {
-			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
+			    	JaNeeType value = (JaNeeType)new BasicCellEditor().getValue(item, property, rowcount);
 			        
 			        HtmlBuilder html = new HtmlBuilder();
-			        if(JaNeeType.JA.getCode().equals(value)) {
+			        if(JaNeeType.JA.getCode().equals(value.getCode())) {
 			        	html.input().type("checkbox").checked().disabled().close();
 			        } else {
 			        	html.input().type("checkbox").disabled().close();
@@ -254,6 +255,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 					return html.toString();
 			    }
 			});
+			htmlColumn.getCellRenderer().setStyle("text-align: center");
 		}
 		return ++teller;
 	}
