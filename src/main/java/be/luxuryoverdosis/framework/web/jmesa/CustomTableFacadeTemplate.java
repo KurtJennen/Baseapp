@@ -236,17 +236,17 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return this.setTitleRow(row, teller, MessageLocator.getMessage(request, titleKey), numberCellEditor);
 	}
 	
+	@Deprecated
 	public int setTitleRowCheckbox(Row row, int teller, String title) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
 		if(!isExporting()) {
-			HtmlColumn htmlColumn = (HtmlColumn) column;
-			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
+			column.getCellRenderer().setCellEditor(new CellEditor() {
 			    public Object getValue(Object item, String property, int rowcount) {
-			    	JaNeeType value = (JaNeeType)new BasicCellEditor().getValue(item, property, rowcount);
+			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 			        
 			        HtmlBuilder html = new HtmlBuilder();
-			        if(JaNeeType.JA.getCode().equals(value.getCode())) {
+			        if(JaNeeType.JA.getCode().equals(value)) {
 			        	html.input().type("checkbox").checked().disabled().close();
 			        } else {
 			        	html.input().type("checkbox").disabled().close();
@@ -255,13 +255,41 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 					return html.toString();
 			    }
 			});
+		}
+		return ++teller;
+	}
+	
+	@Deprecated
+	public int setTitleKeyRowCheckbox(Row row, int teller, String titleKey) {
+		return this.setTitleRowCheckbox(row, teller, MessageLocator.getMessage(request, titleKey));
+	}
+	
+	public int setTitleRowCheckboxEnum(Row row, int teller, String title) {
+		Column column = row.getColumn(getColumnProperties()[teller]);
+		column.setTitle(title);
+		if(!isExporting()) {
+			HtmlColumn htmlColumn = (HtmlColumn) column;
+			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
+				public Object getValue(Object item, String property, int rowcount) {
+					JaNeeType value = (JaNeeType)new BasicCellEditor().getValue(item, property, rowcount);
+					
+					HtmlBuilder html = new HtmlBuilder();
+					if(JaNeeType.JA.getCode().equals(value.getCode())) {
+						html.input().type("checkbox").checked().disabled().close();
+					} else {
+						html.input().type("checkbox").disabled().close();
+					}
+					
+					return html.toString();
+				}
+			});
 			htmlColumn.getCellRenderer().setStyle("text-align: center");
 		}
 		return ++teller;
 	}
 	
-	public int setTitleKeyRowCheckbox(Row row, int teller, String titleKey) {
-		return this.setTitleRowCheckbox(row, teller, MessageLocator.getMessage(request, titleKey));
+	public int setTitleKeyRowCheckboxEnum(Row row, int teller, String titleKey) {
+		return this.setTitleRowCheckboxEnum(row, teller, MessageLocator.getMessage(request, titleKey));
 	}
 	
 	public int setTitleRowComment(Row row, int teller, String title) {
