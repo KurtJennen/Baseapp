@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -8,6 +9,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
@@ -184,6 +186,19 @@ public class SearchServiceSpringImpl implements SearchService {
 							objects[teller] = DateTool.parseUtilTimestamp(values[i]);
 						} catch (Exception e) {
 							throw new ServiceException("errors.date", new String[] {searchParameter.getKey()});
+						}
+						
+					} else if (searchParameter.getType().contains("enumeration")) {
+						try {
+							Class<?> enumClass = Class.forName(searchParameter.getType());
+							
+							Method enumMethod = ReflectionUtils.findMethod(enumClass, "convert", String.class);
+							
+							Object object = enumClass.cast(ReflectionUtils.invokeMethod(enumMethod, null, values[i]));
+							
+							objects[teller] = object;
+						} catch (Exception e) {
+							throw new ServiceException("errors.enum", new String[] {searchParameter.getKey()});
 						}
 						
 					}
