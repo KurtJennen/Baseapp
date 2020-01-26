@@ -9,6 +9,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
@@ -25,6 +26,7 @@ public class EnumSelect implements Tag {
 	private String value;
 	private boolean disabled;
 	private String roles;
+	private String onchange = StringUtils.EMPTY;
 	
 	public void setClazz(String clazz) {
 		this.clazz = clazz;
@@ -52,6 +54,10 @@ public class EnumSelect implements Tag {
 
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public void setOnchange(String onchange) {
+		this.onchange = onchange;
 	}
 
 	public void setParent(Tag t) {
@@ -94,9 +100,9 @@ public class EnumSelect implements Tag {
 			List<String> keyList = getKeysForClass();
 			
 			if(enabled && !disabled) {
-				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\">");
+				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\">");
 			} else {
-				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" disabled=\"disabled\">");
+				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\" disabled=\"disabled\">");
 			}
 	    	
 			for(String key : keyList) {
