@@ -5,6 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
+import be.luxuryoverdosis.framework.business.query.SearchSelect;
+import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
+import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
@@ -48,5 +51,9 @@ public class SearchUserForm extends SearchForm {
 		Logging.info(this, "End Validating");
 		
 		return errors;
+	}
+	
+	public SearchSelect getSearchSelect() {
+		return (SearchSelect)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
 	}
 }
