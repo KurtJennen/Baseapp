@@ -125,7 +125,7 @@ public class SearchServiceSpringImpl implements SearchService {
 		return search.toString();
 	}
 	
-	private Object[] constructObjects(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
+	public Object[] constructObjects(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
 		String[] operators = searchCriteria.getOperators();
 		String[] parameters = searchCriteria.getParameters();
 		String[] values = searchCriteria.getValues();

@@ -9,11 +9,14 @@ import org.apache.struts.action.ActionMessage;
 
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
+import be.luxuryoverdosis.framework.business.query.SearchSelect;
+import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
-public class SearchForm extends BaseForm {
+public abstract class SearchForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 	
 	private SearchCriteria searchCriteria;
@@ -35,6 +38,8 @@ public class SearchForm extends BaseForm {
 	private boolean isButton3Allowed = false;
 	private boolean isButton4Allowed = false;
 	private boolean isButton5Allowed = false;
+	
+	abstract public SearchSelect getSearchSelect();
 	
 	public int getDefaultLines() {
 		return defaultLines;
@@ -192,6 +197,8 @@ public class SearchForm extends BaseForm {
 			searchCriteria.setOperators(operators);
 			searchCriteria.setParameters(parameters);
 			searchCriteria.setValues(values);
+			
+			getSearchService().constructObjects(getSearchSelect(), searchCriteria);
 		}
 		
 		if(this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
@@ -213,6 +220,10 @@ public class SearchForm extends BaseForm {
 		Logging.info(this, "End Validating");
 		
 		return errors;
+	}
+	
+	private SearchService getSearchService() {
+		return BaseSpringServiceLocator.getBean(SearchService.class);
 	}
 	
 }

@@ -7,4 +7,5 @@ import be.luxuryoverdosis.framework.business.query.SearchSelect;
 
 public interface SearchService {
 	public ArrayList<Object> search(SearchSelect searchSelect, SearchCriteria searchCriteria);
+	public Object[] constructObjects(final SearchSelect searchSelect, final SearchCriteria searchCriteria);
 }
