@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 
 public class MenuDTO extends BaseDTO {
 	private String fullName;
@@ -8,16 +8,16 @@ public class MenuDTO extends BaseDTO {
 	private String title;
 	private String fullLevel;
 	private int level;
-	private JaNeeType hidden;
-	private JaNeeType disabled;
-	private JaNeeType forPay;
-	private JaNeeType payed;
+	private JaNeeEnum hidden;
+	private JaNeeEnum disabled;
+	private JaNeeEnum forPay;
+	private JaNeeEnum payed;
 	private int userId;
 	
 	public MenuDTO() {
 	}
 	
-	public MenuDTO(int id, String fullName, String name, String title, String fullLevel, int level, JaNeeType hidden, JaNeeType disabled, JaNeeType forPay, JaNeeType payed,int userId) {
+	public MenuDTO(int id, String fullName, String name, String title, String fullLevel, int level, JaNeeEnum hidden, JaNeeEnum disabled, JaNeeEnum forPay, JaNeeEnum payed,int userId) {
 		super();
 		setId(id);
 		this.fullLevel = fullLevel;
@@ -62,28 +62,28 @@ public class MenuDTO extends BaseDTO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public JaNeeType getHidden() {
+	public JaNeeEnum getHidden() {
 		return hidden;
 	}
-	public void setHidden(JaNeeType hidden) {
+	public void setHidden(JaNeeEnum hidden) {
 		this.hidden = hidden;
 	}
-	public JaNeeType getDisabled() {
+	public JaNeeEnum getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(JaNeeType disabled) {
+	public void setDisabled(JaNeeEnum disabled) {
 		this.disabled = disabled;
 	}
-	public JaNeeType getForPay() {
+	public JaNeeEnum getForPay() {
 		return forPay;
 	}
-	public void setForPay(JaNeeType forPay) {
+	public void setForPay(JaNeeEnum forPay) {
 		this.forPay = forPay;
 	}
-	public JaNeeType getPayed() {
+	public JaNeeEnum getPayed() {
 		return payed;
 	}
-	public void setPayed(JaNeeType payed) {
+	public void setPayed(JaNeeEnum payed) {
 		this.payed = payed;
 	}
 	public int getUserId() {

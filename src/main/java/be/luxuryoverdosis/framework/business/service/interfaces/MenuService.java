@@ -2,7 +2,7 @@ package be.luxuryoverdosis.framework.business.service.interfaces;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
 import be.luxuryoverdosis.framework.data.wrapperdto.MenuWrapperDTO;
@@ -24,7 +24,7 @@ public interface MenuService {
 	public MenuWrapperDTO getMenuWrapperDTO(MenuRepository menuRepository, int userId)  throws LoadableResourceException;
 	
 	public ArrayList<MenuDTO> produceMenu(MenuRepository menuRepository, int userId) throws LoadableResourceException;
-	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeType[] hidden, JaNeeType[] disabled, JaNeeType[] forPay, JaNeeType[] payed, int userId) throws LoadableResourceException;
+	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeEnum[] hidden, JaNeeEnum[] disabled, JaNeeEnum[] forPay, JaNeeEnum[] payed, int userId) throws LoadableResourceException;
 	
 	public MenuRepository produceAlterredMenu(MenuRepository menuRepository, int userId);
 }

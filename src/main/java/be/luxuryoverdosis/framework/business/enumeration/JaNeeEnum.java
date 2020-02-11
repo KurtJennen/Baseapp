@@ -3,14 +3,14 @@ package be.luxuryoverdosis.framework.business.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum JaNeeType {
+public enum JaNeeEnum {
 	JA("J"),
 	NEE("N");
 	
 	private static final List<String> JA_NEE_CODES = new ArrayList<String>();
 	
 	static {
-		for(JaNeeType value : values()) {
+		for(JaNeeEnum value : values()) {
 			JA_NEE_CODES.add(value.getCode());
 		}
 	}
@@ -21,7 +21,7 @@ public enum JaNeeType {
 		return code;
 	}
 
-	private JaNeeType (String code) {
+	private JaNeeEnum (String code) {
 		this.code = code;
 	}
 	
@@ -29,23 +29,23 @@ public enum JaNeeType {
 		return JA_NEE_CODES;
 	}
 	
-	public static JaNeeType convert(String code) {
-		for (JaNeeType jaNeeType: values()) {
-			if(jaNeeType.getCode().equals(code)) {
-				return jaNeeType;
+	public static JaNeeEnum convert(String code) {
+		for (JaNeeEnum jaNeeEnum: values()) {
+			if(jaNeeEnum.getCode().equals(code)) {
+				return jaNeeEnum;
 			}
 		}
 		
-		return JaNeeType.NEE;
+		return JaNeeEnum.NEE;
 	}
 	
-	public static JaNeeType[] convert(String[] array) {
-		JaNeeType jaNeeType[] = new JaNeeType[array.length];
+	public static JaNeeEnum[] convert(String[] array) {
+		JaNeeEnum jaNeeEnum[] = new JaNeeEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
-			jaNeeType[i] = convert(array[i]);
+			jaNeeEnum[i] = convert(array[i]);
 		}
 		
-		return jaNeeType;
+		return jaNeeEnum;
 	}
 }
