@@ -92,14 +92,17 @@ public class BatchJobInstanceDTO {
 	public String getBatchJobExecutionStatus() {
 		return batchJobExecutionStatus;
 	}
+	public String getBatchJobExecutionStatusTranslated() {
+		return BatchJobTranslater.getBatchJobStatusTranslated(batchJobExecutionStatus);
+	}
 	public void setBatchJobExecutionStatus(String batchJobExecutionStatus) {
 		this.batchJobExecutionStatus = batchJobExecutionStatus;
 	}
-	public String getBatchJobExecutionStatusTranslated() {
-		return BatchJobTranslater.getTranslatedBatchJobStatus(batchJobExecutionStatus);
-	}
 	public String getBatchJobExecutionExitCode() {
 		return batchJobExecutionExitCode;
+	}
+	public String getBatchJobExecutionExitCodeTranslated() {
+		return BatchJobTranslater.getBatchJobExitCodeTranslated(batchJobExecutionExitCode);
 	}
 	public void setBatchJobExecutionExitCode(String batchJobExecutionExitCode) {
 		this.batchJobExecutionExitCode = batchJobExecutionExitCode;

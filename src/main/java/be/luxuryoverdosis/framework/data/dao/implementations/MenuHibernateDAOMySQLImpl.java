@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.MenuHibernateDAO;
@@ -76,7 +76,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<MenuDTO> listHidden(final int userId, final JaNeeType hidden) {
+	public ArrayList<MenuDTO> listHidden(final int userId, final JaNeeEnum hidden) {
 		Logging.info(this, "Begin listHiddenMenu");
 
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_HIDDEN_DTO_BY_USER);
@@ -89,7 +89,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<MenuDTO> listDisabled(final int userId, final JaNeeType disabled) {
+	public ArrayList<MenuDTO> listDisabled(final int userId, final JaNeeEnum disabled) {
 		Logging.info(this, "Begin listDisabledMenu");
 		
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_DISABLED_DTO_BY_USER);
@@ -102,7 +102,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<MenuDTO> listForPayAndPayed(final int userId, final JaNeeType payed) {
+	public ArrayList<MenuDTO> listForPayAndPayed(final int userId, final JaNeeEnum payed) {
 		Logging.info(this, "Begin listForPayAndPayedMenu");
 		
 		Query<MenuDTO> query = getCurrentSession().getNamedQuery(Menu.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED);

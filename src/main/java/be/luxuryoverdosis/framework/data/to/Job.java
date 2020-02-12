@@ -17,7 +17,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
 
-import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.data.convertor.JobStatusConvertor;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 
@@ -66,7 +66,7 @@ public class Job extends BaseTO {
 	
 	@Column(name="Status")
 	@Convert(converter=JobStatusConvertor.class)
-	private JobStatusType status;
+	private JobStatusEnum status;
 	
 	public Job() {
 		super();
@@ -77,7 +77,7 @@ public class Job extends BaseTO {
 		
 		this.setName(name);
 		this.setExecuted(false);
-		this.setStatus(JobStatusType.NOT_STARTED);
+		this.setStatus(JobStatusEnum.NOT_STARTED);
 	}
 	
 	public Job(String name, FileDTO fileDTO) {
@@ -88,7 +88,7 @@ public class Job extends BaseTO {
 		this.setFileSize(fileDTO.getFileSize());
 		this.setContentType(fileDTO.getContentType());
 		this.setExecuted(false);
-		this.setStatus(JobStatusType.NOT_STARTED);
+		this.setStatus(JobStatusEnum.NOT_STARTED);
 	}
 	
 	public String getName() {
@@ -145,10 +145,10 @@ public class Job extends BaseTO {
 	public void setEnded(Date ended) {
 		this.ended = ended;
 	}
-	public JobStatusType getStatus() {
+	public JobStatusEnum getStatus() {
 		return status;
 	}
-	public void setStatus(JobStatusType status) {
+	public void setStatus(JobStatusEnum status) {
 		this.status = status;
 	}
 	

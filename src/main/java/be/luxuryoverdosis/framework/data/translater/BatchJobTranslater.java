@@ -1,33 +1,65 @@
 package be.luxuryoverdosis.framework.data.translater;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.batch.core.BatchStatus;
 import org.springframework.batch.core.ExitStatus;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 
 public class BatchJobTranslater {
-	public static String getTranslatedBatchJobStatus(String status) {
-	    
-	    if(ExitStatus.COMPLETED.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.completed");
+	public static String getBatchJobStatusTranslated(String status) {
+		String value = StringUtils.EMPTY;
+		
+		if(BatchStatus.ABANDONED.toString().equals(status)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.abandoned");
 		}
-	    if(ExitStatus.EXECUTING.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.executing");
+	    if(BatchStatus.COMPLETED.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.completed");
+		}
+	    if(BatchStatus.FAILED.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.failed");
 	    }
-	    if(ExitStatus.FAILED.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.failed");
+	    if(BatchStatus.STARTED.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.started");
 	    }
-	    if(ExitStatus.NOOP.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.noop");
+	    if(BatchStatus.STARTING.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.starting");
 	    }
-	    if(ExitStatus.STOPPED.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.stopped");
+	    if(BatchStatus.STOPPED.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.stopped");
 	    }
-	    if(ExitStatus.UNKNOWN.getExitCode().equals(status)) {
-	    	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.unknown");
+	    if(BatchStatus.STOPPING.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.stopping");
+	    }
+	    if(BatchStatus.UNKNOWN.toString().equals(status)) {
+	    	value = BaseSpringServiceLocator.getMessage("batchjobexecution.status.unknown");
 	    }
 	
+	    return value;
+	}
 	
-	    return StringUtils.EMPTY;
+	public static String getBatchJobExitCodeTranslated(String exitCode) {
+		String value = StringUtils.EMPTY;
+		
+		if(ExitStatus.COMPLETED.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.completed");
+		}
+		if(ExitStatus.EXECUTING.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.executing");
+		}
+		if(ExitStatus.FAILED.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.failed");
+		}
+		if(ExitStatus.NOOP.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.noop");
+		}
+		if(ExitStatus.STOPPED.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.stopped");
+		}
+		if(ExitStatus.UNKNOWN.getExitCode().equals(exitCode)) {
+			value = BaseSpringServiceLocator.getMessage("batchjobexecution.exit.code.unknown");
+		}
+		
+		return value;
 	}
 }

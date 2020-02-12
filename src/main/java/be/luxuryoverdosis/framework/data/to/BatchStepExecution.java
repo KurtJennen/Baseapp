@@ -128,11 +128,11 @@ public class BatchStepExecution {
 	public String getStatus() {
 		return status;
 	}
+	public String getStatusTranslated() {
+		return BatchJobTranslater.getBatchJobStatusTranslated(status);
+	}
 	public void setStatus(String status) {
 		this.status = status;
-	}
-	public String getStatusTranslated() {
-		return BatchJobTranslater.getTranslatedBatchJobStatus(status);
 	}
 	public long getCommitCount() {
 		return commitCount;
@@ -184,6 +184,9 @@ public class BatchStepExecution {
 	}
 	public String getExitCode() {
 		return exitCode;
+	}
+	public String getExitCodeTranslated() {
+		return BatchJobTranslater.getBatchJobExitCodeTranslated(exitCode);
 	}
 	public void setExitCode(String exitCode) {
 		this.exitCode = exitCode;

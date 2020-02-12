@@ -29,7 +29,7 @@ import org.jmesa.view.html.component.HtmlTable;
 import org.jmesa.view.html.event.RowEvent;
 import org.jmesa.view.html.toolbar.Toolbar;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.dto.BaseDTO;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -246,7 +246,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 			        
 			        HtmlBuilder html = new HtmlBuilder();
-			        if(JaNeeType.JA.getCode().equals(value)) {
+			        if(JaNeeEnum.JA.getCode().equals(value)) {
 			        	html.input().type("checkbox").checked().disabled().close();
 			        } else {
 			        	html.input().type("checkbox").disabled().close();
@@ -271,10 +271,10 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			HtmlColumn htmlColumn = (HtmlColumn) column;
 			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
 				public Object getValue(Object item, String property, int rowcount) {
-					JaNeeType value = (JaNeeType)new BasicCellEditor().getValue(item, property, rowcount);
+					JaNeeEnum value = (JaNeeEnum)new BasicCellEditor().getValue(item, property, rowcount);
 					
 					HtmlBuilder html = new HtmlBuilder();
-					if(JaNeeType.JA.getCode().equals(value.getCode())) {
+					if(JaNeeEnum.JA.getCode().equals(value.getCode())) {
 						html.input().type("checkbox").checked().disabled().close();
 					} else {
 						html.input().type("checkbox").disabled().close();

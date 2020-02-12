@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Proxy;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.convertor.JaNeeConvertor;
 
 @Entity
@@ -57,19 +57,19 @@ public class Menu extends BaseTO {
 	
 	@Column(name="Hidden")
 	@Convert(converter=JaNeeConvertor.class)
-	private JaNeeType hidden;
+	private JaNeeEnum hidden;
 	
 	@Column(name="Disabled")
 	@Convert(converter=JaNeeConvertor.class)
-	private JaNeeType disabled;
+	private JaNeeEnum disabled;
 	
 	@Column(name="ForPay")
 	@Convert(converter=JaNeeConvertor.class)
-	private JaNeeType forPay;
+	private JaNeeEnum forPay;
 	
 	@Column(name="Payed")
 	@Convert(converter=JaNeeConvertor.class)
-	private JaNeeType payed;
+	private JaNeeEnum payed;
 	
 	@ManyToOne
 	@JoinColumn(name="User_Id")
@@ -105,28 +105,28 @@ public class Menu extends BaseTO {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	public JaNeeType getHidden() {
+	public JaNeeEnum getHidden() {
 		return hidden;
 	}
-	public void setHidden(JaNeeType hidden) {
+	public void setHidden(JaNeeEnum hidden) {
 		this.hidden = hidden;
 	}
-	public JaNeeType getDisabled() {
+	public JaNeeEnum getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(JaNeeType disabled) {
+	public void setDisabled(JaNeeEnum disabled) {
 		this.disabled = disabled;
 	}
-	public JaNeeType getForPay() {
+	public JaNeeEnum getForPay() {
 		return forPay;
 	}
-	public void setForPay(JaNeeType forPay) {
+	public void setForPay(JaNeeEnum forPay) {
 		this.forPay = forPay;
 	}
-	public JaNeeType getPayed() {
+	public JaNeeEnum getPayed() {
 		return payed;
 	}
-	public void setPayed(JaNeeType payed) {
+	public void setPayed(JaNeeEnum payed) {
 		this.payed = payed;
 	}
 	public User getUser() {

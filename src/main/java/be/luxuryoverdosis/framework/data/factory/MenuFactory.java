@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.data.factory;
 
-import be.luxuryoverdosis.framework.business.enumeration.JaNeeType;
+import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
@@ -18,10 +18,10 @@ public class MenuFactory {
 		menuDTO.setTitle(BaseSpringServiceLocator.getMessage(menuComponent.getTitle()));
 		menuDTO.setFullLevel(fullLevel);
 		menuDTO.setLevel(level);
-		menuDTO.setHidden(JaNeeType.NEE);
-		menuDTO.setDisabled(JaNeeType.NEE);
-		menuDTO.setForPay(JaNeeType.NEE);
-		menuDTO.setPayed(JaNeeType.NEE);
+		menuDTO.setHidden(JaNeeEnum.NEE);
+		menuDTO.setDisabled(JaNeeEnum.NEE);
+		menuDTO.setForPay(JaNeeEnum.NEE);
+		menuDTO.setPayed(JaNeeEnum.NEE);
 		
 		return menuDTO;
 	}
