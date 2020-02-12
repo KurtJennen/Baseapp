@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.BaseService;
-import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.business.service.interfaces.AbstractJobService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.JobLogHibernateDAO;
@@ -64,7 +64,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 			Job job = (Job) jobsIterator.next();
 			
 			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(JobStatusType.STARTED);
+			job.setStatus(JobStatusEnum.STARTED);
 			jobHibernateDAO.createOrUpdate(job);
 		}
 		
@@ -81,7 +81,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 			Job job = (Job) jobsIterator.next();
 			
 			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(JobStatusType.EXECUTED);
+			job.setStatus(JobStatusEnum.EXECUTED);
 			job.setExecuted(true);
 			jobHibernateDAO.createOrUpdate(job);
 		}

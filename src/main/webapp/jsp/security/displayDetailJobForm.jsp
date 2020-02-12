@@ -81,7 +81,7 @@ $(document).ready(function() {
 				<lo:pqGridColumn width="150" dataIndx="stepName" dataType="string" titleKey="batchjobstepexecution.step.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="150" dataIndx="startTimeAsString" dataType="string" titleKey="batchjobstepexecution.start.time"></lo:pqGridColumn>
 				<lo:pqGridColumn width="150" dataIndx="endTimeAsString" dataType="string" titleKey="batchjobstepexecution.end.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="100" dataIndx="status" dataType="string" titleKey="batchjobstepexecution.status"></lo:pqGridColumn>
+				<lo:pqGridColumn width="100" dataIndx="statusTranslated" dataType="string" titleKey="batchjobstepexecution.status"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="commitCount" dataType="string" titleKey="batchjobstepexecution.commit.count"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="readCount" dataType="string" titleKey="batchjobstepexecution.read.count"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="filterCount" dataType="string" titleKey="batchjobstepexecution.filter.count"></lo:pqGridColumn>
@@ -90,7 +90,7 @@ $(document).ready(function() {
 				<lo:pqGridColumn width="100" dataIndx="wriyteSkipCount" dataType="string" titleKey="batchjobstepexecution.write.skip.count"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="processSkipCount" dataType="string" titleKey="batchjobstepexecution.process.skip.count"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="rollbackCount" dataType="string" titleKey="batchjobstepexecution.rollback.count"></lo:pqGridColumn>
-				<lo:pqGridColumn width="100" dataIndx="exitCode" dataType="string" titleKey="batchjobstepexecution.exit.code"></lo:pqGridColumn>
+				<lo:pqGridColumn width="100" dataIndx="exitCodeTranslated" dataType="string" titleKey="batchjobstepexecution.exit.code"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="exitMessage" dataType="string" titleKey="batchjobstepexecution.exit.message"></lo:pqGridColumn>
 				<lo:pqGridColumn width="150" dataIndx="lastUpdatedAsString" dataType="string" titleKey="batchjobstepexecution.last.updated"></lo:pqGridColumn>
 			</lo:pqGrid>

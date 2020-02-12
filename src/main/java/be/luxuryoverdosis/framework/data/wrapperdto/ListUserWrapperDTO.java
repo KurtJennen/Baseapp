@@ -2,12 +2,12 @@ package be.luxuryoverdosis.framework.data.wrapperdto;
 
 import java.util.ArrayList;
 
-import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
+import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 
 public class ListUserWrapperDTO {
 	private ArrayList<Object> searchUserList;
-	private ArrayList<BatchJobInstance> batchJobInstanceImportList;
-	private ArrayList<BatchJobInstance> batchJobInstanceExportList;
+	private ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList;
+	private ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList;
 	
 	public ArrayList<Object> getSearchUserList() {
 		return searchUserList;
@@ -15,16 +15,16 @@ public class ListUserWrapperDTO {
 	public void setSearchUserList(ArrayList<Object> searchUserList) {
 		this.searchUserList = searchUserList;
 	}
-	public ArrayList<BatchJobInstance> getBatchJobInstanceImportList() {
+	public ArrayList<BatchJobInstanceDTO> getBatchJobInstanceImportList() {
 		return batchJobInstanceImportList;
 	}
-	public void setBatchJobInstanceImportList(ArrayList<BatchJobInstance> batchJobInstanceImportList) {
+	public void setBatchJobInstanceImportList(ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList) {
 		this.batchJobInstanceImportList = batchJobInstanceImportList;
 	}
-	public ArrayList<BatchJobInstance> getBatchJobInstanceExportList() {
+	public ArrayList<BatchJobInstanceDTO> getBatchJobInstanceExportList() {
 		return batchJobInstanceExportList;
 	}
-	public void setBatchJobInstanceExportList(ArrayList<BatchJobInstance> batchJobInstanceExportList) {
+	public void setBatchJobInstanceExportList(ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList) {
 		this.batchJobInstanceExportList = batchJobInstanceExportList;
 	}
 }

@@ -92,8 +92,8 @@ public class BatchJobExecutionJmesaTemplate extends CustomTableFacadeTemplate {
 		    }
 		});
 		
-		teller = setTitleKeyRow(row, teller, "batchjobexecution.create.exit.code");
-		teller = setTitleKeyRow(row, teller, "batchjobexecution.create.exit.message");
+		teller = setTitleKeyRow(row, teller, "batchjobexecution.exit.code");
+		teller = setTitleKeyRow(row, teller, "batchjobexecution.exit.message");
 		teller = setTitleKeyRow(row, teller, "batchjobexecution.last.updated");
 	}
 }

@@ -17,7 +17,7 @@ import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.DateCellEditor;
 
 import be.luxuryoverdosis.framework.base.tool.DateTool;
-import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
@@ -57,20 +57,9 @@ public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 		
 		status.getCellRenderer().setCellEditor(new CellEditor() {
 		    public Object getValue(Object item, String property, int rowcount) {
-		    	String status = null;
-		        Object value = new BasicCellEditor().getValue(item, property, rowcount);
+		    	JobStatusEnum value = (JobStatusEnum)new BasicCellEditor().getValue(item, property, rowcount);
 		        
-		        if(JobStatusType.NOT_STARTED.getCode().equals(value)) {
-		        	status = BaseSpringServiceLocator.getMessage("JobStatusType.N");
-				}
-				if(JobStatusType.STARTED.getCode().equals(value)) {
-					status = BaseSpringServiceLocator.getMessage("JobStatusType.Y");
-				}
-				if(JobStatusType.EXECUTED.getCode().equals(value)) {
-					status = BaseSpringServiceLocator.getMessage("JobStatusType.E");
-				}
-				
-				return status;
+				return BaseSpringServiceLocator.getMessage("JobStatusEnum." + value.getCode());
 		    }
 		});
 	}

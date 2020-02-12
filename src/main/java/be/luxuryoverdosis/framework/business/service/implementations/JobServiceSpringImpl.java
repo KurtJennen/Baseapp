@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
-import be.luxuryoverdosis.framework.business.enumeration.JobStatusType;
+import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobExecutionHibernateDAO;
@@ -156,7 +156,7 @@ public class JobServiceSpringImpl implements JobService {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(JobStatusType.STARTED);
+			job.setStatus(JobStatusEnum.STARTED);
 			jobHibernateDAO.createOrUpdate(job);
 		}
 		
@@ -173,7 +173,7 @@ public class JobServiceSpringImpl implements JobService {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
-			job.setStatus(JobStatusType.EXECUTED);
+			job.setStatus(JobStatusEnum.EXECUTED);
 			job.setExecuted(true);
 			jobHibernateDAO.createOrUpdate(job);
 		}
