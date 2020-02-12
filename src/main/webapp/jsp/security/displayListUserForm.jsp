@@ -66,8 +66,8 @@ $(document).ready(function() {
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCode" dataType="string" titleKey="batchjobexecution.create.exit.code"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.create.exit.message"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCodeTranslated" dataType="string" titleKey="batchjobexecution.exit.code"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.exit.message"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
 			</lo:pqGrid>
 		</div>
@@ -84,8 +84,8 @@ $(document).ready(function() {
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCode" dataType="string" titleKey="batchjobexecution.create.exit.code"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.create.exit.message"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCodeTranslated" dataType="string" titleKey="batchjobexecution.exit.code"></lo:pqGridColumn>
+				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.exit.message"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
 			</lo:pqGrid>
 		</div>

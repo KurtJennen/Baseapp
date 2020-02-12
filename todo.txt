@@ -1,2 +1,1 @@
 Make searchselect JPA compliant
-Rename JaNeeType to JaNeeEnum

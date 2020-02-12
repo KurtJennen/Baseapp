@@ -21,8 +21,8 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
+import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
-import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
@@ -172,7 +172,7 @@ public class ListUserAction extends AjaxAction {
 	}
 
 	private void ajaxListJob(HttpServletResponse response, String jobName) throws Exception {
-		ArrayList<BatchJobInstance> userListJob = getBatchJobInstanceService().list(jobName);
+		ArrayList<BatchJobInstanceDTO> userListJob = getBatchJobInstanceService().list(jobName);
 		if (userListJob.size() > 0) {
 			super.sendAsJson(response, userListJob);
 		}

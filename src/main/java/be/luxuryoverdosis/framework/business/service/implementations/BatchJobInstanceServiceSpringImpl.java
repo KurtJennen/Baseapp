@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
+import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -26,9 +27,9 @@ public class BatchJobInstanceServiceSpringImpl implements BatchJobInstanceServic
 	}
 	
 	@Transactional
-	public ArrayList<BatchJobInstance> list(String jobName) {
+	public ArrayList<BatchJobInstanceDTO> list(String jobName) {
 		Logging.info(this, "Begin listBatchJobInstance");
-		ArrayList<BatchJobInstance> arrayList = null;
+		ArrayList<BatchJobInstanceDTO> arrayList = null;
 		arrayList = batchJobInstanceHibernateDAO.list(jobName);
 		Logging.info(this, "End listBatchJobInstance");
 		return arrayList;

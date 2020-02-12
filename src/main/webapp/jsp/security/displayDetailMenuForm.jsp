@@ -51,38 +51,38 @@
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
 						<html:hidden property="hidden" value="${item.hidden.code}"/>
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" disabled="true" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="2" property="hidden" value="${item.hidden.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
 						<html:hidden property="disabled" value="${item.disabled.code}"/>
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" disabled="true" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="3" property="disabled" value="${item.disabled.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
 						<html:hidden property="forPay" value="${item.forPay.code}"/>
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" disabled="true" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="4" property="forPay" value="${item.forPay.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 				<td>
 					<c:if test="${item.level != 0}">
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" />
 					</c:if>
 					<c:if test="${item.level == 0}">
 						<html:hidden property="payed" value="${item.payed}"/>
-						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeType" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" disabled="true" />
+						<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum" tabindex="5" property="payed" value="${item.payed.code}" method="getAllCodes" disabled="true" />
 					</c:if>
 				</td>
 			</tr>

@@ -74,7 +74,7 @@ public class MenuAction extends DispatchAction {
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		
 		MenuForm menuForm = (MenuForm) form;
-		getMenuService().updateMenu(menuRepository, menuForm.getIds(), menuForm.getJaNeeTypeHidden(), menuForm.getJaNeeTypeDisabled(), menuForm.getJaNeeTypeForPay(), menuForm.getJaNeeTypePayed(), menuForm.getUserId());
+		getMenuService().updateMenu(menuRepository, menuForm.getIds(), menuForm.getHiddenAsEnum(), menuForm.getDisabledAsEnum(), menuForm.getForPayAsEnum(), menuForm.getPayedAsEnum(), menuForm.getUserId());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.menu")));
 		saveMessages(request, actionMessages);

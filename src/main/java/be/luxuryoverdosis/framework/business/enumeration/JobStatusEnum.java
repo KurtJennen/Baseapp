@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.business.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
-public enum JobStatusType {
+public enum JobStatusEnum {
 	EXECUTED("E"),
 	NOT_STARTED("N"),
 	STARTED("Y");
@@ -11,7 +11,7 @@ public enum JobStatusType {
 	private static final List<String> JOB_STATUS_CODES = new ArrayList<String>();
 	
 	static {
-		for(JobStatusType value : values()) {
+		for(JobStatusEnum value : values()) {
 			JOB_STATUS_CODES.add(value.getCode());
 		}
 	}
@@ -22,7 +22,7 @@ public enum JobStatusType {
 		return code;
 	}
 
-	private JobStatusType (String code) {
+	private JobStatusEnum (String code) {
 		this.code = code;
 	}
 	
@@ -31,23 +31,23 @@ public enum JobStatusType {
 		return JOB_STATUS_CODES;
 	}
 	
-	public static JobStatusType convert(String code) {
-		for (JobStatusType jobStatusType: values()) {
-			if(jobStatusType.getCode().equals(code)) {
-				return jobStatusType;
+	public static JobStatusEnum convert(String code) {
+		for (JobStatusEnum jobStatusEnum: values()) {
+			if(jobStatusEnum.getCode().equals(code)) {
+				return jobStatusEnum;
 			}
 		}
 		
-		return JobStatusType.NOT_STARTED;
+		return JobStatusEnum.NOT_STARTED;
 	}
 	
-	public static JobStatusType[] convert(String[] array) {
-		JobStatusType jobStatusType[] = new JobStatusType[array.length];
+	public static JobStatusEnum[] convert(String[] array) {
+		JobStatusEnum jobStatusEnum[] = new JobStatusEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
-			jobStatusType[i] = convert(array[i]);
+			jobStatusEnum[i] = convert(array[i]);
 		}
 		
-		return jobStatusType;
+		return jobStatusEnum;
 	}
 }
