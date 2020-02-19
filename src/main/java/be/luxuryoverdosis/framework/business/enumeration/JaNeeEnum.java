@@ -3,6 +3,8 @@ package be.luxuryoverdosis.framework.business.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
+
 public enum JaNeeEnum {
 	JA("J"),
 	NEE("N");
@@ -20,7 +22,11 @@ public enum JaNeeEnum {
 	public String getCode() {
 		return code;
 	}
-
+	
+	public String getKeyForCode() {
+		return SpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
+	}
+	
 	private JaNeeEnum (String code) {
 		this.code = code;
 	}
