@@ -23,7 +23,7 @@ public enum JaNeeEnum {
 		return code;
 	}
 	
-	public String getKeyForCode() {
+	public String getCodeAsKey() {
 		return SpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 	
