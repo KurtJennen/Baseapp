@@ -18,6 +18,8 @@ public class PqGridObject {
 	private String exportLabelCsv;
 	private String exportLabelExcel;
 	private String locale;
+	private String language;
+	private String currency;
 	private ArrayList<PqGridColumnObject> pqGridColumnObjects = new ArrayList<PqGridColumnObject>();
 	
 	public String getId() {
@@ -100,6 +102,18 @@ public class PqGridObject {
 	}
 	public void setLocale(String locale) {
 		this.locale = locale;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	public void setPqGridColumnObjects(ArrayList<PqGridColumnObject> pqGridColumnObjects) {
 		this.pqGridColumnObjects = pqGridColumnObjects;

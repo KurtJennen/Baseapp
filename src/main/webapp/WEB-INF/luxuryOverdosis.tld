@@ -368,6 +368,11 @@
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
+			<name>currency</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
 			<name>filterType</name>
 			<required>false</required>
 		</attribute>

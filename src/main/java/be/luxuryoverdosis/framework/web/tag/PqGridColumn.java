@@ -18,6 +18,7 @@ public class PqGridColumn implements Tag {
 	private String align = "left";
 	private boolean sortable = true;
 	private boolean resizable = true;
+	private boolean currency = false;
 	private String filterType = "textbox";
 	private String filterCondition = "contain";
 
@@ -48,6 +49,9 @@ public class PqGridColumn implements Tag {
 	public void setFilterCondition(String filterCondition) {
 		this.filterCondition = filterCondition;
 	}
+	public void setCurrency(boolean currency) {
+		this.currency = currency;
+	}
 	
 	public void setParent(Tag t) {
 		parent = t;
@@ -77,8 +81,14 @@ public class PqGridColumn implements Tag {
 		gridColumnObject.setAlign(align);
 		gridColumnObject.setSortable(sortable);
 		gridColumnObject.setResizable(resizable);
+		gridColumnObject.setCurrency(currency);
 		gridColumnObject.setFilterType(filterType);
-		gridColumnObject.setFilterCondition(filterCondition);
+		if (currency) {
+			gridColumnObject.setFilterCondition("begin");
+		} else {
+			gridColumnObject.setFilterCondition(filterCondition);
+		}
+		
 		
 		pqGridTag.getPqGridObject().getPqGridColumnObjects().add(gridColumnObject);
 			

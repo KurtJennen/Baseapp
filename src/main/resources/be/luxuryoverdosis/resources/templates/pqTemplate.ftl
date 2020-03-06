@@ -2,6 +2,8 @@
 
 <script>
 	$(document).ready(function () {
+        var summary = "";
+	
 		var ${templateData.id}ColModel = [
 			{ title: "", dataIndx: "selectedRow", maxWidth: 30, minWidth: 30, align: "center", resizable: false,
                 type: 'checkBoxSelection', cls: 'ui-state-default', sortable: false, editable: false,
@@ -15,7 +17,19 @@
             	, align: "${pqGridColumnObject.align}"
             	, sortable: ${pqGridColumnObject.sortable?string("true", "false")}
             	, resizable: ${pqGridColumnObject.resizable?string("true", "false")}
-            	, filter: { type: "${pqGridColumnObject.filterType}", condition: "${pqGridColumnObject.filterCondition}", listeners: ['keyup'] }},
+            	, filter: { type: "${pqGridColumnObject.filterType}", condition: "${pqGridColumnObject.filterCondition}", listeners: ['keyup'] }
+            	<#if pqGridColumnObject.dataType = "float">
+            		<#if pqGridColumnObject.currency = true>
+            			, render: function formatCurrency(ui) {
+            				return formatCurrencyPq(ui, "${templateData.locale}", "${templateData.currency}");
+            			}
+            		<#else>
+            			, render: function format(ui) {
+            				return formatPq(ui, "${templateData.locale}");
+            			}
+            		</#if>
+            	</#if>
+            },
             </#list>
 		];
 		
@@ -74,10 +88,16 @@
                             }
                         }]
                 	}]
-            }
+            },
+            render: function (evt, ui) {
+        		summary = $("<div class='pq-grid-summary'></div>").prependTo($(".pq-grid-bottom", this));
+        	},
+            refresh: function (evt, ui) {
+            	totals(ui, "${templateData.id}Grid", summary);
+        	}
         });
         
-        $("#${templateData.id}Grid").pqGrid("option", $.paramquery.pqGrid.regional['${templateData.locale}']);
-        $("#${templateData.id}Grid").find(".pq-pager").pqPager("option", $.paramquery.pqPager.regional['${templateData.locale}']);
+        $("#${templateData.id}Grid").pqGrid("option", $.paramquery.pqGrid.regional['${templateData.language}']);
+        $("#${templateData.id}Grid").find(".pq-pager").pqPager("option", $.paramquery.pqPager.regional['${templateData.language}']);
 	});
 </script>

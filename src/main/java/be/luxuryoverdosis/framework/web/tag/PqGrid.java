@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.web.tag;
 
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -97,7 +98,13 @@ public class PqGrid implements Tag {
 		pqGridObject.setExportUrl(UrlManager.composeUrl(request, "/rest/export"));
 		pqGridObject.setExportLabelCsv(MessageLocator.getMessage(request, "export.csv"));
 		pqGridObject.setExportLabelExcel(MessageLocator.getMessage(request, "export.excel"));
-		pqGridObject.setLocale(MessageLocator.getLocale(request).getLanguage());
+		
+		Locale locale =  MessageLocator.getLocale(request);
+		Currency currency = Currency.getInstance(locale);
+		
+		pqGridObject.setLanguage(locale.getLanguage());
+		pqGridObject.setLocale(locale.getLanguage() + '-' + locale.getCountry());
+		pqGridObject.setCurrency(currency.getCurrencyCode());
 		
 		return EVAL_BODY_INCLUDE;
 	}
