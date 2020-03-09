@@ -14,6 +14,7 @@ public class PqGridObject {
 	private String height = "500";
 	private int freezeCols = 1;
 	private int rPP = 15;
+	private boolean summary = false;
 	private String exportUrl;
 	private String exportLabelCsv;
 	private String exportLabelExcel;
@@ -63,6 +64,12 @@ public class PqGridObject {
 	}
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
+	}
+	public boolean isSummary() {
+		return summary;
+	}
+	public void setSummary(boolean summary) {
+		this.summary = summary;
 	}
 	public String getSelectedIds() {
 		return selectedIds;

@@ -1,7 +1,5 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 
 import be.luxuryoverdosis.framework.base.tool.DateTool;
@@ -89,7 +87,7 @@ public class UserDTO extends BaseDTO {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	public BigDecimal getBedrag() {
-		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
-	}
+//	public BigDecimal getBedrag() {
+//		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
+//	}
 }

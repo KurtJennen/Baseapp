@@ -30,6 +30,7 @@ public class PqGrid implements Tag {
 	private String height = "520";
 	private int freezeCols = 1;
 	private int rPP = 14;
+	private boolean summary = false;
 	
 	private PqGridObject pqGridObject;
 
@@ -63,6 +64,9 @@ public class PqGrid implements Tag {
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
 	}
+	public void setSummary(boolean summary) {
+		this.summary = summary;
+	}
 	
 	public PqGridObject getPqGridObject() {
 		return pqGridObject;
@@ -95,6 +99,7 @@ public class PqGrid implements Tag {
 		pqGridObject.setHeight(height);
 		pqGridObject.setFreezeCols(freezeCols);
 		pqGridObject.setrPP(rPP);
+		pqGridObject.setSummary(summary);
 		pqGridObject.setExportUrl(UrlManager.composeUrl(request, "/rest/export"));
 		pqGridObject.setExportLabelCsv(MessageLocator.getMessage(request, "export.csv"));
 		pqGridObject.setExportLabelExcel(MessageLocator.getMessage(request, "export.excel"));

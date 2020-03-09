@@ -59,26 +59,25 @@ function formatPq(ui, sLocale) {
 
 function totals(ui, sId, sSummary) {
 	if (ui.pageData != undefined) {
-		var totaal = 0;
 		var totalData = new Object();
 		
 		var cols = $("#" + sId).pqGrid("option", "colModel");
 		
-		for (var i = 0, len = cols.length; i < len; i++) {
-			if(cols[i].dataType != undefined && cols[i].dataType == "float") {
-				totalData[cols[i].dataIndx] = "0";
-			} else if {
+		for (var i = 0, lenCols = cols.length; i < lenCols; i++) {
+			if(cols[i].dataType != undefined && cols[i].dataType == "float" && cols[i].totalizable == true) {
+				var total = 0;
+				var data = $("#" + sId).pqGrid("option", "dataModel.data");
+				
+				for (var j = 0, lenData = data.length; j < lenData; j++) {
+					var rowData = data[j];
+					total += rowData[cols[i].dataIndx];
+				}
+				
+				totalData[cols[i].dataIndx] = total;
+			} else {
 				totalData[cols[i].dataIndx] = "";
 			}
 		}
-		
-//		var data = $("#" + sId).pqGrid("option", "dataModel.data");
-//		
-//		for (var i = 0, len = data.length; i < len; i++) {
-//			totaal += data[i].bedrag;
-//		}
-		
-		//var totalData = { name: "", userName: "", email: "", dateExpirationAsString: "", roleName: "", bedrag: totaal, pq_rowcls: 'green' };
 		
 		var data = [totalData];
 		var obj = { data: data, $cont: sSummary };

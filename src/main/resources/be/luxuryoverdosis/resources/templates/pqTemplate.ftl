@@ -18,6 +18,7 @@
             	, sortable: ${pqGridColumnObject.sortable?string("true", "false")}
             	, resizable: ${pqGridColumnObject.resizable?string("true", "false")}
             	, filter: { type: "${pqGridColumnObject.filterType}", condition: "${pqGridColumnObject.filterCondition}", listeners: ['keyup'] }
+            	, totalizable: ${pqGridColumnObject.totalizable?string("true", "false")}
             	<#if pqGridColumnObject.dataType = "float">
             		<#if pqGridColumnObject.currency = true>
             			, render: function formatCurrency(ui) {
@@ -89,12 +90,14 @@
                         }]
                 	}]
             },
-            render: function (evt, ui) {
-        		summary = $("<div class='pq-grid-summary'></div>").prependTo($(".pq-grid-bottom", this));
-        	},
-            refresh: function (evt, ui) {
-            	totals(ui, "${templateData.id}Grid", summary);
-        	}
+            <#if templateData.summary = true>
+	            render: function (evt, ui) {
+	        		summary = $("<div class='pq-grid-summary'></div>").prependTo($(".pq-grid-bottom", this));
+	        	},
+	            refresh: function (evt, ui) {
+	            	totals(ui, "${templateData.id}Grid", summary);
+	        	}
+	        </#if>
         });
         
         $("#${templateData.id}Grid").pqGrid("option", $.paramquery.pqGrid.regional['${templateData.language}']);

@@ -8,6 +8,7 @@ public class PqGridColumnObject {
 	private String align = "left";
 	private boolean sortable = true;
 	private boolean resizable = true;
+	private boolean totalizable = true;
 	private boolean currency = true;
 	private String filterType = "textbox";
 	private String filterCondition = "contain";
@@ -53,6 +54,12 @@ public class PqGridColumnObject {
 	}
 	public void setResizable(boolean resizable) {
 		this.resizable = resizable;
+	}
+	public boolean isTotalizable() {
+		return totalizable;
+	}
+	public void setTotalizable(boolean totalizable) {
+		this.totalizable = totalizable;
 	}
 	public boolean isCurrency() {
 		return currency;
