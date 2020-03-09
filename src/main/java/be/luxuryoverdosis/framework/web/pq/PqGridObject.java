@@ -14,10 +14,13 @@ public class PqGridObject {
 	private String height = "500";
 	private int freezeCols = 1;
 	private int rPP = 15;
+	private boolean summary = false;
 	private String exportUrl;
 	private String exportLabelCsv;
 	private String exportLabelExcel;
 	private String locale;
+	private String language;
+	private String currency;
 	private ArrayList<PqGridColumnObject> pqGridColumnObjects = new ArrayList<PqGridColumnObject>();
 	
 	public String getId() {
@@ -62,6 +65,12 @@ public class PqGridObject {
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
 	}
+	public boolean isSummary() {
+		return summary;
+	}
+	public void setSummary(boolean summary) {
+		this.summary = summary;
+	}
 	public String getSelectedIds() {
 		return selectedIds;
 	}
@@ -100,6 +109,18 @@ public class PqGridObject {
 	}
 	public void setLocale(String locale) {
 		this.locale = locale;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
 	}
 	public void setPqGridColumnObjects(ArrayList<PqGridColumnObject> pqGridColumnObjects) {
 		this.pqGridColumnObjects = pqGridColumnObjects;

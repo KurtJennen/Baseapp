@@ -39,3 +39,48 @@ function unCheckPq(ui, sSelectedIdsName) {
 function createHiddenInputTag(id, sSelectedIdsName) {
 	$("<input>").attr("type", "hidden").attr("value", id).prop("name", sSelectedIdsName).appendTo("form");
 }
+
+function formatCurrencyPq(ui, sLocale, sCurrency) {
+    var myObj = {
+	  style: "currency",
+	  currency: sCurrency
+	}
+
+    return ((ui.cellData < 0) ? "-" : "") + ui.cellData.toLocaleString(sLocale, myObj);
+}
+
+function formatPq(ui, sLocale) {
+	var myObj = {
+	  minimumFractionDigits: 2
+	}
+
+    return ((ui.cellData < 0) ? "-" : "") + ui.cellData.toLocaleString(sLocale, myObj);
+}
+
+function totals(ui, sId, sSummary) {
+	if (ui.pageData != undefined) {
+		var totalData = new Object();
+		
+		var cols = $("#" + sId).pqGrid("option", "colModel");
+		
+		for (var i = 0, lenCols = cols.length; i < lenCols; i++) {
+			if(cols[i].dataType != undefined && cols[i].dataType == "float" && cols[i].totalizable == true) {
+				var total = 0;
+				var data = $("#" + sId).pqGrid("option", "dataModel.data");
+				
+				for (var j = 0, lenData = data.length; j < lenData; j++) {
+					var rowData = data[j];
+					total += rowData[cols[i].dataIndx];
+				}
+				
+				totalData[cols[i].dataIndx] = total;
+			} else {
+				totalData[cols[i].dataIndx] = "";
+			}
+		}
+		
+		var data = [totalData];
+		var obj = { data: data, $cont: sSummary };
+		$("#" + sId).pqGrid("createTable", obj);
+	}
+}

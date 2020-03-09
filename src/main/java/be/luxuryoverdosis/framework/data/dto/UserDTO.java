@@ -87,4 +87,7 @@ public class UserDTO extends BaseDTO {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
+//	public BigDecimal getBedrag() {
+//		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
+//	}
 }
