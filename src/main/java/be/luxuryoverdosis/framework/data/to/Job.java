@@ -17,6 +17,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Proxy;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.data.convertor.JobStatusConvertor;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
@@ -136,11 +137,17 @@ public class Job extends BaseTO {
 	public Date getStarted() {
 		return started;
 	}
+	public String getStartedAsString() {
+		return DateTool.formatUtilDate(started);
+	}
 	public void setStarted(Date started) {
 		this.started = started;
 	}
 	public Date getEnded() {
 		return ended;
+	}
+	public String getEndedAsString() {
+		return DateTool.formatUtilDate(ended);
 	}
 	public void setEnded(Date ended) {
 		this.ended = ended;

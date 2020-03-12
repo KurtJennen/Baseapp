@@ -103,11 +103,11 @@
 				<forward name="read" path="/detailNumber.do?method=read" />
 		</action>
 		
-		<action path="/detailPdf"
+		<action path="/listPdf"
 				name="pdfForm"
 				validate="true"
 				scope="request"
-				input="display.detail.pdf.form"
+				input="display.list.pdf.form"
 				type="be.luxuryoverdosis.framework.web.action.security.PdfAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />

@@ -104,9 +104,7 @@ public class BaseForm extends ValidatorForm {
 	}
 	
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
-		ActionErrors errors = new ActionErrors();
-		
-		errors = super.validate(mapping, request);
+		ActionErrors errors = super.validate(mapping, request);
 		
 		if(this.getMethod().equals(BaseWebConstants.CREATE_DOCUMENT)) {
 			if(documentId < 0) {
