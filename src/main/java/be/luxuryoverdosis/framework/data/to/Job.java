@@ -138,7 +138,7 @@ public class Job extends BaseTO {
 		return started;
 	}
 	public String getStartedAsString() {
-		return DateTool.formatUtilDate(started);
+		return DateTool.formatUtilDateTime(started);
 	}
 	public void setStarted(Date started) {
 		this.started = started;
@@ -147,13 +147,16 @@ public class Job extends BaseTO {
 		return ended;
 	}
 	public String getEndedAsString() {
-		return DateTool.formatUtilDate(ended);
+		return DateTool.formatUtilDateTime(ended);
 	}
 	public void setEnded(Date ended) {
 		this.ended = ended;
 	}
 	public JobStatusEnum getStatus() {
 		return status;
+	}
+	public String getStatusAsKey() {
+		return status.getCodeAsKey();
 	}
 	public void setStatus(JobStatusEnum status) {
 		this.status = status;

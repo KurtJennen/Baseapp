@@ -3,6 +3,8 @@ package be.luxuryoverdosis.framework.business.enumeration;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
+
 public enum JobStatusEnum {
 	EXECUTED("E"),
 	NOT_STARTED("N"),
@@ -20,6 +22,10 @@ public enum JobStatusEnum {
 	
 	public String getCode() {
 		return code;
+	}
+	
+	public String getCodeAsKey() {
+		return SpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 
 	private JobStatusEnum (String code) {
