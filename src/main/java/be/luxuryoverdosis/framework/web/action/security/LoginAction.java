@@ -8,6 +8,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
@@ -93,7 +94,7 @@ public class LoginAction extends DispatchAction {
 		
 		Logging.error(this, "End Logout Failed");
 		
-		return (mapping.getInputForward());
+		return new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 	}
 	
 	public ActionForward register(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

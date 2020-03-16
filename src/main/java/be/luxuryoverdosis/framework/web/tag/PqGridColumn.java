@@ -18,7 +18,7 @@ public class PqGridColumn implements Tag {
 	private String align = "left";
 	private boolean sortable = true;
 	private boolean resizable = true;
-	private boolean totalizable = true;
+	private boolean totalizable = false;
 	private boolean currency = false;
 	private String filterType = "textbox";
 	private String filterCondition = "contain";
@@ -93,6 +93,9 @@ public class PqGridColumn implements Tag {
 			gridColumnObject.setFilterCondition("begin");
 		} else {
 			gridColumnObject.setFilterCondition(filterCondition);
+		}
+		if (totalizable) {
+			pqGridTag.getPqGridObject().setSummary(true);
 		}
 		
 		

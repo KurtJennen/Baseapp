@@ -58,10 +58,14 @@ public class BaseAction extends DispatchAction {
 	}
 	
 	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+       return read(mapping, form, request, response, BaseWebConstants.READ);
+    }
+	
+	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, String forward) throws Exception {
         Logging.info(this, "Begin Read");
         
         ListForm listForm = (ListForm) form;
-        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
+        ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(forward));
         actionRedirect.addParameter(BaseWebConstants.ID, listForm.getSelectedIds()[0]);
         
         Logging.info(this, "End Read Success");

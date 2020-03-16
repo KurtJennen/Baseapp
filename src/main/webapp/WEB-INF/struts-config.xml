@@ -32,6 +32,7 @@
 				<forward name="success" path="display.body.form" />
 				<forward name="failed" path="display.login.form" />
 				<forward name="register" path="display.register.form" />
+				<forward name="login" path="/login.do?method=index" />
 		</action>
 		
 		<action path="/loginRegister"

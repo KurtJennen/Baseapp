@@ -47,7 +47,6 @@ $(document).ready(function() {
 			<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 			<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 			<hr />
-<%-- 			<lo:pqGrid selectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15" summary="true"> --%>
 			<lo:pqGrid selectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
