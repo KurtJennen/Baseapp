@@ -338,8 +338,12 @@
 		<name>pqGridColumn</name>
 		<tag-class>be.luxuryoverdosis.framework.web.tag.PqGridColumn</tag-class>
 		<attribute>
+			<name>title</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
 			<name>titleKey</name>
-			<required>true</required>
+			<required>false</required>
 		</attribute>
 		<attribute>
 			<name>dataType</name>
@@ -356,6 +360,11 @@
 		<attribute>
 			<name>align</name>
 			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>visible</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>sortable</name>
