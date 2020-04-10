@@ -11,6 +11,9 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.apache.commons.lang.StringUtils;
+
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.pq.PqGridObject;
@@ -30,6 +33,8 @@ public class PqGrid implements Tag {
 	private String height = "520";
 	private int freezeCols = 1;
 	private int rPP = 14;
+	private String roles;
+	private boolean clickable = true;
 	
 	private PqGridObject pqGridObject;
 
@@ -63,6 +68,12 @@ public class PqGrid implements Tag {
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
 	}
+	public void setRoles(String roles) {
+		this.roles = roles;
+	}
+	public void setClickable(boolean clickable) {
+		this.clickable = clickable;
+	}
 	
 	public PqGridObject getPqGridObject() {
 		return pqGridObject;
@@ -84,12 +95,35 @@ public class PqGrid implements Tag {
 	
 	public int doStartTag() throws JspException {
 		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+		User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
+		
+		boolean roleClickable = false;
+		if(user != null) {
+			if(roles != null) {
+				String[] seperatedRoles = roles.split(",");
+				for(int i = 0; i < seperatedRoles.length; i++) {
+					if(seperatedRoles[i].equals(user.getRole().getName())) {
+						roleClickable = true;
+					}
+				}
+			} else {
+				roleClickable = true;
+			}
+		} else {
+			roleClickable = false;
+		}
 		
 		pqGridObject = new PqGridObject();
 		pqGridObject.setId(id);
 		pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
 		pqGridObject.setSelectedIds(selectedIds);
-		pqGridObject.setRowClickMethod(rowClickMethod);
+		
+		if(clickable && roleClickable) {
+			pqGridObject.setRowClickMethod(rowClickMethod);
+		} else {
+			pqGridObject.setRowClickMethod(StringUtils.EMPTY);
+		}
+		
 		pqGridObject.setUrl(UrlManager.composeUrl(request, url));
 		pqGridObject.setWidth(width);
 		pqGridObject.setHeight(height);

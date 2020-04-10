@@ -333,6 +333,16 @@
 			<required>false</required>
 			<type>java.lang.Integer</type>
 		</attribute>
+		<attribute>
+			<name>roles</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>clickable</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
 	</tag>
 	<tag>
 		<name>pqGridColumn</name>
