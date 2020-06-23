@@ -18,7 +18,7 @@ public class ListForm extends BaseForm {
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         Logging.info(this, "Begin Validating");
         
-        ActionErrors errors = new ActionErrors();
+        ActionErrors errors = super.validate(mapping, request);
         
         super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
         
