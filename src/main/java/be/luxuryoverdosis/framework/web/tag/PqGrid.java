@@ -25,6 +25,7 @@ import freemarker.template.TemplateExceptionHandler;
 public class PqGrid implements Tag {
 	PageContext pageContext;
 	private String id;
+	private String title;
 	private String titleKey;
 	private String selectedIds;
 	private String rowClickMethod = BaseWebConstants.READ;
@@ -40,6 +41,9 @@ public class PqGrid implements Tag {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public void setTitleKey(String titleKey) {
 		this.titleKey = titleKey;
@@ -115,7 +119,14 @@ public class PqGrid implements Tag {
 		
 		pqGridObject = new PqGridObject();
 		pqGridObject.setId(id);
-		pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
+		
+		if (!StringUtils.isEmpty(title)) {
+			pqGridObject.setTitle(title);
+		}
+		if (!StringUtils.isEmpty(titleKey)) {
+			pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
+		}
+		
 		pqGridObject.setSelectedIds(selectedIds);
 		
 		if(clickable && roleClickable) {

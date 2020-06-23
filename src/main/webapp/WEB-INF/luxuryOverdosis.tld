@@ -300,8 +300,13 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>titleKey</name>
-			<required>true</required>
+			<required>false</required>
 		</attribute>
 		<attribute>
 			<name>selectedIds</name>
@@ -350,6 +355,7 @@
 		<attribute>
 			<name>title</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>titleKey</name>
