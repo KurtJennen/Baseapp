@@ -31,6 +31,15 @@ public class BigDecimalToolTest {
 	}
 	
 	@Test
+	public void testToStringBigDecimalWithFractionAndNoGrouping() {
+		BigDecimal decimal = new BigDecimal(2020.00);
+		
+		String result = BigDecimalTool.toString(decimal, 0, false);
+		
+		assertThat("2020").isEqualTo(result);
+	}
+	
+	@Test
 	public void testToStringDouble() {
 		BigDecimal decimal = new BigDecimal(123.4567);
 		

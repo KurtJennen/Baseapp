@@ -16,7 +16,7 @@ public class BigDecimalTool {
 	public static int FRACTION = 2;
 	public static int FRACTION_DOUBLE = 4;
 	
-	public static String toString(BigDecimal decimal, int fraction) {
+	public static String toString(BigDecimal decimal, int fraction, boolean grouping) {
 		String convertedDecimal = "";
 		
 		Locale locale = Locale.getDefault();
@@ -25,7 +25,7 @@ public class BigDecimalTool {
 
         formatter.setMinimumFractionDigits(fraction);
         formatter.setMaximumFractionDigits(fraction);
-        formatter.setGroupingUsed(true);
+        formatter.setGroupingUsed(grouping);
         
         if(decimal != null) {
         	convertedDecimal = formatter.format(decimal);
@@ -35,11 +35,11 @@ public class BigDecimalTool {
 	}
 	
 	public static String toString(BigDecimal decimal) {
-		return toString(decimal, FRACTION);
+		return toString(decimal, FRACTION, true);
 	}
 	
 	public static String toStringDouble(BigDecimal decimal) {
-		return toString(decimal, FRACTION_DOUBLE);
+		return toString(decimal, FRACTION_DOUBLE, true);
 	}
 	
 	public static BigDecimal toBigDecimal(String string, int fraction) {
