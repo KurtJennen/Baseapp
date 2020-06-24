@@ -33,6 +33,7 @@ public class PqGrid implements Tag {
 	private String width = "99%";
 	private String height = "520";
 	private int freezeCols = 1;
+	private boolean paging = true;
 	private int rPP = 14;
 	private String roles;
 	private boolean clickable = true;
@@ -68,6 +69,9 @@ public class PqGrid implements Tag {
 	}
 	public void setFreezeCols(int freezeCols) {
 		this.freezeCols = freezeCols;
+	}
+	public void setPaging(boolean paging) {
+		this.paging = paging;
 	}
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
@@ -139,6 +143,7 @@ public class PqGrid implements Tag {
 		pqGridObject.setWidth(width);
 		pqGridObject.setHeight(height);
 		pqGridObject.setFreezeCols(freezeCols);
+		pqGridObject.setPaging(paging);
 		pqGridObject.setrPP(rPP);
 		pqGridObject.setExportUrl(UrlManager.composeUrl(request, "/rest/export"));
 		pqGridObject.setExportLabelCsv(MessageLocator.getMessage(request, "export.csv"));

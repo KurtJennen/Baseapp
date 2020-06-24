@@ -14,6 +14,7 @@ public class PqGridObject {
 	private String height = "500";
 	private int freezeCols = 1;
 	private int rPP = 15;
+	private boolean paging = true;
 	private boolean summary = false;
 	private String exportUrl;
 	private String exportLabelCsv;
@@ -58,6 +59,12 @@ public class PqGridObject {
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public boolean isPaging() {
+		return paging;
+	}
+	public void setPaging(boolean paging) {
+		this.paging = paging;
 	}
 	public int getrPP() {
 		return rPP;

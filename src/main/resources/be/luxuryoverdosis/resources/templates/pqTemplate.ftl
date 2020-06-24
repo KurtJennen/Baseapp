@@ -53,7 +53,9 @@
             selectionModel: { type: null },
             dataModel: ${templateData.id}DataModel,
             colModel: ${templateData.id}ColModel,
-            pageModel: { type: "local", rPP: ${templateData.rPP}, strRpp: "", rPPOptions: "" },
+            <#if templateData.paging = true>
+            	pageModel: { type: "local", rPP: ${templateData.rPP}, strRpp: "", rPPOptions: "" },
+            </#if>
             sorting: "local",
             filterModel: { on: true, mode: "AND", header: true, type: "local" },
             check: function (evt, ui) {

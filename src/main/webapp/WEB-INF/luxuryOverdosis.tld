@@ -334,6 +334,11 @@
 			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
+			<name>paging</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
 			<name>rPP</name>
 			<required>false</required>
 			<type>java.lang.Integer</type>
