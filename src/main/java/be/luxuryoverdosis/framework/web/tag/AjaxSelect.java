@@ -147,7 +147,7 @@ public class AjaxSelect implements Tag {
 
 				//Template
 				out.println("<div style=\"width: 90%; position: fixed; overflow: auto; z-index: 1;\">");
-				out.println("<table id=\"" + property + "Result\" border=\"1\" style=\"background-color: lightgrey; width: 100%;\">");
+				out.println("<table id=\"" + property + "Result\" style=\"background-color: #e3e3e3; border: 1px solid white; width: 100%;\">");
 				out.println("</table>");
 				out.print("</div>");
 			} else {
