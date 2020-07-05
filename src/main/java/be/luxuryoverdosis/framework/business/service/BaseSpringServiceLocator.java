@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import be.luxuryoverdosis.framework.base.Config;
@@ -63,8 +64,14 @@ public abstract class BaseSpringServiceLocator {
 			if(locale == null) {
 				locale = Locale.getDefault();
 			}
-		}		
+		}
 		
-		return applicationContext.getMessage(key, arg, locale);
+		
+		try {
+			return applicationContext.getMessage(key, arg, locale);
+		} catch (NoSuchMessageException e) {
+			return key;
+		}
+		
 	}
 }
