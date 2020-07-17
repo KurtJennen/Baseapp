@@ -8,6 +8,11 @@
 		<name>button</name>
 		<tag-class>be.luxuryoverdosis.framework.web.tag.Button</tag-class>
 		<attribute>
+			<name>submit</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
 			<name>method</name>
 			<required>true</required>
 		</attribute>

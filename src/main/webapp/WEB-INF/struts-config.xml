@@ -8,6 +8,7 @@
 		
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
 		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
+		<form-bean name="listRoleForm" type="be.luxuryoverdosis.framework.web.form.ListRoleForm" />
 		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
 		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
 		<form-bean name="searchUserForm" type="be.luxuryoverdosis.framework.web.form.SearchUserForm" />
@@ -116,7 +117,7 @@
 		</action>
 		
 		<action path="/listRole"
-				name="listForm"
+				name="listRoleForm"
 				validate="true"
 				scope="request"
 				input="display.list.role.form"

@@ -12,6 +12,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class Button implements Tag {
 	PageContext pageContext;
+	private boolean submit = true;
 	private String method;
 	private String image;
 	private String key;
@@ -31,6 +32,10 @@ public class Button implements Tag {
 	
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public void setSubmit(boolean submit) {
+		this.submit = submit;
 	}
 
 	public void setParent(Tag t) {
@@ -71,7 +76,11 @@ public class Button implements Tag {
 			}
 			
 			if(enabled) {
-				out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+				if(submit) {
+					out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+				} else {
+					out.print("<button onclick=\"javascript:" + method + ";\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"button\">");
+				}
 				out.print("<img src=\"images/" + image + "\"/>");
 				out.println("</button>");
 			} else {
