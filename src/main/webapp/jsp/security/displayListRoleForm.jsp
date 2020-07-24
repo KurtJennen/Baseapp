@@ -1,48 +1,39 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
-<script>
-$(document).ready(function() {
-    dialog = $( "#dialog" ).dialog({
-        autoOpen: false,
-        height: 400,
-        width: 400,
-        modal: true,
-        buttons: {
-           "Bewaar": addRole,
-          Cancel: function() {
-            dialog.dialog( "close" );
-          }
-        },
-        close: function() {
-        }
-      });
-    
-    function addRole() {
-    	javascript:doActionDetail('update');
-    	dialog.dialog( "close" );
-    }
-});
-</script>
+
 <html:form action="/listRole.do">
 	<div class="center">
 		<h2><i><fmt:message key="displayList.title" />&nbsp;<fmt:message key="displayRole.title" /></i></h2>
 	</div>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
-	<lo:button image="table_link.png" method="dialog.dialog('open')" key="button.create" submit="false"></lo:button>
+	<lo:button image="application_form.png" method="roleDialog.dialog('open')" key="button.create" submit="false"></lo:button>
 	<hr />
 	<lo:pqGrid selectedIds="selectedIds" url="/listRole.do?method=ajaxList" titleKey="displayRole.title" id="rollen" rPP="15">
 		<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name"></lo:pqGridColumn>
 	</lo:pqGrid>
-	
-	<div id="dialog">
-		<table>
+</html:form>
+
+<lo:dialog id="role" titleKey="table.role" />
+<div id="roleDialog">
+	<html:form action="/listRole.do" styleId="roleDialogForm">
+		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>
-				<td><html:text property="name" size="45" maxlength="45" tabindex="1"></html:text></td>
+				<td><html:text property="dialogName" size="45" maxlength="45" tabindex="1"></html:text></td>
 			</tr>
 		</table>
-	</div>
-</html:form>
+		<c:if test="${error==1}">
+			<table class="tiletable">
+				<tr>
+					<td class="ui-tabs ui-corner-all ui-widget ui-widget-content ui-state-error defaultheight">
+						<jsp:include page="../messages.jsp"></jsp:include>
+					</td>
+				</tr>
+			</table>
+		</c:if>
+	</html:form>
+</div>

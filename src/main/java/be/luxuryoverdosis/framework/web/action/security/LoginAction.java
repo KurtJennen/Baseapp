@@ -64,7 +64,7 @@ public class LoginAction extends DispatchAction {
 			}	
 			if(days > 0 && days <= UserService.DAYS_OF_WARNING){			
 				loginForm.setDeactivation(true);
-				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.warning", String.valueOf(days)));
+				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.warning", new Object[] {String.valueOf(days)}));
 			}
 			
 			SessionManager.putInSession(request, BaseWebConstants.USER, user);

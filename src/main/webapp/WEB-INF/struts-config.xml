@@ -124,6 +124,7 @@
 				type="be.luxuryoverdosis.framework.web.action.security.ListRoleAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="/listRole.do?method=list" />
 				<forward name="create" path="/detailRole.do?method=create" />
 				<forward name="read" path="/detailRole.do?method=read" />
 		</action>

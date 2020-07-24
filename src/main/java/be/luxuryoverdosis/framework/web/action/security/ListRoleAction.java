@@ -67,13 +67,13 @@ public class ListRoleAction extends AjaxAction {
     public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
-		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
+		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		
 		ListRoleForm listRoleForm = (ListRoleForm) form;
 		
 		RoleDTO roleDTO = new RoleDTO();
 		roleDTO.setId(listRoleForm.getId());
-		roleDTO.setName(listRoleForm.getName());
+		roleDTO.setName(listRoleForm.getDialogName());
 		
 		roleDTO = getRoleService().createOrUpdateDTO(roleDTO);
 		if(listRoleForm.getId() < 0) {
@@ -82,7 +82,6 @@ public class ListRoleAction extends AjaxAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		actionRedirect.addParameter(BaseWebConstants.ID, roleDTO.getId());
 		
 		Logging.info(this, "End Update Success");
 		

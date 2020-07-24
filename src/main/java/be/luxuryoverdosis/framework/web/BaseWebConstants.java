@@ -46,6 +46,7 @@ public class BaseWebConstants {
 	
 	//Session objects
 	public static final String DETAIL = "detail";
+	public static final String DIALOG = "dialog";
 	public static final String ERROR = "error";
 	public static final String USER = "user";
 	

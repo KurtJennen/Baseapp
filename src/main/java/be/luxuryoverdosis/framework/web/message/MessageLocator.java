@@ -9,7 +9,7 @@ import org.apache.struts.Globals;
 import org.apache.struts.util.MessageResources;
 
 public class MessageLocator {	
-	public static String getMessage(HttpServletRequest request, String messageKey, String messageValue, String bundleKey) {
+	public static String getMessage(HttpServletRequest request, String messageKey, Object[] messageValue, String bundleKey) {
 		Locale locale = getLocale(request);
 		
 		if(bundleKey == null) {
@@ -31,7 +31,7 @@ public class MessageLocator {
 		return locale;
 	}
 	
-	public static String getMessage(HttpServletRequest request, String messageKey, String messageValue) {
+	public static String getMessage(HttpServletRequest request, String messageKey, Object[] messageValue) {
 		return getMessage(request, messageKey, messageValue, null);
 	}
 	

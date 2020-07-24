@@ -6,6 +6,7 @@
 		<put name="footer" value="/jsp/footer.jsp" />
 		<put name="menu" value="/jsp/strutsmenu.jsp" />
 		<put name="messages" value="/jsp/messages.jsp" />
+		<put name="dialogMessages" value="/jsp/messages.jsp" />
 	</definition>
 	
 	<definition name="display.error.form" extends="myTile">
