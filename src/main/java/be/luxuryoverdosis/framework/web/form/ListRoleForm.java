@@ -34,9 +34,9 @@ public class ListRoleForm extends ListForm {
 		ActionErrors errors = super.validate(mapping, request);
 		
 		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
-			request.setAttribute(BaseWebConstants.DIALOG, true);
 			if(StringUtils.isEmpty(dialogName)) {
 				errors.add("name", new ActionMessage("errors.required", MessageLocator.getMessage(request, "security.name")));
+				request.setAttribute(BaseWebConstants.DIALOG, true);
 			}
 		}
 		

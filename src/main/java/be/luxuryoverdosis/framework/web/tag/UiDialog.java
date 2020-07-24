@@ -102,9 +102,8 @@ public class UiDialog extends BodyTagSupport {
 		uiDialogObject.setAutoOpen(autoOpen);
 		uiDialogObject.setModal(modal);
 		
-		Object error = request.getAttribute(BaseWebConstants.ERROR);
 		Object dialog = request.getAttribute(BaseWebConstants.DIALOG);
-		if(dialog != null && (boolean)dialog && error != null && (int)error == 1) {
+		if(dialog != null && (boolean)dialog) {
 			uiDialogObject.setAutoOpen(true);
 		}
 		
