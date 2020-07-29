@@ -55,7 +55,7 @@ $(document).ready(function() {
 			<li><a href="#tab4"><fmt:message key="displayJobLog.title" /></a></li>
 		</ul>
 		<div id="tab1">
-			<lo:pqGrid selectedIds="selectedIdsBatchJobParams" url="/detailJob.do?method=ajaxBatchJobParamsList" titleKey="displayJobParams.title" id="batchJobParams" rPP="15" rowClickMethod="">
+			<lo:pqGrid nameSelectedIds="selectedIdsBatchJobParams" url="/detailJob.do?method=ajaxBatchJobParamsList" titleKey="displayJobParams.title" id="batchJobParams" rPP="15" rowClickMethod="">
 				<lo:pqGridColumn width="100" dataIndx="typeCode" dataType="string" titleKey="batchjobparams.type.code"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="keyName" dataType="string" titleKey="batchjobparams.key.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="stringValue" dataType="string" titleKey="batchjobparams.string.value"></lo:pqGridColumn>
@@ -65,7 +65,7 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab2">
-			<lo:pqGrid selectedIds="selectedIdsBatchJobExecutionParams" url="/detailJob.do?method=ajaxBatchJobExecutionParamsList" titleKey="displayJobExecutionParams.title" id="batchJobExecutionParams" rPP="15" rowClickMethod="">
+			<lo:pqGrid nameSelectedIds="selectedIdsBatchJobExecutionParams" url="/detailJob.do?method=ajaxBatchJobExecutionParamsList" titleKey="displayJobExecutionParams.title" id="batchJobExecutionParams" rPP="15" rowClickMethod="">
 				<lo:pqGridColumn width="100" dataIndx="typeCode" dataType="string" titleKey="batchjobexecutionparams.type.code"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="keyName" dataType="string" titleKey="batchjobexecutionparams.key.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="stringValue" dataType="string" titleKey="batchjobexecutionparams.string.value"></lo:pqGridColumn>
@@ -76,7 +76,7 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab3">
-			<lo:pqGrid selectedIds="selectedIdsBatchJobStepExecution" url="/detailJob.do?method=ajaxBatchJobStepExecutionList" titleKey="displayJob.title" id="batchJobStepExecution" rPP="15" rowClickMethod="">
+			<lo:pqGrid nameSelectedIds="selectedIdsBatchJobStepExecution" url="/detailJob.do?method=ajaxBatchJobStepExecutionList" titleKey="displayJob.title" id="batchJobStepExecution" rPP="15" rowClickMethod="">
 				<lo:pqGridColumn width="50" dataIndx="version" dataType="string" titleKey="batchjobstepexecution.version"></lo:pqGridColumn>
 				<lo:pqGridColumn width="150" dataIndx="stepName" dataType="string" titleKey="batchjobstepexecution.step.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="150" dataIndx="startTimeAsString" dataType="string" titleKey="batchjobstepexecution.start.time"></lo:pqGridColumn>
@@ -96,7 +96,7 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab4">
-			<lo:pqGrid selectedIds="selectedIdsJobLog" url="/detailJob.do?method=ajaxJobLogList" titleKey="displayJobLog.title" id="jobLog" rPP="15" rowClickMethod="">
+			<lo:pqGrid nameSelectedIds="selectedIdsJobLog" url="/detailJob.do?method=ajaxJobLogList" titleKey="displayJobLog.title" id="jobLog" rPP="15" rowClickMethod="">
 				<lo:pqGridColumn width="1000" dataIndx="input" dataType="string" titleKey="joblog.input"></lo:pqGridColumn>
 				<lo:pqGridColumn width="1000" dataIndx="output" dataType="string" titleKey="joblog.output"></lo:pqGridColumn>
 			</lo:pqGrid>

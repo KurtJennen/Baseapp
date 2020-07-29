@@ -314,7 +314,7 @@
 			<required>false</required>
 		</attribute>
 		<attribute>
-			<name>selectedIds</name>
+			<name>nameSelectedIds</name>
 			<required>true</required>
 		</attribute>
 		<attribute>

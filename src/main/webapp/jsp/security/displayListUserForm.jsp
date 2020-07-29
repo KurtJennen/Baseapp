@@ -47,7 +47,7 @@ $(document).ready(function() {
 			<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 			<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 			<hr />
-			<lo:pqGrid selectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
+			<lo:pqGrid nameSelectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="email" dataType="string" titleKey="security.email"></lo:pqGridColumn>
@@ -60,7 +60,7 @@ $(document).ready(function() {
 			<lo:button image="table_edit.png" method="readExportJob" key="button.edit"></lo:button>
 			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>
 			<hr />
-			<lo:pqGrid selectedIds="selectedIdsExportJob" url="/listUser.do?method=ajaxListExportJob" titleKey="displayJob.title" id="usersExportJob" rPP="15" rowClickMethod="readExportJob">
+			<lo:pqGrid nameSelectedIds="selectedIdsExportJob" url="/listUser.do?method=ajaxListExportJob" titleKey="displayJob.title" id="usersExportJob" rPP="15" rowClickMethod="readExportJob">
 				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
@@ -78,7 +78,7 @@ $(document).ready(function() {
 			<html:file property="formFile" size="100" maxlength="256" tabindex="1"></html:file>
 			<lo:button image="cog.png" method="importUserJob" key="button.import"></lo:button>
 			<hr />
-			<lo:pqGrid selectedIds="selectedIdsImportJob" url="/listUser.do?method=ajaxListImportJob" titleKey="displayJob.title" id="usersImportJob" rPP="15" rowClickMethod="readImportJob">
+			<lo:pqGrid nameSelectedIds="selectedIdsImportJob" url="/listUser.do?method=ajaxListImportJob" titleKey="displayJob.title" id="usersImportJob" rPP="15" rowClickMethod="readImportJob">
 				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>

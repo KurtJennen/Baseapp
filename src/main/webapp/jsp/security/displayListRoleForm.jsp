@@ -12,7 +12,7 @@
 	<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 	<lo:button image="application_form.png" method="roleDialog.dialog('open')" key="button.create" submit="false"></lo:button>
 	<hr />
-	<lo:pqGrid selectedIds="selectedIds" url="/listRole.do?method=ajaxList" titleKey="displayRole.title" id="rollen" rPP="15">
+	<lo:pqGrid nameSelectedIds="selectedIds" url="/listRole.do?method=ajaxList" titleKey="displayRole.title" id="rollen" rPP="15">
 		<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name"></lo:pqGridColumn>
 	</lo:pqGrid>
 </html:form>

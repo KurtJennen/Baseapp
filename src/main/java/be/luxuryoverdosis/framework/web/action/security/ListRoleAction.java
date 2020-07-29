@@ -86,7 +86,6 @@ public class ListRoleAction extends AjaxAction {
 		
 		request.setAttribute(BaseWebConstants.DIALOG, false);
 		
-		
 		Logging.info(this, "End Update Success");
 		
 		return actionRedirect;
