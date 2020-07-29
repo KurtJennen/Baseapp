@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.form.BaseForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.pq.PqGridObject;
 import be.luxuryoverdosis.framework.web.sessionmanager.UrlManager;
@@ -27,7 +28,7 @@ public class PqGrid implements Tag {
 	private String id;
 	private String title;
 	private String titleKey;
-	private String selectedIds;
+	private String nameSelectedIds;
 	private String rowClickMethod = BaseWebConstants.READ;
 	private String url;
 	private String width = "99%";
@@ -49,8 +50,8 @@ public class PqGrid implements Tag {
 	public void setTitleKey(String titleKey) {
 		this.titleKey = titleKey;
 	}
-	public void setSelectedIds(String selectedIds) {
-		this.selectedIds = selectedIds;
+	public void setNameSelectedIds(String nameSelectedIds) {
+		this.nameSelectedIds = nameSelectedIds;
 	}
 	public void setRowClickMethod(String rowClickMethod) {
 		this.rowClickMethod = rowClickMethod;
@@ -121,6 +122,8 @@ public class PqGrid implements Tag {
 			roleClickable = false;
 		}
 		
+		BaseForm baseForm = (BaseForm) request.getAttribute("org.apache.struts.taglib.html.BEAN");
+		
 		pqGridObject = new PqGridObject();
 		pqGridObject.setId(id);
 		
@@ -131,7 +134,8 @@ public class PqGrid implements Tag {
 			pqGridObject.setTitle(MessageLocator.getMessage(request, titleKey));
 		}
 		
-		pqGridObject.setSelectedIds(selectedIds);
+		pqGridObject.setNameSelectedIds(nameSelectedIds);
+		pqGridObject.setSelectedIds(baseForm.getSelectedIds());
 		
 		if(clickable && roleClickable) {
 			pqGridObject.setRowClickMethod(rowClickMethod);

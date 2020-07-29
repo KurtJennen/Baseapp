@@ -8,6 +8,7 @@
 		
 		<form-bean name="loginForm" type="be.luxuryoverdosis.framework.web.form.LoginForm" />
 		<form-bean name="detailRoleForm" type="be.luxuryoverdosis.framework.web.form.DetailRoleForm" />
+		<form-bean name="listRoleForm" type="be.luxuryoverdosis.framework.web.form.ListRoleForm" />
 		<form-bean name="detailUserForm" type="be.luxuryoverdosis.framework.web.form.DetailUserForm" />
 		<form-bean name="listUserForm" type="be.luxuryoverdosis.framework.web.form.ListUserForm" />
 		<form-bean name="searchUserForm" type="be.luxuryoverdosis.framework.web.form.SearchUserForm" />
@@ -116,13 +117,14 @@
 		</action>
 		
 		<action path="/listRole"
-				name="listForm"
+				name="listRoleForm"
 				validate="true"
 				scope="request"
 				input="display.list.role.form"
 				type="be.luxuryoverdosis.framework.web.action.security.ListRoleAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
+				<forward name="list" path="/listRole.do?method=list" />
 				<forward name="create" path="/detailRole.do?method=create" />
 				<forward name="read" path="/detailRole.do?method=read" />
 		</action>

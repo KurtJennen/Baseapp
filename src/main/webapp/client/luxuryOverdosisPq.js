@@ -13,6 +13,16 @@ function cellDblClickPq(ui, sSelectedIdsName, sMethod) {
 	doActionIdPqGrid(sMethod, ui.rowData.id);
 }
 
+function loadPq(oData, iId, sSelectedIdsName) {
+	for (var i = 0, len = oData.length; i < len; i++) {
+		if (oData[i].id == iId) {
+			oData[i].selectedRow = true;
+			createHiddenInputTag(oData[i].id, sSelectedIdsName);
+			break;
+		}
+	}
+}
+
 function checkPq(ui, sId, sSelectedIdsName) {
 	if (ui.source == "header") {
 		var data = $("#" + sId).pqGrid("option", "dataModel.data");

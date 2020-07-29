@@ -8,6 +8,11 @@
 		<name>button</name>
 		<tag-class>be.luxuryoverdosis.framework.web.tag.Button</tag-class>
 		<attribute>
+			<name>submit</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
 			<name>method</name>
 			<required>true</required>
 		</attribute>
@@ -309,7 +314,7 @@
 			<required>false</required>
 		</attribute>
 		<attribute>
-			<name>selectedIds</name>
+			<name>nameSelectedIds</name>
 			<required>true</required>
 		</attribute>
 		<attribute>
@@ -414,6 +419,45 @@
 		<attribute>
 			<name>filterCondition</name>
 			<required>false</required>
+		</attribute>
+	</tag>
+	<tag>
+		<name>dialog</name>
+		<tag-class>be.luxuryoverdosis.framework.web.tag.UiDialog</tag-class>
+		<attribute>
+			<name>id</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>method</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>titleKey</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>width</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>height</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>autoOpen</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>modal</name>
+			<required>false</required>
+			<type>java.lang.Boolean</type>
 		</attribute>
 	</tag>
 </taglib>

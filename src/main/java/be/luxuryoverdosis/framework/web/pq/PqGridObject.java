@@ -7,7 +7,8 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 public class PqGridObject {
 	private String id;
 	private String title;
-	private String selectedIds;
+	private String nameSelectedIds;
+	private int[] selectedIds;
 	private String rowClickMethod = BaseWebConstants.READ;
 	private String url;
 	private String width = "99%";
@@ -78,10 +79,16 @@ public class PqGridObject {
 	public void setSummary(boolean summary) {
 		this.summary = summary;
 	}
-	public String getSelectedIds() {
+	public String getNameSelectedIds() {
+		return nameSelectedIds;
+	}
+	public void setNameSelectedIds(String nameSelectedIds) {
+		this.nameSelectedIds = nameSelectedIds;
+	}
+	public int[] getSelectedIds() {
 		return selectedIds;
 	}
-	public void setSelectedIds(String selectedIds) {
+	public void setSelectedIds(int[] selectedIds) {
 		this.selectedIds = selectedIds;
 	}
 	public String getRowClickMethod() {

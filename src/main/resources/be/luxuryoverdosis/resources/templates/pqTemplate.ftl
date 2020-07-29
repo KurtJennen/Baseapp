@@ -58,15 +58,24 @@
             </#if>
             sorting: "local",
             filterModel: { on: true, mode: "AND", header: true, type: "local" },
+            load: function (evt, ui) {
+	            <#if (templateData.selectedIds)??>
+	            	var data = $("#${templateData.id}Grid").pqGrid("option", "dataModel.data");
+	            	 <#list templateData.selectedIds as selectedId>
+	            		loadPq(data, ${selectedId}, "${templateData.nameSelectedIds}");
+	            	</#list>
+	            	$("#${templateData.id}Grid").pqGrid("refresh");
+	            </#if>
+            },
             check: function (evt, ui) {
-            	checkPq(ui, "${templateData.id}Grid", "${templateData.selectedIds}");
+            	checkPq(ui, "${templateData.id}Grid", "${templateData.nameSelectedIds}");
             },
             unCheck: function (evt, ui) {
-            	unCheckPq(ui, "${templateData.selectedIds}");
+            	unCheckPq(ui, "${templateData.nameSelectedIds}");
             },
             <#if templateData.rowClickMethod != "">
 	            cellDblClick: function (evt, ui) {
-	            	cellDblClickPq(ui, "${templateData.selectedIds}", "${templateData.rowClickMethod}");
+	            	cellDblClickPq(ui, "${templateData.nameSelectedIds}", "${templateData.rowClickMethod}");
 	            },
             </#if>
             toolbar: {
@@ -101,6 +110,8 @@
 	        	}
 	        </#if>
         });
+        
+        $("#${templateData.id}Grid").pqGrid("selection", { type:'row', method:'add', rowIndx:2});
         
         $("#${templateData.id}Grid").pqGrid("option", $.paramquery.pqGrid.regional['${templateData.language}']);
         $("#${templateData.id}Grid").find(".pq-pager").pqPager("option", $.paramquery.pqPager.regional['${templateData.language}']);

@@ -1,25 +1,41 @@
-function doPosition(sMethod) {
-	var iPosition =  window.document.forms[0].action.indexOf("?method=");
+function doPositionForm(sMethod, oFormIndex) {
+	var iPosition =  window.document.forms[oFormIndex].action.indexOf("?method=");
 	if(iPosition != -1 ) {
-		window.document.forms[0].action = window.document.forms[0].action.substr(0, iPosition) + '?method=' + sMethod;
+		window.document.forms[oFormIndex].action = window.document.forms[0].action.substr(0, iPosition) + '?method=' + sMethod;
 	} else {
-		window.document.forms[0].action += '?method=' + sMethod;
+		window.document.forms[oFormIndex].action += '?method=' + sMethod;
 	}
 }
 
-function doAction(sMethod) {
-	doPosition(sMethod);
+function doPosition(sMethod) {
+	doPositionForm(sMethod, 0);
+}
+
+function doActionForm(sMethod, oFormIndex) {
+	doPosition(sMethod, oFormIndex);
 	doSubmit();
 }
 
+function doAction(sMethod) {
+	doActionForm(sMethod, 0);
+}
+
+function doActionDetailForm(sMethod, oFormIndex) {
+	doPositionForm(sMethod, oFormIndex);
+	window.document.forms[oFormIndex].submit();
+}
+
 function doActionDetail(sMethod) {
+	doActionDetailForm(sMethod, 0);
+}
+
+function doActionChangeForm(sMethod, oFormIndex) {
 	doPosition(sMethod);
-	window.document.forms[0].submit();
+	window.document.forms[oFormIndex].submit();
 }
 
 function doActionChange(sMethod) {
-	doPosition(sMethod);
-	window.document.forms[0].submit();
+	doActionChangeForm(sMethod, 0);
 }
 
 function doActionId(sMethod, oObject) {

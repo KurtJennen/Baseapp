@@ -8,7 +8,7 @@
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 	<hr />
-	<lo:pqGrid selectedIds="selectedIds" url="/listNumber.do?method=ajaxList" titleKey="displayNumber.title" id="numbers" rPP="15">
+	<lo:pqGrid nameSelectedIds="selectedIds" url="/listNumber.do?method=ajaxList" titleKey="displayNumber.title" id="numbers" rPP="15">
 		<lo:pqGridColumn width="100" dataIndx="applicationCode" dataType="string" titleKey="security.number.application.code"></lo:pqGridColumn>
 		<lo:pqGridColumn width="50" dataIndx="year" dataType="string" titleKey="security.number.year"></lo:pqGridColumn>
 		<lo:pqGridColumn width="100" dataIndx="number" dataType="string" titleKey="security.number.number"></lo:pqGridColumn>
