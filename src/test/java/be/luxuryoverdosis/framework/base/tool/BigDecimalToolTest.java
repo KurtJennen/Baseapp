@@ -7,8 +7,6 @@ import java.math.RoundingMode;
 
 import org.junit.Test;
 
-import be.luxuryoverdosis.framework.base.tool.BigDecimalTool;
-
 public class BigDecimalToolTest {
 	@Test
 	public void testToStringBigDecimal() {
