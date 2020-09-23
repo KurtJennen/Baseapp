@@ -67,7 +67,7 @@ public class ListRoleAction extends AjaxAction {
     public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
-		request.setAttribute(BaseWebConstants.DIALOG, true);
+		request.setAttribute(BaseWebConstants.ROLE_DIALOG, true);
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LIST));
 		
@@ -84,7 +84,7 @@ public class ListRoleAction extends AjaxAction {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
 		}
 		
-		request.setAttribute(BaseWebConstants.DIALOG, false);
+		request.setAttribute(BaseWebConstants.ROLE_DIALOG, false);
 		
 		Logging.info(this, "End Update Success");
 		
