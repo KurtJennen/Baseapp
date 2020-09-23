@@ -80,13 +80,28 @@ public class PqGridColumn implements Tag {
 	}
 	
 	public Tag getParent() {
-		return null;
+		return parent;
+	}
+	
+	private Tag getParent(Tag tag) {
+		while(true) {
+			Tag parent = tag.getParent();
+			
+			if(parent == null) {
+				return null;
+			}
+			if(parent != null && parent instanceof PqGrid){
+				return parent;
+			}
+			
+			tag = parent;
+		}
 	}
 	
 	public int doStartTag() throws JspException {
 		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 		
-		PqGrid pqGridTag = (PqGrid) parent;
+		PqGrid pqGridTag = (PqGrid) getParent(this);
 		
 		if (visible) {
 			PqGridColumnObject gridColumnObject = new PqGridColumnObject();

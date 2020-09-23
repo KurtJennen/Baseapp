@@ -36,7 +36,7 @@ public class ListRoleForm extends ListForm {
 		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
 			if(StringUtils.isEmpty(dialogName)) {
 				errors.add("name", new ActionMessage("errors.required", MessageLocator.getMessage(request, "security.name")));
-				request.setAttribute(BaseWebConstants.DIALOG, true);
+				request.setAttribute(BaseWebConstants.ROLE_DIALOG, true);
 			}
 		}
 		
