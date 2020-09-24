@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.business.service.interfaces.SqlService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.SqlHibernateDAO;
 import be.luxuryoverdosis.framework.data.to.Sql;
@@ -96,7 +97,7 @@ public class SqlServiceSpringImpl implements SqlService {
 				sqlHibernateDAO.insertJdbc(sqlStatement, name, application);
 				Logging.info(this, "SQL Executed: " + sqlStatement);
 			} catch (DataAccessException e) {
-				Logging.info(this, "SQL NOT Executed: " + sqlStatement + " " + e.getMessage());
+				Logging.info(this, "SQL NOT Executed: " + sqlStatement + Constants.SPACE + e.getMessage());
 				throw e;
 			}
 		}
