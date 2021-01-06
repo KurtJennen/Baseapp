@@ -1,4 +1,4 @@
-package be.luxuryoverdosis.framework.web.action.security;
+package be.luxuryoverdosis.framework.web.action.navigation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionRedirect;
 import be.luxuryoverdosis.framework.base.tool.ArrayTool;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
+import be.luxuryoverdosis.framework.web.action.ajax.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.BaseForm;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 

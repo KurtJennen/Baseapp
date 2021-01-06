@@ -25,7 +25,7 @@ import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
+import be.luxuryoverdosis.framework.web.action.ajax.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.ListUserForm;
 import be.luxuryoverdosis.framework.web.form.SearchUserForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;

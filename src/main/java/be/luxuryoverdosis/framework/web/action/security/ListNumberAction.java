@@ -16,7 +16,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.NumberService;
 import be.luxuryoverdosis.framework.data.to.Number;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
+import be.luxuryoverdosis.framework.web.action.ajax.AjaxAction;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 

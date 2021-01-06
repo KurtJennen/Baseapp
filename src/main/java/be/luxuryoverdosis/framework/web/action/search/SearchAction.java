@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
+import be.luxuryoverdosis.framework.web.action.ajax.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.SearchForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 

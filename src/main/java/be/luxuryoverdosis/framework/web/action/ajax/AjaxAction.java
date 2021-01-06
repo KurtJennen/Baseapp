@@ -1,4 +1,4 @@
-package be.luxuryoverdosis.framework.web.action.ajaxaction;
+package be.luxuryoverdosis.framework.web.action.ajax;
 
 import java.io.PrintWriter;
 

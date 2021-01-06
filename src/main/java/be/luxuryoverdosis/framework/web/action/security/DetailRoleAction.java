@@ -15,6 +15,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.action.navigation.NavigationAction;
 import be.luxuryoverdosis.framework.web.form.DetailRoleForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 

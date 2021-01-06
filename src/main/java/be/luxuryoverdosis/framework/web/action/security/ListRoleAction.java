@@ -18,7 +18,7 @@ import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
-import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
+import be.luxuryoverdosis.framework.web.action.ajax.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.ListRoleForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;

@@ -21,6 +21,7 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.action.navigation.NavigationAction;
 import be.luxuryoverdosis.framework.web.form.DetailUserForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
