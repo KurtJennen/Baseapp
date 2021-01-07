@@ -133,7 +133,7 @@
 				validate="true"
 				scope="request"
 				input="display.detail.role.form"
-				type="be.luxuryoverdosis.framework.web.action.security.DetailRoleAction"
+				type="be.luxuryoverdosis.framework.web.action.navigation.DetailRoleAction"
 				parameter="method">
 				<forward name="failed" path="display.error.form" />
 				<forward name="list" path="/listRole.do?method=list" />
