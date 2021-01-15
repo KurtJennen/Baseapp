@@ -48,7 +48,11 @@ public class BigDecimalTool {
 		Locale locale = Locale.getDefault();
 		
         if(string != null && StringUtils.isNotEmpty(string)) {
-        	convertedDecimal = new BigDecimalValidator().validate(string, locale).setScale(fraction);
+        	BigDecimal validatedDecimal = new BigDecimalValidator().validate(string, locale);
+        	
+        	if(validatedDecimal != null) {
+        		convertedDecimal = new BigDecimalValidator().validate(string, locale).setScale(fraction);
+        	}
         }
         
         return convertedDecimal;
