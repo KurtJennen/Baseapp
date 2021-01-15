@@ -66,6 +66,15 @@ public class BigDecimalToolTest {
 	}
 	
 	@Test
+	public void testToBigDecimalString() {
+		String string = "Aa;";
+		
+		BigDecimal result = BigDecimalTool.toBigDecimal(string);
+		
+		assertThat(BigDecimal.ZERO).isEqualByComparingTo(result);
+	}
+	
+	@Test
 	public void testToBigDecimalDouble() {
 		String string = "123,4567";
 		BigDecimal decimal = new BigDecimal(123.4567).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
