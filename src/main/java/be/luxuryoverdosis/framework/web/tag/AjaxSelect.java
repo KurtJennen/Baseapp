@@ -140,7 +140,7 @@ public class AjaxSelect implements Tag {
 				Object waarde = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
 				
 				out.println("<input type=\"hidden\" name=\"" + property + "\" value=\"" + waarde.toString() + "\" id=\"" + property + "\">");
-				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "')\">");
+				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "')\" autocomplete=\"off\">");
 				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
 				out.println("<img src=\"images/" + image + "\"/>");
 				out.println("</button>");
