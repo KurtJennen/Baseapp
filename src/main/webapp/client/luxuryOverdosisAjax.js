@@ -1,29 +1,39 @@
 function doAjaxSelect(sProperty, sMethodAll, sMethodOne, aFields, sNoResult) {
 	$('#' + sProperty + 'Button').click(function(e) {
-		$('#' + sProperty + 'Result').text("");
-		
-		$.ajax({
-			type: 'post',
-			url: doComposeAction(sMethodAll),
-			data: $('form').serialize(),
-			success: function(response) {
-				if (response.length == 0) {
-					$("<tr><td onclick=javascript:doAjaxBlurNoResult('" + sProperty + "') onmouseover=this.style.background='#fdecae' onmouseout=this.style.background='#e3e3e3'>" + sNoResult + "</td></tr>").appendTo($('#' + sProperty + 'Result'));
-				} else {
-					var template = $('#' + sProperty + 'Tmpl');
-					template.tmpl($.parseJSON(response)).appendTo('#' + sProperty + 'Result');
-				}
-				
-			},
-			error: function(e) {
-				alert('Error: ' + e);
-			}
-		})
+		doAjaxSelectCommon(sProperty, sMethodAll, sNoResult);
+	});
+	
+	$('#' + sProperty + 'Value').keyup(function(e) {
+		if(e.keyCode == 40) {
+			doAjaxSelectCommon(sProperty, sMethodAll, sNoResult);
+		}
 	});
 	
 	if ($('#' + sProperty).val() > 0) {
 		doAjaxSelectClicked(sProperty, sMethodOne, $('#' + sProperty).val(), aFields);
 	}
+}
+
+function doAjaxSelectCommon(sProperty, sMethodAll, sNoResult) {
+	$('#' + sProperty + 'Result').text("");
+	
+	$.ajax({
+		type: 'post',
+		url: doComposeAction(sMethodAll),
+		data: $('form').serialize(),
+		success: function(response) {
+			if (response.length == 0) {
+				$("<tr><td onclick=javascript:doAjaxBlurNoResult('" + sProperty + "') onmouseover=this.style.background='#fdecae' onmouseout=this.style.background='#e3e3e3'>" + sNoResult + "</td></tr>").appendTo($('#' + sProperty + 'Result'));
+			} else {
+				var template = $('#' + sProperty + 'Tmpl');
+				template.tmpl($.parseJSON(response)).appendTo('#' + sProperty + 'Result');
+			}
+			
+		},
+		error: function(e) {
+			alert('Error: ' + e);
+		}
+	})
 }
 
 function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields) {
