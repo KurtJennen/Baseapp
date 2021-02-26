@@ -32,7 +32,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		User user = ThreadManager.getUserFromThread();
 		
-		Query query = this.read(queryDTO.getName(), queryDTO.getType());
+		Query query = this.read(queryDTO.getName(), queryDTO.getType(), user.getId());
 		if(query == null) {
 			query = new Query();
 		}
@@ -112,10 +112,10 @@ public class QueryServiceSpringImpl implements QueryService {
 	}
 	
 	@Transactional(readOnly=true)
-	public Query read(final String name, final String type) {
+	public Query read(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin readQuery");
 		Query result = null;
-		result = queryHibernateDAO.read(name, type);
+		result = queryHibernateDAO.read(name, type, userId);
 		Logging.info(this, "End readQuery");
 		return result;
 	}
@@ -265,13 +265,13 @@ public class QueryServiceSpringImpl implements QueryService {
 	}
 	
 	@Transactional
-	public long countAndCreateOrUpdateDTO(final String name, final String type, final QueryDTO queryDTO) {
+	public long countAndCreateOrUpdateDTO(final String type, final QueryDTO queryDTO) {
 		Logging.info(this, "Begin countQuery");
 		
 		User user = ThreadManager.getUserFromThread();
 		
 		Long countQuery = new Long(0);
-		countQuery = queryHibernateDAO.count(name, type, user.getId());
+		countQuery = queryHibernateDAO.count(queryDTO.getName(), type, user.getId());
 		
 		this.createOrUpdateDTO(queryDTO);
 		

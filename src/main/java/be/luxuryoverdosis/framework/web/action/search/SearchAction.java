@@ -92,7 +92,7 @@ public abstract class SearchAction extends AjaxAction {
 		queryDTO.setOpenBrackets(searchForm.getSearchCriteria().getOpenBrackets());
 		queryDTO.setCloseBrackets(searchForm.getSearchCriteria().getCloseBrackets());
 		
-		long count = getQueryService().countAndCreateOrUpdateDTO(searchForm.getQueryName(), this.getSearchServiceName(), queryDTO);
+		long count = getQueryService().countAndCreateOrUpdateDTO(this.getSearchServiceName(), queryDTO);
 		if(count == 0) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
