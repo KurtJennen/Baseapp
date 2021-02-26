@@ -11,7 +11,7 @@ public interface QueryService {
 	
 	public Query createOrUpdate(Query query);
 	public Query read(int id);
-	public Query read(String name, String type);
+	public Query read(String name, String type, int userId);
 	public String[] readParameters(int id);
 	public String[] readOperators(int id);
 	public String[] readValues(int id);
@@ -22,5 +22,5 @@ public interface QueryService {
 	
 	public ArrayList<Query> list(String type);
 	
-	public long countAndCreateOrUpdateDTO(String name, String type, QueryDTO queryDTO);
+	public long countAndCreateOrUpdateDTO(String type, QueryDTO queryDTO);
 }

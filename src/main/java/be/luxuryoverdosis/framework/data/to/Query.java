@@ -16,13 +16,13 @@ import org.hibernate.annotations.Proxy;
 @Table(name="base_query")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Query.SELECT_QUERIES_BY_NAME_AND_TYPE, query=Query.Queries.SELECT_QUERIES_BY_NAME_AND_TYPE),
+	@NamedQuery(name=Query.SELECT_QUERIES_BY_NAME_AND_TYPE_AND_USER, query=Query.Queries.SELECT_QUERIES_BY_NAME_AND_TYPE_AND_USER),
 	@NamedQuery(name=Query.SELECT_QUERIES_BY_TYPE_AND_USER, query=Query.Queries.SELECT_QUERIES_BY_TYPE_AND_USER),
 	@NamedQuery(name=Query.COUNT_QUERIES_BY_NAME_AND_TYPE_AND_USER, query=Query.Queries.COUNT_QUERIES_BY_NAME_AND_TYPE_AND_USER),
 })
 @Proxy(lazy=false)
 public class Query extends BaseTO {
-	public static final String SELECT_QUERIES_BY_NAME_AND_TYPE = "selectQueriesByNameAndType";
+	public static final String SELECT_QUERIES_BY_NAME_AND_TYPE_AND_USER = "selectQueriesByNameAndTypeAndUser";
 	public static final String SELECT_QUERIES_BY_TYPE_AND_USER = "selectQueriesByTypeAndUser";
 	public static final String COUNT_QUERIES_BY_NAME_AND_TYPE_AND_USER = "countQueriesByNameAndTypeAndUser";
 	
@@ -65,9 +65,10 @@ public class Query extends BaseTO {
 	}
 	
 	public static final class Queries {
-		public static final String SELECT_QUERIES_BY_NAME_AND_TYPE = "from Query q "
+		public static final String SELECT_QUERIES_BY_NAME_AND_TYPE_AND_USER = "from Query q "
 				+ "where q.name = :name "
-				+ "and q.type = :type";
+				+ "and q.type = :type "
+				+ "and q.user.id = :userId";
 		
 		public static final String SELECT_QUERIES_BY_TYPE_AND_USER = "from Query q "
 				+ "where q.type = :type "

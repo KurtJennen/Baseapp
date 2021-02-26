@@ -27,12 +27,13 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 	}
 	
 	@SuppressWarnings("unchecked")
-	public Query read(final String name, final String type) {
+	public Query read(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin readQuery(name, type)");
 		
-		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery(Query.SELECT_QUERIES_BY_NAME_AND_TYPE);
+		org.hibernate.query.Query<Query> hibernateQuery = getCurrentSession().getNamedQuery(Query.SELECT_QUERIES_BY_NAME_AND_TYPE_AND_USER);
 		hibernateQuery.setParameter(BaseQueryParameters.NAME, name);
 		hibernateQuery.setParameter(BaseQueryParameters.TYPE, type);
+		hibernateQuery.setParameter(BaseQueryParameters.USER_ID, userId);
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Query query = null;
