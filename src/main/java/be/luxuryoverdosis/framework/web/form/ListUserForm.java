@@ -49,7 +49,7 @@ public class ListUserForm extends ListForm {
 		ActionErrors errors = super.validate(mapping, request);
 		
 		if(this.getMethod().equals(BaseWebConstants.IMPORT_USER_JOB)) {
-			if(this.getFormFile() == null || StringUtils.isEmpty(this.getFormFile().getFileName())) {
+			if(StringUtils.isEmpty(this.getFormFile().getFileName())) {
 				errors.add("formFile", new ActionMessage("errors.required", MessageLocator.getMessage(request, "file")));
 			}
 		}

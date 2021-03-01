@@ -64,13 +64,13 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		if(documentHibernateDAO.count(document.getType(), document.getFileName(), document.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.document"});
 		}
-		if(document.getFileName() == null || StringUtils.isEmpty(document.getFileName())) {
+		if(StringUtils.isEmpty(document.getFileName())) {
 			throw new ServiceException("errors.required", new String[] {"file.name"});
 		}
 		if(document.getFileData() == null) {
 			throw new ServiceException("errors.required", new String[] {"file.data"});
 		}
-		if(document.getContentType() == null || StringUtils.isEmpty(document.getContentType())) {
+		if(StringUtils.isEmpty(document.getContentType())) {
 			throw new ServiceException("errors.required", new String[] {"file.contenttype"});
 		}
 		if(!document.getFileName().endsWith(FileType.ODT)) {

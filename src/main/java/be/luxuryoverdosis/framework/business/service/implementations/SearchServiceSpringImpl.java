@@ -53,7 +53,7 @@ public class SearchServiceSpringImpl implements SearchService {
 		
 		search.append(searchSelect.getSelect());
 		search.append(SearchQuery.SPACE);
-		if(addOnSelect != null && !StringUtils.isEmpty(addOnSelect)) {
+		if(!StringUtils.isEmpty(addOnSelect)) {
 			search.append(addOnSelect);
 			search.append(SearchQuery.SPACE);
 		}

@@ -55,13 +55,13 @@ public class NumberServiceSpringImpl implements NumberService {
 		if(numberHibernateDAO.count(number.getApplicationCode(), number.getYear(), number.getType(), number.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.number"});
 		}
-		if(number.getApplicationCode() == null || StringUtils.isEmpty(number.getApplicationCode())) {
+		if(StringUtils.isEmpty(number.getApplicationCode())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.application.code"});
 		}
-		if(number.getYear() == null || StringUtils.isEmpty(number.getYear())) {
+		if(StringUtils.isEmpty(number.getYear())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.year"});
 		}
-		if(number.getType() == null || StringUtils.isEmpty(number.getType())) {
+		if(StringUtils.isEmpty(number.getType())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.type"});
 		}
 		Number result = null;
