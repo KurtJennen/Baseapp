@@ -29,5 +29,22 @@ public class SearchSelect {
 	public void setSearchParameter(int index, SearchParameter searchParameter) {
 		this.searchParameters[index] = searchParameter;
 	}
+	public SearchParameter getSearchParameter(String name) {
+		for (int i = 0; i < searchParameters.length; i++) {
+			SearchParameter searchParameter = searchParameters[i];
+			if(searchParameter.getName().equals(name)) {
+				return searchParameter;
+			}
+		}
+		return null;
+	}
+	public void setSearchParameter(String name, SearchParameter newSearchParameter) {
+		for (int i = 0; i < searchParameters.length; i++) {
+			SearchParameter oldSearchParameter = searchParameters[i];
+			if(oldSearchParameter.getName().equals(name)) {
+				this.searchParameters[i] = newSearchParameter;
+			}
+		}
+	}
 	
 }

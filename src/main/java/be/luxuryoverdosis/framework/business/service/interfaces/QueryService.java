@@ -12,7 +12,7 @@ public interface QueryService {
 	public Query createOrUpdate(Query query);
 	public Query read(int id);
 	public Query read(String name, String type, int userId);
-	public String[] readParameters(int id);
+	public String[] readNames(int id);
 	public String[] readOperators(int id);
 	public String[] readValues(int id);
 	public String[] readAddAndOrs(int id);

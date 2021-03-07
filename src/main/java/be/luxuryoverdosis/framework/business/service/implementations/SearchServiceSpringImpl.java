@@ -42,7 +42,7 @@ public class SearchServiceSpringImpl implements SearchService {
 	
 	private String constructSelect(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
 		String[] operators = searchCriteria.getOperators();
-		String[] parameters = searchCriteria.getParameters();
+		String[] names = searchCriteria.getNames();
 		String[] openBrackets = searchCriteria.getOpenBrackets();
 		String[] closeBrackets = searchCriteria.getCloseBrackets();
 		String[] addAndOrs = searchCriteria.getAddAndOrs();
@@ -58,7 +58,7 @@ public class SearchServiceSpringImpl implements SearchService {
 			search.append(SearchQuery.SPACE);
 		}
 		
-		if(parameters != null) {
+		if(names != null) {
 			int fromPos = searchSelect.getSelect().lastIndexOf(SearchQuery.FROM);
 			String from = searchSelect.getSelect().substring(fromPos);
 			
@@ -69,9 +69,9 @@ public class SearchServiceSpringImpl implements SearchService {
 			}
 			search.append(SearchQuery.SPACE);
 			
-			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(SearchQuery.MINUS_ONE)) {
-					SearchParameter searchParameter = searchSelect.getSearchParameter(Integer.valueOf(parameters[i]));
+			for(int i = 0; i < names.length; i++) {
+				if(!names[i].equals(SearchQuery.MINUS_ONE)) {
+					SearchParameter searchParameter = searchSelect.getSearchParameter(names[i]);
 					
 					if(i > 0) {
 						if(complexQuery.equals(SearchQuery.ONE)) {
@@ -127,16 +127,16 @@ public class SearchServiceSpringImpl implements SearchService {
 	
 	public Object[] constructObjects(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
 		String[] operators = searchCriteria.getOperators();
-		String[] parameters = searchCriteria.getParameters();
+		String[] names = searchCriteria.getNames();
 		String[] values = searchCriteria.getValues();
 		
 		Object[] objects = null;
 		
-		if(parameters != null) {
+		if(names != null) {
 			int teller = 0;
 			
-			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
+			for(int i = 0; i < names.length; i++) {
+				if(!names[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
 					teller++;
 				}
 			}
@@ -145,9 +145,9 @@ public class SearchServiceSpringImpl implements SearchService {
 			
 			teller = 0;
 			
-			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
-					SearchParameter searchParameter = searchSelect.getSearchParameter(Integer.valueOf(parameters[i]));
+			for(int i = 0; i < names.length; i++) {
+				if(!names[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
+					SearchParameter searchParameter = searchSelect.getSearchParameter(names[i]);
 					
 					if(searchParameter.getType() == null || searchParameter.getType().equals("java.lang.String")) {
 						if(Integer.valueOf(operators[i]) >= 6 && Integer.valueOf(operators[i]) <= 8) {

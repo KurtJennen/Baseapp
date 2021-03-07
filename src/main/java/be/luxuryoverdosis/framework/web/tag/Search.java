@@ -170,14 +170,14 @@ public class Search implements Tag {
 				}
 				
 				out.print("<td>");
-				out.print("<select name=\"parameters\">");
+				out.print("<select name=\"names\">");
 				out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
 				for(int j = 0; j < getSearchSelect().getSearchParameters().length; j++) {
 					SearchParameter searchParameter = getSearchSelect().getSearchParameter(j);
-					if(searchForm.getParameters() != null && i < searchForm.getParameters().length && searchForm.getParameters()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
-						out.print("<option value=\"" + j + "\" selected=\"selected\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
+					if(searchForm.getNames() != null && i < searchForm.getNames().length && searchForm.getNames()[i].equals(String.valueOf(searchParameter.getName())) && searchName.equals(searchForm.getSearchName())) {
+						out.print("<option value=\"" + searchParameter.getName() + "\" selected=\"selected\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
 					} else {
-						out.print("<option value=\"" + j + "\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
+						out.print("<option value=\"" + searchParameter.getName() + "\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
 					}
 						
 				}
@@ -187,7 +187,7 @@ public class Search implements Tag {
 				out.print("<td>");
 				out.print("<select name=\"operators\">");
 				for(int j = 0; j < SearchQuery.DEFAULT_OPERATORS.length; j++) {
-					if(searchForm.getOperators() != null && i < searchForm.getParameters().length && searchForm.getOperators()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
+					if(searchForm.getOperators() != null && i < searchForm.getNames().length && searchForm.getOperators()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
 						if(j < 6) {
 							out.print("<option value=\"" + j + "\" selected=\"selected\">" + SearchQuery.DEFAULT_OPERATORS[j] + "</option>");
 						} else {

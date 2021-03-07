@@ -315,4 +315,10 @@ public class SqlStartup {
 	public final static String SQL_181019j = "INSERT INTO BATCH_JOB_SEQ (ID, UNIQUE_KEY) select * from (select 0 as ID, '0' as UNIQUE_KEY) as tmp where not exists(select * from BATCH_JOB_SEQ)";
 	//Spring Batch Upgrade End
 	
+	public final static String SQL_210307a = "DELETE FROM base_query_param";
+	
+	public final static String SQL_210307b = "DELETE FROM base_query";
+	
+	public final static String SQL_210307c = "ALTER TABLE base_query_param CHANGE Parameter Name VARCHAR(45) NOT NULL DEFAULT ''";
+	
 }

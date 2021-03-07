@@ -45,11 +45,11 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		queryParamHibernateDAO.deleteForQuery(query.getId());
 		
-		for(int i = 0; i < queryDTO.getParameters().length; i++) {
-			if(!queryDTO.getParameters()[i].equals(SearchQuery.MINUS_ONE)) {
+		for(int i = 0; i < queryDTO.getNames().length; i++) {
+			if(!queryDTO.getNames()[i].equals(SearchQuery.MINUS_ONE)) {
 				QueryParam queryParam = new QueryParam();
 				queryParam.setQuery(query);
-				queryParam.setParameter(queryDTO.getParameters()[i]);
+				queryParam.setName(queryDTO.getNames()[i]);
 				queryParam.setOperator(queryDTO.getOperators()[i]);
 				queryParam.setValue(queryDTO.getValues()[i]);
 				if(queryDTO.getComplex().equals(SearchQuery.ONE)) {
@@ -75,7 +75,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		QueryDTO queryDTO = new QueryDTO();
 		queryDTO.setComplex(query.getComplex());
-		queryDTO.setParameters(this.readParameters(id));
+		queryDTO.setNames(this.readNames(id));
 		queryDTO.setOperators(this.readOperators(id));
 		queryDTO.setValues(this.readValues(id));
 		
@@ -121,23 +121,23 @@ public class QueryServiceSpringImpl implements QueryService {
 	}
 	
 	@Transactional(readOnly=true)
-	public String[] readParameters(final int id) {
-		Logging.info(this, "Begin readParametersQuery");
+	public String[] readNames(final int id) {
+		Logging.info(this, "Begin readNamesQuery");
 		
 		ArrayList<QueryParam> queryParameters = queryParamHibernateDAO.list(id);
 		Iterator<QueryParam> iterator = queryParameters.iterator();
 		
-		String[] parameters = new String[queryParameters.size()];
+		String[] names = new String[queryParameters.size()];
 		int teller = 0;
 		
 		while(iterator.hasNext()) {
 			QueryParam queryParam = (QueryParam)iterator.next();
-			parameters[teller] = queryParam.getParameter();
+			names[teller] = queryParam.getName();
 			teller++;
 		}
 		
-		Logging.info(this, "End readParametersQuery");
-		return parameters;
+		Logging.info(this, "End readNamesQuery");
+		return names;
 	}
 	
 	@Transactional(readOnly=true)

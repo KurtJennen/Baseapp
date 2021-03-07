@@ -85,7 +85,7 @@ public abstract class SearchAction extends AjaxAction {
 		queryDTO.setName(searchForm.getQueryName());
 		queryDTO.setType(this.getSearchServiceName());
 		queryDTO.setComplex(searchForm.getComplexQuery());
-		queryDTO.setParameters(searchForm.getSearchCriteria().getParameters());
+		queryDTO.setNames(searchForm.getSearchCriteria().getNames());
 		queryDTO.setOperators(searchForm.getSearchCriteria().getOperators());
 		queryDTO.setValues(searchForm.getSearchCriteria().getValues());
 		queryDTO.setAddAndOrs(searchForm.getSearchCriteria().getAddAndOrs());
@@ -120,13 +120,13 @@ public abstract class SearchAction extends AjaxAction {
 			QueryDTO queryDTO = getQueryService().readDTO(id);
 			
 			searchForm.setComplexQuery(queryDTO.getComplex());
-			searchForm.setParameters(queryDTO.getParameters());
+			searchForm.setNames(queryDTO.getNames());
 			searchForm.setOperators(queryDTO.getOperators());
 			searchForm.setValues(queryDTO.getValues());
 			searchForm.setAddAndOrs(queryDTO.getAddAndOrs());
 			searchForm.setOpenBrackets(queryDTO.getOpenBrackets());
 			searchForm.setCloseBrackets(queryDTO.getCloseBrackets());
-			searchForm.setDefaultLines(searchForm.getParameters().length);
+			searchForm.setDefaultLines(searchForm.getNames().length);
 		}
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.query")));
@@ -162,7 +162,7 @@ public abstract class SearchAction extends AjaxAction {
 		
 		SearchForm searchForm = (SearchForm) form;
 		searchForm.setOperators(null);
-		searchForm.setParameters(null);
+		searchForm.setNames(null);
 		searchForm.setValues(null);
 		searchForm.setOpenBrackets(null);
 		searchForm.setCloseBrackets(null);

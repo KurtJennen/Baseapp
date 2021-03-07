@@ -4,7 +4,7 @@ import be.luxuryoverdosis.framework.base.SearchQuery;
 
 public class SearchCriteria {
 	private String[] operators;
-	private String[] parameters;
+	private String[] names;
 	private String[] values;
 	private String[] openBrackets;
 	private String[] closeBrackets;
@@ -18,11 +18,11 @@ public class SearchCriteria {
 	public void setOperators(String[] operators) {
 		this.operators = operators;
 	}
-	public String[] getParameters() {
-		return parameters;
+	public String[] getNames() {
+		return names;
 	}
-	public void setParameters(String[] parameters) {
-		this.parameters = parameters;
+	public void setNames(String[] names) {
+		this.names = names;
 	}
 	public String[] getValues() {
 		return values;
