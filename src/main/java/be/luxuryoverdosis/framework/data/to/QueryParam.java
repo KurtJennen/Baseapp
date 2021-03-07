@@ -26,8 +26,8 @@ public class QueryParam extends BaseTO {
 	public static final String DELETE_QUERYPARAMS_BY_QUERY = "deleteQueryParamsByQuery";
 	public static final String COUNT_QUERYPARAMS_BY_QUERY = "countQueryParamsByQuery";
 	
-	@Column(name="Parameter")
-	private String parameter;
+	@Column(name="Name")
+	private String name;
 
 	@Column(name="Operator")
 	private String operator;
@@ -48,11 +48,11 @@ public class QueryParam extends BaseTO {
 	@JoinColumn(name="Query_Id")
 	private Query query;
 	
-	public String getParameter() {
-		return parameter;
+	public String getName() {
+		return name;
 	}
-	public void setParameter(String parameter) {
-		this.parameter = parameter;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getOperator() {
 		return operator;

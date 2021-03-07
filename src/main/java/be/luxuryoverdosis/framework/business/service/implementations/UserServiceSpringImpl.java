@@ -92,16 +92,16 @@ public class UserServiceSpringImpl implements UserService {
 		if(userHibernateDAO.count(user.getName(), user.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.user"});
 		}
-		if(user.getName() == null || StringUtils.isEmpty(user.getName())) {
+		if(StringUtils.isEmpty(user.getName())) {
 			throw new ServiceException("errors.required", new String[] {"security.name.unique"});
 		}
-		if(user.getUserName() == null || StringUtils.isEmpty(user.getUserName())) {
+		if(StringUtils.isEmpty(user.getUserName())) {
 			throw new ServiceException("errors.required", new String[] {"security.username"});
 		}
-		if(user.getEncryptedPassword() == null || StringUtils.isEmpty(user.getEncryptedPassword())) {
+		if(StringUtils.isEmpty(user.getEncryptedPassword())) {
 			throw new ServiceException("errors.required", new String[] {"security.password"});
 		}
-		if(user.getEmail() == null || StringUtils.isEmpty(user.getEmail())) {
+		if(StringUtils.isEmpty(user.getEmail())) {
 			throw new ServiceException("errors.required", new String[] {"security.email"});
 		}
 		

@@ -4,7 +4,7 @@ public class QueryDTO extends BaseDTO {
 	private String name;
 	private String type;
 	public String complex;
-	public String[] parameters;
+	public String[] names;
 	public String[] operators;
 	public String[] values;
 	public String[] addAndOrs;
@@ -29,11 +29,11 @@ public class QueryDTO extends BaseDTO {
 	public void setComplex(String complex) {
 		this.complex = complex;
 	}
-	public String[] getParameters() {
-		return parameters;
+	public String[] getNames() {
+		return names;
 	}
-	public void setParameters(String[] parameters) {
-		this.parameters = parameters;
+	public void setNames(String[] names) {
+		this.names = names;
 	}
 	public String[] getOperators() {
 		return operators;

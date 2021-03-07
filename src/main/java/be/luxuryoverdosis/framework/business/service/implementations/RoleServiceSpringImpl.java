@@ -58,7 +58,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		if(roleHibernateDAO.count(role.getName(), role.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.role"});
 		}
-		if(role.getName() == null || StringUtils.isEmpty(role.getName())) {
+		if(StringUtils.isEmpty(role.getName())) {
 			throw new ServiceException("errors.required", new String[] {"security.name"});
 		}
 		Role result = null;

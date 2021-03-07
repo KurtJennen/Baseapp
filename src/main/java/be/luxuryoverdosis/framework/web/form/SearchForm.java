@@ -23,7 +23,7 @@ public abstract class SearchForm extends BaseForm {
 	
 	private int defaultLines = 2;
 	private String[] operators;
-	private String[] parameters;
+	private String[] names;
 	private String[] values;
 	private String[] openBrackets;
 	private String[] closeBrackets;
@@ -53,11 +53,11 @@ public abstract class SearchForm extends BaseForm {
 	public void setOperators(String[] operators) {
 		this.operators = operators;
 	}
-	public String[] getParameters() {
-		return parameters;
+	public String[] getNames() {
+		return names;
 	}
-	public void setParameters(String[] parameters) {
-		this.parameters = parameters;
+	public void setNames(String[] names) {
+		this.names = names;
 	}
 	public String[] getValues() {
 		return values;
@@ -158,19 +158,19 @@ public abstract class SearchForm extends BaseForm {
 		errors.add(super.validate(mapping, request));
 		
 		if(this.getMethod().equals(BaseWebConstants.LIST) || this.getMethod().equals(BaseWebConstants.LIST_JMESA) || this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
-			int aantalParameters = 0;
+			int aantalNames = 0;
 			int aantalOpenBrackets = 0;
 			int aantalCloseBrackets = 0;
 			
-			for(int i = 0; i < parameters.length; i++) {
-				if(!parameters[i].equals(SearchQuery.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < 9) {
+			for(int i = 0; i < names.length; i++) {
+				if(!names[i].equals(SearchQuery.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < 9) {
 					errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.value")));
 				}
-				if(parameters[i].equals(SearchQuery.MINUS_ONE)) {
-					aantalParameters++;
+				if(names[i].equals(SearchQuery.MINUS_ONE)) {
+					aantalNames++;
 				}
 				if(complexQuery.equals(SearchQuery.ONE)) {
-					if(i > 0 && !parameters[i].equals(SearchQuery.MINUS_ONE) && addAndOrs[i - 1].equals(SearchQuery.MINUS_ONE)) {
+					if(i > 0 && !names[i].equals(SearchQuery.MINUS_ONE) && addAndOrs[i - 1].equals(SearchQuery.MINUS_ONE)) {
 						errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.and.or")));
 					}
 					if(openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
@@ -181,7 +181,7 @@ public abstract class SearchForm extends BaseForm {
 					}
 				}
 			}
-			if(aantalParameters == parameters.length) {
+			if(aantalNames == names.length) {
 				errors.add(SearchQuery.FIELD + SearchQuery.ZERO, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.parameter")));
 			}
 			if(complexQuery.equals(SearchQuery.ONE)) {
@@ -195,7 +195,7 @@ public abstract class SearchForm extends BaseForm {
 			searchCriteria.setCloseBrackets(closeBrackets);
 			searchCriteria.setOpenBrackets(openBrackets);
 			searchCriteria.setOperators(operators);
-			searchCriteria.setParameters(parameters);
+			searchCriteria.setNames(names);
 			searchCriteria.setValues(values);
 			
 			getSearchService().constructObjects(getSearchSelect(), searchCriteria);
