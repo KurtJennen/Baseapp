@@ -1,6 +1,5 @@
 package be.luxuryoverdosis.framework.data.to;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -14,15 +13,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import org.hibernate.CallbackException;
-import org.hibernate.Session;
-import org.hibernate.classic.Lifecycle;
-
-import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public class BaseTO implements Lifecycle {
+public class BaseTO {
 	@Id
 	@Column(name="Id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -83,34 +76,4 @@ public class BaseTO implements Lifecycle {
 		this.dateUpdate = dateUpdate;
 	}
 	
-	public boolean onDelete(Session arg0) throws CallbackException {
-		return false;
-	}
-	
-	public void onLoad(Session arg0, Serializable arg1) {
-	}
-	
-	public boolean onSave(Session arg0) throws CallbackException {
-		User user = (User) ThreadManager.getUserFromThread();
-		
-		if(user != null) {
-			userAdd = user.getName();
-			userUpdate = user.getName();
-		}
-		dateAdd = new Date(System.currentTimeMillis());
-		dateUpdate = new Date(System.currentTimeMillis());
-		
-		return false;
-	}
-	
-	public boolean onUpdate(Session arg0) throws CallbackException {
-		User user = (User) ThreadManager.getUserFromThread();
-		
-		if(user != null) {
-			userUpdate = user.getName();
-		}		
-		dateUpdate = new Date(System.currentTimeMillis());
-		
-		return false;
-	}
 }
