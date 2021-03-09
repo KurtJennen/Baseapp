@@ -12,7 +12,7 @@ function doPosition(sMethod) {
 }
 
 function doActionForm(sMethod, oFormIndex) {
-	doPosition(sMethod, oFormIndex);
+	doPositionForm(sMethod, oFormIndex);
 	doSubmit();
 }
 
@@ -30,7 +30,7 @@ function doActionDetail(sMethod) {
 }
 
 function doActionChangeForm(sMethod, oFormIndex) {
-	doPosition(sMethod);
+	doPositionForm(sMethod, oFormIndex);
 	window.document.forms[oFormIndex].submit();
 }
 
