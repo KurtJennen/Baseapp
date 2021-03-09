@@ -93,8 +93,8 @@ public class DetailUserForm extends BaseForm {
 			errors = super.validate(mapping, request);
 			
 			if(!password.equals(passwordConfirm)) {
-				errors.add("password", new ActionMessage("not.same", MessageLocator.getMessage(request, "security.password"), MessageLocator.getMessage(request, "security.password.confirm")));
-				errors.add("passwordConfirm", new ActionMessage("not.same", MessageLocator.getMessage(request, "security.password.confirm"), MessageLocator.getMessage(request, "security.password")));
+				errors.add("password", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password"), MessageLocator.getMessage(request, "security.password.confirm")));
+				errors.add("passwordConfirm", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password.confirm"), MessageLocator.getMessage(request, "security.password")));
 			}
 			
 			if(roleId < 0) {
