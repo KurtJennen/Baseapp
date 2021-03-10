@@ -31,6 +31,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
+import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
+import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.to.Job;
 
 public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport implements ResourceAwareItemWriterItemStream<T>,
@@ -39,9 +41,12 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	//added by luxuryoverdosis
 	@Resource
 	JobService jobService;
+	@Resource
+	private UserService userService;
 	
 	//added by luxuryoverdosis
 	private int jobId;
+	private String jobUser;
 
 	private static final boolean DEFAULT_TRANSACTIONAL = true;
 
@@ -85,6 +90,9 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	//added by luxuryoverdosis
 	public void setJobId(int jobId) {
 		this.jobId = jobId;
+	}
+	public void setJobUser(String jobUser) {
+		this.jobUser = jobUser;
 	}
 
 	/**
@@ -436,6 +444,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 			try {
 				if (outputBufferedWriter != null) {
 					//added by luxuryoverdosis
+					ThreadManager.setUserOnThread(userService.readName(jobUser));
 					
 					Job job = jobService.read(jobId);
 					job.setFileData(baos.toByteArray());

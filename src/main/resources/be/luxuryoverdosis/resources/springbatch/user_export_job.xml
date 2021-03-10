@@ -12,6 +12,7 @@
 	
 	<bean id="userExportWriter" class="be.luxuryoverdosis.framework.business.job.FlatFileItemDatabaseWriter" scope="step">
 		<property name="jobId" value="#{jobParameters[jobId]}" />
+		<property name="jobUser" value="#{jobParameters[jobUser]}" />
 		<property name="lineAggregator">
 			<bean class="org.springframework.batch.item.file.transform.DelimitedLineAggregator">
 				<property name="delimiter" value="|"/>

@@ -26,10 +26,10 @@ public class BaseTO {
 	private int version = -1;
 	
 	@Column(name="UserAdd")
-	private String userAdd = "root";
+	private String userAdd;
 	
 	@Column(name="UserUpdate")
-	private String userUpdate = "root";
+	private String userUpdate;
 	
 	@Column(name="DateAdd")
 	@Temporal(TemporalType.TIMESTAMP)

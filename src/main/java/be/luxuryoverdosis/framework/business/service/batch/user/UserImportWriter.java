@@ -16,6 +16,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
+import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
@@ -35,12 +36,18 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	private UserService userService;
 	
 	private int jobId;
+	private String jobUser;
 
 	public void setJobId(long jobId) {
 		this.jobId = (int)jobId;
 	}
+	public void setJobUser(String jobUser) {
+		this.jobUser = jobUser;
+	}
 
 	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
+		ThreadManager.setUserOnThread(userService.readName(jobUser));
+		
 		Job job = jobService.read(jobId);
 		try {
 			

@@ -29,6 +29,7 @@
 	<bean id="userImportWriter" class="be.luxuryoverdosis.framework.business.service.batch.user.UserImportWriter" scope="step">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="jobId" value="#{jobParameters[jobId]}" />
+		<property name="jobUser" value="#{jobParameters[jobUser]}" />
 	</bean>
  	
 	<batch:step id="userImportStep">
