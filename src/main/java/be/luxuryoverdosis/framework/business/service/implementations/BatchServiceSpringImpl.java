@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
+import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -40,6 +41,7 @@ public class BatchServiceSpringImpl implements BatchService {
 		//JobParameters
 		JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
 		jobParametersBuilder.addLong(BaseConstants.JOB_ID, Long.valueOf(job.getId()));
+		jobParametersBuilder.addString(BaseConstants.JOB_USER, ThreadManager.getUserFromThread().getName());
 		
 		//Run
 		jobLauncherAsync.run(userExportJob, jobParametersBuilder.toJobParameters());
@@ -56,6 +58,7 @@ public class BatchServiceSpringImpl implements BatchService {
 		//JobParameters
 		JobParametersBuilder jobParametersBuilder = new JobParametersBuilder();
 		jobParametersBuilder.addLong(BaseConstants.JOB_ID, Long.valueOf(job.getId()));
+		jobParametersBuilder.addString(BaseConstants.JOB_USER, ThreadManager.getUserFromThread().getName());
 		
 		//Run
 		jobLauncherAsync.run(userImportJob, jobParametersBuilder.toJobParameters());

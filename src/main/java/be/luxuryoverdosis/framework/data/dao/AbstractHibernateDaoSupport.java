@@ -31,7 +31,7 @@ public abstract class AbstractHibernateDaoSupport extends HibernateDaoSupport {
 	}
 	
 	public Session getCurrentSession() {
-		return getSessionFactory().getCurrentSession();
+		return sessionFactory.getCurrentSession();
 	}
 	
 }
