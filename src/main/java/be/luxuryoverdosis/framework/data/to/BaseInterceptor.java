@@ -7,6 +7,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 
 
@@ -30,9 +31,13 @@ public class BaseInterceptor extends EmptyInterceptor {
 
 	private boolean setBaseProperties(Object[] state, String[] propertyNames) {
 		boolean changed = false;
+		String userName = BaseConstants.JOB_USER_ROOT;
 		
 		Date now = new Date();
-		String userName = ThreadManager.getUserFromThread().getName();
+		User user = ThreadManager.getUserFromThread();
+		if(user != null) {
+			userName = user.getName();
+		}
 		
 		boolean userAddChanged = onCreate(state, propertyNames, USERADD, userName);
 		boolean userUpdateChanged = onUpdate(state, propertyNames, USERUPDATE, userName);
