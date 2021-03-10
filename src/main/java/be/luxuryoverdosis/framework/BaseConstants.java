@@ -34,6 +34,7 @@ public class BaseConstants {
 	public static final String JOB_EXPORT_USER_FILENAME = "userExport.txt";
 	public static final String JOB_IMPORT_USER = "userImportJob";
 	public static final String JOB_USER = "jobUser";
+	public static final String JOB_USER_ROOT = "root";
 	
 	public static final String DOCUMENTYPE_USER = "USER";
 	
