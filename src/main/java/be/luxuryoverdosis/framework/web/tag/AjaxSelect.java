@@ -22,6 +22,8 @@ public class AjaxSelect implements Tag {
 	private String image = "zoom.png";
 	private String size;
 	private String maxLength;
+    private String width = "90";
+    private String height = "500";
 	private String key;
 	private String roles;
 	
@@ -56,6 +58,14 @@ public class AjaxSelect implements Tag {
 	public void setMaxLength(String maxLength) {
 		this.maxLength = maxLength;
 	}
+	
+    public void setWidth(String width) {
+        this.width = width;
+    }
+
+    public void setHeight(String height) {
+        this.height = height;
+    }
 
 	public void setKey(String key) {
 		this.key = key;
@@ -146,7 +156,7 @@ public class AjaxSelect implements Tag {
 				out.println("</button>");
 
 				//Template
-				out.println("<div style=\"width: 90%; position: fixed; overflow: auto; z-index: 1;\">");
+                out.println("<div style=\"width: " + width + "%; height:" + height + "px; position: fixed; overflow: auto; z-index: 1;\">");
 				out.println("<table id=\"" + property + "Result\" style=\"background-color: #e3e3e3; border: 1px solid white; width: 100%;\">");
 				out.println("</table>");
 				out.print("</div>");

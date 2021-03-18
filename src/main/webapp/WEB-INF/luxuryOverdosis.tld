@@ -215,6 +215,16 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
+            <name>width</name>
+            <required>false</required>
+            <description>witdh in %</description>
+        </attribute>
+        <attribute>
+            <name>height</name>
+            <required>false</required>
+            <description>heigth in px</description>
+        </attribute>
+		<attribute>
 			<name>key</name>
 			<required>true</required>
 		</attribute>
