@@ -97,7 +97,8 @@ public class User extends BaseTO {
 	}
 	
 	public static final class Queries {
-		public static final String SELECT_USERS = "from User u";
+        public static final String SELECT_USERS = "from User u "
+                + "order by u.name";
 		
 		public static final String SELECT_USERS_BY_NAME = "from User u "
 				+ "where u.name = :name";
@@ -111,7 +112,8 @@ public class User extends BaseTO {
 				+ "r.name "
 				+ ") "
 				+ "from User u "
-				+ "inner join u.role r";
+		        + "inner join u.role r "
+		        + "order by u.name";
 		
 		public static final String SELECT_USERS_DTO_BY_NAME = "select new be.luxuryoverdosis.framework.data.dto.UserDTO("
 				+ "u.id, "
