@@ -11,7 +11,7 @@
 				</value>
 			</property>
 			<property name="orderby">
-				<value>ORDER BY u.name DESC</value>
+				<value>ORDER BY u.name</value>
 			</property>
 			<property name="searchParameters">
 				<list>
