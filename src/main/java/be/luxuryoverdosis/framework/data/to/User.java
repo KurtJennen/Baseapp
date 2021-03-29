@@ -125,7 +125,8 @@ public class User extends BaseTO {
 				+ ") "
 				+ "from User u "
 				+ "inner join u.role r "
-				+ "where u.name like :name";
+				+ "where u.name like :name "
+				+ "order by u.name";
 		
 		public static final String COUNT_USERS_BY_NAME = "select count(*) "
 				+ "from User u "
