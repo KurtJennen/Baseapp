@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
+import be.luxuryoverdosis.baseapp.business.enumeration.DocumentTypeEnum;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
@@ -38,7 +39,7 @@ public class SearchUserAction extends SearchAction {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
-		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, getDocumentService().list(BaseConstants.DOCUMENTYPE_USER));
+		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, getDocumentService().list(DocumentTypeEnum.USER.getCode()));
 	}
 		
 	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -36,8 +36,6 @@ public class BaseConstants {
 	public static final String JOB_USER = "jobUser";
 	public static final String JOB_USER_ROOT = "root";
 	
-	public static final String DOCUMENTYPE_USER = "USER";
-	
 	public static final String REPORT_PATH = "/files/reports/";
 	public static final String REPORT_USERS = "Users";
 	public static final String REPORT_USERS_PATH = REPORT_PATH + REPORT_USERS + FileType.JRXML;
