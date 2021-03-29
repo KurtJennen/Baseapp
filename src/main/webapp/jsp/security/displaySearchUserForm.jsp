@@ -1,7 +1,6 @@
 <%@page import="be.luxuryoverdosis.framework.web.BaseWebConstants"%>
 <%@page import="be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
-<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
 <html:form action="/searchUser.do">
