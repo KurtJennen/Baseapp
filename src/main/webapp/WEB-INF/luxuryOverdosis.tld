@@ -220,7 +220,7 @@
             <description>witdh in %</description>
         </attribute>
         <attribute>
-            <name>height</name>
+            <name>maxHeight</name>
             <required>false</required>
             <description>heigth in px</description>
         </attribute>
