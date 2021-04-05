@@ -20,6 +20,7 @@ public class DetailDocumentForm extends BaseForm {
 	private String fileName;
 	private int fileSize;
 	private String contentType;
+	private String fancytext;
 	
 	
 	public FormFile getFormFile() {
@@ -52,6 +53,12 @@ public class DetailDocumentForm extends BaseForm {
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}
+	public String getFancytext() {
+		return fancytext;
+	}
+	public void setFancytext(String fancytext) {
+		this.fancytext = fancytext;
+	}
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		super.reset(mapping, request);
@@ -60,6 +67,7 @@ public class DetailDocumentForm extends BaseForm {
 		this.setFileName("");
 		this.setFileSize(0);
 		this.setContentType("");
+		this.setFancytext("Word nog niet bewaard");
 	}
 	
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {

@@ -21,7 +21,7 @@
 			<field property="applicationCode" depends="required">
 				<arg key="security.number.application.code" />
 			</field>
-			<field property="year" depends="required">
+			<field property="year" depends="required,integer">
 				<arg key="security.number.year" />
 			</field>
 			<field property="number" depends="required">
