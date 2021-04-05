@@ -4,6 +4,13 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
+<script src="https://cdn.tiny.cloud/1/mzbhyfa1gz6ntbornsz8lvyeay6qnyfqj3tlwlvqlk756z8p/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+      tinymce.init({
+        selector: '#fancytext',
+        height: 400
+      });
+</script>
 <html:form action="/detailDocument.do" enctype="multipart/form-data">
 	<div align="center">
 		<h2><i><fmt:message key="displayDetail.title" />&nbsp;<fmt:message key="table.document" /></i></h2>
@@ -43,4 +50,5 @@
 			<td><c:out value="${detailDocumentForm.contentType}"/></td>
 		</tr>
 	</table>
+	<html:textarea property="fancytext" styleId="fancytext"></html:textarea>
 </html:form>
