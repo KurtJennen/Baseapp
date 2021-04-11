@@ -75,9 +75,29 @@ public class BigDecimalToolTest {
 	}
 	
 	@Test
+	public void testToBigDecimalLongString() {
+		String string = "12,3456";
+		BigDecimal decimal = new BigDecimal(12.35).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
+		
+		BigDecimal result = BigDecimalTool.toBigDecimal(string);
+		
+		assertThat(decimal).isEqualByComparingTo(result);
+	}
+	
+	@Test
 	public void testToBigDecimalDouble() {
 		String string = "123,4567";
 		BigDecimal decimal = new BigDecimal(123.4567).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
+		
+		BigDecimal result = BigDecimalTool.toBigDecimalDouble(string);
+		
+		assertThat(decimal).isEqualByComparingTo(result);
+	}
+	
+	@Test
+	public void testToBigDecimalLongDouble() {
+		String string = "123,456789";
+		BigDecimal decimal = new BigDecimal(123.4568).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
 		
 		BigDecimal result = BigDecimalTool.toBigDecimalDouble(string);
 		
