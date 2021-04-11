@@ -49,10 +49,10 @@ $(document).ready(function() {
 	
 	<div id="tabs">
 		<ul>
-			<li><a href="#tab1"><fmt:message key="job.parameters" /></a></li>
-			<li><a href="#tab2"><fmt:message key="job.execution.parameters" /></a></li>
-			<li><a href="#tab3"><fmt:message key="job.steps" /></a></li>
-			<li><a href="#tab4"><fmt:message key="displayJobLog.title" /></a></li>
+			<li><a href="#tab1"><fmt:message key="displayJobDetail1.title" /></a></li>
+			<li><a href="#tab2"><fmt:message key="displayJobDetail2.title" /></a></li>
+			<li><a href="#tab3"><fmt:message key="displayJobDetail3.title" /></a></li>
+			<li><a href="#tab4"><fmt:message key="displayJobDetail4.title" /></a></li>
 		</ul>
 		<div id="tab1">
 			<lo:pqGrid nameSelectedIds="selectedIdsBatchJobParams" url="/detailJob.do?method=ajaxBatchJobParamsList" titleKey="displayJobParams.title" id="batchJobParams" rPP="15" rowClickMethod="">

@@ -1,6 +1,7 @@
 package be.luxuryoverdosis.framework.base.tool;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -51,7 +52,7 @@ public class BigDecimalTool {
         	BigDecimal validatedDecimal = new BigDecimalValidator().validate(string, locale);
         	
         	if(validatedDecimal != null) {
-        		convertedDecimal = new BigDecimalValidator().validate(string, locale).setScale(fraction);
+        		convertedDecimal = new BigDecimalValidator().validate(string, locale).setScale(fraction, RoundingMode.HALF_UP);
         	}
         }
         
