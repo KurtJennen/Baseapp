@@ -6,8 +6,8 @@ import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 
 public class ListUserWrapperDTO {
 	private ArrayList<Object> searchUserList;
-	private ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList;
-	private ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList;
+	private ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList = new ArrayList<BatchJobInstanceDTO>();
+	private ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList = new ArrayList<BatchJobInstanceDTO>();
 	
 	public ArrayList<Object> getSearchUserList() {
 		return searchUserList;

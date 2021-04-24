@@ -6,7 +6,7 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
 public class UserRestWrapperDTO extends BaseRestWrapperDTO {
 	private UserDTO userDTO;
-	private ArrayList<UserDTO> userDTOList;
+	private ArrayList<UserDTO> userDTOList = new ArrayList<UserDTO>();
 
 	public UserDTO getUserDTO() {
 		return userDTO;
