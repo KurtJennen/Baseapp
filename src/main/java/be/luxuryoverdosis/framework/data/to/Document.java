@@ -103,7 +103,8 @@ public class Document extends BaseTO {
 				+ "d.fileSize, "
 				+ "d.contentType "
 				+ ") "
-				+ "from Document d";
+				+ "from Document d "
+				+ "order by d.type, d.fileName";
 		
 		public static final String SELECT_DOCUMENTS_BY_TYPE = "from Document d "
 				+ "where d.type = :type "
