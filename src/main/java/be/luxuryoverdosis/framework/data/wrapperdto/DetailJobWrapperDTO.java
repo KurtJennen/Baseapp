@@ -11,9 +11,9 @@ public class DetailJobWrapperDTO {
 	byte[] fileData;
 	private String fileName;
 	private String jobName;
-	private ArrayList<BatchJobParams> batchJobParamsList;
-	private ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList;
-	private ArrayList<BatchStepExecution> batchStepExecutionList;
+	private ArrayList<BatchJobParams> batchJobParamsList = new ArrayList<BatchJobParams>();
+	private ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList = new ArrayList<BatchJobExecutionParams>();
+	private ArrayList<BatchStepExecution> batchStepExecutionList = new ArrayList<BatchStepExecution>();
 	private ArrayList<JobLog> jobLogList;
 	
 	public byte[] getFileData() {

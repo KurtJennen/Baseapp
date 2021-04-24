@@ -6,8 +6,8 @@ import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 
 public class MenuWrapperDTO {
-	private ArrayList<User> userList;
-	private ArrayList<MenuDTO> menuDTOList;
+	private ArrayList<User> userList = new ArrayList<User>();
+	private ArrayList<MenuDTO> menuDTOList = new ArrayList<MenuDTO>();
 	
 	public ArrayList<User> getUserList() {
 		return userList;
