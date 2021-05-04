@@ -75,6 +75,18 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
+	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(int userId) {
+		Logging.info(this, "Begin listRole");
+		
+		Query<RoleDTO> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
+		ArrayList<RoleDTO> arrayList = (ArrayList<RoleDTO>) query.list();
+		
+		Logging.info(this, "End listRole");
+		return arrayList;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
 		

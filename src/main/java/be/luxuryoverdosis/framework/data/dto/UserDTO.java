@@ -14,6 +14,9 @@ public class UserDTO extends BaseDTO {
 	private int roleId;
 	private String roleName;
 	
+	private int[] linkedRoleIds;
+	private int[] unlinkedRoleIds;
+	
 	public UserDTO() {
 		super();
 	}
@@ -90,4 +93,16 @@ public class UserDTO extends BaseDTO {
 //	public BigDecimal getBedrag() {
 //		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
 //	}
+	public int[] getLinkedRoleIds() {
+		return linkedRoleIds;
+	}
+	public void setLinkedRoleIds(int[] linkedRoleIds) {
+		this.linkedRoleIds = linkedRoleIds;
+	}
+	public int[] getUnlinkedRoleIds() {
+		return unlinkedRoleIds;
+	}
+	public void setUnlinkedRoleIds(int[] unlinkedRoleIds) {
+		this.unlinkedRoleIds = unlinkedRoleIds;
+	}
 }

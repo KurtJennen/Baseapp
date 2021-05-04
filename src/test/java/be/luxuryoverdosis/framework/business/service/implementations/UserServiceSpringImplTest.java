@@ -36,6 +36,8 @@ import be.luxuryoverdosis.framework.mother.UserDTOMother;
 import be.luxuryoverdosis.framework.mother.UserMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
+//Add mysql driver to classpath
+
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceSpringImplTest {
 	

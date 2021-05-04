@@ -57,4 +57,22 @@
 			</td>
 		</tr>
 	</table>
+	<table>
+		<tr>
+			<td><fmt:message key="user.role.gekoppeld" />:</td>
+			<td><fmt:message key="user.role.ontkoppeld" />:</td>
+		</tr>
+		<tr>
+			<td>
+				<html:select property="linkedRoleIds" tabindex="7" multiple="true" size="10" style="width: 600px">
+					<html:optionsCollection name="userRoleLinkedList" label="roleNameAsKey" value="roleId" />
+				</html:select>
+			</td>
+			<td>
+				<html:select property="unlinkedRoleIds" tabindex="8" multiple="true" size="10" style="width: 600px">
+					<html:optionsCollection name="userRoleUnLinkedList" label="nameAsKey" value="id" />
+				</html:select>
+			</td>
+		</tr>
+	</table>
 </html:form>

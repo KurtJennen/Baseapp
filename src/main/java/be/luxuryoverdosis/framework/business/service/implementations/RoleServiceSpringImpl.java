@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.factory.RoleFactory;
 import be.luxuryoverdosis.framework.data.to.Role;
@@ -22,6 +23,8 @@ public class RoleServiceSpringImpl implements RoleService {
 	private RoleHibernateDAO roleHibernateDAO;
 	@Resource
 	private UserHibernateDAO userHibernateDAO;
+	@Resource
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional
 	public RoleDTO createOrUpdateDTO(final RoleDTO roleDTO) {
@@ -90,6 +93,9 @@ public class RoleServiceSpringImpl implements RoleService {
 		if(userHibernateDAO.count(id) > 0) {
 			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.role", "table.user"});
 		}
+		if(userRoleHibernateDAO.countRole(id) > 0) {
+			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.role", "table.user.role"});
+		}
 		roleHibernateDAO.delete(id);
 		Logging.info(this, "End deleteRole");
 	}
@@ -103,12 +109,20 @@ public class RoleServiceSpringImpl implements RoleService {
 		return arrayList;
 	}
 	
-	
 	@Transactional(readOnly=true)
 	public ArrayList<RoleDTO> listDTO(String searchValue) {
 		Logging.info(this, "Begin listRole");
 		ArrayList<RoleDTO> arrayList = null;
 		arrayList = roleHibernateDAO.listDTO(searchValue);
+		Logging.info(this, "End listRole");
+		return arrayList;
+	}
+	
+	@Transactional(readOnly=true)
+	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(int userId) {
+		Logging.info(this, "Begin listRole");
+		ArrayList<RoleDTO> arrayList = null;
+		arrayList = roleHibernateDAO.listNotInUserRoleForUserDTO(userId);
 		Logging.info(this, "End listRole");
 		return arrayList;
 	}

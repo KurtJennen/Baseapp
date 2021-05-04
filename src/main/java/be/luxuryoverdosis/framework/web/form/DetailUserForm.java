@@ -22,6 +22,9 @@ public class DetailUserForm extends BaseForm {
 	private String date;
 	private int roleId;
 	private String roleIdValue;
+	
+	private int[] linkedRoleIds;
+	private int[] unlinkedRoleIds;
 
 	public String getName() {
 		return name;
@@ -70,6 +73,19 @@ public class DetailUserForm extends BaseForm {
 	}
 	public void setRoleIdValue(String roleIdValue) {
 		this.roleIdValue = roleIdValue;
+	}
+	
+	public int[] getLinkedRoleIds() {
+		return linkedRoleIds;
+	}
+	public void setLinkedRoleIds(int[] linkedRoleIds) {
+		this.linkedRoleIds = linkedRoleIds;
+	}
+	public int[] getUnlinkedRoleIds() {
+		return unlinkedRoleIds;
+	}
+	public void setUnlinkedRoleIds(int[] unlinkedRoleIds) {
+		this.unlinkedRoleIds = unlinkedRoleIds;
 	}
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {

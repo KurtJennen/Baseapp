@@ -13,6 +13,7 @@ public interface RoleHibernateDAO {
 	
 	public ArrayList<Role> list();
 	public ArrayList<RoleDTO> listDTO(String searchValue);
+	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(int userId);
 	
 	public long count(String name, int id);
 }

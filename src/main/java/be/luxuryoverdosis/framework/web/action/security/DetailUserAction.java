@@ -12,19 +12,31 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 
+import be.luxuryoverdosis.baseapp.web.WebConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
+import be.luxuryoverdosis.framework.business.service.interfaces.UserRoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.DetailUserForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
+import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class DetailUserAction extends NavigationAction {
+	private void storeListsInSession(HttpServletRequest request, DetailUserForm detailUserForm) {
+		 ArrayList<UserRoleDTO> linkedRolesList = getUserRoleService().listDTO(detailUserForm.getId());
+        SessionManager.putInSession(request, WebConstants.USER_ROLE_LINKED_LIST, linkedRolesList);
+        
+        ArrayList<RoleDTO> unlinkedRolesList = getRoleService().listNotInUserRoleForUserDTO(detailUserForm.getId());
+        SessionManager.putInSession(request, WebConstants.USER_ROLE_UNLINKED_LIST, unlinkedRolesList);
+	}
+	
 	public String getNameIds() {
 		return BaseWebConstants.USER_IDS;
 	}
@@ -62,6 +74,8 @@ public class DetailUserAction extends NavigationAction {
 		userForm.setDate(userDTO.getDateExpirationAsString());
 		userForm.setRoleId(userDTO.getRoleId());
 		
+		storeListsInSession(request, userForm);
+		
 		super.setNavigationButtons(form, request);
 		
 		if(BaseWebConstants.SAVE.equals(previous)) {
@@ -84,6 +98,8 @@ public class DetailUserAction extends NavigationAction {
 		
 		DetailUserForm userForm = (DetailUserForm) form;
 		userForm.reset(mapping, request);
+		
+		storeListsInSession(request, userForm);
 		
         super.setNavigationButtons(form, request);
 		
@@ -110,6 +126,8 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setEmail(userForm.getEmail());
 		userDTO.setDateExpirationAsString(userForm.getDate());
 		userDTO.setRoleId(userForm.getRoleId());
+		userDTO.setLinkedRoleIds(userForm.getLinkedRoleIds());
+		userDTO.setUnlinkedRoleIds(userForm.getUnlinkedRoleIds());
 		
 		if(userForm.getRoleId() == 0) {
 			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
@@ -226,5 +244,9 @@ public class DetailUserAction extends NavigationAction {
 	
 	private RoleService getRoleService() {
 		return BaseSpringServiceLocator.getBean(RoleService.class);
+	}
+	
+	private UserRoleService getUserRoleService() {
+		return BaseSpringServiceLocator.getBean(UserRoleService.class);
 	}
 }

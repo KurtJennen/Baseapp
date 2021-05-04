@@ -27,11 +27,13 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.document.UserDocument;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.to.UserRole;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -44,6 +46,8 @@ public class UserServiceSpringImpl implements UserService {
 	private UserHibernateDAO userHibernateDAO;
 	@Resource
 	private RoleHibernateDAO roleHibernateDAO;
+	@Resource
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	@Resource
 	private BatchJobInstanceHibernateDAO batchJobInstanceHibernateDAO;
 	@Resource
@@ -69,6 +73,23 @@ public class UserServiceSpringImpl implements UserService {
 		}
 		
 		user = this.createOrUpdate(user);
+		
+		int[] roleIds = userDTO.getLinkedRoleIds();
+		if(roleIds != null) {
+			for (int i = 0; i < roleIds.length; i++) {
+				userRoleHibernateDAO.delete(user.getId(), roleIds[i]);
+			}
+		}
+		
+		roleIds = userDTO.getUnlinkedRoleIds();
+		if(roleIds != null) {
+			for (int i = 0; i < roleIds.length; i++) {
+				UserRole userRole = new UserRole();
+				userRole.setUser(user);
+				userRole.setRole(roleHibernateDAO.read(roleIds[i]));
+				userRoleHibernateDAO.createOrUpdate(userRole);
+			}
+		}
 		
 		Logging.info(this, "End createUserDTO");
 		return this.readDTO(user.getId());
@@ -146,6 +167,10 @@ public class UserServiceSpringImpl implements UserService {
 	@Transactional
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteUser");
+		if(userRoleHibernateDAO.countUser(id) > 0) {
+			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.user", "table.user.role"});
+		}
+		
 		menuService.deleteForUser(id);
 		userHibernateDAO.delete(id);
 		Logging.info(this, "End deleteUser");

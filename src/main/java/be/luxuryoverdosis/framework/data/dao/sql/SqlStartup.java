@@ -328,13 +328,16 @@ public class SqlStartup {
 			"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
 			"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
 			"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
-			"User_Id int(10) NOT NULL unsigned DEFAULT '0', " +
-			"Role_Id int(10) NOT NULL unsigned DEFAULT '0', " +
+			"User_Id int(10) unsigned NOT NULL DEFAULT '0', " +
+			"Role_Id int(10) unsigned NOT NULL DEFAULT '0', " +
 			"PRIMARY KEY (Id), " +
 			"KEY FK_USER_ROLE_USER_ID (User_Id), " +
 			"CONSTRAINT FK_USER_ROLE_USER_ID FOREIGN KEY (User_Id) REFERENCES base_user (Id), " +
 			"KEY FK_USER_ROLE_ROLE_ID (Role_Id), " +
 			"CONSTRAINT FK_USER_ROLE_ROLE_ID FOREIGN KEY (Role_Id) REFERENCES base_role (Id))";
+	
+	public final static String SQL_210504a = "INSERT INTO base_user_role (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, User_Id, Role_Id) VALUES " + 
+			"(1, 1, 'root', 'root', '2021-05-04', '2021-05-04', 1, 1)";
 		
 	
 }
