@@ -48,7 +48,7 @@ public class Role extends BaseTO {
 				+ "r.name "
 				+ ") "
 				+ "from Role r "
-				+ "where name like :name "
+				+ "where r.name like :name "
 				+ "order by r.name";
 		
 		public static final String COUNT_ROLES_BY_NAME = "select count(*) "

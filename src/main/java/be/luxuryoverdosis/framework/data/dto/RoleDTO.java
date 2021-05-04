@@ -1,5 +1,7 @@
 package be.luxuryoverdosis.framework.data.dto;
 
+import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
+
 public class RoleDTO extends BaseDTO {
 	private String name;
 	
@@ -15,6 +17,9 @@ public class RoleDTO extends BaseDTO {
 	
 	public String getName() {
 		return name;
+	}
+	public String getNameAsKey() {
+		return RoleNameEnum.convert(name).getCodeAsKey();
 	}
 	public void setName(String name) {
 		this.name = name;

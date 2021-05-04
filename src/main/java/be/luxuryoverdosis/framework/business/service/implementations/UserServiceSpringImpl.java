@@ -13,12 +13,12 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
-import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
@@ -52,7 +52,7 @@ public class UserServiceSpringImpl implements UserService {
 	private DocumentService documentService;
 	@Resource
 	private SearchService searchService;
-	@Resource(name=BaseSpringServiceConstants.SENDER_SERVICE)
+	@Resource
 	private JavaMailSender javaMailSender;
 	
 	@Transactional
@@ -112,7 +112,7 @@ public class UserServiceSpringImpl implements UserService {
 		}
 		
 		if(user.getRole() == null) {
-			user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
+			user.setRole(roleHibernateDAO.readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode()));
 		}
 		
 		User result = null;
@@ -275,7 +275,7 @@ public class UserServiceSpringImpl implements UserService {
 			}
 			user.setDateExpiration(expCalendar.getTime());
 		}
-		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_UITGEBREIDE_GEBRUIKER));
+		user.setRole(roleHibernateDAO.readName(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode()));
 		
 		Logging.info(this, "Begin activate");
 		
@@ -288,7 +288,7 @@ public class UserServiceSpringImpl implements UserService {
 		User user = userHibernateDAO.read(id);
 		
 		user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
-		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
+		user.setRole(roleHibernateDAO.readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode()));
 		
 		Logging.info(this, "Begin deactivate");
 		

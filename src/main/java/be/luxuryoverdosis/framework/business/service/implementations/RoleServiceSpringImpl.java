@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +57,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		if(roleHibernateDAO.count(role.getName(), role.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.role"});
 		}
-		if(StringUtils.isEmpty(role.getName())) {
+		if(role.getName() == null) {
 			throw new ServiceException("errors.required", new String[] {"security.name"});
 		}
 		Role result = null;

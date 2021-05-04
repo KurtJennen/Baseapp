@@ -53,7 +53,7 @@
 <%-- 					<html:option value="-1"><fmt:message key="select" /></html:option> --%>
 <%-- 					<html:optionsCollection name="roleList" label="name" value="id" /> --%>
 <%-- 				</html:select> --%>
-				<lo:ajaxSelect property="roleId" methodAll="detailUser.do?method=ajaxSearchAllRole" methodOne="detailUser.do?method=ajaxSearchOneRole" fieldsAll="id,name" fieldsOne="id,name"  key="button.search" maxLength="45" size="45"></lo:ajaxSelect>
+				<lo:ajaxSelect property="roleId" methodAll="detailUser.do?method=ajaxSearchAllRole" methodOne="detailUser.do?method=ajaxSearchOneRole" fieldsAll="id,nameAsKey" fieldsOne="id,nameAsKey"  key="button.search" maxLength="45" size="45"></lo:ajaxSelect>
 			</td>
 		</tr>
 	</table>

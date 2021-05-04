@@ -18,7 +18,9 @@
 	<table>
 		<tr>
 			<td><fmt:message key="security.name" />*:</td>
-			<td><html:text property="name" size="45" maxlength="45" tabindex="1"></html:text></td>
+			<td>
+				<lo:enumSelect clazz="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum" tabindex="1" property="name" value="${detailRoleForm.name}" method="getAllCodes" />
+			</td>
 		</tr>
 	</table>
 </html:form>
