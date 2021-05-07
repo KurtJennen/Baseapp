@@ -61,7 +61,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 					
 					user = UserFactory.produceUser(user, userDTO);
 					
-					userService.createOrUpdate(user);
+					userService.createOrUpdate(user, userDTO.getLinkedRoleIds(), userDTO.getUnlinkedRoleIds());
 					
 					JobLog jobLog = new JobLog();
 					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.success"), getOutput(userDTO));

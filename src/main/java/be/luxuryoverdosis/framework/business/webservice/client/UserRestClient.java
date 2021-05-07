@@ -52,7 +52,7 @@ public class UserRestClient {
 		System.out.println(userDTO.getId());
 		System.out.println(userDTO.getName());
 		System.out.println(userDTO.getUserName());
-		System.out.println(userDTO.getRoleName());
+//		System.out.println(userDTO.getRoleName());
 		System.out.println(userDTO.getDateExpirationAsString());
 		System.out.println(userDTO.getEmail());
 		System.out.println(userDTO.getPassword());

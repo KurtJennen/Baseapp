@@ -16,10 +16,22 @@
 			<xs:element name="encryptedPassword" type="xs:string" />
 			<xs:element name="email" type="xs:string" />
 			<xs:element name="dateExpiration" type="xs:string" />
-			<xs:element name="role" type="xs:string" />
+			<xs:element name="roles" type="tns:Roles" />
 		</xs:sequence>
 		<xs:attribute ref="tns:Name" use="required" />
 	</xs:complexType>
+	
+	<xs:complexType name="Roles">
+        <xs:sequence>
+            <xs:element name="role" type="tns:Role" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    
+	<xs:complexType name="Role">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string" />
+        </xs:sequence>
+    </xs:complexType>
 	
 	<xs:attribute name="Name" type="xs:string" />
 	

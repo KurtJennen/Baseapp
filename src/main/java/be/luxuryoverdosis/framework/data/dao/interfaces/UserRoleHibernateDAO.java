@@ -7,6 +7,7 @@ import be.luxuryoverdosis.framework.data.to.UserRole;
 
 public interface UserRoleHibernateDAO {
 	public UserRole createOrUpdate(UserRole userRole);
+	public void delete(int userId);
 	public void delete(int userId, int roleId);
 	
     public ArrayList<UserRoleDTO> listDTO(int userId);

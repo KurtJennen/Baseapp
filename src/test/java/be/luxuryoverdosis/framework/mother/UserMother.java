@@ -42,7 +42,7 @@ public class UserMother {
 	public static User produceUserRole() {
 		User user = produceUser();
 		user.setDateExpiration(new Date());
-		user.setRole(RoleMother.produceRole());
+//		user.setRole(RoleMother.produceRole());
 		
 		return user;
 	}

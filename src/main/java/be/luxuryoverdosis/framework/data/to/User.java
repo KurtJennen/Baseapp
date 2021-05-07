@@ -1,16 +1,16 @@
 package be.luxuryoverdosis.framework.data.to;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Proxy;
@@ -23,8 +23,8 @@ import org.hibernate.annotations.Proxy;
 	@NamedQuery(name=User.SELECT_USERS_BY_NAME, query=User.Queries.SELECT_USERS_BY_NAME),
 	@NamedQuery(name=User.SELECT_USERS_DTO, query=User.Queries.SELECT_USERS_DTO),
 	@NamedQuery(name=User.SELECT_USERS_DTO_BY_NAME, query=User.Queries.SELECT_USERS_DTO_BY_NAME),
-	@NamedQuery(name=User.COUNT_USERS_BY_NAME, query=User.Queries.COUNT_USERS_BY_NAME),
-	@NamedQuery(name=User.COUNT_USERS_BY_ROLE, query=User.Queries.COUNT_USERS_BY_ROLE)
+	@NamedQuery(name=User.COUNT_USERS_BY_NAME, query=User.Queries.COUNT_USERS_BY_NAME)
+//	@NamedQuery(name=User.COUNT_USERS_BY_ROLE, query=User.Queries.COUNT_USERS_BY_ROLE)
 })
 @Proxy(lazy=false)
 @XmlType
@@ -34,7 +34,7 @@ public class User extends BaseTO {
 	public static final String SELECT_USERS_DTO = "selectUsersDto";
 	public static final String SELECT_USERS_DTO_BY_NAME = "selectUsersDtoByName";
 	public static final String COUNT_USERS_BY_NAME = "countUsersByName";
-	public static final String COUNT_USERS_BY_ROLE = "countUsersByRole";
+//	public static final String COUNT_USERS_BY_ROLE = "countUsersByRole";
 	
 	@Column(name="Name")
 	private String name;
@@ -51,9 +51,12 @@ public class User extends BaseTO {
 	@Column(name="DateExp")
 	private Date dateExpiration;
 	
-	@ManyToOne
-	@JoinColumn(name="Role_Id")
-	private Role role;
+//	@ManyToOne
+//	@JoinColumn(name="Role_Id")
+//	private Role role;
+	
+	@Transient
+	ArrayList<String> roles = new ArrayList<String>();
 	
 	public User() {
 		super();
@@ -89,13 +92,19 @@ public class User extends BaseTO {
 	public void setDateExpiration(Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
-	public Role getRole() {
-		return role;
+//	public Role getRole() {
+//		return role;
+//	}
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
+	public ArrayList<String> getRoles() {
+		return roles;
 	}
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(ArrayList<String> roles) {
+		this.roles = roles;
 	}
-	
+
 	public static final class Queries {
         public static final String SELECT_USERS = "from User u "
                 + "order by u.name";
@@ -107,24 +116,24 @@ public class User extends BaseTO {
 				+ "u.id, "
 				+ "u.name, "
 				+ "u.userName, "
-				+ "u.email, "
-				+ "r.id, "
-				+ "r.name "
+				+ "u.email "
+//				+ "r.id, "
+//				+ "r.name "
 				+ ") "
 				+ "from User u "
-		        + "inner join u.role r "
+//		        + "inner join u.role r "
 		        + "order by u.name";
 		
 		public static final String SELECT_USERS_DTO_BY_NAME = "select new be.luxuryoverdosis.framework.data.dto.UserDTO("
 				+ "u.id, "
 				+ "u.name, "
 				+ "u.userName, "
-				+ "u.email, "
-				+ "r.id, "
-				+ "r.name "
+				+ "u.email "
+//				+ "r.id, "
+//				+ "r.name "
 				+ ") "
 				+ "from User u "
-				+ "inner join u.role r "
+//				+ "inner join u.role r "
 				+ "where u.name like :name "
 				+ "order by u.name";
 		
@@ -133,9 +142,9 @@ public class User extends BaseTO {
 				+ "where u.name = :name "
 				+ "and u.id != :id";
 		
-		public static final String COUNT_USERS_BY_ROLE = "select count(*) "
-				+ "from User u "
-				+ "where u.role.id = :roleId";
+//		public static final String COUNT_USERS_BY_ROLE = "select count(*) "
+//				+ "from User u "
+//				+ "where u.role.id = :roleId";
 	}
 
 }

@@ -3,7 +3,6 @@ package be.luxuryoverdosis.framework.mother;
 import java.util.ArrayList;
 import java.util.Date;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
@@ -18,8 +17,8 @@ public class UserDTOMother {
 		userDTO.setEmail("kurt.jennen@skynet.be");
 		userDTO.setDateExpiration(new Date());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(new Date()));
-		userDTO.setRoleId(1);
-		userDTO.setRoleName(RoleNameEnum.BEHEERDER.getCode());
+//		userDTO.setRoleId(1);
+//		userDTO.setRoleName(RoleNameEnum.BEHEERDER.getCode());
 		return userDTO;
 	}
 	

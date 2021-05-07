@@ -19,6 +19,7 @@ import org.hibernate.annotations.Proxy;
 	@NamedQuery(name=UserRole.SELECT_USERROLES_DTO_BY_USER, query=UserRole.Queries.SELECT_USERROLES_DTO_BY_USER),
 	@NamedQuery(name=UserRole.COUNT_USERROLES_BY_USER, query=UserRole.Queries.COUNT_USERROLES_BY_USER),
 	@NamedQuery(name=UserRole.COUNT_USERROLES_BY_ROLE, query=UserRole.Queries.COUNT_USERROLES_BY_ROLE),
+	@NamedQuery(name=UserRole.DELETE_USERROLES_BY_USER, query=UserRole.Queries.DELETE_USERROLES_BY_USER),
 	@NamedQuery(name=UserRole.DELETE_USERROLES_BY_USER_AND_ROLE, query=UserRole.Queries.DELETE_USERROLES_BY_USER_AND_ROLE)
 })
 @Proxy(lazy=false)
@@ -27,6 +28,7 @@ public class UserRole extends BaseTO {
 	public static final String SELECT_USERROLES_DTO_BY_USER = "selectUserRolesDtoByUser";
 	public static final String COUNT_USERROLES_BY_USER = "countUserRolesByUser";
 	public static final String COUNT_USERROLES_BY_ROLE = "countUserRolesByRole";
+	public static final String DELETE_USERROLES_BY_USER = "deleteUserRolesByUser";
 	public static final String DELETE_USERROLES_BY_USER_AND_ROLE = "deleteUserRolesByUserAndRole";
 	
 	@ManyToOne
@@ -73,6 +75,10 @@ public class UserRole extends BaseTO {
 		public static final String COUNT_USERROLES_BY_ROLE = "select count(*) "
 				+ "from UserRole ur "
 				+ "where ur.role.id = :roleId ";
+		
+		public static final String DELETE_USERROLES_BY_USER = "delete "
+				+ "from UserRole ur "
+				+ "where ur.user.id = :userId ";
 		
 		public static final String DELETE_USERROLES_BY_USER_AND_ROLE = "delete "
 				+ "from UserRole ur "

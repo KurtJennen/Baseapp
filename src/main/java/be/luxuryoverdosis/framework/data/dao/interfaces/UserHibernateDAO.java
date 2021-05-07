@@ -16,5 +16,5 @@ public interface UserHibernateDAO {
 	public ArrayList<UserDTO> listDTO(String searchValue);
 	
 	public long count(String name, int id);
-	public long count(int roleId);
+//	public long count(int roleId);
 }

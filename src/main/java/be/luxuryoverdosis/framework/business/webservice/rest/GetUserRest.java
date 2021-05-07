@@ -29,9 +29,9 @@ public class GetUserRest {
 			@RequestHeader(value="userName") String userName,
 			@RequestHeader(value="encryptedPassword") String encryptedPassword,
 			@RequestHeader(value="email") String email,
-			@RequestHeader(value="roleName") String roleName) throws JsonProcessingException {
+			@RequestHeader(value="roleNames") String[] roleNames) throws JsonProcessingException {
 		
-		return getUserRestService().createOrUpdateUserRequest(name, userName, encryptedPassword, email, roleName);
+		return getUserRestService().createOrUpdateUserRequest(name, userName, encryptedPassword, email, roleNames);
 	}
 	
 	@RequestMapping(value = "/deleteUserRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)

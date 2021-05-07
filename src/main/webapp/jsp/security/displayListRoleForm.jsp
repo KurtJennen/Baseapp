@@ -23,7 +23,9 @@
 		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>
-				<td><html:text property="dialogName" size="45" maxlength="45" tabindex="1"></html:text></td>
+				<td>
+					<lo:enumSelect clazz="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum" tabindex="1" property="dialogName" value="${listRoleForm.dialogName}" method="getAllCodes" />
+				</td>
 			</tr>
 		</table>
 		<c:if test="${error==1}">

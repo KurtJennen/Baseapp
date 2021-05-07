@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="encryptedPassword" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="dateExpiration" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="roles" type="{http://www.luxuryoverdosis.be/user/schema/v1}Roles"/>
  *       &lt;/sequence>
  *       &lt;attribute ref="{http://www.luxuryoverdosis.be/user/schema/v1}Name use="required""/>
  *     &lt;/restriction>
@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlType;
     "encryptedPassword",
     "email",
     "dateExpiration",
-    "role"
+    "roles"
 })
 public class User {
 
@@ -51,7 +51,7 @@ public class User {
     @XmlElement(required = true)
     protected String dateExpiration;
     @XmlElement(required = true)
-    protected String role;
+    protected Roles roles;
     @XmlAttribute(name = "Name", namespace = "http://www.luxuryoverdosis.be/user/schema/v1", required = true)
     protected String name;
 
@@ -152,27 +152,27 @@ public class User {
     }
 
     /**
-     * Gets the value of the role property.
+     * Gets the value of the roles property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Roles }
      *     
      */
-    public String getRole() {
-        return role;
+    public Roles getRoles() {
+        return roles;
     }
 
     /**
-     * Sets the value of the role property.
+     * Sets the value of the roles property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Roles }
      *     
      */
-    public void setRole(String value) {
-        this.role = value;
+    public void setRoles(Roles value) {
+        this.roles = value;
     }
 
     /**

@@ -22,6 +22,16 @@ public class UserRoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	}
 	
 	@SuppressWarnings("unchecked")
+	public void delete(int userId) {
+		Logging.info(this, "Begin deleteUserRole");
+		
+		Query<UserRole> query = getCurrentSession().getNamedQuery(UserRole.DELETE_USERROLES_BY_USER);
+		query.setParameter(BaseQueryParameters.USER_ID, userId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteUserRole");
+	}
+	@SuppressWarnings("unchecked")
 	public void delete(int userId, int roleId) {
 		Logging.info(this, "Begin deleteUserRole");
 		

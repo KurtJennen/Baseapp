@@ -28,6 +28,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
@@ -49,6 +50,9 @@ public class UserServiceSpringImplTest {
 	
 	@Mock
 	private RoleHibernateDAO roleHibernateDAO;
+	
+	@Mock
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Mock
 	private MenuService menuService;
@@ -76,6 +80,7 @@ public class UserServiceSpringImplTest {
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		when(userHibernateDAO.read(anyInt())).thenReturn(user);
 		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
 		userServiceSpringImpl.createOrUpdateDTO(userDTO);
 		
@@ -108,8 +113,9 @@ public class UserServiceSpringImplTest {
 		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode());
@@ -123,7 +129,7 @@ public class UserServiceSpringImplTest {
 			
 			when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(1L);
 			
-			userServiceSpringImpl.createOrUpdate(user);
+			userServiceSpringImpl.createOrUpdate(user, null, null);
 			
 			verify(userHibernateDAO).count(anyString(), anyInt());
 		} catch (Exception e) {
@@ -142,8 +148,9 @@ public class UserServiceSpringImplTest {
 		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(anyObject());
@@ -158,8 +165,9 @@ public class UserServiceSpringImplTest {
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(userHibernateDAO).createOrUpdate(user);
@@ -173,8 +181,9 @@ public class UserServiceSpringImplTest {
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(null);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(roleHibernateDAO).readName(anyObject());

@@ -58,7 +58,8 @@ public class MenuItem implements Tag {
 				if(roles != null) {
 					String[] seperatedRoles = roles.split(",");
 					for(int i = 0; i < seperatedRoles.length; i++) {
-						if(seperatedRoles[i].equals(user.getRole().getName())) {
+						//if(seperatedRoles[i].equals(user.getRole().getName())) {
+						if(user.getRoles().contains(seperatedRoles[i])) {
 							enabled = true;
 						}
 					}

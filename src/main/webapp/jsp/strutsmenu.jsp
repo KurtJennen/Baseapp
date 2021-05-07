@@ -4,19 +4,19 @@
 <%@page import="be.luxuryoverdosis.baseapp.Constants"%>
 <%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
 <%@page import="be.luxuryoverdosis.framework.data.to.User"%>
-<c:if test="<%=RoleNameEnum.BEHEERDER.getCode().equals(((User)request.getSession().getAttribute(WebConstants.USER)).getRole().getName())%>">
+<c:if test="<%=((User)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BEHEERDER.getCode())%>">
 	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
 		<menu:displayMenu name="menuBeheerder" />
 		<menu:displayMenu name="menu1Beheerder" />
 	</menu:useMenuDisplayer>
 </c:if>
-<c:if test="<%=RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode().equals(((User)request.getSession().getAttribute(WebConstants.USER)).getRole().getName())%>">
+<c:if test="<%=((User)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode())%>">
 	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
 		<menu:displayMenu name="menuBeheerder" />
 		<menu:displayMenu name="menu1Beheerder" />
 	</menu:useMenuDisplayer>
 </c:if>
-<c:if test="<%=RoleNameEnum.NORMALE_GEBRUIKER.getCode().equals(((User)request.getSession().getAttribute(WebConstants.USER)).getRole().getName())%>">
+<c:if test="<%=((User)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.NORMALE_GEBRUIKER.getCode())%>">
 	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
 		<menu:displayMenu name="menuBeheerder" />
 	</menu:useMenuDisplayer>

@@ -52,7 +52,7 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 				exportBuffer.append(user.getEncryptedPassword()).append(BaseConstants.PIPE);
 				exportBuffer.append(user.getEmail()).append(BaseConstants.PIPE);
 				exportBuffer.append(user.getDateExpiration()).append(BaseConstants.PIPE);
-				exportBuffer.append(user.getRole().getName());
+//				exportBuffer.append(user.getRole().getName());
 				exportBuffer.append(BaseConstants.CARRIAGE_RETURN);
 				
 				baos.write(exportBuffer.toString().getBytes(), 0, exportBuffer.length());

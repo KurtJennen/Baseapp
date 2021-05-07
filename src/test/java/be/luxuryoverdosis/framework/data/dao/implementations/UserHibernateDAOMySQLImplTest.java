@@ -168,19 +168,19 @@ public class UserHibernateDAOMySQLImplTest {
 		assertThat(count).isEqualTo(0);
 	}
 	
-	@Test
-	public void testCountRoleId() {
-		User user = UserMother.produceUserRole();
-		ArrayList<Long> arrayList = UserDTOMother.produceListLong();
-		
-		when(session.getNamedQuery(anyString())).thenReturn(longQuery);
-		when(longQuery.list()).thenReturn(arrayList);
-		
-		long count = userHibernateDAOMySQLImpl.count(user.getRole().getId());
-		
-		verify(session).getNamedQuery(anyString());
-		verify(longQuery).list();
-		
-		assertThat(count).isEqualTo(0);
-	}
+//	@Test
+//	public void testCountRoleId() {
+//		User user = UserMother.produceUserRole();
+//		ArrayList<Long> arrayList = UserDTOMother.produceListLong();
+//		
+//		when(session.getNamedQuery(anyString())).thenReturn(longQuery);
+//		when(longQuery.list()).thenReturn(arrayList);
+//		
+//		long count = userHibernateDAOMySQLImpl.count(user.getRole().getId());
+//		
+//		verify(session).getNamedQuery(anyString());
+//		verify(longQuery).list();
+//		
+//		assertThat(count).isEqualTo(0);
+//	}
 }

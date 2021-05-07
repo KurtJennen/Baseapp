@@ -7,6 +7,7 @@ import be.luxuryoverdosis.generated.user.schema.v1.DeleteUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.Message;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.Role;
 import be.luxuryoverdosis.generated.user.schema.v1.User;
 
 public class UserEndpointClient {
@@ -41,10 +42,13 @@ public class UserEndpointClient {
 	private static void print(User user) {
 		System.out.println(user.getName());
 		System.out.println(user.getUserName());
-		System.out.println(user.getRole());
 		System.out.println(user.getDateExpiration());
 		System.out.println(user.getEmail());
 		System.out.println(user.getEncryptedPassword());
+		
+		for(Role role : user.getRoles().getRole()) {
+			System.out.println(role.getName());
+		}
 	}
 
 	private static void printMessage(Message message) {

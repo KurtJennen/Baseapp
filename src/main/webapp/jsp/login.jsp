@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
 <script>
 	$(document).ready(function() {
@@ -17,10 +18,13 @@
 </script>
 
 <html:form action="/login.do">
+	<html:hidden property="activation" />
 	<div id="tabs" align="center">
 		<ul>
 			<li><a href="#tab1"><fmt:message key="login" /></a></li>
-			<li><a href="#tab2"><fmt:message key="info" /></a></li>
+			<c:if test="${loginForm.activation==true}">
+				<li><a href="#tab2"><fmt:message key="info" /></a></li>
+			</c:if>
 		</ul>
 		<div id="tab1">
 			<table>
@@ -38,7 +42,9 @@
 							<tr>
 								<td colspan="3" class="center">
 									<lo:button image="door_in.png" method="login" key="button.login"></lo:button>
-									<lo:button image="user.png" method="register" key="button.register"></lo:button>
+									<c:if test="${loginForm.activation==true}">
+										<lo:button image="user.png" method="register" key="button.register"></lo:button>
+									</c:if>
 								</td>
 							</tr>
 							<tr>
@@ -57,26 +63,28 @@
 				</tr>
 			</table>
 		</div>
-		<div id="tab2" class="center">
-			<fmt:message key="subscription" /><br />
-			<br />
-			<fmt:message key="subscription1" /><br />
-			<br />
-			<fmt:message key="subscription2" /><br />
-			<br />
-			<fmt:message key="subscription3" /><br />
-			<br />
-			<fmt:message key="subscription4" /><br />
-			<br />
-			<fmt:message key="subscription5" /><br />
-			<br />
-			<fmt:message key="subscription6" /><br />
-			<br />
-			<i>
-				<fmt:message key="copyright" />
-				<a href="mailto:ubuntu.form.zero@skynet.be"><fmt:message key="programmer.name" /></a><br />
-				<fmt:message key="programmer.title" />
-			</i>
-		</div>
+		<c:if test="${loginForm.activation==true}">
+			<div id="tab2" class="center">
+				<fmt:message key="subscription" /><br />
+				<br />
+				<fmt:message key="subscription1" /><br />
+				<br />
+				<fmt:message key="subscription2" /><br />
+				<br />
+				<fmt:message key="subscription3" /><br />
+				<br />
+				<fmt:message key="subscription4" /><br />
+				<br />
+				<fmt:message key="subscription5" /><br />
+				<br />
+				<fmt:message key="subscription6" /><br />
+				<br />
+				<i>
+					<fmt:message key="copyright" />
+					<a href="mailto:ubuntu.form.zero@skynet.be"><fmt:message key="programmer.name" /></a><br />
+					<fmt:message key="programmer.title" />
+				</i>
+			</div>
+		</c:if>
 	</div>
 </html:form>
