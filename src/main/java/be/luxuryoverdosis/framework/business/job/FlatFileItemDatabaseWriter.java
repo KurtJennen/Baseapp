@@ -444,7 +444,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 			try {
 				if (outputBufferedWriter != null) {
 					//added by luxuryoverdosis
-					ThreadManager.setUserOnThread(userService.readName(jobUser));
+					ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
 					
 					Job job = jobService.read(jobId);
 					job.setFileData(baos.toByteArray());

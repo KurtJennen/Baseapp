@@ -1,19 +1,19 @@
 package be.luxuryoverdosis.framework.data.wrapperdto;
 
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import net.sf.navigator.menu.MenuRepository;
 
 public class LoginWrapperDTO {
-	private User user;
+	private UserDTO userDTO;
 	private boolean activation;
 	private int days;
 	private MenuRepository menuRepository;
 	
-	public User getUser() {
-		return user;
+	public UserDTO getUserDTO() {
+		return userDTO;
 	}
-	public void setUser(User user) {
-		this.user = user;
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 	public boolean isActivation() {
 		return activation;

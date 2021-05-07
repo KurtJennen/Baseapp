@@ -15,7 +15,7 @@ import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
 
 public class SpringSecurityFilter implements Filter {
@@ -36,9 +36,9 @@ public class SpringSecurityFilter implements Filter {
 	        String credentials = Encryption.decode(base64Credentials);
 	        final String[] values = credentials.split(":",2);
 	        
-	        User user = getUserService().readName(values[0]);
-	        if(user != null && user.getEncryptedPassword().equals(Encryption.encode(values[1]))) {
-	        	ThreadManager.setUserOnThread(user);
+	        UserDTO userDTO = getUserService().readNameDTO(values[0]);
+	        if(userDTO != null && userDTO.getPassword().equals(values[1])) {
+	        	ThreadManager.setUserOnThread(userDTO);
 	        	filterChain.doFilter(request, response);
 //	        	try {
 //					ResponseTool.writeResponseForAuthentication(httpServletResponse, BaseSpringServiceLocator.getMessage("security.access.denied"));

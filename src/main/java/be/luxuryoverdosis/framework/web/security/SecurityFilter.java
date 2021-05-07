@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class SecurityFilter implements Filter {
@@ -32,13 +32,13 @@ public class SecurityFilter implements Filter {
 		String loginPath = filterConfig.getInitParameter(SecurityFilter.LOGIN);
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
 		String path = httpServletRequest.getServletPath();
-		User user = (User) httpServletRequest.getSession().getAttribute(BaseWebConstants.USER);
+		UserDTO userDTO = (UserDTO) httpServletRequest.getSession().getAttribute(BaseWebConstants.USER);
 		
 		if(!path.startsWith(unsecurePath)) {
-			if(user == null) {
+			if(userDTO == null) {
 				request.getRequestDispatcher(loginPath).forward(request,response);
 			} else {
-				ThreadManager.setUserOnThread(user);
+				ThreadManager.setUserOnThread(userDTO);
 			}
 		}
 		

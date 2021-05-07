@@ -13,10 +13,11 @@ import be.luxuryoverdosis.framework.business.service.interfaces.QueryService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.QueryParamHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.QueryDTO;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.QueryParam;
 import be.luxuryoverdosis.framework.data.to.Query;
-import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
@@ -25,21 +26,23 @@ public class QueryServiceSpringImpl implements QueryService {
 	private QueryHibernateDAO queryHibernateDAO;
 	@Resource
 	private QueryParamHibernateDAO queryParamHibernateDAO;
+	@Resource
+	private UserHibernateDAO userHibernateDAO;
 	
 	@Transactional
 	public QueryDTO createOrUpdateDTO(final QueryDTO queryDTO) {
 		Logging.info(this, "Begin createQueryDTO");
 		
-		User user = ThreadManager.getUserFromThread();
+		UserDTO userDTO = ThreadManager.getUserFromThread();
 		
-		Query query = this.read(queryDTO.getName(), queryDTO.getType(), user.getId());
+		Query query = this.read(queryDTO.getName(), queryDTO.getType(), userDTO.getId());
 		if(query == null) {
 			query = new Query();
 		}
 		query.setName(queryDTO.getName());
 		query.setType(queryDTO.getType());
 		query.setComplex(queryDTO.getComplex());
-		query.setUser(user);
+		query.setUser(userHibernateDAO.read(userDTO.getId()));
 		
 		query = this.createOrUpdate(query);
 		
@@ -256,7 +259,7 @@ public class QueryServiceSpringImpl implements QueryService {
 	public ArrayList<Query> list(final String type) {
 		Logging.info(this, "Begin listQuery");
 		
-		User user = ThreadManager.getUserFromThread();
+		UserDTO user = ThreadManager.getUserFromThread();
 		
 		ArrayList<Query> arrayList = null;
 		arrayList = queryHibernateDAO.list(type, user.getId());
@@ -268,7 +271,7 @@ public class QueryServiceSpringImpl implements QueryService {
 	public long countAndCreateOrUpdateDTO(final String type, final QueryDTO queryDTO) {
 		Logging.info(this, "Begin countQuery");
 		
-		User user = ThreadManager.getUserFromThread();
+		UserDTO user = ThreadManager.getUserFromThread();
 		
 		Long countQuery = new Long(0);
 		countQuery = queryHibernateDAO.count(queryDTO.getName(), type, user.getId());

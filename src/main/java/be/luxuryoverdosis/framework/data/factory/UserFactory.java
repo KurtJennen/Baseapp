@@ -17,6 +17,7 @@ public class UserFactory {
 		userDTO.setUserName(user.getUserName());
 		userDTO.setPassword(Encryption.decode(user.getEncryptedPassword()));
 		userDTO.setEmail(user.getEmail());
+		userDTO.setDateExpiration(user.getDateExpiration());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
 //		if(user.getRole() != null) {
 //			Role role = user.getRole();

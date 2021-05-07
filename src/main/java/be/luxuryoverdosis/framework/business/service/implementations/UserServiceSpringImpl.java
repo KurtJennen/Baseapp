@@ -105,6 +105,24 @@ public class UserServiceSpringImpl implements UserService {
 		
 		UserDTO userDTO = UserFactory.produceUserDTO(user);
 		userDTO.setActivation(activation);
+		userDTO.setRoles(getMaxRangRoles(userDTO));
+		
+		Logging.info(this, "End readUserDTO");
+		return userDTO;
+	}
+	
+	@Transactional(readOnly=true)
+	public UserDTO readNameDTO(final String name) {
+		Logging.info(this, "Begin readUserDTO");
+		
+		User user = userHibernateDAO.readName(name);
+		UserDTO userDTO = null;
+		
+		if(user != null) {
+			userDTO = UserFactory.produceUserDTO(user);
+			userDTO.setActivation(activation);
+			userDTO.setRoles(getMaxRangRoles(userDTO));
+		}
 		
 		Logging.info(this, "End readUserDTO");
 		return userDTO;
@@ -266,27 +284,27 @@ public class UserServiceSpringImpl implements UserService {
 		LoginWrapperDTO loginWrapperDTO = new LoginWrapperDTO();
 		loginWrapperDTO.setActivation(activation);
 		
-		User user = userHibernateDAO.readName(name);
-		if(user != null) {
-			ArrayList<String> roleNames = getMaxRangRoles(user);
-			user.setRoles(roleNames);
-			loginWrapperDTO.setUser(user);
+		UserDTO userDTO = this.readNameDTO(name);
+		if(userDTO != null) {
+			ArrayList<String> roleNames = getMaxRangRoles(userDTO);
+			userDTO.setRoles(roleNames);
+			loginWrapperDTO.setUserDTO(userDTO);
 			
-			int days = daysBeforeDeactivate(user);
+			int days = daysBeforeDeactivate(userDTO);
 			loginWrapperDTO.setDays(days);
-			if(user != null && days == 0) {
-				deactivate(user.getId());
+			if(userDTO != null && days == 0) {
+				deactivate(userDTO.getId());
 			}
 			
-			loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, user.getId()));
+			loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, userDTO.getId()));
 		}
 		
 		Logging.info(this, "End getLoginWrapperDTO");
 		return loginWrapperDTO;
 	}
 
-	private ArrayList<String> getMaxRangRoles(User user) {
-		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(user.getId());
+	private ArrayList<String> getMaxRangRoles(UserDTO userDTO) {
+		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
 		HashMap<Integer, RoleNameEnum> maxRangRoles = new HashMap<Integer, RoleNameEnum>();
 		
 		for (UserRoleDTO userRoleDTO : userRolesList) {
@@ -409,12 +427,12 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	@Transactional
-	public int daysBeforeDeactivate(final User user) {
+	public int daysBeforeDeactivate(final UserDTO userDTO) {
 		Logging.info(this, "Begin daysBeforeDeactivate");
 		
 		int days = -1;
 		
-		if(user == null) {
+		if(userDTO == null) {
 			return 0;
 		}
 		
@@ -422,7 +440,7 @@ public class UserServiceSpringImpl implements UserService {
 		defaultCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_WARNING);
 		
 		Calendar expCalendar = Calendar.getInstance();
-		expCalendar.setTime(user.getDateExpiration());
+		expCalendar.setTime(userDTO.getDateExpiration());
 		
 		if(defaultCalendar.after(expCalendar)) {
 			int daysExp = expCalendar.get(Calendar.DAY_OF_YEAR);

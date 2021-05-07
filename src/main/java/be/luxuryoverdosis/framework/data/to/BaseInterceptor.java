@@ -9,6 +9,7 @@ import org.hibernate.type.Type;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
 
 public class BaseInterceptor extends EmptyInterceptor {
@@ -34,9 +35,9 @@ public class BaseInterceptor extends EmptyInterceptor {
 		String userName = BaseConstants.JOB_USER_ROOT;
 		
 		Date now = new Date();
-		User user = ThreadManager.getUserFromThread();
-		if(user != null) {
-			userName = user.getName();
+		UserDTO userDTO = ThreadManager.getUserFromThread();
+		if(userDTO != null) {
+			userName = userDTO.getName();
 		}
 		
 		boolean userAddChanged = onCreate(state, propertyNames, USERADD, userName);

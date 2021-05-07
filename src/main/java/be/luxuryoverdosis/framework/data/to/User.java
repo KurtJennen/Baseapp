@@ -1,6 +1,5 @@
 package be.luxuryoverdosis.framework.data.to;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -10,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlType;
 
 import org.hibernate.annotations.Proxy;
@@ -55,8 +53,8 @@ public class User extends BaseTO {
 //	@JoinColumn(name="Role_Id")
 //	private Role role;
 	
-	@Transient
-	ArrayList<String> roles = new ArrayList<String>();
+//	@Transient
+//	ArrayList<String> roles = new ArrayList<String>();
 	
 	public User() {
 		super();
@@ -98,12 +96,12 @@ public class User extends BaseTO {
 //	public void setRole(Role role) {
 //		this.role = role;
 //	}
-	public ArrayList<String> getRoles() {
-		return roles;
-	}
-	public void setRoles(ArrayList<String> roles) {
-		this.roles = roles;
-	}
+//	public ArrayList<String> getRoles() {
+//		return roles;
+//	}
+//	public void setRoles(ArrayList<String> roles) {
+//		this.roles = roles;
+//	}
 
 	public static final class Queries {
         public static final String SELECT_USERS = "from User u "

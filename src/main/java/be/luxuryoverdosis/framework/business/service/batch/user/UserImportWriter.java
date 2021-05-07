@@ -46,7 +46,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	}
 
 	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
-		ThreadManager.setUserOnThread(userService.readName(jobUser));
+		ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
 		
 		Job job = jobService.read(jobId);
 		try {

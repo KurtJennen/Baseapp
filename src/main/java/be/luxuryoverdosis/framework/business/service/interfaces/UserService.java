@@ -20,6 +20,7 @@ public interface UserService {
 	
 	public UserDTO createOrUpdateDTO(UserDTO userDTO);
 	public UserDTO readDTO(int id);
+	public UserDTO readNameDTO(String name);
 	
 	public User createOrUpdate(User user, String[] unlinkedRoleNames);
 	public User createOrUpdate(User user, int[] linkedRoleIds, int[] unlinkedRoleIds);
@@ -41,5 +42,5 @@ public interface UserService {
 	public boolean isActiviation();
 	public User activate(int id, int period);
 	public User deactivate(int id);
-	public int daysBeforeDeactivate(User user);
+	public int daysBeforeDeactivate(UserDTO userDTO);
 }

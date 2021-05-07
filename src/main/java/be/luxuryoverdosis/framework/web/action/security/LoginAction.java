@@ -11,11 +11,10 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
-import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -47,21 +46,21 @@ public class LoginAction extends DispatchAction {
 		
 		LoginForm loginForm = (LoginForm) form;
 		
-		String encryptedPassword = Encryption.encode(loginForm.getPassword());
+//		String encryptedPassword = Encryption.encode(loginForm.getPassword());
 		
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		menuRepository.reload();
 		
 		LoginWrapperDTO loginWrapperDTO = getUserService().getLoginWrapperDTO(loginForm.getName(), menuRepository);
 		
-		User user = loginWrapperDTO.getUser();
+		UserDTO userDTO = loginWrapperDTO.getUserDTO();
 		boolean activation = loginWrapperDTO.isActivation();
 		int days = loginWrapperDTO.getDays();
 		
-		if(user == null) {
+		if(userDTO == null) {
 			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.user"));
 		}
-		if(user != null && (!loginForm.getName().equals(user.getName()) || !encryptedPassword.equals(user.getEncryptedPassword()))) {
+		if(userDTO != null && (!loginForm.getName().equals(userDTO.getName()) || !loginForm.getPassword().equals(userDTO.getPassword()))) {
 			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.name.or.password"));
 		}
 		if(days == 0 && activation) {
@@ -74,8 +73,8 @@ public class LoginAction extends DispatchAction {
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
 		saveMessages(request, actionMessages);
 		
-		SessionManager.putInSession(request, BaseWebConstants.USER, user);
-		ThreadManager.setUserOnThread(user);
+		SessionManager.putInSession(request, BaseWebConstants.USER, userDTO);
+		ThreadManager.setUserOnThread(userDTO);
 		request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
 		
 		request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
