@@ -21,8 +21,6 @@ public class DetailUserForm extends BaseForm {
 	private String email;
 	private String date;
 	private boolean isActivation;
-//	private int roleId;
-//	private String roleIdValue;
 	
 	private int[] linkedRoleIds;
 	private int[] unlinkedRoleIds;
@@ -69,18 +67,6 @@ public class DetailUserForm extends BaseForm {
 	public void setActivation(boolean isActivation) {
 		this.isActivation = isActivation;
 	}
-//	public int getRoleId() {
-//		return roleId;
-//	}
-//	public void setRoleId(int roleId) {
-//		this.roleId = roleId;
-//	}
-//	public String getRoleIdValue() {
-//		return roleIdValue;
-//	}
-//	public void setRoleIdValue(String roleIdValue) {
-//		this.roleIdValue = roleIdValue;
-//	}
 	
 	public int[] getLinkedRoleIds() {
 		return linkedRoleIds;
@@ -103,8 +89,6 @@ public class DetailUserForm extends BaseForm {
 		this.setPasswordConfirm("");
 		this.setEmail("");
 		this.setDate(DateTool.formatUtilDate(DateTool.getDefaultDateFromCalendar()));
-//		this.setRoleId(-1);
-//		this.setRoleIdValue("");
 	}
 	
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
@@ -119,10 +103,6 @@ public class DetailUserForm extends BaseForm {
 				errors.add("password", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password"), MessageLocator.getMessage(request, "security.password.confirm")));
 				errors.add("passwordConfirm", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password.confirm"), MessageLocator.getMessage(request, "security.password")));
 			}
-			
-//			if(roleId < 0) {
-//				errors.add("roleId", new ActionMessage("errors.required", MessageLocator.getMessage(request, "security.role")));
-//			}
 		}
 		
 		if(errors.size() > 0) {

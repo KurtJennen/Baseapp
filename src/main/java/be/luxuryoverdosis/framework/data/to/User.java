@@ -22,7 +22,6 @@ import org.hibernate.annotations.Proxy;
 	@NamedQuery(name=User.SELECT_USERS_DTO, query=User.Queries.SELECT_USERS_DTO),
 	@NamedQuery(name=User.SELECT_USERS_DTO_BY_NAME, query=User.Queries.SELECT_USERS_DTO_BY_NAME),
 	@NamedQuery(name=User.COUNT_USERS_BY_NAME, query=User.Queries.COUNT_USERS_BY_NAME)
-//	@NamedQuery(name=User.COUNT_USERS_BY_ROLE, query=User.Queries.COUNT_USERS_BY_ROLE)
 })
 @Proxy(lazy=false)
 @XmlType
@@ -32,7 +31,6 @@ public class User extends BaseTO {
 	public static final String SELECT_USERS_DTO = "selectUsersDto";
 	public static final String SELECT_USERS_DTO_BY_NAME = "selectUsersDtoByName";
 	public static final String COUNT_USERS_BY_NAME = "countUsersByName";
-//	public static final String COUNT_USERS_BY_ROLE = "countUsersByRole";
 	
 	@Column(name="Name")
 	private String name;
@@ -48,13 +46,6 @@ public class User extends BaseTO {
 	
 	@Column(name="DateExp")
 	private Date dateExpiration;
-	
-//	@ManyToOne
-//	@JoinColumn(name="Role_Id")
-//	private Role role;
-	
-//	@Transient
-//	ArrayList<String> roles = new ArrayList<String>();
 	
 	public User() {
 		super();
@@ -90,18 +81,6 @@ public class User extends BaseTO {
 	public void setDateExpiration(Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
-//	public Role getRole() {
-//		return role;
-//	}
-//	public void setRole(Role role) {
-//		this.role = role;
-//	}
-//	public ArrayList<String> getRoles() {
-//		return roles;
-//	}
-//	public void setRoles(ArrayList<String> roles) {
-//		this.roles = roles;
-//	}
 
 	public static final class Queries {
         public static final String SELECT_USERS = "from User u "
@@ -115,11 +94,8 @@ public class User extends BaseTO {
 				+ "u.name, "
 				+ "u.userName, "
 				+ "u.email "
-//				+ "r.id, "
-//				+ "r.name "
 				+ ") "
 				+ "from User u "
-//		        + "inner join u.role r "
 		        + "order by u.name";
 		
 		public static final String SELECT_USERS_DTO_BY_NAME = "select new be.luxuryoverdosis.framework.data.dto.UserDTO("
@@ -127,11 +103,8 @@ public class User extends BaseTO {
 				+ "u.name, "
 				+ "u.userName, "
 				+ "u.email "
-//				+ "r.id, "
-//				+ "r.name "
 				+ ") "
 				+ "from User u "
-//				+ "inner join u.role r "
 				+ "where u.name like :name "
 				+ "order by u.name";
 		
@@ -140,9 +113,6 @@ public class User extends BaseTO {
 				+ "where u.name = :name "
 				+ "and u.id != :id";
 		
-//		public static final String COUNT_USERS_BY_ROLE = "select count(*) "
-//				+ "from User u "
-//				+ "where u.role.id = :roleId";
 	}
 
 }

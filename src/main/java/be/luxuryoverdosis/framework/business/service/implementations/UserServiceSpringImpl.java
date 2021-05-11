@@ -401,7 +401,6 @@ public class UserServiceSpringImpl implements UserService {
 			}
 			user.setDateExpiration(expCalendar.getTime());
 		}
-//		user.setRole(roleHibernateDAO.readName(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode()));
 		
 		Logging.info(this, "Begin activate");
 		
@@ -414,7 +413,6 @@ public class UserServiceSpringImpl implements UserService {
 		User user = userHibernateDAO.read(id);
 		
 		user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
-//		user.setRole(roleHibernateDAO.readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode()));
 		
 		Logging.info(this, "Begin deactivate");
 		

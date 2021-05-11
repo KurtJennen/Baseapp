@@ -73,7 +73,6 @@ public class DetailUserAction extends NavigationAction {
 		userForm.setEmail(userDTO.getEmail());
 		userForm.setDate(userDTO.getDateExpirationAsString());
 		userForm.setActivation(userDTO.isActivation());
-//		userForm.setRoleId(userDTO.getRoleId());
 		
 		storeListsInSession(request, userForm);
 		
@@ -128,12 +127,10 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setPassword(userForm.getPassword());
 		userDTO.setEmail(userForm.getEmail());
 		userDTO.setDateExpirationAsString(userForm.getDate());
-//		userDTO.setRoleId(userForm.getRoleId());
 		userDTO.setLinkedRoleIds(userForm.getLinkedRoleIds());
 		userDTO.setUnlinkedRoleIds(userForm.getUnlinkedRoleIds());
 		
 		if(SessionManager.getFromSession(request, WebConstants.USER_ROLE_LINKED_LIST) == null) {
-//		if(!StringUtils.isEmpty(userForm.getDefaultRoleName())) {
 			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 			userDTO.setRegister(true);
 		} else {
@@ -175,7 +172,6 @@ public class DetailUserAction extends NavigationAction {
 		DetailUserForm userForm = (DetailUserForm) form;
 		
 		User user = getUserService().activate(userForm.getId(), UserService.YEAR);
-//		userForm.setRoleId(user.getRole().getId());
 		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
@@ -192,7 +188,6 @@ public class DetailUserAction extends NavigationAction {
 		DetailUserForm userForm = (DetailUserForm) form;
 		
 		User user = getUserService().activate(userForm.getId(), UserService.HALF_YEAR);
-//		userForm.setRoleId(user.getRole().getId());
 		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
@@ -209,7 +204,6 @@ public class DetailUserAction extends NavigationAction {
 		DetailUserForm userForm = (DetailUserForm) form;
 		
 		User user = getUserService().deactivate(userForm.getId());
-//		userForm.setRoleId(user.getRole().getId());
 		userForm.setDate(DateTool.formatUtilDate(user.getDateExpiration()));
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
@@ -219,35 +213,6 @@ public class DetailUserAction extends NavigationAction {
 		
 		return actionRedirect;
 	}
-	
-//	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin Ajax");
-//		
-//		DetailUserForm userForm = (DetailUserForm) form;
-//		
-//		ArrayList<RoleDTO> roleList = getRoleService().listDTO(userForm.getRoleIdValue());
-//		if (roleList.size() > 0) {
-//			super.sendAsJson(response, roleList);
-//		}
-//		
-//		Logging.info(this, "End Ajax Success");
-//		
-//		return null;
-//	}
-//	
-//	public ActionForward ajaxSearchOneRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin Ajax");
-//		
-//		DetailUserForm userForm = (DetailUserForm) form;
-//		
-//		RoleDTO roleDTO = getRoleService().readDTO(userForm.getRoleId());
-//		
-//		super.sendAsJson(response, roleDTO);
-//		
-//		Logging.info(this, "End Ajax Success");
-//		
-//		return null;
-//	}
 	
 	private UserService getUserService() {
 		return BaseSpringServiceLocator.getBean(UserService.class);

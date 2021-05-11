@@ -90,9 +90,6 @@ public class RoleServiceSpringImpl implements RoleService {
 	@Transactional
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteRole");
-//		if(userHibernateDAO.count(id) > 0) {
-//			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.role", "table.user"});
-//		}
 		if(userRoleHibernateDAO.countRole(id) > 0) {
 			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.role", "table.user.role"});
 		}

@@ -22,11 +22,6 @@ public class UserFactory {
 		userDTO.setEmail(user.getEmail());
 		userDTO.setDateExpiration(user.getDateExpiration());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
-//		if(user.getRole() != null) {
-//			Role role = user.getRole();
-//			userDTO.setRoleId(role.getId());
-//			userDTO.setRoleName(role.getName());
-//		}
 		
 		return userDTO;
 	}
@@ -59,7 +54,6 @@ public class UserFactory {
 		user.setId(userDTO.getId());
 		user.setName(userDTO.getName());
 		user.setUserName(userDTO.getUserName());
-		//user.setEncryptedPassword(userDTO.getPassword());
 		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		user.setEmail(userDTO.getEmail());
 		try {

@@ -129,9 +129,6 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 			unlinkedRoleNames[i] = userWs.getRoles().getRole().get(i).getName();
 		}
 		
-//		Role role = roleService.readName(userWs.getRole());
-//		user.setRole(role);
-		
 		try {
 			userService.createOrUpdate(user, unlinkedRoleNames);
 			if (isNew) {

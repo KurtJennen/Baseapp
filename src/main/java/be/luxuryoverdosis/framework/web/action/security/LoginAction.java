@@ -46,8 +46,6 @@ public class LoginAction extends DispatchAction {
 		
 		LoginForm loginForm = (LoginForm) form;
 		
-//		String encryptedPassword = Encryption.encode(loginForm.getPassword());
-		
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		menuRepository.reload();
 		

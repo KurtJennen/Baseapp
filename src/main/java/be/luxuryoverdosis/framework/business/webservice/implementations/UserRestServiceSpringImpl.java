@@ -107,15 +107,6 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		user.setName(name);
 		user.setUserName(userName);
 		
-		//String[] unlinkedRoleNames = new String[] {roleName};
-		
-//		Role role = roleService.readName(roleName);
-//		if (role == null) {
-//			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.role")});
-//			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
-//		}
-//		user.setRole(role);
-		
 		try {
 			user = userService.createOrUpdate(user, roleNames);
 			userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
