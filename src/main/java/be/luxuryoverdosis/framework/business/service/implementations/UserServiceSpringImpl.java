@@ -84,9 +84,6 @@ public class UserServiceSpringImpl implements UserService {
 			user = this.read(userDTO.getId());
 		}
 		user = UserFactory.produceUser(user, userDTO);
-//		if(userDTO.getRoleId() > 0) {
-//			user.setRole(roleHibernateDAO.read(userDTO.getRoleId()));
-//		}
 		if(userDTO.isRegister()) {
 			user = this.createOrUpdate(user, new String[]{defaultRoleName});
 		} else {
@@ -129,37 +126,15 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	@Transactional
-	public User createOrUpdate(final User user, final String[] unlinkedRoleNames) {
-		Logging.info(this, "Begin createUser");
-		User result = createOrUpdate(user);
-		
-		userRoleHibernateDAO.delete(user.getId());
-		
-		if(unlinkedRoleNames != null) {
-			for (int i = 0; i < unlinkedRoleNames.length; i++) {
-				Role role = roleHibernateDAO.readName(unlinkedRoleNames[i]);
-				if(role != null) {
-					UserRole userRole = new UserRole();
-					userRole.setUser(user);
-					userRole.setRole(role);
-					userRoleHibernateDAO.createOrUpdate(userRole);
-				}
-			}
-		}
-		
-		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
-			throw new ServiceException("errors.selected.one.more.role");
-		}
-		
-		Logging.info(this, "End createUser");
-		return result;
-	}
-
-	@Transactional
 	public User createOrUpdate(final User user, final int[] linkedRoleIds, final int[] unlinkedRoleIds) {
 		Logging.info(this, "Begin createUser");
 		
-		User result = createOrUpdate(user);
+		validate(user);
+		
+		User result = userHibernateDAO.createOrUpdate(user);
+		if(result != null) {
+			sendUserMail(result);
+		}
 		
 		if(linkedRoleIds != null) {
 			for (int i = 0; i < linkedRoleIds.length; i++) {
@@ -188,7 +163,40 @@ public class UserServiceSpringImpl implements UserService {
 		return result;
 	}
 	
-	private User createOrUpdate(final User user) {
+	@Transactional
+	public User createOrUpdate(final User user, final String[] unlinkedRoleNames) {
+		Logging.info(this, "Begin createUser");
+		
+		validate(user);
+		
+		User result = userHibernateDAO.createOrUpdate(user);
+		if(result != null) {
+			sendUserMail(result);
+		}
+		
+		userRoleHibernateDAO.delete(user.getId());
+		
+		if(unlinkedRoleNames != null) {
+			for (int i = 0; i < unlinkedRoleNames.length; i++) {
+				Role role = roleHibernateDAO.readName(unlinkedRoleNames[i]);
+				if(role != null) {
+					UserRole userRole = new UserRole();
+					userRole.setUser(user);
+					userRole.setRole(role);
+					userRoleHibernateDAO.createOrUpdate(userRole);
+				}
+			}
+		}
+		
+		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
+			throw new ServiceException("errors.selected.one.more.role");
+		}
+		
+		Logging.info(this, "End createUser");
+		return result;
+	}
+	
+	public void validate(final User user) {
 		if(userHibernateDAO.count(user.getName(), user.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.user"});
 		}
@@ -205,22 +213,9 @@ public class UserServiceSpringImpl implements UserService {
 			throw new ServiceException("errors.required", new String[] {"security.email"});
 		}
 		
-		//user.setEncryptedPassword(Encryption.encode(user.getEncryptedPassword()));
-		
 		if(user.getDateExpiration() == null) {
 			user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
 		}
-		
-//		if(user.getRole() == null) {
-//			user.setRole(roleHibernateDAO.readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode()));
-//		}
-		
-		User result = null;
-		result = userHibernateDAO.createOrUpdate(user);
-		if(result != null) {
-			sendUserMail(result);
-		}
-		return result;
 	}
 	
 	@Transactional(readOnly=true)

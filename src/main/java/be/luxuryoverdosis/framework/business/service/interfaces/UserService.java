@@ -18,12 +18,14 @@ public interface UserService {
 	public static final int DAYS_OF_HALF_YEAR = 183;
 	public static final int DAYS_OF_WARNING = 10;
 	
+	public void validate(User user);
+	
 	public UserDTO createOrUpdateDTO(UserDTO userDTO);
 	public UserDTO readDTO(int id);
 	public UserDTO readNameDTO(String name);
 	
-	public User createOrUpdate(User user, String[] unlinkedRoleNames);
 	public User createOrUpdate(User user, int[] linkedRoleIds, int[] unlinkedRoleIds);
+	public User createOrUpdate(User user, String[] unlinkedRoleNames);
 	public User read(int id);
 	public User readName(String name);
 	public void delete(int id);

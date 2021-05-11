@@ -1,8 +1,11 @@
 package be.luxuryoverdosis.framework.data.factory;
 
+import java.util.Date;
+
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.dto.UserImportDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -28,6 +31,27 @@ public class UserFactory {
 		return userDTO;
 	}
 	
+	public static UserDTO produceUserDTO(UserDTO userDTO, final UserImportDTO userImportDTO) {
+		if(userDTO == null) {
+			userDTO = new UserDTO();
+			userDTO.setRegister(true);
+		}
+		userDTO.setName(userImportDTO.getName());
+		userDTO.setUserName(userImportDTO.getUserName());
+		userDTO.setPassword(Encryption.decode(userImportDTO.getEncryptedPassword()));
+		userDTO.setEmail(userImportDTO.getEmail());
+		try {
+			Date dateExpiration = DateTool.parseSqlTimestamp(userImportDTO.getDateExpirationAsString());
+			userDTO.setDateExpirationAsString(DateTool.formatUtilDate(dateExpiration));
+		} catch (Exception e) {
+			throw new ServiceException("errors.date", new String[] {"date"});
+		}
+		
+		
+		
+		return userDTO;
+	}
+	
 	public static User produceUser(User user, final UserDTO userDTO) {
 		if(user == null) {
 			user = new User();
@@ -46,4 +70,5 @@ public class UserFactory {
 		
 		return user;
 	}
+	
 }

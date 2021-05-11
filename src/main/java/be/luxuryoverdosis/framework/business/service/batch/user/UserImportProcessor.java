@@ -1,13 +1,9 @@
 package be.luxuryoverdosis.framework.business.service.batch.user;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
-import org.hibernate.SessionFactory;
-import org.springframework.batch.item.database.HibernateItemWriter;
+import org.springframework.batch.item.ItemProcessor;
 
-import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
@@ -15,12 +11,15 @@ import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.dto.UserImportDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
+import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.JobLog;
+import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
-public class UserImportWriter extends HibernateItemWriter<UserDTO> {
+public class UserImportProcessor implements ItemProcessor<UserImportDTO, UserDTO> {
 	@Resource
 	private JobService jobService;
 	
@@ -40,43 +39,35 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 		this.jobUser = jobUser;
 	}
 
-	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
+	@Override
+	public UserDTO process(UserImportDTO importDTO) throws Exception {
 		ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
-		
 		Job job = jobService.read(jobId);
+		
+		UserDTO userDTO = userService.readNameDTO(importDTO.getName());
+		
 		try {
-			for (UserDTO userDTO : users) {
-				if(userDTO.getId() < 0) {
-					userService.createOrUpdateDTO(userDTO);
-					
-					JobLog jobLog = new JobLog();
-					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.success"), getOutput(userDTO));
-					jobLogService.createOrUpdate(jobLog);
-				} else {
-					JobLog jobLog = new JobLog();
-					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.failed") + ":" + getInput("exists"), getOutput(userDTO));
-					jobLogService.createOrUpdate(jobLog);
-				}
-			}
+			userDTO = UserFactory.produceUserDTO(userDTO, importDTO);
+			
+			userService.validate(UserFactory.produceUser(new User(), userDTO));
+			
 		} catch (Exception e) {
-			String output = ExceptionTool.convertExceptionToString(e, "import.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
+			String output = ExceptionTool.convertExceptionToString(e, "validate.failed", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			
 			JobLog jobLog = new JobLog();
-			jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.failed"), output);
+			jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("validate.failed"), output);
 			jobLogService.createOrUpdate(jobLog);
 			
 			Logging.error(this, output);
+			
+			return null;
 		}
+		
+		return userDTO;
 	}
 
 	private String getInput(String key) {
-		return BaseSpringServiceLocator.getMessage(key,  new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
+		return BaseSpringServiceLocator.getMessage(key, new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 	}
-
-	private String getOutput(UserDTO userDTO) {
-		return userDTO.getName() + Constants.SPACE + userDTO.getUserName();
-	}
-
 	
-
 }
