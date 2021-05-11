@@ -17,8 +17,6 @@ public class UserDTOMother {
 		userDTO.setEmail("kurt.jennen@skynet.be");
 		userDTO.setDateExpiration(new Date());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(new Date()));
-//		userDTO.setRoleId(1);
-//		userDTO.setRoleName(RoleNameEnum.BEHEERDER.getCode());
 		return userDTO;
 	}
 	

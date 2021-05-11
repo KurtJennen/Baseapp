@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
@@ -46,6 +47,7 @@ public class UserHibernateDAOMySQLImplTest {
 	
 	@Before
 	public void before() {
+		MockitoAnnotations.initMocks(this);
 		userHibernateDAOMySQLImpl.setSessionFactory(sessionFactory);
 		when(userHibernateDAOMySQLImpl.getCurrentSession()).thenReturn(session);
 	}
@@ -168,19 +170,4 @@ public class UserHibernateDAOMySQLImplTest {
 		assertThat(count).isEqualTo(0);
 	}
 	
-//	@Test
-//	public void testCountRoleId() {
-//		User user = UserMother.produceUserRole();
-//		ArrayList<Long> arrayList = UserDTOMother.produceListLong();
-//		
-//		when(session.getNamedQuery(anyString())).thenReturn(longQuery);
-//		when(longQuery.list()).thenReturn(arrayList);
-//		
-//		long count = userHibernateDAOMySQLImpl.count(user.getRole().getId());
-//		
-//		verify(session).getNamedQuery(anyString());
-//		verify(longQuery).list();
-//		
-//		assertThat(count).isEqualTo(0);
-//	}
 }

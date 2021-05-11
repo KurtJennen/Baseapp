@@ -21,7 +21,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
@@ -32,9 +31,11 @@ import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.to.UserRole;
 import be.luxuryoverdosis.framework.mother.RoleMother;
 import be.luxuryoverdosis.framework.mother.UserDTOMother;
 import be.luxuryoverdosis.framework.mother.UserMother;
+import be.luxuryoverdosis.framework.mother.UserRoleMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 //Add mysql driver to classpath
@@ -65,6 +66,8 @@ public class UserServiceSpringImplTest {
 		Config config = Config.getInstance();
 		config.addKeyValue(javax.servlet.jsp.jstl.core.Config.FMT_LOCALE, "nl_BE");
 		
+//		ReflectionTestUtils.setField(userServiceSpringImpl, "activateRoleName", "BEHEERDER");
+		
 		SpringServiceLocator.getSpringServiceLocator();
 	}
 	
@@ -84,7 +87,7 @@ public class UserServiceSpringImplTest {
 		
 		userServiceSpringImpl.createOrUpdateDTO(userDTO);
 		
-		verify(roleHibernateDAO).read(anyInt());
+		//verify(roleHibernateDAO).read(anyInt());
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(userHibernateDAO).createOrUpdate(anyObject());
 		verify(userHibernateDAO).read(anyInt());
@@ -118,7 +121,7 @@ public class UserServiceSpringImplTest {
 		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode());
+		//verify(roleHibernateDAO).readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
@@ -153,7 +156,7 @@ public class UserServiceSpringImplTest {
 		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(anyObject());
+		//verify(roleHibernateDAO).readName(anyObject());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
@@ -186,7 +189,7 @@ public class UserServiceSpringImplTest {
 		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(anyObject());
+		//verify(roleHibernateDAO).readName(anyObject());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 
@@ -247,9 +250,16 @@ public class UserServiceSpringImplTest {
 	public void testActivateYear() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserDate();
+		UserRole userRole = UserRoleMother.produceUserRole();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(userHibernateDAO.read(anyInt())).thenReturn(user);
-		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		doNothing().when(userRoleHibernateDAO).delete(anyInt());
+		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
+		when(userRoleHibernateDAO.createOrUpdate(anyObject())).thenReturn(userRole);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
 		userServiceSpringImpl.activate(anyInt(), UserService.YEAR);
 		
