@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,9 +28,15 @@ import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
 @NamedQueries({
 	@NamedQuery(name=BatchStepExecution.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query=BatchStepExecution.Queries.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE)
 })
+@NamedNativeQueries({
+	@NamedNativeQuery(name=BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query=BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE),
+	@NamedNativeQuery(name=BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE, query=BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE)
+})
 @Proxy(lazy=false)
 public class BatchStepExecution {
-	public static final String SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchStepExecutionByJobInstance";
+	public static final String SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchStepExecutionsByJobInstance";
+	public static final String DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "deleteBatchStepExecutionsByJobInstance";
+	public static final String DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE = "deleteBatchStepExecutionsContextsByJobInstance";
 	
 	@Id
 	@Column(name="Step_Execution_Id")
@@ -219,5 +227,17 @@ public class BatchStepExecution {
 				+ "inner join bse.batchJobExecution bje "
 				+ "inner join bje.batchJobInstance jbi "
 				+ "where jbi.id = :jobInstanceId";
+	}
+	
+	public static final class NativeQueries {
+		public static final String DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "delete "
+				+ "from batch_step_execution "
+				+ "where exists (select 1 from batch_job_execution where batch_job_execution.job_execution_id = batch_step_execution.job_execution_id and batch_job_execution.job_instance_id = :jobInstanceId)";
+		
+		public static final String DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE = "delete "
+				+ "from batch_step_execution_context "
+				+ "where exists (select 1 from batch_step_execution where batch_step_execution.step_execution_id = batch_step_execution_context.step_execution_id "
+				+ "and exists (select 1 from batch_job_execution where batch_job_execution.job_execution_id = batch_step_execution.job_execution_id and batch_job_execution.job_instance_id = :jobInstanceId))";
+		
 	}
 }

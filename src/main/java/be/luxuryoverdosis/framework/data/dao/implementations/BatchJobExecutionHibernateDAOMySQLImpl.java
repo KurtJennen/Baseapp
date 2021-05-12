@@ -29,4 +29,37 @@ public class BatchJobExecutionHibernateDAOMySQLImpl extends AbstractHibernateDao
 		Logging.info(this, "End readBatchJobExecution");
 		return batchJobExecution;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void delete(final long jobInstanceId) {
+		Logging.info(this, "Begin deleteBatchJobExecution");
+		
+		Query<Long> query = getCurrentSession().getNamedQuery(BatchJobExecution.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE);
+		query.setParameter(BaseQueryParameters.JOB_INSTANCE_ID, jobInstanceId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchJobExecution");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteContexts(final long jobInstanceId) {
+		Logging.info(this, "Begin deleteBatchJobExecutionContexts");
+		
+		Query<Long> query = getCurrentSession().getNamedNativeQuery(BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE);
+		query.setParameter(BaseQueryParameters.JOB_INSTANCE_ID, jobInstanceId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchJobExecutionContexts");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteParams(final long jobInstanceId) {
+		Logging.info(this, "Begin deleteBatchJobExecutionParams");
+		
+		Query<Long> query = getCurrentSession().getNamedNativeQuery(BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE);
+		query.setParameter(BaseQueryParameters.JOB_INSTANCE_ID, jobInstanceId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchJobExecutionParams");
+	}
 }

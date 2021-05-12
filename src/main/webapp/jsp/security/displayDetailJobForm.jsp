@@ -43,6 +43,7 @@ $(document).ready(function() {
 	</div>
 	<lo:button image="door_out.png" method="back" key="button.back"></lo:button>
 	<lo:button image="arrow_down.png" method="downloadFile" key="button.download"></lo:button>
+	<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
 	<br/>
 	<hr/>
 	<fmt:message key="job.name" /> : <c:out value="${jobForm.jobName}"/>

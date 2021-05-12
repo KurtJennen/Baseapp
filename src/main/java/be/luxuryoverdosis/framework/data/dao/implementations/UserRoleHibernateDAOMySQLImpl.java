@@ -35,7 +35,7 @@ public class UserRoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	public void delete(int userId, int roleId) {
 		Logging.info(this, "Begin deleteUserRole");
 		
-		Query<UserRole> query = getCurrentSession().getNamedQuery(UserRole.DELETE_USERROLES_BY_USER_AND_ROLE);
+		Query<Long> query = getCurrentSession().getNamedQuery(UserRole.DELETE_USERROLES_BY_USER_AND_ROLE);
 		query.setParameter(BaseQueryParameters.USER_ID, userId);
 		query.setParameter(BaseQueryParameters.ROLE_ID, roleId);
 		query.executeUpdate();

@@ -20,6 +20,7 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchService;
+import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
 import be.luxuryoverdosis.framework.business.service.interfaces.SearchService;
 import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
@@ -96,6 +97,28 @@ public class ListUserAction extends AjaxAction {
         actionRedirect.addParameter(BaseWebConstants.ID, jobId);
 		
 		return actionRedirect;
+	}
+	
+	public ActionForward deleteExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin delete");
+		
+		ListUserForm userForm = (ListUserForm) form;
+		getJobService().delete(userForm.getSelectedIdsExportJob());
+		
+		Logging.info(this, "End delete");
+		
+		return mapping.getInputForward();
+	}
+	
+	public ActionForward deleteImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin delete");
+		
+		ListUserForm userForm = (ListUserForm) form;
+		getJobService().delete(userForm.getSelectedIdsImportJob());
+		
+		Logging.info(this, "End delete");
+		
+		return mapping.getInputForward();
 	}
 	
 	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -176,6 +199,10 @@ public class ListUserAction extends AjaxAction {
 		if (userListJob.size() > 0) {
 			super.sendAsJson(response, userListJob);
 		}
+	}
+	
+	private JobService getJobService() {
+		return BaseSpringServiceLocator.getBean(JobService.class);
 	}
 	
 	private BatchService getBatchService() {

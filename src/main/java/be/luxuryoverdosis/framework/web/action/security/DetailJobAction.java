@@ -77,6 +77,18 @@ public class DetailJobAction extends AjaxAction {
 		return redirect;
 	}
 
+	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin delete");
+		
+		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		
+		getJobService().delete(new int[] {jobInstanceId});
+		
+		Logging.info(this, "End delete");
+		
+		return back(mapping, form, request, response);
+	}
+	
 	public void downloadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin downloadFile");
 		

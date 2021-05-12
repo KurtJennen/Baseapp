@@ -22,6 +22,17 @@ public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoS
 	}
 	
 	@SuppressWarnings("unchecked")
+	public void delete(final long id) {
+		Logging.info(this, "Begin deleteBatchJobInstance");
+		
+		Query<Long> query = getCurrentSession().getNamedQuery(BatchJobInstance.DELETE_BATCH_JOB_INSTANCES_BY_ID);
+		query.setParameter(BaseQueryParameters.ID, id);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchJobInstance");
+	}
+	
+	@SuppressWarnings("unchecked")
 	public ArrayList<BatchJobInstanceDTO> list(final String jobName) {
 		Logging.info(this, "Begin listBatchJobInstance");
 		
