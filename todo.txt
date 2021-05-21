@@ -2,3 +2,599 @@ Make searchselect JPA compliant
 pqgrid select values in grid
 pqgrid custom column order
 users with multiple roles
+
+
+RoleNameEnum.PHOENIX=Phoenix
+RoleNameEnum.JAARPLANBEHEERDER=Jaarplanbeheerder
+RoleNameEnum.DOELSTELLINGEN=Doelstellingen
+RoleNameEnum.FINANCIEELBEHEERDER=Financieelbeheerder
+RoleNameEnum.FINANCIELEDIENST=Financiele dienst
+RoleNameEnum.HOOFDBUDGETHOUDER=Hoofdbudgethouder
+RoleNameEnum.BUDGETHOUDER=Budgerhouder
+RoleNameEnum.MEDEWERKER=Medewerker
+RoleNameEnum.CONSULTATIE=Consultatie
+RoleNameEnum.BUDGETCONSULTANT=Budgetconsultant
+RoleNameEnum.PERSONEELSDIENST=Personeelsdienst
+RoleNameEnum.ALGEMENE_BOEKHOUDING_BEHEERDER=Algemene boekhouding beheerder
+RoleNameEnum.ALGEMENE_BOEKHOUDING_GEBRUIKER=Algemene boekhouding gebruiker
+RoleNameEnum.ALGEMENE_BOEKHOUDING_CONSULTATIE=Algemene boekhouding consultatie
+RoleNameEnum.BUDGETHOUDER_BEHEERDER=Budgethouder beheerder
+RoleNameEnum.BUDGETHOUDER_GEBRUIKER=Budgethouder gebruiker
+RoleNameEnum.DERDE=Derde
+
+PHOENIX(2, "PHOENIX", 1),
+JAARPLANBEHEERDER(3, "JAARPLANBEHEERDER", 1),
+DOELSTELLINGEN(3, "DOELSTELLINGEN", 2),
+FINANCIEELBEHEERDER(3, "FINANCIEELBEHEERDER", 3),
+FINANCIELEDIENST(3, "FINANCIELEDIENST", 4),
+HOOFDBUDGETHOUDER(3, "HOOFDBUDGETHOUDER", 5),
+BUDGETHOUDER(3, "BUDGETHOUDER", 6),
+MEDEWERKER(3, "MEDEWERKER", 7),
+CONSULTATIE(3, "CONSULTATIE", 8),
+BUDGETCONSULTANT(3, "BUDGETCONSULTANT", 9),
+PERSONEELSDIENST(3, "PERSONEELSDIENST", 10),
+ALGEMENE_BOEKHOUDING_BEHEERDER(4, "ALGEMENE_BOEKHOUDING_BEHEERDER", 1),
+ALGEMENE_BOEKHOUDING_GEBRUIKER(4, "ALGEMENE_BOEKHOUDING_GEBRUIKER", 2),
+ALGEMENE_BOEKHOUDING_CONSULTATIE(4, "ALGEMENE_BOEKHOUDING_CONSULTATIE", 3),
+BUDGETHOUDER_BEHEERDER(5, "BUDGETHOUDER_BEHEERDER", 1),
+BUDGETHOUDER_GEBRUIKER(5, "BUDGETHOUDER_GEBRUIKER", 2),
+DERDE(6, "DERDE", 1)
+
+<%@page import="be.luxuryoverdosis.framework.data.dto.UserDTO"%>
+<%@page import="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum"%>
+<%@ taglib uri="http://struts-menu.sf.net/tag-el" prefix="menu" %>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+<%@page import="be.luxuryoverdosis.baseapp.Constants"%>
+<%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
+<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BEHEERDER.getCode())%>">
+		<menu:displayMenu name="menu1Beheerder" />
+		<menu:displayMenu name="menu2Beheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode())%>">
+		<menu:displayMenu name="menu1Beheerder" />
+		<menu:displayMenu name="menu2Beheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.NORMALE_GEBRUIKER.getCode())%>">
+		<menu:displayMenu name="menu1Beheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.JAARPLANBEHEERDER.getCode())%>">
+		<menu:displayMenu name="menu3Jaarplanbeheerder" />
+		<menu:displayMenu name="menu7Jaarplanbeheerder" />
+		<menu:displayMenu name="menu8Jaarplanbeheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.DOELSTELLINGEN.getCode())%>">
+		<menu:displayMenu name="menu3Doelstellingen" />
+		<menu:displayMenu name="menu7Doelstellingen" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.FINANCIEELBEHEERDER.getCode())%>">
+		<menu:displayMenu name="menu3Financieelbeheerder" />
+		<menu:displayMenu name="menu7Financieelbeheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.FINANCIELEDIENST.getCode())%>">
+		<menu:displayMenu name="menu3Financieledienst" />
+		<menu:displayMenu name="menu7Financieledienst" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.HOOFDBUDGETHOUDER.getCode())%>">
+		<menu:displayMenu name="menu3Hoofdbudgethouder" />
+		<menu:displayMenu name="menu7Hoofdbudgethouder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BUDGETHOUDER.getCode())%>">
+		<menu:displayMenu name="menu3Budgethouder" />
+		<menu:displayMenu name="menu7Budgethouder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.MEDEWERKER.getCode())%>">
+		<menu:displayMenu name="menu3Medewerker" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.CONSULTATIE.getCode())%>">
+		<menu:displayMenu name="menu3Consultatie" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BUDGETCONSULTANT.getCode())%>">
+		<menu:displayMenu name="menu3Budgetconsultant" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.PERSONEELSDIENST.getCode())%>">
+		<menu:displayMenu name="menu3Personeelsdienst" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.ALGEMENE_BOEKHOUDING_CONSULTATIE.getCode())%>">
+		<menu:displayMenu name="menu5Algemeneboekhoudingconsultatie" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.ALGEMENE_BOEKHOUDING_BEHEERDER.getCode())%>">
+		<menu:displayMenu name="menu5Algemeneboekhoudingbeheerder" />
+		<menu:displayMenu name="menu6Algemeneboekhoudingbeheerder" />
+		<menu:displayMenu name="menu7Algemeneboekhoudingbeheerder" />
+		<menu:displayMenu name="menu8Algemeneboekhoudingbeheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.ALGEMENE_BOEKHOUDING_GEBRUIKER.getCode())%>">
+		<menu:displayMenu name="menu5Algemeneboekhoudinggebruiker" />
+		<menu:displayMenu name="menu6Algemeneboekhoudinggebruiker" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BUDGETHOUDER_BEHEERDER.getCode())%>">
+		<menu:displayMenu name="menu6Budgethouderbeheerder" />
+		<menu:displayMenu name="menu7Budgethouderbeheerder" />
+		<menu:displayMenu name="menu8Budgethouderbeheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BUDGETHOUDER_GEBRUIKER.getCode())%>">
+		<menu:displayMenu name="menu6Budgethouderbeheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.DERDE.getCode())%>">
+		<menu:displayMenu name="menu6Derde" />
+	</c:if>
+</menu:useMenuDisplayer>
+
+<?xml version="1.0" encoding="UTF-8"?>
+<MenuConfig>
+	<Displayers>
+		<Displayer name="ListMenu" type="net.sf.navigator.displayer.ListMenuDisplayer" />
+	</Displayers>
+	
+	<Menus>
+		<!-- Beheerder-->
+		<Menu name="menu1Beheerder" title="menu1.title">
+			<Item name="menuitem1" title="logout" action="login.do?method=logout" />
+			<Item name="menuitem2" title="displayParameter.title" action="detailDienstjaarBudgethouder.do?method=show" />
+		</Menu>
+		<Menu name="menu2Beheerder" title="menu2.title">
+			<Item name="menu2item1" title="displayRole.title" action="listRole.do?method=list" />
+			<Item name="menu2item2" title="displayUser.title" action="searchUser.do?method=search" />
+			<Item name="menu2item3" title="displayMenu.title" action="detailMenu.do?method=list" />
+			<Item name="menu2item4" title="displayNumber.title" action="listNumber.do?method=list" />
+			<Item name="menu2item5" title="displayDocument.title" action="listDocument.do?method=list" />
+		</Menu>
+		
+		<!-- Jaarplanbeheerder -->
+		<Menu name="menu3Jaarplanbeheerder" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayInitiatiefBudgetAanvraagVoorAkkoord.title" action="listInitiatiefBudgetAanvraagVoorAkkoord.do?method=list" />
+				<Item name="menu32item3" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+			<Item name="menu3item4" title="submenu34.title">
+				<Item name="menu34item1" title="displayTotaalFullTimeEquivalent.title" action="listTotaalFullTimeEquivalent.do?method=list" />
+			</Item>	
+		</Menu>
+		
+		<Menu name="menu7Jaarplanbeheerder" title="menu7.title">
+			<Item name="menu7item1" title="displayDossierAlgemeen.title" action="listDossierAlgemeen.do?method=list" />
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayHoofdBudgethouder.title" action="listHoofdBudgethouder.do?method=list" />
+				<Item name="menu72item2" title="displayMandataris.title" action="listMandataris.do?method=list" />
+				<Item name="menu72item3" title="displayBudgethouder.title" action="listBudgethouder.do?method=list" />
+				<Item name="menu72item4" title="displayPrioriteit.title" action="listPrioriteit.do?method=list" />
+				<Item name="menu72item5" title="displayCodeActie.title" action="listCodeActie.do?method=list" />
+				<Item name="menu72item6" title="displayCodeStappenplan.title" action="listCodeStappenplan.do?method=list" />
+				<Item name="menu72item7" title="displayTypeBudgetAanvraag.title" action="listTypeBudgetAanvraag.do?method=list" />
+				<Item name="menu72item8" title="displayDoelgroep.title" action="listDoelgroep.do?method=list" />
+				<Item name="menu72item9" title="displayFunctie.title" action="listFunctie.do?method=list" />
+				<Item name="menu72item10" title="displayGebruiker.title" action="listGebruiker.do?method=list" />
+				<Item name="menu72item11" title="displayParameter.title" action="listParameter.do?method=list" />
+				<Item name="menu72item12" title="displayInvestering.title" action="listInvestering.do?method=list" />
+				<Item name="menu72item13" title="displayBudgetGroep.title" action="listBudgetGroep.do?method=list" />
+				<Item name="menu72item14" title="displayAlgemeneRekeningGroep.title" action="listAlgemeneRekeningGroep.do?method=list" />
+				<Item name="menu72item15" title="displayDienstInventaris.title" action="listDienstInventaris.do?method=list" />
+				<Item name="menu72item16" title="displayDoelstellingSubstatus.title" action="listDoelstellingSubstatus.do?method=list" />
+			</Item>
+			<Item name="menu7item3" title="submenu73.title">
+				<Item name="menu73item1" title="displayBeleidsDomein.title" action="listBeleidsDomein.do?method=list" />
+				<Item name="menu73item2" title="displayBeleidsVeld.title" action="listBeleidsVeld.do?method=list" />
+				<Item name="menu73item3" title="displayBeleidsItem.title" action="listBeleidsItem.do?method=list" />
+				<Item name="menu73item4" title="displayBeleidsRubriek.title" action="listBeleidsRubriek.do?method=list" />
+				<Item name="menu73item5" title="displayBeleidsMinimumRekeningnummer.title" action="listBeleidsMinimumRekeningnummer.do?method=list" />
+				<Item name="menu73item6" title="displayBeleidsAlgemeenRekeningnummer.title" action="listBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu73item7" title="displayRapporteringsCode.title" action="listRapporteringsCode.do?method=list" />
+				<Item name="menu73item8" title="displayEconomischeSectorCode.title" action="listEconomischeSectorCode.do?method=list" />
+				<Item name="menu73item8" title="displayInvesteringProject.title" action="listInvesteringProject.do?method=list" />
+			</Item>
+			<Item name="menu7item4" title="submenu74.title">
+				<Item name="menu74item1" title="displayAanpassingRamingMatrix.title" action="listAanpassingRamingMatrix.do?method=list" />
+				<Item name="menu74item2" title="displayAanpassingRamingStroom.title" action="listAanpassingRamingStroom.do?method=list" />
+				<Item name="menu74item3" title="displayRamingSubtype.title" action="listRamingSubtype.do?method=list" />
+				<Item name="menu74item4" title="displayGoedkeuringDatum.title" action="listGoedkeuringDatum.do?method=list" />
+			</Item>
+			<Item name="menu7item5" title="submenu75.title">
+				<Item name="menu75item1" title="displayIndicatorBibliotheek.title" action="listIndicatorBibliotheek.do?method=list" />
+				<Item name="menu75item2" title="displayOpvolging.title" action="listOpvolging.do?method=list" />
+			</Item>
+			<Item name="menu7item6" title="submenu76.title">
+				<Item name="menu76item1" title="displayKostenplaats.title" action="listAnalytischeCode.do?method=list&amp;type=K" />
+				<Item name="menu76item2" title="displayAnalytischeCode1.title" action="listAnalytischeCode.do?method=list&amp;type=N1" />
+				<Item name="menu76item3" title="displayAnalytischeCode2.title" action="listAnalytischeCode.do?method=list&amp;type=N2" />
+				<Item name="menu76item4" title="displayAnalytischeCode3.title" action="listAnalytischeCode.do?method=list&amp;type=N3" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu8Jaarplanbeheerder" title="menu8.title">
+			<Item name="menu8item1" title="displayReadBeleidsRubriek.title" action="listReadBeleidsRubriek.do?method=list" />
+			<Item name="menu8item2" title="displayReadBeleidsMinimumRekeningnummer.title" action="listReadBeleidsMinimumRekeningnummer.do?method=list" />
+			<Item name="menu8item3" title="displayReadBeleidsMinimumRekeningnummerRubriek.title" action="listReadBeleidsMinimumRekeningnummerRubriek.do?method=list" />
+			<Item name="menu8item4" title="displayReadBeleidsAlgemeenRekeningnummer.title" action="listReadBeleidsAlgemeenRekeningnummer.do?method=list" />
+			<Item name="menu8item5" title="displayReadBeleidsVeld.title" action="listReadBeleidsVeld.do?method=list" />
+			<Item name="menu8item6" title="displayReadEconomischeSectorCode.title" action="listReadEconomischeSectorCode.do?method=list" />
+		</Menu>
+		
+		<!-- Doelstellingen -->
+		<Menu name="menu3Doelstellingen" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item5" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu7Doelstellingen" title="menu7.title">
+			<Item name="menu7item5" title="submenu75.title">
+				<Item name="menu75item1" title="displayIndicatorBibliotheek.title" action="listIndicatorBibliotheek.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<!-- Financieelbeheerder -->
+		<Menu name="menu3Financieelbeheerder" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayInitiatiefBudgetAanvraagVoorAkkoord.title" action="listInitiatiefBudgetAanvraagVoorAkkoord.do?method=list" />
+				<Item name="menu32item3" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu7Financieelbeheerder" title="menu7.title">
+			<Item name="menu7item1" title="displayDossierAlgemeen.title" action="listDossierAlgemeen.do?method=list" />
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayHoofdBudgethouder.title" action="listHoofdBudgethouder.do?method=list" />
+				<Item name="menu72item2" title="displayMandataris.title" action="listMandataris.do?method=list" />
+				<Item name="menu72item3" title="displayBudgethouder.title" action="listBudgethouder.do?method=list" />
+				<Item name="menu72item4" title="displayPrioriteit.title" action="listPrioriteit.do?method=list" />
+				<Item name="menu72item5" title="displayCodeActie.title" action="listCodeActie.do?method=list" />
+				<Item name="menu72item6" title="displayCodeStappenplan.title" action="listCodeStappenplan.do?method=list" />
+				<Item name="menu72item7" title="displayTypeBudgetAanvraag.title" action="listTypeBudgetAanvraag.do?method=list" />
+				<Item name="menu72item8" title="displayFunctie.title" action="listFunctie.do?method=list" />
+				<Item name="menu72item9" title="displayGebruiker.title" action="listGebruiker.do?method=list" />
+				<Item name="menu72item10" title="displayParameter.title" action="listParameter.do?method=list" />
+				<Item name="menu72item11" title="displayDoelstellingSubstatus.title" action="listDoelstellingSubstatus.do?method=list" />
+			</Item>
+			<Item name="menu7item3" title="submenu73.title">
+				<Item name="menu73item1" title="displayBeleidsDomein.title" action="listBeleidsDomein.do?method=list" />
+				<Item name="menu73item2" title="displayBeleidsVeld.title" action="listBeleidsVeld.do?method=list" />
+				<Item name="menu73item3" title="displayBeleidsItem.title" action="listBeleidsItem.do?method=list" />
+				<Item name="menu73item4" title="displayBeleidsRubriek.title" action="listBeleidsRubriek.do?method=list" />
+				<Item name="menu73item5" title="displayBeleidsMinimumRekeningnummer.title" action="listBeleidsMinimumRekeningnummer.do?method=list" />
+				<Item name="menu73item6" title="displayBeleidsAlgemeenRekeningnummer.title" action="listBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu73item8" title="displayEconomischeSectorCode.title" action="listEconomischeSectorCode.do?method=list" />
+			</Item>
+			<Item name="menu7item5" title="submenu75.title">
+				<Item name="menu75item1" title="displayIndicatorBibliotheek.title" action="listIndicatorBibliotheek.do?method=list" />
+				<Item name="menu75item2" title="displayOpvolging.title" action="listOpvolging.do?method=list" />
+			</Item>
+			<Item name="menu7item6" title="submenu76.title">
+				<Item name="menu76item1" title="displayKostenplaats.title" action="listAnalytischeCode.do?method=list&amp;type=K" />
+				<Item name="menu76item2" title="displayAnalytischeCode1.title" action="listAnalytischeCode.do?method=list&amp;type=N1" />
+				<Item name="menu76item3" title="displayAnalytischeCode2.title" action="listAnalytischeCode.do?method=list&amp;type=N2" />
+				<Item name="menu76item4" title="displayAnalytischeCode3.title" action="listAnalytischeCode.do?method=list&amp;type=N3" />
+			</Item>
+		</Menu>
+		
+		<!-- Financieledienst -->
+		<Menu name="menu3Financieledienst" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayInitiatiefBudgetAanvraagVoorAkkoord.title" action="listInitiatiefBudgetAanvraagVoorAkkoord.do?method=list" />
+				<Item name="menu32item3" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu7Financieledienst" title="menu7.title">
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayGebruiker.title" action="listGebruiker.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<!-- Hoofdbudgethouder -->
+		<Menu name="menu3Hoofdbudgethouder" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayInitiatiefBudgetAanvraagVoorAkkoord.title" action="listInitiatiefBudgetAanvraagVoorAkkoord.do?method=list" />
+				<Item name="menu32item3" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu7Hoofdbudgethouder" title="menu7.title">
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayFunctie.title" action="listFunctie.do?method=list" />
+				<Item name="menu72item2" title="displayGebruiker.title" action="listGebruiker.do?method=list" />
+				<Item name="menu72item3" title="displayParameter.title" action="listParameter.do?method=list" />
+				<Item name="menu72item4" title="displayDoelstellingSubstatus.title" action="listDoelstellingSubstatus.do?method=list" />
+			</Item>
+			<Item name="menu7item3" title="submenu73.title">
+				<Item name="menu73item1" title="displayBeleidsDomein.title" action="listBeleidsDomein.do?method=list" />
+				<Item name="menu73item2" title="displayBeleidsVeld.title" action="listBeleidsVeld.do?method=list" />
+				<Item name="menu73item3" title="displayBeleidsRubriek.title" action="listBeleidsRubriek.do?method=list" />
+				<Item name="menu73item4" title="displayBeleidsMinimumRekeningnummer.title" action="listBeleidsMinimumRekeningnummer.do?method=list" />
+				<Item name="menu73item5" title="displayBeleidsAlgemeenRekeningnummer.title" action="listBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu73item6" title="displayEconomischeSectorCode.title" action="listEconomischeSectorCode.do?method=list" />
+			</Item>
+			<Item name="menu7item5" title="submenu75.title">
+				<Item name="menu75item1" title="displayIndicatorBibliotheek.title" action="listIndicatorBibliotheek.do?method=list" />
+				<Item name="menu75item2" title="displayOpvolging.title" action="listOpvolging.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<!-- Budgethouder -->
+		<Menu name="menu3Budgethouder" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayInitiatiefBudgetAanvraagVoorAkkoord.title" action="listInitiatiefBudgetAanvraagVoorAkkoord.do?method=list" />
+				<Item name="menu32item3" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu7Budgethouder" title="menu7.title">
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayFunctie.title" action="listFunctie.do?method=list" />
+				<Item name="menu72item2" title="displayGebruiker.title" action="listGebruiker.do?method=list" />
+				<Item name="menu72item3" title="displayParameter.title" action="listParameter.do?method=list" />
+				<Item name="menu72item4" title="displayDoelstellingSubstatus.title" action="listDoelstellingSubstatus.do?method=list" />
+			</Item>
+			<Item name="menu7item3" title="submenu73.title">
+				<Item name="menu73item1" title="displayBeleidsDomein.title" action="listBeleidsDomein.do?method=list" />
+				<Item name="menu73item2" title="displayBeleidsVeld.title" action="listBeleidsVeld.do?method=list" />
+				<Item name="menu73item3" title="displayBeleidsRubriek.title" action="listBeleidsRubriek.do?method=list" />
+				<Item name="menu73item4" title="displayBeleidsMinimumRekeningnummer.title" action="listBeleidsMinimumRekeningnummer.do?method=list" />
+				<Item name="menu73item5" title="displayBeleidsAlgemeenRekeningnummer.title" action="listBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu73item6" title="displayEconomischeSectorCode.title" action="listEconomischeSectorCode.do?method=list" />
+			</Item>
+			<Item name="menu7item5" title="submenu75.title">
+				<Item name="menu75item1" title="displayIndicatorBibliotheek.title" action="listIndicatorBibliotheek.do?method=list" />
+				<Item name="menu75item2" title="displayOpvolging.title" action="listOpvolging.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<!-- Evaluator -->
+		<Menu name="menu3Evaluator" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<!-- Medewerker -->
+		<Menu name="menu3Medewerker" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<!-- Consultatie -->
+		<Menu name="menu3Consultatie" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayBeleidsSector.title" action="listBeleidsSector.do?method=list" />
+				<Item name="menu31item2" title="displayStrategischeDoelstelling.title" action="listStrategischeDoelstelling.do?method=list" />
+				<Item name="menu31item3" title="displayStrategischeDoelstellingDoelgroep.title" action="listStrategischeDoelstellingDoelgroep.do?method=list" />
+				<Item name="menu31item4" title="displayTactischeDoelstelling.title" action="listTactischeDoelstelling.do?method=list" />
+				<Item name="menu31item5" title="displayTactischeDoelstellingBudgethouder.title" action="listTactischeDoelstellingBudgethouder.do?method=list" />
+				<Item name="menu31item6" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item2" title="submenu32.title">
+				<Item name="menu32item1" title="displayInitiatiefOperationeleDoelstelling.title" action="searchInitiatiefOperationeleDoelstelling.do?method=search" />
+				<Item name="menu32item2" title="displayEvaluatieOperationeleDoelstelling.title" action="searchEvaluatieOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<!-- Budgetconsultant -->
+		<Menu name="menu3Budgetconsultant" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item3" title="submenu33.title">
+				<Item name="menu33item1" title="displayBudget.title" action="searchBudget.do?method=search" />
+			</Item>
+		</Menu>
+		
+		<!-- Personeelsdienst -->
+		<Menu name="menu3Personeelsdienst" title="menu3.title">
+			<Item name="menu3item1" title="submenu31.title">
+				<Item name="menu31item1" title="displayOperationeleDoelstelling.title" action="searchOperationeleDoelstelling.do?method=search" />
+			</Item>
+			<Item name="menu3item4" title="submenu34.title">
+				<Item name="menu34item1" title="displayTotaalFullTimeEquivalent.title" action="listTotaalFullTimeEquivalent.do?method=list" />
+			</Item>	
+		</Menu>
+		
+		<!-- Budgethouder gebruiker -->
+		<Menu name="menu6Budgethoudergebruiker" title="menu6.title">
+			<Item name="menu6item1" title="displayBic.title" action="listBic.do?method=list" />
+			<Item name="menu6item2" title="displayIso.title" action="listIso.do?method=list" />
+			<Item name="menu6item3" title="displayDerdeStatus.title" action="listDerdeStatus.do?method=list" />
+			<Item name="menu6item4" title="displayMaatschappelijkWerker.title" action="listMaatschappelijkWerker.do?method=list" />
+		</Menu>
+		
+		<!-- Budgethouder beheerder -->
+		<Menu name="menu6Budgethouderbeheerder" title="menu6.title">
+			<Item name="menu6item1" title="displayBic.title" action="listBic.do?method=list" />
+			<Item name="menu6item2" title="displayIso.title" action="listIso.do?method=list" />
+			<Item name="menu6item3" title="displayDerdeStatus.title" action="listDerdeStatus.do?method=list" />
+			<Item name="menu6item4" title="displayMaatschappelijkWerker.title" action="listMaatschappelijkWerker.do?method=list" />
+			<Item name="menu6item5" title="displayDerde.title" action="searchDerde.do?method=search" />
+		</Menu>
+		
+		<Menu name="menu7Budgethouderbeheerder" title="menu7.title">
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayParameter.title" action="listParameter.do?method=list" />
+			</Item>
+			<Item name="menu7item7" title="submenu77.title">
+				<Item name="menu77item1" title="displayBudgethouderStroom.title" action="listBudgethouderStroom.do?method=list" />
+				<Item name="menu77item2" title="displayDatumGoedkeuring.title" action="listDatumGoedkeuring.do?method=list" />
+				<Item name="menu77item3" title="displayVoorafgaandelijkVisum.title" action="detailVoorafgaandelijkVisum.do?method=read" />
+				<Item name="menu77item4" title="displayFactuurLeverAdres.title" action="listFactuurLeverAdres.do?method=list" />
+				<Item name="menu77item5" title="displayEenheid.title" action="listEenheid.do?method=list" />
+				<Item name="menu77item6" title="displayMaskerInkomendeFactuurSubType.title" action="listMaskerInkomendeFactuurSubType.do?method=list" />
+				<Item name="menu77item8" title="displayBron.title" action="listBron.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu8Budgethouderbeheerder" title="menu8.title">
+			<Item name="menu8item1" title="displayReadBic.title" action="listReadBic.do?method=list" />
+		</Menu>
+		
+		<!-- Algemene boekhouding consultatie -->
+		<Menu name="menu5Algemeneboekhoudingconsultatie" title="menu5.title">
+			<Item name="menu5item1" title="displayThesaurie.title" action="listThesaurie.do?method=list" />
+		</Menu>
+		
+		<!-- Algemene boekhouding gebruiker -->
+		<Menu name="menu5Algemeneboekhoudinggebruiker" title="menu5.title">
+			<Item name="menu5item1" title="displayThesaurie.title" action="listThesaurie.do?method=list" />
+		</Menu>
+		
+		<Menu name="menu6Algemeneboekhoudinggebruiker" title="menu6.title">
+			<Item name="menu6item1" title="displayBic.title" action="listBic.do?method=list" />
+			<Item name="menu6item2" title="displayIso.title" action="listIso.do?method=list" />
+			<Item name="menu6item3" title="displayDerdeStatus.title" action="listDerdeStatus.do?method=list" />
+			<Item name="menu6item4" title="displayMaatschappelijkWerker.title" action="listMaatschappelijkWerker.do?method=list" />
+		</Menu>
+		
+		<!-- Algemene boekhouding beheerder -->
+		<Menu name="menu5Algemeneboekhoudingbeheerder" title="menu5.title">
+			<Item name="menu5item1" title="displayThesaurie.title" action="listThesaurie.do?method=list" />
+		</Menu>
+		
+		<Menu name="menu6Algemeneboekhoudingbeheerder" title="menu6.title">
+			<Item name="menu6item1" title="displayBic.title" action="listBic.do?method=list" />
+			<Item name="menu6item2" title="displayIso.title" action="listIso.do?method=list" />
+			<Item name="menu6item3" title="displayDerdeStatus.title" action="listDerdeStatus.do?method=list" />
+			<Item name="menu6item4" title="displayMaatschappelijkWerker.title" action="listMaatschappelijkWerker.do?method=list" />
+			<Item name="menu6item5" title="displayDerde.title" action="searchDerde.do?method=search" />
+		</Menu>
+		
+		<Menu name="menu7Algemeneboekhoudingbeheerder" title="menu7.title">
+			<Item name="menu7item2" title="submenu72.title">
+				<Item name="menu72item1" title="displayParameter.title" action="listParameter.do?method=list" />
+			</Item>
+			<Item name="menu7item6" title="submenu76.title">
+				<Item name="menu76item1" title="displayKostenplaats.title" action="listAnalytischeCode.do?method=list&amp;type=K" />
+				<Item name="menu76item2" title="displayAnalytischeCode1.title" action="listAnalytischeCode.do?method=list&amp;type=N1" />
+				<Item name="menu76item3" title="displayAnalytischeCode2.title" action="listAnalytischeCode.do?method=list&amp;type=N2" />
+				<Item name="menu76item4" title="displayAnalytischeCode3.title" action="listAnalytischeCode.do?method=list&amp;type=N3" />
+			</Item>
+			<Item name="menu7item8" title="submenu78.title">
+				<Item name="menu78item1" title="displayCodaParameter.title" action="/listCodaParameter.do?method=list" />
+				<Item name="menu78item2" title="displayModule.title" action="/listModule.do?method=list" />
+				<Item name="menu78item3" title="displayFiche281Parameter.title" action="/listFiche281Parameter.do?method=list" />
+			</Item>
+			<Item name="menu7item9" title="submenu79.title">
+				<Item name="menu79item1" title="displayBtwProcent.title" action="listBtwProcent.do?method=list" />
+				<Item name="menu79item2" title="displayBtwActiviteit.title" action="listBtwActiviteit.do?method=list" />
+				<Item name="menu79item3" title="displayBtwPeriode.title" action="listBtwPeriode.do?method=list" />
+			</Item>
+			<Item name="menu7item10" title="submenu710.title">
+				<Item name="menu710item1" title="displayAanmaningGroep.title" action="listAanmaningGroep.do?method=list" />
+				<Item name="menu710item2" title="displayOpvolgingsCode.title" action="listOpvolgingsCode.do?method=list" />
+				<Item name="menu710item3" title="displayOndertekening.title" action="listOndertekening.do?method=list" />
+				<Item name="menu710item4" title="displayAanmaningKostParameter.title" action="detailAanmaningKostParameter.do?method=read" />
+				<Item name="menu710item5" title="displayAanmaningGraadModuleParameter.title" action="detailAanmaningGraadModuleParameter.do?method=list" />
+				<Item name="menu710item6" title="displayAanmaningAfbetalingsplanParameter.title" action="detailAanmaningAfbetalingsplanParameter.do?method=list" />
+			</Item>
+			<Item name="menu7item11" title="submenu711.title">
+				<Item name="menu711item1" title="displayActivaBeleidsAlgemeenRekeningnummer.title" action="listActivaBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu711item2" title="displayPassivaBeleidsAlgemeenRekeningnummer.title" action="listPassivaBeleidsAlgemeenRekeningnummer.do?method=list" />
+				<Item name="menu711item3" title="displayLeningParameter.title" action="listLeningParameter.do?method=list" />
+				<Item name="menu711item3" title="displayAfschrijvingParameter.title" action="listAfschrijvingParameter.do?method=list" />
+			</Item>
+			<Item name="menu7item12" title="submenu712.title">
+				<Item name="menu712item1" title="displayLoonkostParameter.title" action="listLoonkostParameter.do?method=list" />
+				<Item name="menu712item2" title="displayLoonkostType.title" action="listLoonkostType.do?method=list" />
+				<Item name="menu712item3" title="displayLoonkostBedragtype.title" action="listLoonkostBedragtype.do?method=list" />
+				<Item name="menu712item4" title="displayLoonkostVersleutel.title" action="listLoonkostVersleutel.do?method=list" />
+			</Item>
+		</Menu>
+		
+		<Menu name="menu8Algemeneboekhoudingbeheerder" title="menu8.title">
+			<Item name="menu8item1" title="displayReadBic.title" action="listReadBic.do?method=list" />
+			<Item name="menu8item2" title="displayReadCodaParameter.title" action="listReadCodaParameter.do?method=list" />
+			<Item name="menu8item3" title="displayReadLeningParameter.title" action="listReadLeningParameter.do?method=list" />
+			<Item name="menu8item4" title="displayReadLoonkostParameter.title" action="listReadLoonkostParameter.do?method=list" />
+			<Item name="menu8item4" title="displayReadLoonkostBedragtype.title" action="listReadLoonkostBedragtype.do?method=list" />
+		</Menu>
+		
+		<!-- Derde -->
+		<Menu name="menu6Derde" title="menu6.title">
+			<Item name="menu6item1" title="displayBic.title" action="listBic.do?method=list" />
+			<Item name="menu6item2" title="displayIso.title" action="listIso.do?method=list" />
+			<Item name="menu6item3" title="displayDerdeStatus.title" action="listDerdeStatus.do?method=list" />
+			<Item name="menu6item4" title="displayMaatschappelijkWerker.title" action="listMaatschappelijkWerker.do?method=list" />
+			<Item name="menu6item5" title="displayDerde.title" action="searchDerde.do?method=search" />
+		</Menu>
+	</Menus>
+</MenuConfig>

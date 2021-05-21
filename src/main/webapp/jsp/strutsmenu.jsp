@@ -4,20 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@page import="be.luxuryoverdosis.baseapp.Constants"%>
 <%@page import="be.luxuryoverdosis.baseapp.web.WebConstants"%>
-<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BEHEERDER.getCode())%>">
-	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
-		<menu:displayMenu name="menuBeheerder" />
+<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BEHEERDER.getCode())%>">
 		<menu:displayMenu name="menu1Beheerder" />
-	</menu:useMenuDisplayer>
-</c:if>
-<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode())%>">
-	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
-		<menu:displayMenu name="menuBeheerder" />
+		<menu:displayMenu name="menu2Beheerder" />
+		<menu:displayMenu name="menu3Beheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode())%>">
 		<menu:displayMenu name="menu1Beheerder" />
-	</menu:useMenuDisplayer>
-</c:if>
-<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.NORMALE_GEBRUIKER.getCode())%>">
-	<menu:useMenuDisplayer name="ListMenu" bundle="org.apache.struts.action.MESSAGE">
-		<menu:displayMenu name="menuBeheerder" />
-	</menu:useMenuDisplayer>
-</c:if>
+		<menu:displayMenu name="menu2Beheerder" />
+	</c:if>
+	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.NORMALE_GEBRUIKER.getCode())%>">
+		<menu:displayMenu name="menu1Beheerder" />
+	</c:if>
+</menu:useMenuDisplayer>
