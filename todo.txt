@@ -3,6 +3,38 @@ pqgrid select values in grid
 pqgrid custom column order
 users with multiple roles
 
+C:\SsTmp\Baseapp\build.gradle
+
+C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\enumeration\RoleNameEnum.java
+C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\wsdl\user-1.0.wsdl
+C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\xsd\user-1.0.xsd
+
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_en_US.properties
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_nl_BE.properties
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\properties\security.properties
+
+C:\SsTmp\Baseapp\src\main\resources\log4j.properties
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_db.xml
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_search_user.xml
+C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\springbatch\user_import_job.xml
+
+C:\SsTmp\Baseapp\src\main\webapp\client\luxuryOverdosisPq.js
+
+C:\SsTmp\Baseapp\src\main\webapp\files\soap\UserRest-soapui-project.xml
+C:\SsTmp\Baseapp\src\main\webapp\files\soap\User-soapui-project.xml
+C:\SsTmp\Baseapp\src\main\webapp\files\exchange\userExport.txt
+
+C:\SsTmp\Baseapp\src\main\webapp\jsp\menu.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\strutsmenu.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailRoleForm.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailUserForm.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\body.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\login.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\strutsmenu.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListRoleForm.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListUserForm.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayRegisterForm.jsp
+C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailJobForm.jsp
 
 RoleNameEnum.PHOENIX=Phoenix
 RoleNameEnum.JAARPLANBEHEERDER=Jaarplanbeheerder
