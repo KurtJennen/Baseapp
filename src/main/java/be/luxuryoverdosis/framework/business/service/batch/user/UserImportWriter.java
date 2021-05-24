@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
 
-import be.luxuryoverdosis.baseapp.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
@@ -74,7 +74,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	}
 
 	private String getOutput(UserDTO userDTO) {
-		return userDTO.getName() + Constants.SPACE + userDTO.getUserName();
+		return userDTO.getName() + BaseConstants.SPACE + userDTO.getUserName();
 	}
 
 	

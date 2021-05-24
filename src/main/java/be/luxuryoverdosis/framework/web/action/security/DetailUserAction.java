@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 
-import be.luxuryoverdosis.baseapp.web.WebConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
@@ -31,10 +30,10 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 public class DetailUserAction extends NavigationAction {
 	private void storeListsInSession(HttpServletRequest request, DetailUserForm detailUserForm) {
 		 ArrayList<UserRoleDTO> linkedRolesList = getUserRoleService().listDTO(detailUserForm.getId());
-        SessionManager.putInSession(request, WebConstants.USER_ROLE_LINKED_LIST, linkedRolesList);
+        SessionManager.putInSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST, linkedRolesList);
         
         ArrayList<RoleDTO> unlinkedRolesList = getRoleService().listNotInUserRoleForUserDTO(detailUserForm.getId());
-        SessionManager.putInSession(request, WebConstants.USER_ROLE_UNLINKED_LIST, unlinkedRolesList);
+        SessionManager.putInSession(request, BaseWebConstants.USER_ROLE_UNLINKED_LIST, unlinkedRolesList);
 	}
 	
 	public String getNameIds() {
@@ -130,7 +129,7 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setLinkedRoleIds(userForm.getLinkedRoleIds());
 		userDTO.setUnlinkedRoleIds(userForm.getUnlinkedRoleIds());
 		
-		if(SessionManager.getFromSession(request, WebConstants.USER_ROLE_LINKED_LIST) == null) {
+		if(SessionManager.getFromSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST) == null) {
 			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 			userDTO.setRegister(true);
 		} else {
