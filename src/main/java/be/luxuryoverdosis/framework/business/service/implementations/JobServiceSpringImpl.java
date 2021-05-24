@@ -96,10 +96,7 @@ public class JobServiceSpringImpl implements JobService {
 			if(batchJobExecutionParams != null) {
 				jobId = (int)batchJobExecutionParams.getLongValue();
 			}
-			jobParamHibernateDAO.deleteForJob(jobId);
-			jobLogService.deleteForJob(jobId);		
-			jobHibernateDAO.delete(jobId);
-			
+			this.delete(jobId);
 			
 			//BatchStepExecution/Context
 			batchStepExecutionHibernateDAO.deleteContexts(jobInstanceId[i]);

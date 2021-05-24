@@ -8,11 +8,10 @@
 	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.BEHEERDER.getCode())%>">
 		<menu:displayMenu name="menu1Beheerder" />
 		<menu:displayMenu name="menu2Beheerder" />
-		<menu:displayMenu name="menu3Beheerder" />
 	</c:if>
 	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.UITGEBREIDE_GEBRUIKER.getCode())%>">
 		<menu:displayMenu name="menu1Beheerder" />
-		<menu:displayMenu name="menu2Beheerder" />
+		<menu:displayMenu name="menu3Beheerder" />
 	</c:if>
 	<c:if test="<%=((UserDTO)request.getSession().getAttribute(WebConstants.USER)).getRoles().contains(RoleNameEnum.NORMALE_GEBRUIKER.getCode())%>">
 		<menu:displayMenu name="menu1Beheerder" />
