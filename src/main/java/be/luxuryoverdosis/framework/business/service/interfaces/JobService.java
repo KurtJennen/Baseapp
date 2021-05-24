@@ -8,6 +8,7 @@ import be.luxuryoverdosis.framework.data.wrapperdto.DetailJobWrapperDTO;
 public interface JobService {
 	public Job createOrUpdate(Job job);
 	public Job read(int id);
+	public void delete(int jobId);
 	public void delete(int[] jobInstanceId);
 	public Job downloadFile(int jobInstanceId);
 	

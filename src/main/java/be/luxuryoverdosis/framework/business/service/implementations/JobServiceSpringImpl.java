@@ -68,6 +68,17 @@ public class JobServiceSpringImpl implements JobService {
 	}
 	
 	@Transactional
+	public void delete(final int id) {
+		Logging.info(this, "Begin deleteJob");
+		
+		jobParamHibernateDAO.deleteForJob(id);
+		jobLogService.deleteForJob(id);		
+		jobHibernateDAO.delete(id);
+		
+		Logging.info(this, "End deleteJob");
+	}
+	
+	@Transactional
 	public void delete(final int[] jobInstanceId) {
 		Logging.info(this, "Begin deleteJob");
 		

@@ -3,39 +3,39 @@ pqgrid select values in grid
 pqgrid custom column order
 users with multiple roles
 
-C:\SsTmp\Baseapp\build.gradle
+OK C:\SsTmp\Baseapp\build.gradle
 
-C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\enumeration\RoleNameEnum.java
-C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\wsdl\user-1.0.wsdl
-C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\xsd\user-1.0.xsd
+OK C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\enumeration\RoleNameEnum.java
+OK C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\wsdl\user-1.0.wsdl
+OK C:\SsTmp\Baseapp\src\main\java\be\luxuryoverdosis\baseapp\business\webservice\xsd\user-1.0.xsd
 
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_en_US.properties
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_nl_BE.properties
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\properties\security.properties
+OK C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_en_US.properties
+OK C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\locale\ApplicationResources_nl_BE.properties
+OK C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\properties\security.properties
 
-C:\SsTmp\Baseapp\src\main\resources\log4j.properties
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_db.xml
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_search_user.xml
-C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\springbatch\user_import_job.xml
+OK C:\SsTmp\Baseapp\src\main\resources\log4j.properties
+OK C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_db.xml
+OK C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\spring\baseapp_spring_search_user.xml
+?? C:\SsTmp\Baseapp\src\main\resources\be\luxuryoverdosis\resources\springbatch\user_import_job.xml
 
-C:\SsTmp\Baseapp\src\main\webapp\client\luxuryOverdosisPq.js
+OK C:\SsTmp\Baseapp\src\main\webapp\client\luxuryOverdosisPq.js
 
-C:\SsTmp\Baseapp\src\main\webapp\files\soap\UserRest-soapui-project.xml
-C:\SsTmp\Baseapp\src\main\webapp\files\soap\User-soapui-project.xml
-C:\SsTmp\Baseapp\src\main\webapp\files\exchange\userExport.txt
+OK C:\SsTmp\Baseapp\src\main\webapp\files\soap\UserRest-soapui-project.xml
+OK C:\SsTmp\Baseapp\src\main\webapp\files\soap\User-soapui-project.xml
+OK C:\SsTmp\Baseapp\src\main\webapp\files\exchange\userExport.txt
 
-C:\SsTmp\Baseapp\src\main\webapp\jsp\menu.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\strutsmenu.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailRoleForm.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailUserForm.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\body.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\login.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\strutsmenu.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListRoleForm.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListUserForm.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayRegisterForm.jsp
-C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailJobForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\menu.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\strutsmenu.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailRoleForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailUserForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\body.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\login.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListRoleForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayListUserForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayRegisterForm.jsp
+OK C:\SsTmp\Baseapp\src\main\webapp\jsp\security\displayDetailJobForm.jsp
 
+OK
 RoleNameEnum.PHOENIX=Phoenix
 RoleNameEnum.JAARPLANBEHEERDER=Jaarplanbeheerder
 RoleNameEnum.DOELSTELLINGEN=Doelstellingen
@@ -54,6 +54,7 @@ RoleNameEnum.BUDGETHOUDER_BEHEERDER=Budgethouder beheerder
 RoleNameEnum.BUDGETHOUDER_GEBRUIKER=Budgethouder gebruiker
 RoleNameEnum.DERDE=Derde
 
+OK
 PHOENIX(2, "PHOENIX", 1),
 JAARPLANBEHEERDER(3, "JAARPLANBEHEERDER", 1),
 DOELSTELLINGEN(3, "DOELSTELLINGEN", 2),
@@ -72,6 +73,7 @@ BUDGETHOUDER_BEHEERDER(5, "BUDGETHOUDER_BEHEERDER", 1),
 BUDGETHOUDER_GEBRUIKER(5, "BUDGETHOUDER_GEBRUIKER", 2),
 DERDE(6, "DERDE", 1)
 
+OK
 <%@page import="be.luxuryoverdosis.framework.data.dto.UserDTO"%>
 <%@page import="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum"%>
 <%@ taglib uri="http://struts-menu.sf.net/tag-el" prefix="menu" %>
