@@ -338,6 +338,9 @@ public class SqlStartup {
 	
 	public final static String SQL_210504a = "INSERT INTO base_user_role (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, User_Id, Role_Id) VALUES " + 
 			"(1, 1, 'root', 'root', '2021-05-04', '2021-05-04', 1, 1)";
-		
+	
+	public final static String SQL_210525a = "UPDATE base_role SET name = 'Beheerder' where name = 'BEHEERDER'";
+	public final static String SQL_210525b = "UPDATE base_role SET name = 'UitgebreideGebruiker' where name = 'UITGEBREIDE_GEBRUIKER'";
+	public final static String SQL_210525c = "UPDATE base_role SET name = 'NormaleGebruiker' where name = 'NORMALE_GEBRUIKER'";
 	
 }

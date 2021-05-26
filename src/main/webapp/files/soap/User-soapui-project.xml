@@ -151,7 +151,7 @@
             <dateExpiration>31/12/2020</dateExpiration>
             <roles>
             	<role>
-            		<name>NORMALE_GEBRUIKER</name>
+            		<name>NormaleGebruiker</name>
             	</role>
             </roles>
          </User>

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
@@ -16,9 +15,6 @@ public class DetailRoleForm extends BaseForm {
 	
 	public String getName() {
 		return name;
-	}
-	public RoleNameEnum getNameAsEnum() {
-		return RoleNameEnum.convert(name);
 	}
 	public void setName(String name) {
 		this.name = name;

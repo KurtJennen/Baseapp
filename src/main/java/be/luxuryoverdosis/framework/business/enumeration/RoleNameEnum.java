@@ -1,4 +1,4 @@
-package be.luxuryoverdosis.baseapp.business.enumeration;
+package be.luxuryoverdosis.framework.business.enumeration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 
 public enum RoleNameEnum {
-	BEHEERDER(1, "BEHEERDER", 1),
-	UITGEBREIDE_GEBRUIKER(1, "UITGEBREIDE_GEBRUIKER", 2),
-	NORMALE_GEBRUIKER(1, "NORMALE_GEBRUIKER", 3);
+	BEHEERDER(1, "Beheerder", 1),
+	UITGEBREIDEGEBRUIKER(1, "UitgebreideGebruiker", 2),
+	NORMALEGEBRUIKER(1, "NormaleGebruiker", 3);
 	
 	private static final List<String> ROLE_CODES = new ArrayList<String>();
 	
@@ -62,7 +62,7 @@ public enum RoleNameEnum {
 			}
 		}
 		
-		return RoleNameEnum.NORMALE_GEBRUIKER;
+		return RoleNameEnum.NORMALEGEBRUIKER;
 	}
 	
 	public static RoleNameEnum[] convert(String[] array) {

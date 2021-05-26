@@ -45,13 +45,13 @@ public class UserRestServiceClientImpl extends BaseRestServiceClient implements 
 		return responseEntity.getBody();
 	}
 	
-	public UserRestWrapperDTO createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName) {
+	public UserRestWrapperDTO createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleNames) {
 		HttpHeaders httpHeaders = getHttpHeaders(user, password);
 		httpHeaders.set("name", name);
 		httpHeaders.set("userName", userName);
 		httpHeaders.set("encryptedPassword", encryptedPassword);
 		httpHeaders.set("email", email);
-		httpHeaders.set("roleName", roleName);
+		httpHeaders.set("roleNames", roleNames);
 		ResponseEntity<UserRestWrapperDTO> responseEntity = restTemplate.exchange(defaultUri + CREATE_OR_UPDATE_USER_REQUEST, HttpMethod.POST, new HttpEntity<>(httpHeaders), UserRestWrapperDTO.class);
 		return responseEntity.getBody();
 	}

@@ -75,7 +75,7 @@ DERDE(6, "DERDE", 1)
 
 OK
 <%@page import="be.luxuryoverdosis.framework.data.dto.UserDTO"%>
-<%@page import="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum"%>
+<%@page import="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum"%>
 <%@ taglib uri="http://struts-menu.sf.net/tag-el" prefix="menu" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@page import="be.luxuryoverdosis.baseapp.Constants"%>

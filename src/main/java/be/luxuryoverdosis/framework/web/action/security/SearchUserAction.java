@@ -12,7 +12,7 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.DocumentTypeEnum;
+import be.luxuryoverdosis.framework.business.enumeration.DocumentTypeEnum;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;

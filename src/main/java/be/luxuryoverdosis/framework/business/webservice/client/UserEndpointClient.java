@@ -30,7 +30,7 @@ public class UserEndpointClient {
 		}
 		
 		//CreateOrUpdateUserRequest
-		CreateOrUpdateUserResponse createOrUpdateUserResponse = getUserEndpointServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
+		CreateOrUpdateUserResponse createOrUpdateUserResponse = getUserEndpointServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "Beheerder");
 		printMessage(createOrUpdateUserResponse.getMessage());
 		
 		//DeleteUserResponse

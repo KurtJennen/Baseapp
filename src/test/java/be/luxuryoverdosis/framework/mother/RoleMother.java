@@ -1,6 +1,6 @@
 package be.luxuryoverdosis.framework.mother;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
+import be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.framework.data.to.Role;
 
 public class RoleMother {

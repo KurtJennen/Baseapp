@@ -1,6 +1,7 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -14,8 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
-import be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
@@ -54,6 +55,8 @@ public class UserServiceSpringImpl implements UserService {
 	private String activateRoleName;
 	@Value("${security.deactivate.role}")
 	private String deactivateRoleName;
+	@Value("${security.role.enum.class}")
+	private String roleEnumClass;
 	@Resource
 	private UserHibernateDAO userHibernateDAO;
 	@Resource
@@ -281,8 +284,8 @@ public class UserServiceSpringImpl implements UserService {
 		
 		UserDTO userDTO = this.readNameDTO(name);
 		if(userDTO != null) {
-			ArrayList<String> roleNames = getMaxRangRoles(userDTO);
-			userDTO.setRoles(roleNames);
+//			ArrayList<String> roleNames = getMaxRangRoles(userDTO);
+//			userDTO.setRoles(roleNames);
 			loginWrapperDTO.setUserDTO(userDTO);
 			
 			int days = daysBeforeDeactivate(userDTO);
@@ -300,23 +303,42 @@ public class UserServiceSpringImpl implements UserService {
 
 	private ArrayList<String> getMaxRangRoles(UserDTO userDTO) {
 		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
-		HashMap<Integer, RoleNameEnum> maxRangRoles = new HashMap<Integer, RoleNameEnum>();
+		HashMap<Integer, String> maxRangRoles = new HashMap<Integer, String>();
 		
-		for (UserRoleDTO userRoleDTO : userRolesList) {
-			RoleNameEnum roleNameEnum = RoleNameEnum.convert(userRoleDTO.getRoleName());
+		try {
+			Class<?> enumClass = Class.forName(roleEnumClass);
+			Method typeMethod = ReflectionUtils.findMethod(enumClass, "getType");
+			Method codeMethod = ReflectionUtils.findMethod(enumClass, "getCode");
+			Method rangMethod = ReflectionUtils.findMethod(enumClass, "getRang");
 			
-			if(maxRangRoles.containsKey(roleNameEnum.getType())) {
-				if (roleNameEnum.getRang() < maxRangRoles.get(roleNameEnum.getType()).getRang()) {
-					maxRangRoles.put(roleNameEnum.getType(), roleNameEnum);
+			for (UserRoleDTO userRoleDTO : userRolesList) {
+				
+				Object[] objects = enumClass.getEnumConstants();
+				for (Object object : objects) {
+					String code = (String) ReflectionUtils.invokeMethod(codeMethod, object);
+					if(userRoleDTO.getRoleName().equals(code)) {
+						int type = (int) ReflectionUtils.invokeMethod(typeMethod, object);
+						int rang = (int) ReflectionUtils.invokeMethod(rangMethod, object);
+						
+						if(maxRangRoles.containsKey(type)) {
+							String[] rangAndCode = maxRangRoles.get(type).split(BaseConstants.DOUBLEPOINT);
+							if (rang < Integer.valueOf(rangAndCode[0])) {
+								maxRangRoles.put(type, rang + BaseConstants.DOUBLEPOINT + code);
+							}
+						} else {
+							maxRangRoles.put(type, rang + BaseConstants.DOUBLEPOINT + code);
+						}
+					}
 				}
-			} else {
-				maxRangRoles.put(roleNameEnum.getType(), roleNameEnum);
 			}
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
 		}
+			
 		
 		ArrayList<String> roleNames = new ArrayList<String>();
-		for (RoleNameEnum value : maxRangRoles.values()) {
-			roleNames.add(value.getCode());
+		for (String value : maxRangRoles.values()) {
+			roleNames.add(value.split(BaseConstants.DOUBLEPOINT)[1]);
 		}
 		return roleNames;
 	}
@@ -354,7 +376,7 @@ public class UserServiceSpringImpl implements UserService {
 			
 			ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(user.getId());
 			for (UserRoleDTO userRoleDTO : userRolesList) {
-				text.append(addMailKeyText("mail.user.text4.create", userRoleDTO.getRoleNameAsKey()));
+				text.append(addMailKeyText("mail.user.text4.create", userRoleDTO.getRoleName()));
 			}
 			
 			helper.setTo(user.getEmail());

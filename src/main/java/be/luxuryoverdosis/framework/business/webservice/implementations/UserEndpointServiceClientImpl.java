@@ -17,6 +17,7 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserRequest;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.Role;
+import be.luxuryoverdosis.generated.user.schema.v1.Roles;
 import be.luxuryoverdosis.generated.user.schema.v1.User;
 
 @Service
@@ -62,7 +63,10 @@ public class UserEndpointServiceClientImpl implements UserEndpointServiceClient 
 		Role role = new Role();
 		role.setName(roleName);
 		
-		user.getRoles().getRole().add(role);
+		Roles roles = new Roles();
+		roles.getRole().add(role);
+		
+		user.setRoles(roles);
 		createOrUpdateUserRequest.setUser(user);
 		
 		webServiceTemplate.setDefaultUri(defaultUri);

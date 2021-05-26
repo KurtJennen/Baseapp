@@ -30,7 +30,7 @@ public class UserRestClient {
 		}
 		
 		//CreateOrUpdateUserRequest (POST)
-		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "BEHEERDER");
+		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "Beheerder,NormaleGebruiker");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getUserDTO() != null) {

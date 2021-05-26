@@ -121,7 +121,7 @@ public class UserServiceSpringImplTest {
 		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		//verify(roleHibernateDAO).readName(RoleNameEnum.NORMALE_GEBRUIKER.getCode());
+		//verify(roleHibernateDAO).readName(RoleNameEnum.NORMALEGEBRUIKER.getCode());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	

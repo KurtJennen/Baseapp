@@ -1,4 +1,3 @@
-<%@page import="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -69,12 +68,12 @@
 		<tr>
 			<td>
 				<html:select property="linkedRoleIds" tabindex="7" multiple="true" size="10" style="width: 600px">
-					<html:optionsCollection name="userRoleLinkedList" label="roleNameAsKey" value="roleId" />
+					<html:optionsCollection name="userRoleLinkedList" label="roleName" value="roleId" />
 				</html:select>
 			</td>
 			<td>
 				<html:select property="unlinkedRoleIds" tabindex="8" multiple="true" size="10" style="width: 600px">
-					<html:optionsCollection name="userRoleUnLinkedList" label="nameAsKey" value="id" />
+					<html:optionsCollection name="userRoleUnLinkedList" label="name" value="id" />
 				</html:select>
 			</td>
 		</tr>

@@ -1,4 +1,4 @@
-<%@page import="be.luxuryoverdosis.baseapp.business.enumeration.RoleNameEnum"%>
+<%@page import="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
