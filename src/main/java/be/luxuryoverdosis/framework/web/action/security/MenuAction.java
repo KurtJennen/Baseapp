@@ -13,7 +13,7 @@ import org.apache.struts.actions.DispatchAction;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.MenuWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -27,11 +27,11 @@ public class MenuAction extends DispatchAction {
 	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages, ActionForm form) throws Exception {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
-		User user = ThreadManager.getUserFromThread();
+		UserDTO userDTO = ThreadManager.getUserFromThread();
 		
 		MenuForm menuForm = (MenuForm) form;
 		if(menuForm.getUserId() < 0) {
-			menuForm.setUserId(user.getId());
+			menuForm.setUserId(userDTO.getId());
 		}
 		
 		MenuWrapperDTO menuWrapperDTO = getMenuService().getMenuWrapperDTO(getMenuRepository(request), menuForm.getUserId());

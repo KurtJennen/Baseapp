@@ -321,4 +321,26 @@ public class SqlStartup {
 	
 	public final static String SQL_210307c = "ALTER TABLE base_query_param CHANGE Parameter Name VARCHAR(45) NOT NULL DEFAULT ''";
 	
+	public final static String SQL_210503a = "CREATE TABLE base_user_role ( " +
+			"Id int(10) unsigned NOT NULL AUTO_INCREMENT, " +
+			"Version int(10) unsigned NOT NULL DEFAULT '0', " +
+			"UserAdd varchar(45) NOT NULL DEFAULT '', " +
+			"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
+			"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
+			"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+			"User_Id int(10) unsigned NOT NULL DEFAULT '0', " +
+			"Role_Id int(10) unsigned NOT NULL DEFAULT '0', " +
+			"PRIMARY KEY (Id), " +
+			"KEY FK_USER_ROLE_USER_ID (User_Id), " +
+			"CONSTRAINT FK_USER_ROLE_USER_ID FOREIGN KEY (User_Id) REFERENCES base_user (Id), " +
+			"KEY FK_USER_ROLE_ROLE_ID (Role_Id), " +
+			"CONSTRAINT FK_USER_ROLE_ROLE_ID FOREIGN KEY (Role_Id) REFERENCES base_role (Id))";
+	
+	public final static String SQL_210504a = "INSERT INTO base_user_role (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, User_Id, Role_Id) VALUES " + 
+			"(1, 1, 'root', 'root', '2021-05-04', '2021-05-04', 1, 1)";
+	
+	public final static String SQL_210525a = "UPDATE base_role SET name = 'Beheerder' where name = 'BEHEERDER'";
+	public final static String SQL_210525b = "UPDATE base_role SET name = 'UitgebreideGebruiker' where name = 'UITGEBREIDE_GEBRUIKER'";
+	public final static String SQL_210525c = "UPDATE base_role SET name = 'NormaleGebruiker' where name = 'NORMALE_GEBRUIKER'";
+	
 }

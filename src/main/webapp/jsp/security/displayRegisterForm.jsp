@@ -1,3 +1,4 @@
+<%@page import="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="/luxuryOverdosis" prefix="lo" %>
@@ -25,7 +26,7 @@
 			<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
 			<hr />
 			<html:hidden property="id" />
-			<html:hidden property="roleId" value="0" />
+			<html:hidden property="defaultRoleName" value="<%= RoleNameEnum.NORMALEGEBRUIKER.getCode() %>" />
 			<table>
 				<tr>
 					<td><fmt:message key="security.name.unique" />:</td>

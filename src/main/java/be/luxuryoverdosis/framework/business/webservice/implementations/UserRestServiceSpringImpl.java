@@ -15,10 +15,11 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.restwrapperdto.UserRestWrapperDTO;
-import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
@@ -29,6 +30,8 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	private UserService userService;
 	@Resource
 	private RoleService roleService;
+	@Resource
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional(readOnly=true)
 	public String readUserRequest(String name) throws JsonProcessingException {
@@ -41,14 +44,13 @@ public class UserRestServiceSpringImpl implements UserRestService {
 			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
 		}
 		
-		
 		User user = userService.readName(name);
 		if (user == null) {
 			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
-		} 
+		}
 		
-		userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
+		userRestWrapperDTO.setUserDTO(produceUserDTO(user));
 		
 		Logging.info(this, "End readUserRequest");
 		return sendRestWrapperDto(userRestWrapperDTO);
@@ -70,6 +72,9 @@ public class UserRestServiceSpringImpl implements UserRestService {
 			String error =  BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
 		}
+		for (UserDTO userDTO : userDTOList) {
+			fillUserRoles(userDTO);
+		}
 		
 		userRestWrapperDTO.setUserDTOList(userDTOList);
 		
@@ -78,7 +83,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	}
 
 	@Transactional
-	public String createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName) throws JsonProcessingException {
+	public String createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String[] roleNames) throws JsonProcessingException {
 		Logging.info(this, "Begin createOrUpdateUserRequest");
 		
 		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
@@ -102,15 +107,8 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		user.setName(name);
 		user.setUserName(userName);
 		
-		Role role = roleService.readName(roleName);
-		if (role == null) {
-			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.role")});
-			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
-		}
-		user.setRole(role);
-		
 		try {
-			user = userService.createOrUpdate(user);
+			user = userService.createOrUpdate(user, roleNames);
 			userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
 			if (isNew) {
 				Logging.info(this, "End createOrUpdateUserRequest");
@@ -138,7 +136,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		}
 		
 		User user = userService.readName(name);
-		userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
+		userRestWrapperDTO.setUserDTO(produceUserDTO(user));
 		if(user != null) {
 			userService.delete(user.getId());
 			Logging.info(this, "Begin deleteUserRequest");
@@ -169,5 +167,19 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	private String sendRestWrapperDto(Object object) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		return objectMapper.writeValueAsString(object);
+	}
+	
+	private UserDTO produceUserDTO(User user) {
+		UserDTO userDTO = UserFactory.produceUserDTO(user);
+		
+		return fillUserRoles(userDTO);
+	}
+	private UserDTO fillUserRoles(UserDTO userDTO) {
+		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
+		for (UserRoleDTO userRoleDTO : userRolesList) {
+			userDTO.getRoles().add(userRoleDTO.getRoleName());
+		}
+		
+		return userDTO;
 	}
 }

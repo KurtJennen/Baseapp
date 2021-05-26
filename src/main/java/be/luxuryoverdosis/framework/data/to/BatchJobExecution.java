@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -23,11 +25,19 @@ import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
 @Table(name="batch_job_execution")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobExecution.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query=BatchJobExecution.Queries.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE)
+	@NamedQuery(name=BatchJobExecution.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query=BatchJobExecution.Queries.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE),
+	@NamedQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query=BatchJobExecution.Queries.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE)
+})
+@NamedNativeQueries({
+	@NamedNativeQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE, query=BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE),
+	@NamedNativeQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE, query=BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE)
 })
 @Proxy(lazy=false)
 public class BatchJobExecution {
 	public static final String SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchJobExecutionsByJobInstance";
+	public static final String DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE = "deleteBatchJobExecutionsByJobInstance";
+	public static final String DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE = "deleteBatchJobExecutionContextsByJobInstance";
+	public static final String DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE = "deleteBatchJobExecutionParamssByJobInstance";
 	
 	@Id
 	@Column(name="Job_Execution_Id")
@@ -137,5 +147,21 @@ public class BatchJobExecution {
 				+ "inner join bje.batchJobInstance bji "
 				+ "where bji.id = :jobInstanceId "
 				+ "order by bje.createTime desc";
+		
+		public static final String DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE = "delete "
+				+ "from BatchJobExecution bje "
+				+ "where bje.batchJobInstance.id = :jobInstanceId";
+	}
+	
+	public static final class NativeQueries {
+		public static final String DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE = "delete "
+				+ "from batch_job_execution_context "
+				+ "where exists (select 1 from batch_job_execution where batch_job_execution.job_execution_id = batch_job_execution_context.job_execution_id and batch_job_execution.job_instance_id = :jobInstanceId)";
+		
+		public static final String DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE = "delete "
+				+ "from batch_job_execution_params "
+				+ "where exists (select 1 from batch_job_execution where batch_job_execution.job_execution_id = batch_job_execution_params.job_execution_id and batch_job_execution.job_instance_id = :jobInstanceId)";
+		
+		
 	}
 }

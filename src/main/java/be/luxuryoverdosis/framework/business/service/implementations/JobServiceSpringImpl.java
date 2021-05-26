@@ -78,6 +78,40 @@ public class JobServiceSpringImpl implements JobService {
 		Logging.info(this, "End deleteJob");
 	}
 	
+	@Transactional
+	public void delete(final int[] jobInstanceId) {
+		Logging.info(this, "Begin deleteJob");
+		
+		for (int i = 0; i < jobInstanceId.length; i++) {
+			BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId[i]);
+			
+			BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId[i], BaseConstants.JOB_ID);
+			BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
+			
+			int jobId = -1;
+			
+			if(batchJobParams != null) {
+				jobId = (int)batchJobParams.getLongValue();
+			}
+			if(batchJobExecutionParams != null) {
+				jobId = (int)batchJobExecutionParams.getLongValue();
+			}
+			this.delete(jobId);
+			
+			//BatchStepExecution/Context
+			batchStepExecutionHibernateDAO.deleteContexts(jobInstanceId[i]);
+			batchStepExecutionHibernateDAO.delete(jobInstanceId[i]);
+			//BatchJobExecution/Context/Params
+			batchJobExecutionHibernateDAO.deleteContexts(jobInstanceId[i]);
+			batchJobExecutionHibernateDAO.deleteParams(jobInstanceId[i]);
+			batchJobExecutionHibernateDAO.delete(jobInstanceId[i]);
+			batchJobInstanceHibernateDAO.delete(jobInstanceId[i]);
+		}
+		
+		
+		Logging.info(this, "End deleteJob");
+	}
+	
 	@Transactional(readOnly=true)
 	public Job downloadFile(int jobInstanceId){
 		Logging.info(this, "Begin downloadFileJob");

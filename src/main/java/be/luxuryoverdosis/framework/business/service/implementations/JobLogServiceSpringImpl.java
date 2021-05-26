@@ -116,9 +116,9 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		Logging.info(this, "Begin listJobLog");
 		ArrayList<JobLog> arrayList = null;
 		
-		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId, BaseConstants.JOB_ID);
-		
 		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);
+		
+		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId, BaseConstants.JOB_ID);
 		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
 		
 		if(batchJobParams != null) {

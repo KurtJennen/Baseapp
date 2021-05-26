@@ -11,11 +11,10 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
-import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
@@ -31,6 +30,8 @@ public class LoginAction extends DispatchAction {
 		
 		LoginForm loginForm = (LoginForm) form;
 		loginForm.reset(mapping, request);
+		
+		loginForm.setActivation(getUserService().isActiviation());
 				
 		MessageManager.syncDisplayTagWithStruts(request);
 		
@@ -45,43 +46,47 @@ public class LoginAction extends DispatchAction {
 		
 		LoginForm loginForm = (LoginForm) form;
 		
-		String encryptedPassword = Encryption.encode(loginForm.getPassword());
-		
 		MenuRepository menuRepository = (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 		menuRepository.reload();
 		
 		LoginWrapperDTO loginWrapperDTO = getUserService().getLoginWrapperDTO(loginForm.getName(), menuRepository);
 		
-		User user = loginWrapperDTO.getUser();
-		if(user != null && loginForm.getName().equals(user.getName()) && encryptedPassword.equals(user.getEncryptedPassword())) {
-			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
-			saveMessages(request, actionMessages);
-			
-			int days = loginWrapperDTO.getDays();
-			if(days == 0) {
-				loginForm.setDeactivation(true);
-				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.reset"));
-			}	
-			if(days > 0 && days <= UserService.DAYS_OF_WARNING){			
-				loginForm.setDeactivation(true);
-				loginForm.setDeactivationMessage(MessageLocator.getMessage(request, "login.warning", new Object[] {String.valueOf(days)}));
-			}
-			
-			SessionManager.putInSession(request, BaseWebConstants.USER, user);
-			ThreadManager.setUserOnThread(user);
-			request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
-			
-			request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
-						
-			Logging.info(this, "End Login Success");
-			return (mapping.findForward(BaseWebConstants.SUCCESS));
-		} else {
-			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.failed", MessageLocator.getMessage(request, "login")));
-			saveMessages(request, actionMessages);
-			request.setAttribute(BaseWebConstants.ERROR, 1);
-			Logging.error(this, "End Login Failed");
-			return (mapping.findForward(BaseWebConstants.FAILED));
+		UserDTO userDTO = loginWrapperDTO.getUserDTO();
+		boolean activation = loginWrapperDTO.isActivation();
+		int days = loginWrapperDTO.getDays();
+		
+		if(userDTO == null) {
+			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.user"));
 		}
+		if(userDTO != null && (!loginForm.getName().equals(userDTO.getName()) || !loginForm.getPassword().equals(userDTO.getPassword()))) {
+			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.name.or.password"));
+		}
+		if(days == 0 && activation) {
+			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.reset"));
+		}
+		
+		if(days > 0 && days <= UserService.DAYS_OF_WARNING && activation){			
+			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.warning", String.valueOf(days)));
+		}
+		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
+		saveMessages(request, actionMessages);
+		
+		SessionManager.putInSession(request, BaseWebConstants.USER, userDTO);
+		ThreadManager.setUserOnThread(userDTO);
+		request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
+		
+		request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
+					
+		Logging.info(this, "End Login Success");
+		return (mapping.findForward(BaseWebConstants.SUCCESS));
+	}
+
+	private ActionForward addActionMessage(ActionMapping mapping, HttpServletRequest request, ActionMessages actionMessages, String message) {
+		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.failed", message));
+		saveMessages(request, actionMessages);
+		request.setAttribute(BaseWebConstants.ERROR, 1);
+		Logging.error(this, "End Login Failed");
+		return (mapping.findForward(BaseWebConstants.FAILED));
 	}
 	
 	public ActionForward logout(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {

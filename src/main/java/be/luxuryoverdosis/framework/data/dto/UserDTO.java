@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import be.luxuryoverdosis.framework.base.tool.DateTool;
@@ -11,24 +12,26 @@ public class UserDTO extends BaseDTO {
 	private String email;
 	private Date dateExpiration;
 	private String dateExpirationAsString;
-	private int roleId;
-	private String roleName;
+	private boolean isActivation;
+	private boolean isRegister;
+	ArrayList<String> roles = new ArrayList<String>();
+	
+	private int[] linkedRoleIds;
+	private int[] unlinkedRoleIds;
 	
 	public UserDTO() {
 		super();
 	}
 	
-	public UserDTO(int id, String name, String userName, String email, int roleId, String roleName) {
+	public UserDTO(int id, String name, String userName, String email) {
 		super();
 		setId(id);
 		this.name = name;
 		this.userName = userName;
 		this.email = email;
-		this.roleId = roleId;
-		this.roleName = roleName;
 	}
 	
-	public UserDTO(int id, String name, String userName, String email, Date dateExpiration, String roleName) {
+	public UserDTO(int id, String name, String userName, String email, Date dateExpiration) {
 		super();
 		setId(id);
 		this.name = name;
@@ -36,7 +39,6 @@ public class UserDTO extends BaseDTO {
 		this.email = email;
 		this.dateExpiration = dateExpiration;
 		this.dateExpirationAsString = DateTool.formatUtilDate(dateExpiration);
-		this.roleName = roleName;
 	}
 	
 	public String getName() {
@@ -75,19 +77,38 @@ public class UserDTO extends BaseDTO {
 	public void setDateExpirationAsString(String dateExpirationAsString) {
 		this.dateExpirationAsString = dateExpirationAsString;
 	}
-	public int getRoleId() {
-		return roleId;
+	public boolean isActivation() {
+		return isActivation;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
+	public void setActivation(boolean isActivation) {
+		this.isActivation = isActivation;
 	}
-	public String getRoleName() {
-		return roleName;
+	public boolean isRegister() {
+		return isRegister;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setRegister(boolean isRegister) {
+		this.isRegister = isRegister;
 	}
 //	public BigDecimal getBedrag() {
 //		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
 //	}
+	public ArrayList<String> getRoles() {
+		return roles;
+	}
+	public void setRoles(ArrayList<String> roles) {
+		this.roles = roles;
+	}
+	
+	public int[] getLinkedRoleIds() {
+		return linkedRoleIds;
+	}
+	public void setLinkedRoleIds(int[] linkedRoleIds) {
+		this.linkedRoleIds = linkedRoleIds;
+	}
+	public int[] getUnlinkedRoleIds() {
+		return unlinkedRoleIds;
+	}
+	public void setUnlinkedRoleIds(int[] unlinkedRoleIds) {
+		this.unlinkedRoleIds = unlinkedRoleIds;
+	}
 }

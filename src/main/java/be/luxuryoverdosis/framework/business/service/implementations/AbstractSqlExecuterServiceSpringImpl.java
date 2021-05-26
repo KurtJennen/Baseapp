@@ -65,6 +65,11 @@ public abstract class AbstractSqlExecuterServiceSpringImpl implements AbstractSq
 		sqlService.execute(SqlStartup.SQL_210307a, "210307a", BaseConstants.NAME);
 		sqlService.execute(SqlStartup.SQL_210307b, "210307b", BaseConstants.NAME);
 		sqlService.execute(SqlStartup.SQL_210307c, "210307c", BaseConstants.NAME);
+		sqlService.execute(SqlStartup.SQL_210503a, "210503a", BaseConstants.NAME);
+		sqlService.execute(SqlStartup.SQL_210504a, "210504a", BaseConstants.NAME);
+		sqlService.execute(SqlStartup.SQL_210525a, "210525a", BaseConstants.NAME);
+		sqlService.execute(SqlStartup.SQL_210525b, "210525b", BaseConstants.NAME);
+		sqlService.execute(SqlStartup.SQL_210525c, "210525c", BaseConstants.NAME);
 		this.executeSql(sqlService);
 		
 		Logging.info(this, "Begin execute");

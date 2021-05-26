@@ -24,4 +24,26 @@ public class BatchStepExecutionHibernateDAOMySQLImpl extends AbstractHibernateDa
 		Logging.info(this, "End listBatchStepExecution");
 		return arrayList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void delete(final long jobInstanceId) {
+		Logging.info(this, "Begin deleteBatchStepExecutions");
+		
+		Query<Long> query = getCurrentSession().getNamedNativeQuery(BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE);
+		query.setParameter(BaseQueryParameters.JOB_INSTANCE_ID, jobInstanceId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchStepExecutions");
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteContexts(final long jobInstanceId) {
+		Logging.info(this, "Begin deleteBatchStepExecutionContexts");
+		
+		Query<Long> query = getCurrentSession().getNamedNativeQuery(BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE);
+		query.setParameter(BaseQueryParameters.JOB_INSTANCE_ID, jobInstanceId);
+		query.executeUpdate();
+		
+		Logging.info(this, "End deleteBatchStepExecutionContexts");
+	}
 }

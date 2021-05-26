@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.data.to;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Access;
@@ -25,7 +26,8 @@ import be.luxuryoverdosis.framework.base.tool.DateTool;
 	@NamedQuery(name=BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME, query=BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME)
 })
 @Proxy(lazy=false)
-public class BatchJobExecutionParams {
+public class BatchJobExecutionParams implements Serializable {
+	private static final long serialVersionUID = 1L;
 	public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION = "selectJobExecutionParamsByJobExecution";
 	public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME = "selectJobExecutionParamsByJobExecutionAndKeyName";
 	
@@ -36,6 +38,7 @@ public class BatchJobExecutionParams {
 	@Column(name="Type_Cd")
 	private String typeCode;
 	
+	@Id
 	@Column(name="Key_name")
 	private String keyName;
 	

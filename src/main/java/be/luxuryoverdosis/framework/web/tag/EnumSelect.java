@@ -13,7 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
-import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
@@ -78,14 +78,15 @@ public class EnumSelect implements Tag {
 		try {
 			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			User user = (User)request.getSession().getAttribute(BaseWebConstants.USER);
+			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
 			
 			boolean enabled = false;
-			if(user != null) {
+			if(userDTO != null) {
 				if(roles != null) {
 					String[] seperatedRoles = roles.split(",");
 					for(int i = 0; i < seperatedRoles.length; i++) {
-						if(seperatedRoles[i].equals(user.getRole().getName())) {
+						//if(seperatedRoles[i].equals(user.getRole().getName())) {
+						if(userDTO.getRoles().contains(seperatedRoles[i])) {
 							enabled = true;
 						}
 					}

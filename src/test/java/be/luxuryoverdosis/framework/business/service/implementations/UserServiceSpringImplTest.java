@@ -10,27 +10,35 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.to.UserRole;
 import be.luxuryoverdosis.framework.mother.RoleMother;
 import be.luxuryoverdosis.framework.mother.UserDTOMother;
 import be.luxuryoverdosis.framework.mother.UserMother;
+import be.luxuryoverdosis.framework.mother.UserRoleMother;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
+
+//Add mysql driver to classpath
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceSpringImplTest {
@@ -45,12 +53,20 @@ public class UserServiceSpringImplTest {
 	private RoleHibernateDAO roleHibernateDAO;
 	
 	@Mock
+	private UserRoleHibernateDAO userRoleHibernateDAO;
+	
+	@Mock
 	private MenuService menuService;
+	
+	@Mock
+	JavaMailSender javaMailSender;
 	
 	@Before
 	public void before() {
 		Config config = Config.getInstance();
 		config.addKeyValue(javax.servlet.jsp.jstl.core.Config.FMT_LOCALE, "nl_BE");
+		
+//		ReflectionTestUtils.setField(userServiceSpringImpl, "activateRoleName", "BEHEERDER");
 		
 		SpringServiceLocator.getSpringServiceLocator();
 	}
@@ -60,15 +76,18 @@ public class UserServiceSpringImplTest {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserRole();
 		UserDTO userDTO = UserDTOMother.produceUserDTO();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(roleHibernateDAO.read(anyInt())).thenReturn(role);
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
 		when(userHibernateDAO.read(anyInt())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
 		userServiceSpringImpl.createOrUpdateDTO(userDTO);
 		
-		verify(roleHibernateDAO).read(anyInt());
+		//verify(roleHibernateDAO).read(anyInt());
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(userHibernateDAO).createOrUpdate(anyObject());
 		verify(userHibernateDAO).read(anyInt());
@@ -91,15 +110,18 @@ public class UserServiceSpringImplTest {
 	public void testCreateOrUpdate() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUser();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
+		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(BaseConstants.ROLE_NORMALE_GEBRUIKER);
+		//verify(roleHibernateDAO).readName(RoleNameEnum.NORMALEGEBRUIKER.getCode());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
@@ -110,7 +132,7 @@ public class UserServiceSpringImplTest {
 			
 			when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(1L);
 			
-			userServiceSpringImpl.createOrUpdate(user);
+			userServiceSpringImpl.createOrUpdate(user, null, null);
 			
 			verify(userHibernateDAO).count(anyString(), anyInt());
 		} catch (Exception e) {
@@ -122,28 +144,33 @@ public class UserServiceSpringImplTest {
 	@Test
 	public void testCreateOrUpdateDate() {
 		Role role = RoleMother.produceRole();
-		
 		User user = UserMother.produceUserDate();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
+		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(anyString());
+		//verify(roleHibernateDAO).readName(anyObject());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 	
 	@Test
 	public void testCreateOrUpdateRole() {
 		User user = UserMother.produceUserRole();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
 		verify(userHibernateDAO).createOrUpdate(user);
@@ -155,13 +182,14 @@ public class UserServiceSpringImplTest {
 		User user = UserMother.produceUserDate();
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
-		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
+		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(null);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
-		userServiceSpringImpl.createOrUpdate(user);
+		userServiceSpringImpl.createOrUpdate(user, null, null);
 		
 		verify(userHibernateDAO).count(anyString(), anyInt());
-		verify(roleHibernateDAO).readName(anyString());
+		//verify(roleHibernateDAO).readName(anyObject());
 		verify(userHibernateDAO).createOrUpdate(user);
 	}
 
@@ -222,13 +250,20 @@ public class UserServiceSpringImplTest {
 	public void testActivateYear() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserDate();
+		UserRole userRole = UserRoleMother.produceUserRole();
+		MimeMessage msg = new MimeMessage((Session)null);
 		
 		when(userHibernateDAO.read(anyInt())).thenReturn(user);
+		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
+		when(javaMailSender.createMimeMessage()).thenReturn(msg);
+		doNothing().when(userRoleHibernateDAO).delete(anyInt());
 		when(roleHibernateDAO.readName(anyString())).thenReturn(role);
+		when(userRoleHibernateDAO.createOrUpdate(anyObject())).thenReturn(userRole);
+		when(userRoleHibernateDAO.countUser(anyInt())).thenReturn(1L);
 		
 		userServiceSpringImpl.activate(anyInt(), UserService.YEAR);
 		
 		verify(userHibernateDAO).read(anyInt());
-		verify(roleHibernateDAO).readName(anyString());
+		verify(roleHibernateDAO).readName(anyObject());
 	}
 }

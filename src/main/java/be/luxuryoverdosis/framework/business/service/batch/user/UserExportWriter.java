@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
 
-import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
@@ -52,7 +51,7 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 				exportBuffer.append(user.getEncryptedPassword()).append(BaseConstants.PIPE);
 				exportBuffer.append(user.getEmail()).append(BaseConstants.PIPE);
 				exportBuffer.append(user.getDateExpiration()).append(BaseConstants.PIPE);
-				exportBuffer.append(user.getRole().getName());
+//				exportBuffer.append(user.getRole().getName());
 				exportBuffer.append(BaseConstants.CARRIAGE_RETURN);
 				
 				baos.write(exportBuffer.toString().getBytes(), 0, exportBuffer.length());
@@ -85,7 +84,7 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 	}
 
 	private String getOutput(User user) {
-		return user.getName() + Constants.SPACE + user.getUserName();
+		return user.getName() + BaseConstants.SPACE + user.getUserName();
 	}
 
 	

@@ -52,13 +52,14 @@ $(document).ready(function() {
 				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="email" dataType="string" titleKey="security.email"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="dateExpirationAsString" dataType="string" titleKey="security.date.expiration"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="roleName" dataType="string" titleKey="security.role"></lo:pqGridColumn>
+<%-- 				<lo:pqGridColumn width="200" dataIndx="roleName" dataType="string" titleKey="security.role"></lo:pqGridColumn> --%>
 <%-- 				<lo:pqGridColumn width="200" dataIndx="bedrag" dataType="float" titleKey="file" align="right" totalizable="true" currency="true"></lo:pqGridColumn> --%>
 			</lo:pqGrid>
 		</div>
 		<div id="tab2">
 			<lo:button image="table_edit.png" method="readExportJob" key="button.edit"></lo:button>
 			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>
+			<lo:button image="table_delete.png" method="deleteExportJob" key="button.delete"></lo:button>
 			<hr />
 			<lo:pqGrid nameSelectedIds="selectedIdsExportJob" url="/listUser.do?method=ajaxListExportJob" titleKey="displayJob.title" id="usersExportJob" rPP="15" rowClickMethod="readExportJob">
 				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
@@ -77,6 +78,7 @@ $(document).ready(function() {
 			<fmt:message key="file" />*:
 			<html:file property="formFile" size="100" maxlength="256" tabindex="1"></html:file>
 			<lo:button image="cog.png" method="importUserJob" key="button.import"></lo:button>
+			<lo:button image="table_delete.png" method="deleteImportJob" key="button.delete"></lo:button>
 			<hr />
 			<lo:pqGrid nameSelectedIds="selectedIdsImportJob" url="/listUser.do?method=ajaxListImportJob" titleKey="displayJob.title" id="usersImportJob" rPP="15" rowClickMethod="readImportJob">
 				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>

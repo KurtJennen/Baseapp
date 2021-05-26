@@ -1,6 +1,5 @@
 package be.luxuryoverdosis.framework.business.service.batch.user;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,10 +7,8 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
 
-import be.luxuryoverdosis.baseapp.Constants;
-import be.luxuryoverdosis.framework.base.tool.DateTool;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
-import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobLogService;
 import be.luxuryoverdosis.framework.business.service.interfaces.JobService;
@@ -19,10 +16,8 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.factory.JobLogFactory;
-import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.to.JobLog;
-import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 public class UserImportWriter extends HibernateItemWriter<UserDTO> {
@@ -46,22 +41,13 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	}
 
 	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
-		ThreadManager.setUserOnThread(userService.readName(jobUser));
+		ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
 		
 		Job job = jobService.read(jobId);
 		try {
-			
 			for (UserDTO userDTO : users) {
-				User user = userService.readName(userDTO.getName());
-				
-				if(user == null) {
-					userDTO.setPassword(Encryption.decode(userDTO.getPassword()));
-					Date dateExpiration = DateTool.parseSqlTimestamp(userDTO.getDateExpirationAsString());
-					userDTO.setDateExpirationAsString(DateTool.formatUtilDate(dateExpiration));
-					
-					user = UserFactory.produceUser(user, userDTO);
-					
-					userService.createOrUpdate(user);
+				if(userDTO.getId() < 0) {
+					userService.createOrUpdateDTO(userDTO);
 					
 					JobLog jobLog = new JobLog();
 					jobLog = JobLogFactory.produceJobLog(jobLog, job, getInput("import.success"), getOutput(userDTO));
@@ -88,7 +74,7 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	}
 
 	private String getOutput(UserDTO userDTO) {
-		return userDTO.getName() + Constants.SPACE + userDTO.getUserName();
+		return userDTO.getName() + BaseConstants.SPACE + userDTO.getUserName();
 	}
 
 	

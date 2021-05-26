@@ -13,9 +13,14 @@
           <xs:element name="encryptedPassword" type="xs:string"/>
           <xs:element name="email" type="xs:string"/>
           <xs:element name="dateExpiration" type="xs:string"/>
-          <xs:element name="role" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" name="roles" type="v1:Roles"/>
         </xs:sequence>
         <xs:attribute ref="v1:Name" use="required"/>
+      </xs:complexType>
+      <xs:complexType name="Roles">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string"/>
+        </xs:sequence>
       </xs:complexType>
       <xs:attribute name="Name" type="xs:string"/>
       <xs:element name="CreateOrUpdateUserRequest">
@@ -144,7 +149,11 @@
             <encryptedPassword>kurt</encryptedPassword>
             <email>kje@skynet.be</email>
             <dateExpiration>31/12/2020</dateExpiration>
-            <role>NORMALE_GEBRUIKER</role>
+            <roles>
+            	<role>
+            		<name>NormaleGebruiker</name>
+            	</role>
+            </roles>
          </User>
       </v1:CreateOrUpdateUserRequest>
    </soapenv:Body>

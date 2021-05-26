@@ -23,10 +23,6 @@ public class BaseConstants {
 	public static final String MAIL_DELIMITER_DOUBLEPOINT = " : ";
 	public static final String MAIL_DELIMITER_BR = "<BR>";
 	
-	public static final String ROLE_BEHEERDER = "BEHEERDER";
-	public static final String ROLE_UITGEBREIDE_GEBRUIKER = "UITGEBREIDE_GEBRUIKER";
-	public static final String ROLE_NORMALE_GEBRUIKER = "NORMALE_GEBRUIKER";
-	
 	public static final String JOB_NIVEAU_USER = "USER";
 	
 	public static final String JOB_ID = "jobId";

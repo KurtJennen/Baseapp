@@ -15,11 +15,13 @@ import org.hibernate.annotations.Proxy;
 @Table(name="batch_job_instance")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME)
+	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME),
+	@NamedQuery(name=BatchJobInstance.DELETE_BATCH_JOB_INSTANCES_BY_ID, query=BatchJobInstance.Queries.DELETE_BATCH_JOB_INSTANCES_BY_ID)
 })
 @Proxy(lazy=false)
 public class BatchJobInstance {
 	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "selectBatchJobInstancesByJobName";
+	public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "deleteBatchJobInstancesById";
 	
 	@Id
 	@Column(name="Job_Instance_Id")
@@ -77,5 +79,9 @@ public class BatchJobInstance {
 				+ "inner join bje.batchJobInstance bji "
 				+ "where bji.jobName = :jobName "
 				+ "order by bje.createTime desc";
+		
+		public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "delete "
+				+ "from BatchJobInstance bji "
+				+ "where bji.id = :id ";
 	}
 }

@@ -13,7 +13,7 @@
 	<lo:button image="application_form.png" method="roleDialog.dialog('open')" key="button.create" submit="false"></lo:button>
 	<hr />
 	<lo:pqGrid nameSelectedIds="selectedIds" url="/listRole.do?method=ajaxList" titleKey="displayRole.title" id="rollen" rPP="15">
-		<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name"></lo:pqGridColumn>
+		<lo:pqGridColumn width="250" dataIndx="name" dataType="string" titleKey="security.name"></lo:pqGridColumn>
 	</lo:pqGrid>
 </html:form>
 
@@ -23,7 +23,9 @@
 		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>
-				<td><html:text property="dialogName" size="45" maxlength="45" tabindex="1"></html:text></td>
+				<td>
+					<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="1" property="dialogName" value="${listRoleForm.dialogName}" method="getAllCodes" />
+				</td>
 			</tr>
 		</table>
 		<c:if test="${error==1}">

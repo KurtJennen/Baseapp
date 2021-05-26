@@ -11,6 +11,8 @@ public class BaseWebConstants {
 	public static final String CREATE = "create";
 	public static final String CREATE_DOCUMENT = "createDocument";
 	public static final String DELETE = "delete";
+	public static final String DELETE_EXPORT_JOB = "deleteExportJob";
+	public static final String DELETE_IMPORT_JOB = "deleteImportJob";
 	public static final String DISABLED = "disabled";
 	public static final String DOWNLOAD_FILE_LOG = "downloadFileLog";
 	public static final String FAILED = "failed";
@@ -74,6 +76,8 @@ public class BaseWebConstants {
 	public static final String NUMBER_LIST = "numberList";
 	public static final String ROLE_LIST = "roleList";
 	public static final String USER_LIST = "userList";
+	public static final String USER_ROLE_LINKED_LIST = "userRoleLinkedList";
+	public static final String USER_ROLE_UNLINKED_LIST = "userRoleUnLinkedList";
 	public static final String USER_EXPORT_LIST = "userExportList";
 	public static final String USER_IMPORT_LIST = "userImportList";
 	

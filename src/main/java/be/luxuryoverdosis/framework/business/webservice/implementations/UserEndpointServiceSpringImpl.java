@@ -12,7 +12,8 @@ import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserEndpointService;
-import be.luxuryoverdosis.framework.data.to.Role;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
+import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
@@ -25,6 +26,8 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersRequest;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserRequest;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
+import be.luxuryoverdosis.generated.user.schema.v1.Role;
+import be.luxuryoverdosis.generated.user.schema.v1.Roles;
 
 @Service
 public class UserEndpointServiceSpringImpl implements UserEndpointService {
@@ -32,6 +35,8 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 	private UserService userService;
 	@Resource
 	private RoleService roleService;
+	@Resource
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional(readOnly=true)
 	public ReadUserResponse readUserRequest(ReadUserRequest request) {
@@ -119,11 +124,13 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		user.setName(userWs.getName());
 		user.setUserName(userWs.getUserName());
 		
-		Role role = roleService.readName(userWs.getRole());
-		user.setRole(role);
+		String[] unlinkedRoleNames = new String[userWs.getRoles().getRole().size()];
+		for (int i = 0; i < userWs.getRoles().getRole().size(); i++) {
+			unlinkedRoleNames[i] = userWs.getRoles().getRole().get(i).getName();
+		}
 		
 		try {
-			userService.createOrUpdate(user);
+			userService.createOrUpdate(user, unlinkedRoleNames);
 			if (isNew) {
 				message.setMessage(BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")}));
 			} else {
@@ -174,8 +181,24 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		userWs.setEmail(user.getEmail());
 		userWs.setEncryptedPassword(user.getEncryptedPassword());
 		userWs.setName(user.getName());
-		userWs.setRole(user.getRole().getName());
 		userWs.setUserName(user.getUserName());
+		
+		fillUserRoles(user, userWs);
+		
 		return userWs;
 	}
+
+	private void fillUserRoles(User user, be.luxuryoverdosis.generated.user.schema.v1.User userWs) {
+		Roles roles = new Roles();
+		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(user.getId());
+		for (UserRoleDTO userRoleDTO : userRolesList) {
+			Role role = new Role();
+			role.setName(userRoleDTO.getRoleName());
+			
+			roles.getRole().add(role);
+		}
+		
+		userWs.setRoles(roles);
+	}
+	
 }

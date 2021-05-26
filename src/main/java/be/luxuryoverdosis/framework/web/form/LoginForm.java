@@ -11,11 +11,16 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 public class LoginForm extends BaseForm {
 	private static final long serialVersionUID = 1L;
 	
+	private boolean activation;
 	private String name;
 	private String password;
-	private boolean deactivation;
-	private String deactivationMessage;
 		
+	public boolean isActivation() {
+		return activation;
+	}
+	public void setActivation(boolean activation) {
+		this.activation = activation;
+	}
 	public String getName() {
 		return name;
 	}
@@ -28,25 +33,11 @@ public class LoginForm extends BaseForm {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public boolean isDeactivation() {
-		return deactivation;
-	}
-	public void setDeactivation(boolean deactivation) {
-		this.deactivation = deactivation;
-	}	
-	public String getDeactivationMessage() {
-		return deactivationMessage;
-	}
-	public void setDeactivationMessage(String deactivationMessage) {
-		this.deactivationMessage = deactivationMessage;
-	}
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setName("");
 		this.setPassword("");
-		this.setDeactivation(false);
-		this.setDeactivationMessage("");
 	}
 	
 	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {

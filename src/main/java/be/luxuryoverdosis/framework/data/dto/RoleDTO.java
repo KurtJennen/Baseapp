@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.data.dto;
 
+
 public class RoleDTO extends BaseDTO {
 	private String name;
 	

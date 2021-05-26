@@ -99,16 +99,4 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		return count;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public long count(final int roleId) {
-		Logging.info(this, "Begin countUser(int)");
-
-		Query<Long> query = getCurrentSession().getNamedQuery(User.COUNT_USERS_BY_ROLE);
-		query.setParameter(BaseQueryParameters.ROLE_ID, roleId);
-		ArrayList<Long> arrayList = (ArrayList<Long>) query.list();
-		long count = arrayList.iterator().next().longValue();
-		
-		Logging.info(this, "End countUser(int)");
-		return count;
-	}
 }

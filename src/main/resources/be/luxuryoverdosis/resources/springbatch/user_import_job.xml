@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
                     http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
                     
-    <bean id="user" class="be.luxuryoverdosis.framework.data.dto.UserDTO" scope="prototype" />
+    <bean id="user" class="be.luxuryoverdosis.framework.data.dto.UserImportDTO" scope="prototype" />
                     
 	<bean id="userImportReader" class="be.luxuryoverdosis.framework.business.job.FlatFileItemDatabaseReader" scope="step">
 		<property name="jobId" value="#{jobParameters[jobId]}" />
@@ -13,7 +13,7 @@
 			<bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
 				<property name="lineTokenizer">
 					<bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
-						<property name="names" value="name,userName,password,email,dateExpirationAsString" />
+						<property name="names" value="name,userName,encryptedPassword,email,dateExpirationAsString" />
 						<property name="delimiter" value="|" />
 					</bean>
 				</property>
@@ -26,6 +26,11 @@
 		</property>
 	</bean>
 	
+	<bean id="userImportProcessor" class="be.luxuryoverdosis.framework.business.service.batch.user.UserImportProcessor" scope="step">
+		<property name="jobId" value="#{jobParameters[jobId]}" />
+		<property name="jobUser" value="#{jobParameters[jobUser]}" />
+	</bean>
+	
 	<bean id="userImportWriter" class="be.luxuryoverdosis.framework.business.service.batch.user.UserImportWriter" scope="step">
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="jobId" value="#{jobParameters[jobId]}" />
@@ -34,7 +39,7 @@
  	
 	<batch:step id="userImportStep">
 		<batch:tasklet>
-			<batch:chunk reader="userImportReader" writer="userImportWriter" commit-interval="1" />
+			<batch:chunk reader="userImportReader" processor="userImportProcessor" writer="userImportWriter" commit-interval="1" />
 		</batch:tasklet>
 	</batch:step>
 	

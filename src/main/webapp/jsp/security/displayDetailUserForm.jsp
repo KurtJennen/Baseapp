@@ -13,14 +13,17 @@
 	<lo:button image="table_save.png" method="update" key="button.update"></lo:button>
 	<logic:notEqual name="detailUserForm" property="id" value="-1">
 		<lo:button image="table_delete.png" method="delete" key="button.delete"></lo:button>
-		<lo:button image="flag_green.png" method="activateYear" key="button.activate.year"></lo:button>
-		<lo:button image="flag_orange.png" method="activateHalfYear" key="button.activate.half.year"></lo:button>
-		<lo:button image="flag_red.png" method="deactivate" key="button.deactivate"></lo:button>
+		<c:if test="${detailUserForm.activation==true}">
+			<lo:button image="flag_green.png" method="activateYear" key="button.activate.year"></lo:button>
+			<lo:button image="flag_orange.png" method="activateHalfYear" key="button.activate.half.year"></lo:button>
+			<lo:button image="flag_red.png" method="deactivate" key="button.deactivate"></lo:button>
+		</c:if>
 	</logic:notEqual>
 	<lo:navigation nameIds="userIds" firstVisible="${detailUserForm.firstVisible}" previousVisible="${detailUserForm.previousVisible}" nextVisible="${detailUserForm.nextVisible}" lastVisible="${detailUserForm.lastVisible}"/>
 	<hr />
 	<html:hidden property="id" />
 	<html:hidden property="date" />
+	<html:hidden property="activation" />
 	<table>
 		<tr>
 			<td><fmt:message key="security.name.unique" />*:</td>
@@ -46,14 +49,32 @@
 			<td><fmt:message key="security.date.expiration" />*:</td>
 			<td><c:out value="${detailUserForm.date}"/></td>
 		</tr>
-		<tr>
-			<td><fmt:message key="security.role" />*:</td>
-			<td>
+<!-- 		<tr> -->
+<%-- 			<td><fmt:message key="security.role" />*:</td> --%>
+<!-- 			<td> -->
 <%-- 				<html:select property="roleId" tabindex="6"> --%>
 <%-- 					<html:option value="-1"><fmt:message key="select" /></html:option> --%>
 <%-- 					<html:optionsCollection name="roleList" label="name" value="id" /> --%>
 <%-- 				</html:select> --%>
-				<lo:ajaxSelect property="roleId" methodAll="detailUser.do?method=ajaxSearchAllRole" methodOne="detailUser.do?method=ajaxSearchOneRole" fieldsAll="id,name" fieldsOne="id,name"  key="button.search" maxLength="45" size="45"></lo:ajaxSelect>
+<%-- 				<lo:ajaxSelect property="roleId" methodAll="detailUser.do?method=ajaxSearchAllRole" methodOne="detailUser.do?method=ajaxSearchOneRole" fieldsAll="id,nameAsKey" fieldsOne="id,nameAsKey"  key="button.search" maxLength="45" size="45"></lo:ajaxSelect> --%>
+<!-- 			</td> -->
+<!-- 		</tr> -->
+	</table>
+	<table>
+		<tr>
+			<td><fmt:message key="user.role.gekoppeld" />:</td>
+			<td><fmt:message key="user.role.ontkoppeld" />:</td>
+		</tr>
+		<tr>
+			<td>
+				<html:select property="linkedRoleIds" tabindex="7" multiple="true" size="10" style="width: 600px">
+					<html:optionsCollection name="userRoleLinkedList" label="roleName" value="roleId" />
+				</html:select>
+			</td>
+			<td>
+				<html:select property="unlinkedRoleIds" tabindex="8" multiple="true" size="10" style="width: 600px">
+					<html:optionsCollection name="userRoleUnLinkedList" label="name" value="id" />
+				</html:select>
 			</td>
 		</tr>
 	</table>

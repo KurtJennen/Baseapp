@@ -6,16 +6,20 @@
 	
 	<Menus>
 		<!-- Beheerder-->
-		<Menu name="menuBeheerder" title="menu.title">
+		<Menu name="menu1Beheerder" title="menu1.title">
 			<Item name="menuitem1" title="logout" action="login.do?method=logout" />
 		</Menu>
-		<Menu name="menu1Beheerder" title="menu1.title">
+		<Menu name="menu2Beheerder" title="menu2.title">
 			<Item name="menu1item1" title="displayRole.title" action="listRole.do?method=list" />
 			<Item name="menu1item2" title="displayUser.title" action="searchUser.do?method=search" />
 			<Item name="menu1item3" title="displayMenu.title" action="detailMenu.do?method=list" />
 			<Item name="menu1item4" title="displayNumber.title" action="listNumber.do?method=list" />
 			<Item name="menu1item5" title="displayDocument.title" action="listDocument.do?method=list" />
 			<Item name="menu1item6" title="displayPdf.title" action="listPdf.do?method=list" />
+		</Menu>
+		<Menu name="menu3Beheerder" title="menu2.title">
+			<Item name="menu1item1" title="displayRole.title" action="listRole.do?method=list" />
+			<Item name="menu1item2" title="displayUser.title" action="searchUser.do?method=search" />
 		</Menu>
 	</Menus>
 </MenuConfig>

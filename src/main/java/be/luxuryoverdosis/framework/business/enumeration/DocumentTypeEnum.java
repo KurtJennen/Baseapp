@@ -1,4 +1,4 @@
-package be.luxuryoverdosis.baseapp.business.enumeration;
+package be.luxuryoverdosis.framework.business.enumeration;
 
 import java.util.ArrayList;
 import java.util.List;

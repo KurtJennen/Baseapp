@@ -1,9 +1,11 @@
 package be.luxuryoverdosis.framework.data.factory;
 
+import java.util.Date;
+
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.to.Role;
+import be.luxuryoverdosis.framework.data.dto.UserImportDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
@@ -18,12 +20,29 @@ public class UserFactory {
 		userDTO.setUserName(user.getUserName());
 		userDTO.setPassword(Encryption.decode(user.getEncryptedPassword()));
 		userDTO.setEmail(user.getEmail());
+		userDTO.setDateExpiration(user.getDateExpiration());
 		userDTO.setDateExpirationAsString(DateTool.formatUtilDate(user.getDateExpiration()));
-		if(user.getRole() != null) {
-			Role role = user.getRole();
-			userDTO.setRoleId(role.getId());
-			userDTO.setRoleName(role.getName());
+		
+		return userDTO;
+	}
+	
+	public static UserDTO produceUserDTO(UserDTO userDTO, final UserImportDTO userImportDTO) {
+		if(userDTO == null) {
+			userDTO = new UserDTO();
+			userDTO.setRegister(true);
 		}
+		userDTO.setName(userImportDTO.getName());
+		userDTO.setUserName(userImportDTO.getUserName());
+		userDTO.setPassword(Encryption.decode(userImportDTO.getEncryptedPassword()));
+		userDTO.setEmail(userImportDTO.getEmail());
+		try {
+			Date dateExpiration = DateTool.parseSqlTimestamp(userImportDTO.getDateExpirationAsString());
+			userDTO.setDateExpirationAsString(DateTool.formatUtilDate(dateExpiration));
+		} catch (Exception e) {
+			throw new ServiceException("errors.date", new String[] {"date"});
+		}
+		
+		
 		
 		return userDTO;
 	}
@@ -35,7 +54,6 @@ public class UserFactory {
 		user.setId(userDTO.getId());
 		user.setName(userDTO.getName());
 		user.setUserName(userDTO.getUserName());
-		//user.setEncryptedPassword(userDTO.getPassword());
 		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		user.setEmail(userDTO.getEmail());
 		try {
@@ -46,4 +64,5 @@ public class UserFactory {
 		
 		return user;
 	}
+	
 }

@@ -21,7 +21,7 @@ public class UserWebServiceMessageSenderAuthorization extends HttpUrlConnectionM
 	protected void prepareConnection(HttpURLConnection connection) throws IOException {
 		String authorization = RequestTool.initializeRequestForWebservice(user, password);
 		
-		connection.setRequestProperty(BaseConstants.AUTHORIZATION, authorization );
+		connection.setRequestProperty(BaseConstants.AUTHORIZATION, authorization);
 		
 		super.prepareConnection(connection);
 	}

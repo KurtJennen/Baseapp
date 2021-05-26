@@ -1,24 +1,27 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import javax.annotation.Resource;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
-import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.service.interfaces.MenuService;
@@ -27,11 +30,15 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.BatchJobInstanceHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserHibernateDAO;
+import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.document.UserDocument;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.to.Document;
+import be.luxuryoverdosis.framework.data.to.Role;
 import be.luxuryoverdosis.framework.data.to.User;
+import be.luxuryoverdosis.framework.data.to.UserRole;
 import be.luxuryoverdosis.framework.data.wrapperdto.ListUserWrapperDTO;
 import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
@@ -40,10 +47,22 @@ import net.sf.navigator.menu.MenuRepository;
 
 @Service
 public class UserServiceSpringImpl implements UserService {
+	@Value("${security.activation}")
+	private boolean activation;
+	@Value("${security.default.role}")
+	private String defaultRoleName;
+	@Value("${security.activate.role}")
+	private String activateRoleName;
+	@Value("${security.deactivate.role}")
+	private String deactivateRoleName;
+	@Value("${security.role.enum.class}")
+	private String roleEnumClass;
 	@Resource
 	private UserHibernateDAO userHibernateDAO;
 	@Resource
 	private RoleHibernateDAO roleHibernateDAO;
+	@Resource
+	private UserRoleHibernateDAO userRoleHibernateDAO;
 	@Resource
 	private BatchJobInstanceHibernateDAO batchJobInstanceHibernateDAO;
 	@Resource
@@ -52,8 +71,12 @@ public class UserServiceSpringImpl implements UserService {
 	private DocumentService documentService;
 	@Resource
 	private SearchService searchService;
-	@Resource(name=BaseSpringServiceConstants.SENDER_SERVICE)
+	@Resource
 	private JavaMailSender javaMailSender;
+	
+	public boolean isActiviation() {
+		return activation;
+	}
 	
 	@Transactional
 	public UserDTO createOrUpdateDTO(final UserDTO userDTO) {
@@ -64,11 +87,11 @@ public class UserServiceSpringImpl implements UserService {
 			user = this.read(userDTO.getId());
 		}
 		user = UserFactory.produceUser(user, userDTO);
-		if(userDTO.getRoleId() > 0) {
-			user.setRole(roleHibernateDAO.read(userDTO.getRoleId()));
+		if(userDTO.isRegister()) {
+			user = this.createOrUpdate(user, new String[]{defaultRoleName});
+		} else {
+			user = this.createOrUpdate(user, userDTO.getLinkedRoleIds(), userDTO.getUnlinkedRoleIds());
 		}
-		
-		user = this.createOrUpdate(user);
 		
 		Logging.info(this, "End createUserDTO");
 		return this.readDTO(user.getId());
@@ -81,14 +104,102 @@ public class UserServiceSpringImpl implements UserService {
 		User user = this.read(id);
 		
 		UserDTO userDTO = UserFactory.produceUserDTO(user);
+		userDTO.setActivation(activation);
+		userDTO.setRoles(getMaxRangRoles(userDTO));
+		
+		Logging.info(this, "End readUserDTO");
+		return userDTO;
+	}
+	
+	@Transactional(readOnly=true)
+	public UserDTO readNameDTO(final String name) {
+		Logging.info(this, "Begin readUserDTO");
+		
+		User user = userHibernateDAO.readName(name);
+		UserDTO userDTO = null;
+		
+		if(user != null) {
+			userDTO = UserFactory.produceUserDTO(user);
+			userDTO.setActivation(activation);
+			userDTO.setRoles(getMaxRangRoles(userDTO));
+		}
 		
 		Logging.info(this, "End readUserDTO");
 		return userDTO;
 	}
 	
 	@Transactional
-	public User createOrUpdate(final User user) {
+	public User createOrUpdate(final User user, final int[] linkedRoleIds, final int[] unlinkedRoleIds) {
 		Logging.info(this, "Begin createUser");
+		
+		validate(user);
+		
+		User result = userHibernateDAO.createOrUpdate(user);
+		if(result != null) {
+			sendUserMail(result);
+		}
+		
+		if(linkedRoleIds != null) {
+			for (int i = 0; i < linkedRoleIds.length; i++) {
+				if(linkedRoleIds[i] > 0) {
+					userRoleHibernateDAO.delete(user.getId(), linkedRoleIds[i]);
+				}
+			}
+		}
+		
+		if(unlinkedRoleIds != null) {
+			for (int i = 0; i < unlinkedRoleIds.length; i++) {
+				if(unlinkedRoleIds[i] > 0) {
+					UserRole userRole = new UserRole();
+					userRole.setUser(user);
+					userRole.setRole(roleHibernateDAO.read(unlinkedRoleIds[i]));
+					userRoleHibernateDAO.createOrUpdate(userRole);
+				}
+			}
+		}
+		
+		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
+			throw new ServiceException("errors.selected.one.more.role");
+		}
+		
+		Logging.info(this, "End createUser");
+		return result;
+	}
+	
+	@Transactional
+	public User createOrUpdate(final User user, final String[] unlinkedRoleNames) {
+		Logging.info(this, "Begin createUser");
+		
+		validate(user);
+		
+		User result = userHibernateDAO.createOrUpdate(user);
+		if(result != null) {
+			sendUserMail(result);
+		}
+		
+		userRoleHibernateDAO.delete(user.getId());
+		
+		if(unlinkedRoleNames != null) {
+			for (int i = 0; i < unlinkedRoleNames.length; i++) {
+				Role role = roleHibernateDAO.readName(unlinkedRoleNames[i]);
+				if(role != null) {
+					UserRole userRole = new UserRole();
+					userRole.setUser(user);
+					userRole.setRole(role);
+					userRoleHibernateDAO.createOrUpdate(userRole);
+				}
+			}
+		}
+		
+		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
+			throw new ServiceException("errors.selected.one.more.role");
+		}
+		
+		Logging.info(this, "End createUser");
+		return result;
+	}
+	
+	public void validate(final User user) {
 		if(userHibernateDAO.count(user.getName(), user.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.user"});
 		}
@@ -105,24 +216,9 @@ public class UserServiceSpringImpl implements UserService {
 			throw new ServiceException("errors.required", new String[] {"security.email"});
 		}
 		
-		//user.setEncryptedPassword(Encryption.encode(user.getEncryptedPassword()));
-		
 		if(user.getDateExpiration() == null) {
 			user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
 		}
-		
-		if(user.getRole() == null) {
-			user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
-		}
-		
-		User result = null;
-		result = userHibernateDAO.createOrUpdate(user);
-		if(result != null) {
-			sendUserMail(result);
-		}
-		
-		Logging.info(this, "End createUser");
-		return result;
 	}
 	
 	@Transactional(readOnly=true)
@@ -147,6 +243,7 @@ public class UserServiceSpringImpl implements UserService {
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteUser");
 		menuService.deleteForUser(id);
+		userRoleHibernateDAO.delete(id);
 		userHibernateDAO.delete(id);
 		Logging.info(this, "End deleteUser");
 	}
@@ -181,22 +278,69 @@ public class UserServiceSpringImpl implements UserService {
 	@Transactional
 	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository) {
 		Logging.info(this, "Begin getLoginWrapperDTO");
+		
 		LoginWrapperDTO loginWrapperDTO = new LoginWrapperDTO();
-		User user = userHibernateDAO.readName(name);
-		loginWrapperDTO.setUser(user);
+		loginWrapperDTO.setActivation(activation);
 		
-		int days = daysBeforeDeactivate(user);
-		loginWrapperDTO.setDays(days);
-		if(user != null && days == 0) {
-			deactivate(user.getId());
-		}
-		
-		if(user != null) {
-			loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, user.getId()));
+		UserDTO userDTO = this.readNameDTO(name);
+		if(userDTO != null) {
+//			ArrayList<String> roleNames = getMaxRangRoles(userDTO);
+//			userDTO.setRoles(roleNames);
+			loginWrapperDTO.setUserDTO(userDTO);
+			
+			int days = daysBeforeDeactivate(userDTO);
+			loginWrapperDTO.setDays(days);
+			if(userDTO != null && days == 0) {
+				deactivate(userDTO.getId());
+			}
+			
+			loginWrapperDTO.setMenuRepository(menuService.produceAlterredMenu(menuRepository, userDTO.getId()));
 		}
 		
 		Logging.info(this, "End getLoginWrapperDTO");
 		return loginWrapperDTO;
+	}
+
+	private ArrayList<String> getMaxRangRoles(UserDTO userDTO) {
+		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
+		HashMap<Integer, String> maxRangRoles = new HashMap<Integer, String>();
+		
+		try {
+			Class<?> enumClass = Class.forName(roleEnumClass);
+			Method typeMethod = ReflectionUtils.findMethod(enumClass, "getType");
+			Method codeMethod = ReflectionUtils.findMethod(enumClass, "getCode");
+			Method rangMethod = ReflectionUtils.findMethod(enumClass, "getRang");
+			
+			for (UserRoleDTO userRoleDTO : userRolesList) {
+				
+				Object[] objects = enumClass.getEnumConstants();
+				for (Object object : objects) {
+					String code = (String) ReflectionUtils.invokeMethod(codeMethod, object);
+					if(userRoleDTO.getRoleName().equals(code)) {
+						int type = (int) ReflectionUtils.invokeMethod(typeMethod, object);
+						int rang = (int) ReflectionUtils.invokeMethod(rangMethod, object);
+						
+						if(maxRangRoles.containsKey(type)) {
+							String[] rangAndCode = maxRangRoles.get(type).split(BaseConstants.DOUBLEPOINT);
+							if (rang < Integer.valueOf(rangAndCode[0])) {
+								maxRangRoles.put(type, rang + BaseConstants.DOUBLEPOINT + code);
+							}
+						} else {
+							maxRangRoles.put(type, rang + BaseConstants.DOUBLEPOINT + code);
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new ServiceException(e.getMessage());
+		}
+			
+		
+		ArrayList<String> roleNames = new ArrayList<String>();
+		for (String value : maxRangRoles.values()) {
+			roleNames.add(value.split(BaseConstants.DOUBLEPOINT)[1]);
+		}
+		return roleNames;
 	}
 	
 	@Transactional(readOnly=true)
@@ -229,7 +373,11 @@ public class UserServiceSpringImpl implements UserService {
 			text.append(addMailKeyText("mail.user.text1.create", user.getUserName()));
 			text.append(addMailKeyText("mail.user.text2.create", Encryption.decode(user.getEncryptedPassword())));
 			text.append(addMailKeyText("mail.user.text3.create", user.getEmail()));
-			text.append(addMailKeyText("mail.user.text4.create", user.getRole().getName()));
+			
+			ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(user.getId());
+			for (UserRoleDTO userRoleDTO : userRolesList) {
+				text.append(addMailKeyText("mail.user.text4.create", userRoleDTO.getRoleName()));
+			}
 			
 			helper.setTo(user.getEmail());
 			helper.setFrom(BaseConstants.MAIL_FROM);
@@ -275,11 +423,10 @@ public class UserServiceSpringImpl implements UserService {
 			}
 			user.setDateExpiration(expCalendar.getTime());
 		}
-		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_UITGEBREIDE_GEBRUIKER));
 		
 		Logging.info(this, "Begin activate");
 		
-		return userHibernateDAO.createOrUpdate(user);
+		return this.createOrUpdate(user, new String[]{activateRoleName});
 	}
 	
 	@Transactional
@@ -288,20 +435,19 @@ public class UserServiceSpringImpl implements UserService {
 		User user = userHibernateDAO.read(id);
 		
 		user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
-		user.setRole(roleHibernateDAO.readName(BaseConstants.ROLE_NORMALE_GEBRUIKER));
 		
 		Logging.info(this, "Begin deactivate");
 		
-		return userHibernateDAO.createOrUpdate(user);
+		return this.createOrUpdate(user, new String[]{deactivateRoleName});
 	}
 	
 	@Transactional
-	public int daysBeforeDeactivate(final User user) {
+	public int daysBeforeDeactivate(final UserDTO userDTO) {
 		Logging.info(this, "Begin daysBeforeDeactivate");
 		
 		int days = -1;
 		
-		if(user == null) {
+		if(userDTO == null) {
 			return 0;
 		}
 		
@@ -309,7 +455,7 @@ public class UserServiceSpringImpl implements UserService {
 		defaultCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_WARNING);
 		
 		Calendar expCalendar = Calendar.getInstance();
-		expCalendar.setTime(user.getDateExpiration());
+		expCalendar.setTime(userDTO.getDateExpiration());
 		
 		if(defaultCalendar.after(expCalendar)) {
 			int daysExp = expCalendar.get(Calendar.DAY_OF_YEAR);

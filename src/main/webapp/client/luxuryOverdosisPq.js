@@ -27,7 +27,10 @@ function checkPq(ui, sId, sSelectedIdsName) {
 	if (ui.source == "header") {
 		var data = $("#" + sId).pqGrid("option", "dataModel.data");
 		for (var i = 0, len = data.length; i < len; i++) {
-			createHiddenInputTag(data[i].id, sSelectedIdsName);
+			var unSelectedRow = "input:hidden[name=" + sSelectedIdsName + "][value=" + data[i].id + "]";
+			if($(unSelectedRow).length == 0) {
+				createHiddenInputTag(data[i].id, sSelectedIdsName);
+			}
 		}
 	}
     if (ui.dataIndx == 'selectedRow' && ui.rowData != null ) {
