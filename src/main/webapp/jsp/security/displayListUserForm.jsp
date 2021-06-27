@@ -5,19 +5,19 @@
 $(document).ready(function() {
 	$('#tabs').tabs({
 // 		heightStyle: "fill"
-	active: ${listUserForm.selectedTab},
-	activate: function(event, ui) {
+		active: ${listUserForm.selectedTab},
+		activate: function(event, ui) {
+	        var index = ui.newTab.index();
+	        $("#selectedTab").prop("value", index);
+	        
 			if(ui.newPanel.selector=="#tab1") {
 				$("#usersGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 0);
 			}
 			if(ui.newPanel.selector=="#tab2") {
 				$("#usersExportJobGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 1);
 			}
 			if(ui.newPanel.selector=="#tab3") {
 				$("#usersImportJobGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 2);
 			}
 		}
 	});

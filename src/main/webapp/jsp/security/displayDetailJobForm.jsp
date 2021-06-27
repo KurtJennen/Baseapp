@@ -6,23 +6,22 @@
 $(document).ready(function() {
 	$('#tabs').tabs({
 // 		heightStyle: "fill"
-	active: ${jobForm.selectedTab},
-	activate: function(event, ui) {
+		active: ${jobForm.selectedTab},
+		activate: function(event, ui) {
+            var index = ui.newTab.index();
+            $("#selectedTab").prop("value", index);
+            
 			if(ui.newPanel.selector=="#tab1") {
 				$("#batchJobParamsGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 0);
 			}
 			if(ui.newPanel.selector=="#tab2") {
 				$("#batchJobExecutionParamsGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 1);
 			}
 			if(ui.newPanel.selector=="#tab3") {
 				$("#batchJobStepExecutionGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 2);
 			}
 			if(ui.newPanel.selector=="#tab4") {
 				$("#jobLogGrid").pqGrid("refresh");
-				$("#selectedTab").prop("value", 3);
 			}
 		}
 	});

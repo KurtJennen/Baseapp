@@ -6,8 +6,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"Content varchar(4000) NOT NULL DEFAULT '', " +
 		"App varchar(45) NOT NULL DEFAULT '', " +
@@ -18,23 +18,23 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"PRIMARY KEY (Id))";
 	
 	public final static String SQL_090710b = "INSERT INTO base_role (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, Name) values " +
-		 "(1, 1, 'root', 'root', '2010-10-19', '2010-10-19', 'BEHEERDER'), " +
-		 "(2, 1, 'root', 'root', '2010-10-19', '2010-10-19', 'UITGEBREIDE_GEBRUIKER'), " +
-		 "(3, 1, 'root', 'root', '2010-10-19', '2010-10-19', 'NORMALE_GEBRUIKER')";
+		 "(1, 1, 'root', 'root', now(), now(), 'BEHEERDER'), " +
+		 "(2, 1, 'root', 'root', now(), now(), 'UITGEBREIDE_GEBRUIKER'), " +
+		 "(3, 1, 'root', 'root', now(), now(), 'NORMALE_GEBRUIKER')";
 	
 	public final static String SQL_090711a = "CREATE TABLE base_user ( " +
 		"Id int(10) unsigned NOT NULL AUTO_INCREMENT, " +
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"UserName varchar(45) NOT NULL DEFAULT '', " +
 		"Password varchar(45) NOT NULL DEFAULT '', " +
@@ -45,15 +45,15 @@ public class SqlStartup {
 		"CONSTRAINT FK_USER_ROLE_ID FOREIGN KEY (Role_Id) REFERENCES base_role (Id))";
 	
 	public final static String SQL_090711b = "INSERT INTO base_user (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, Name, UserName, Password, Email, Role_Id) VALUES " + 
-		"(1, 1, 'root', 'root', '2010-10-19', '2010-10-19', 'root', 'Root', 'cm9vdA==', 'kurt.jennen@skynet.be', 1)";
+		"(1, 1, 'root', 'root', now(), now(), 'root', 'Root', 'cm9vdA==', 'kurt.jennen@skynet.be', 1)";
 	
 	public final static String SQL_090904a = "CREATE TABLE base_job (" +
 		"Id int(10) unsigned NOT NULL AUTO_INCREMENT, " +
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"Filename varchar(256) DEFAULT '', " +
 		"File longblob, " +
@@ -70,8 +70,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Job_Id int(10) unsigned NOT NULL DEFAULT '0', "+
 		"Input varchar(256) NOT NULL DEFAULT '', " +
 		"Output varchar(256) NOT NULL DEFAULT '', " +
@@ -84,8 +84,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Job_Id int(10) unsigned NOT NULL DEFAULT '0', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"Value varchar(45) NOT NULL DEFAULT '', " +
@@ -98,8 +98,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Name varchar(45) NOT NULL DEFAULT '', " +
 		"Type varchar(45) NOT NULL DEFAULT '', " +
 		"User_Id int(10) unsigned DEFAULT NULL, " +
@@ -113,8 +113,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Parameter varchar(45) NOT NULL DEFAULT '', " +
 		"Operator varchar(45) NOT NULL DEFAULT '', " +
 		"Value varchar(45) NOT NULL DEFAULT '', " +
@@ -134,8 +134,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"FullName varchar(256) NOT NULL DEFAULT '', " +
 		"Name varchar(256) NOT NULL DEFAULT '', " +
 		"Title varchar(256) NOT NULL DEFAULT '', " +
@@ -152,8 +152,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"AppCode varchar(4) NOT NULL DEFAULT '', " +
 		"Year varchar(4) NOT NULL DEFAULT '', " +
 		"Number int(10) unsigned NOT NULL DEFAULT '0', " +
@@ -170,8 +170,8 @@ public class SqlStartup {
 		"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 		"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-		"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-		"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 		"Type varchar(45) NOT NULL DEFAULT '', " +
 		"Filename varchar(256) DEFAULT '', " +
 		"File longblob, " +
@@ -326,8 +326,8 @@ public class SqlStartup {
 			"Version int(10) unsigned NOT NULL DEFAULT '0', " +
 			"UserAdd varchar(45) NOT NULL DEFAULT '', " +
 			"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
-			"DateAdd date NOT NULL DEFAULT '0000-00-00', " +
-			"DateUpdate date NOT NULL DEFAULT '0000-00-00', " +
+			"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+			"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
 			"User_Id int(10) unsigned NOT NULL DEFAULT '0', " +
 			"Role_Id int(10) unsigned NOT NULL DEFAULT '0', " +
 			"PRIMARY KEY (Id), " +
@@ -337,7 +337,7 @@ public class SqlStartup {
 			"CONSTRAINT FK_USER_ROLE_ROLE_ID FOREIGN KEY (Role_Id) REFERENCES base_role (Id))";
 	
 	public final static String SQL_210504a = "INSERT INTO base_user_role (Id, Version, UserAdd, UserUpdate, DateAdd, DateUpdate, User_Id, Role_Id) VALUES " + 
-			"(1, 1, 'root', 'root', '2021-05-04', '2021-05-04', 1, 1)";
+			"(1, 1, 'root', 'root', now(), now(), 1, 1)";
 	
 	public final static String SQL_210525a = "UPDATE base_role SET name = 'Beheerder' where name = 'BEHEERDER'";
 	public final static String SQL_210525b = "UPDATE base_role SET name = 'UitgebreideGebruiker' where name = 'UITGEBREIDE_GEBRUIKER'";
