@@ -64,6 +64,14 @@ function doMenuAction(sAction, sMethod) {
 	doSubmit();
 }
 
+function doHyperlinkAction(sAction, sMethod, sId) {
+	var sActionOld = window.document.forms[0].action;
+	var iPosition = sActionOld.lastIndexOf("/");
+	var sActionNew = sActionOld.substr(0, iPosition + 1);
+	window.document.forms[0].action = sActionNew + sAction + '.do?method=' + sMethod + '&id=' + sId;
+	window.document.forms[0].submit();
+}
+
 function doSubmit() {
 	if(window.navigator.appVersion.indexOf("IE 7.0")!= -1) {
 		window.document.forms[0].submit();
@@ -101,5 +109,68 @@ function onInvokeExportAction(id) {
 		location.href = window.document.forms[0].action.substr(0, iPosition) + '?method=listJmesa&' + parameterString;
 	} else {
 		location.href = window.document.forms[0].action + '?method=listJmesa&' + parameterString;
+	}
+}
+
+function doDialogCopy(dialogId, dialogMethod) {
+	var input = $("#" + dialogId + " input");
+	for (var i = 0, len = input.length; i < len; i++) {
+		
+		switch (input[i].type) {
+			case "checkbox":
+				copyDialogCheckbox(input[i]);
+				break;
+			case "radio":
+				if(input[i].checked) {
+					copyDialogInput(input[i]);
+				}
+				break;
+			default:
+				copyDialogInput(input[i]);
+				break;
+		}
+		
+	}
+	
+	var select = $("#" + dialogId + " textarea");
+	for (var i = 0, len = select.length; i < len; i++) {
+		copyDialogInput(select[i]);
+	}
+	
+	var select = $("#" + dialogId + " select");
+	for (var i = 0, len = select.length; i < len; i++) {
+		copyDialogInput(select[i]);
+	}
+	
+	doActionDetail(dialogMethod);
+}
+
+function constructInputName(oInput) {
+	return oInput.name[0].toUpperCase() + oInput.name.substring(1);
+}
+
+function copyDialogCheckbox(oCheckboxInput) {
+	var checkboxValue = 'N';
+	
+	if(oCheckboxInput.checked) {
+		checkboxValue = 'J';
+	}
+	
+	var inputName = oCheckboxInput.name; //constructInputName(oCheckboxInput);
+	var inputExists = $("form:first input:hidden[name=" + inputName + "]");
+	if(inputExists.length == 0) {
+		createHiddenInputTag(checkboxValue, inputName);
+	} else {
+		inputExists.val(checkboxValue);
+	}
+}
+
+function copyDialogInput(oTextInput) {
+	var inputName = oTextInput.name; //constructInputName(oTextInput);
+	var inputExists = $("form:first input:hidden[name=" + inputName + "]");
+	if(inputExists.length == 0) {
+		createHiddenInputTag(oTextInput.value, inputName);
+	} else {
+		inputExists.val(oTextInput.value);
 	}
 }

@@ -19,12 +19,12 @@
 
 <lo:dialog id="role" titleKey="table.role" />
 <div id="roleDialog">
-	<html:form action="/listRole.do" styleId="roleDialogForm">
+	<html:form action="/listRole.do">
 		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>
 				<td>
-					<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="1" property="dialogName" value="${listRoleForm.dialogName}" method="getAllCodes" />
+					<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="1" property="dialogName" value="${listRoleForm.dialogName}" method="getAllCodes"/>
 				</td>
 			</tr>
 		</table>

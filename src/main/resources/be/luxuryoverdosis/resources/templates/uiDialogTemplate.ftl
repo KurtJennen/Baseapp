@@ -18,8 +18,7 @@
 	      });
 	    
 	    function ${templateData.id}Add() {
-		    var form = document.getElementById("${templateData.id}DialogForm");
-	    	javascript:doActionDetailForm('${templateData.method}', form.id);
+	    	javascript:doDialogCopy('${templateData.id}Dialog', '${templateData.method}');
 	    }
 	});
 </script>
