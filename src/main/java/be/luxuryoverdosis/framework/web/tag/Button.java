@@ -16,6 +16,7 @@ public class Button implements Tag {
 	private String method;
 	private String image;
 	private String key;
+	private boolean showKey = false;
 	private String roles;
 	
 	public void setMethod(String method) {
@@ -30,6 +31,10 @@ public class Button implements Tag {
 		this.key = key;
 	}
 	
+	public void setShowKey(boolean showKey) {
+		this.showKey = showKey;
+	}
+
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
@@ -83,6 +88,10 @@ public class Button implements Tag {
 					out.print("<button onclick=\"javascript:" + method + ";\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"button\">");
 				}
 				out.print("<img src=\"images/" + image + "\"/>");
+				if(showKey) {
+					out.print("&nbsp;");
+					out.print(MessageLocator.getMessage(request, key));
+				}
 				out.println("</button>");
 			} else {
 //				int pos = image.indexOf(".");
