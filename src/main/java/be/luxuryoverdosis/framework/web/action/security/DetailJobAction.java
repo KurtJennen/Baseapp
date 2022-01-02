@@ -12,7 +12,6 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 
-import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
@@ -65,12 +64,8 @@ public class DetailJobAction extends AjaxAction {
 	public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Back");
 		
-		ActionRedirect redirect = null;
-		
 		String jobNiveau = (String)SessionManager.getFromSession(request, BaseWebConstants.JOB_NIVEAU);
-		if(BaseConstants.JOB_NIVEAU_USER.equals(jobNiveau)) {
-			redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + jobNiveau.charAt(0) + jobNiveau.substring(1).toLowerCase()));
-		}
+		ActionRedirect redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + jobNiveau.charAt(0) + jobNiveau.substring(1).toLowerCase()));
 			
 		Logging.info(this, "End Back Success");
 		
