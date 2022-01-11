@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -120,5 +121,20 @@ public class DateTool {
 		calendar.set(year, month, day);
 		
 		return calendar.getTime();
+	}
+	
+	public boolean isDateInYear(Date date, String year) {
+		if(date == null) {
+			return true;
+		}
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		
+		if(year.equals(String.valueOf(calendar.get(Calendar.YEAR)))) {
+			return true;
+		}
+		
+		return false;
 	}
 }
