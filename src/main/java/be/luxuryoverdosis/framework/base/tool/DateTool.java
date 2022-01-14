@@ -123,7 +123,7 @@ public class DateTool {
 		return calendar.getTime();
 	}
 	
-	public boolean isDateInYear(Date date, String year) {
+	public static boolean isDateInYear(Date date, String year) {
 		if(date == null) {
 			return true;
 		}
