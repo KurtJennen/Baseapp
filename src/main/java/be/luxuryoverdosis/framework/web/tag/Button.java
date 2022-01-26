@@ -18,31 +18,30 @@ public class Button implements Tag {
 	private String key;
 	private boolean showKey = false;
 	private String roles;
+	private boolean dialog = false;
 	
 	public void setMethod(String method) {
 		this.method = method;
 	}
-
 	public void setImage(String image) {
 		this.image = image;
 	}
-
 	public void setKey(String key) {
 		this.key = key;
 	}
-	
 	public void setShowKey(boolean showKey) {
 		this.showKey = showKey;
 	}
-
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
-
 	public void setSubmit(boolean submit) {
 		this.submit = submit;
 	}
-
+	public void setDialog(boolean dialog) {
+		this.dialog = dialog;
+	}
+	
 	public void setParent(Tag t) {
 	}
 	
@@ -83,7 +82,11 @@ public class Button implements Tag {
 			
 			if(enabled) {
 				if(submit) {
-					out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+					if(dialog) {
+						out.print("<button onclick=\"javascript:doActionDetail('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+					} else {
+						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+					}
 				} else {
 					out.print("<button onclick=\"javascript:" + method + ";\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"button\">");
 				}
