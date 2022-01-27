@@ -12,6 +12,8 @@ public class UiDialogObject {
 	private String height = "500";
 	private boolean autoOpen = false;
 	private boolean modal = true;
+	private boolean defaultSaveButton = false;
+	private boolean defaultCancelButton = false;
 	
 	public String getId() {
 		return id;
@@ -66,5 +68,17 @@ public class UiDialogObject {
 	}
 	public void setModal(boolean modal) {
 		this.modal = modal;
+	}
+	public boolean isDefaultSaveButton() {
+		return defaultSaveButton;
+	}
+	public void setDefaultSaveButton(boolean defaultSaveButton) {
+		this.defaultSaveButton = defaultSaveButton;
+	}
+	public boolean isDefaultCancelButton() {
+		return defaultCancelButton;
+	}
+	public void setDefaultCancelButton(boolean defaultCancelButton) {
+		this.defaultCancelButton = defaultCancelButton;
 	}
 }

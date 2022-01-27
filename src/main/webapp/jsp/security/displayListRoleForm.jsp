@@ -10,16 +10,17 @@
 	</div>
 	<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 	<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
-	<lo:button image="application_form.png" method="roleDialog.dialog('open')" key="button.create" submit="false"></lo:button>
+	<lo:button image="application_form.png" method="createRole" key="button.create"></lo:button>
 	<hr />
 	<lo:pqGrid nameSelectedIds="selectedIds" url="/listRole.do?method=ajaxList" titleKey="displayRole.title" id="rollen" rPP="15">
 		<lo:pqGridColumn width="250" dataIndx="name" dataType="string" titleKey="security.name"></lo:pqGridColumn>
 	</lo:pqGrid>
 </html:form>
 
-<lo:dialog id="role" titleKey="table.role" />
+<lo:dialog id="role" titleKey="table.role"/>
 <div id="roleDialog">
 	<html:form action="/listRole.do">
+		<lo:button image="table_save.png" method="updateRole" key="button.update" dialogId="roleDialog" type="button"></lo:button>
 		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>

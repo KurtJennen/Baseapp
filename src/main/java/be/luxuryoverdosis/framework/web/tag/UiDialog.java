@@ -32,6 +32,8 @@ public class UiDialog extends BodyTagSupport {
 	private String height = "500";
 	private boolean autoOpen = false;
 	private boolean modal = true;
+	private boolean defaultSaveButton = false;
+	private boolean defaultCancelButton = false;
 	
 	private UiDialogObject uiDialogObject;
 
@@ -64,6 +66,12 @@ public class UiDialog extends BodyTagSupport {
 	}
 	public void setUiDialogObject(UiDialogObject uiDialogObject) {
 		this.uiDialogObject = uiDialogObject;
+	}
+	public void setDefaultSaveButton(boolean defaultSaveButton) {
+		this.defaultSaveButton = defaultSaveButton;
+	}
+	public void setDefaultCancelButton(boolean defaultCancelButton) {
+		this.defaultCancelButton = defaultCancelButton;
 	}
 	
 	public void setParent(Tag t) {
@@ -101,6 +109,8 @@ public class UiDialog extends BodyTagSupport {
 		uiDialogObject.setHeight(height);
 		uiDialogObject.setAutoOpen(autoOpen);
 		uiDialogObject.setModal(modal);
+		uiDialogObject.setDefaultSaveButton(defaultSaveButton);
+		uiDialogObject.setDefaultCancelButton(defaultCancelButton);
 		
 		Object dialog = request.getAttribute(id + StringUtils.capitalize(BaseWebConstants.DIALOG));
 		if(dialog != null && (boolean)dialog) {

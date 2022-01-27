@@ -7,10 +7,14 @@
 	        width: ${templateData.width},
 	        modal: ${templateData.modal?string("true", "false")},
 	        buttons: {
-	           "${templateData.saveLabel}": ${templateData.id}Add,
-	           "${templateData.cancelLabel}": function() {
-	          ${templateData.id}Dialog.dialog( "close" );
-	          }
+	        	<#if templateData.defaultSaveButton = true>
+	           		"${templateData.saveLabel}": ${templateData.id}Add,
+	        	</#if>
+	        	<#if templateData.defaultCancelButton = true>
+	        		"${templateData.cancelLabel}": function() {
+			          ${templateData.id}Dialog.dialog( "close" );
+			          }
+	        	</#if>
 	        },
 	        close: function() {
 	       ${templateData.id}Dialog.dialog( "close" );

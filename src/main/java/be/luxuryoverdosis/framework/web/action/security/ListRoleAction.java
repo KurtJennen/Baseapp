@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 
+import be.luxuryoverdosis.baseapp.web.WebConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
@@ -64,7 +65,20 @@ public class ListRoleAction extends AjaxAction {
         return null;
     }
     
-    public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin CreateRole");
+		
+		request.setAttribute(WebConstants.ROLE_DIALOG, true);
+		
+		ListRoleForm listRoleForm = (ListRoleForm) form;
+		listRoleForm.reset(mapping, request);
+		
+		Logging.info(this, "End CreateRole Success");
+		
+		return mapping.getInputForward();
+	}
+    
+    public ActionForward updateRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		request.setAttribute(BaseWebConstants.ROLE_DIALOG, true);

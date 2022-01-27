@@ -1,4 +1,4 @@
-function doActionPqGrid(sMethod, sId) {
+function doActionPqGrid(sMethod) {
     doPosition(sMethod);
     window.document.forms[0].submit();
 }
@@ -9,7 +9,7 @@ function cellDblClickPq(ui, sSelectedIdsName, sMethod) {
 
 	createHiddenInputTag(ui.rowData.id, sSelectedIdsName)
 
-	doActionPqGrid(sMethod, ui.rowData.id);
+	doActionPqGrid(sMethod);
 }
 
 function loadPq(oData, iId, sSelectedIdsName) {
