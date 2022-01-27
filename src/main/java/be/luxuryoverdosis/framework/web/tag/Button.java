@@ -6,19 +6,21 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.springframework.util.StringUtils;
+
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class Button implements Tag {
 	PageContext pageContext;
-	private boolean submit = true;
 	private String method;
 	private String image;
 	private String key;
 	private boolean showKey = false;
 	private String roles;
-	private boolean dialog = false;
+	private String type = "submit";
+	private String dialogId;
 	
 	public void setMethod(String method) {
 		this.method = method;
@@ -35,11 +37,11 @@ public class Button implements Tag {
 	public void setRoles(String roles) {
 		this.roles = roles;
 	}
-	public void setSubmit(boolean submit) {
-		this.submit = submit;
+	public void setType(String type) {
+		this.type = type;
 	}
-	public void setDialog(boolean dialog) {
-		this.dialog = dialog;
+	public void setDialogId(String dialogId) {
+		this.dialogId = dialogId;
 	}
 	
 	public void setParent(Tag t) {
@@ -81,14 +83,14 @@ public class Button implements Tag {
 			}
 			
 			if(enabled) {
-				if(submit) {
-					if(dialog) {
-						out.print("<button onclick=\"javascript:doActionDetail('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
-					} else {
-						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
-					}
+//				if(submit) {
+					if(StringUtils.isEmpty(dialogId)) {
+						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+//					} else {
+//						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+//					}
 				} else {
-					out.print("<button onclick=\"javascript:" + method + ";\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"button\">");
+					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
 				}
 				out.print("<img src=\"images/" + image + "\"/>");
 				if(showKey) {
