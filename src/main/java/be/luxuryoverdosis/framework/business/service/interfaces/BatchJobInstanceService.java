@@ -8,5 +8,5 @@ import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 public interface BatchJobInstanceService {
 	public BatchJobInstance read(long id);
 	
-	public ArrayList<BatchJobInstanceDTO> list(String jobName);
+	public ArrayList<BatchJobInstanceDTO> list(String... jobNames);
 }
