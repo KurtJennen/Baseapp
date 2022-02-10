@@ -9,5 +9,5 @@ public interface BatchJobInstanceHibernateDAO {
 	public BatchJobInstance read(final long id);
 	public void delete(final long id);
 	
-	public ArrayList<BatchJobInstanceDTO> list(String jobName);
+	public ArrayList<BatchJobInstanceDTO> list(String... jobNames);
 }

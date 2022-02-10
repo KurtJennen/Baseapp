@@ -77,7 +77,7 @@ public class BatchJobInstance {
 				+ ") "
 				+ "from BatchJobExecution bje "
 				+ "inner join bje.batchJobInstance bji "
-				+ "where bji.jobName = :jobName "
+				+ "where bji.jobName in (:jobNames) "
 				+ "order by bje.createTime desc";
 		
 		public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "delete "

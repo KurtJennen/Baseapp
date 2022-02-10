@@ -11,7 +11,7 @@ public class BaseQueryParameters {
 	public static final String JOB_ID = "jobId";
 	public static final String JOB_EXECUTION_ID = "jobExecutionId";
 	public static final String JOB_INSTANCE_ID = "jobInstanceId";
-	public static final String JOB_NAME = "jobName";
+	public static final String JOB_NAMES = "jobNames";
 	public static final String KEY_NAME = "keyName";
 	public static final String NAME = "name";
 	public static final String NUMBER = "number";

@@ -9,6 +9,7 @@ import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 
 public class DateTool {
+	public static final String UTIL_DATE_NO_PATTERN = "ddMMyyyy";
 	public static final String UTIL_DATE_PATTERN = "dd/MM/yyyy";
 	public static final String UTIL_DATE_PATTERN_DAY_NAME = "EE";
 	public static final String UTIL_DATETIME_PATTERN = "dd/MM/yyyy HH:mm:ss";
@@ -16,6 +17,12 @@ public class DateTool {
 	
 	public static final int YEAR = 2100;
 	public static final int DAY = 1;
+	
+	
+	public static final int NOT_VALID = -1;
+	public static final int FUTURE = 0;
+	public static final int PAST = 1;
+	public static final int NOW = 2;
 	
 	
 	public static java.sql.Date toSqlDate(java.util.Date utilDate) {
@@ -62,7 +69,7 @@ public class DateTool {
 	
 	@Deprecated
 	public static java.util.Date parseDate(String date, String datePattern) throws ParseException {
-		if(date.equals(StringUtils.EMPTY)) {
+		if(StringUtils.isEmpty(date)) {
 			return null;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -81,7 +88,7 @@ public class DateTool {
 	}
 	
 	public static Timestamp parseTimestamp(String date, String datePattern) throws ParseException {
-		if(date.equals(StringUtils.EMPTY)) {
+		if(StringUtils.isEmpty(date)) {
 			return null;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -122,6 +129,17 @@ public class DateTool {
 		
 		return calendar.getTime();
 	}
+
+	public static Date getCurrentDateFromCalendar() {
+		Calendar today =  Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		today.set(Calendar.MILLISECOND, 0);
+		
+		return today.getTime();
+	}
+	
 	
 	public static boolean isDateInYear(Date date, String year) {
 		if(date == null) {
@@ -137,4 +155,23 @@ public class DateTool {
 		
 		return false;
 	}
+	
+	public static int locateDate(String date, String datePattern) {
+		Calendar calendar = Calendar.getInstance();
+		try {
+			calendar.setTime(DateTool.parseTimestamp(date, datePattern));
+		} catch (Exception e) {
+			return NOT_VALID;
+		}
+		
+		if(calendar.getTimeInMillis() > getCurrentDateFromCalendar().getTime()) {
+			return FUTURE;
+		}
+		if(calendar.getTimeInMillis() < getCurrentDateFromCalendar().getTime()) {
+			return PAST;
+		}
+		
+		return NOW;
+	}
+	
 }

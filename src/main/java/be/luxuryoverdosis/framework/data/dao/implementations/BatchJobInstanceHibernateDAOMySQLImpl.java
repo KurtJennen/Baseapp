@@ -33,11 +33,11 @@ public class BatchJobInstanceHibernateDAOMySQLImpl extends AbstractHibernateDaoS
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<BatchJobInstanceDTO> list(final String jobName) {
+	public ArrayList<BatchJobInstanceDTO> list(final String... jobNames) {
 		Logging.info(this, "Begin listBatchJobInstance");
 		
 		Query<BatchJobInstanceDTO> query = getCurrentSession().getNamedQuery(BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME);
-		query.setParameter(BaseQueryParameters.JOB_NAME, jobName);
+		query.setParameterList(BaseQueryParameters.JOB_NAMES, jobNames);
 		ArrayList<BatchJobInstanceDTO> arrayList = (ArrayList<BatchJobInstanceDTO>) query.list();
 		
 		Logging.info(this, "End listBatchJobInstance");
