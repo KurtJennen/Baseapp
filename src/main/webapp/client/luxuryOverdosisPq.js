@@ -69,6 +69,7 @@ function renderFloatPq(ui, sLocale) {
     return ((ui.cellData < 0) ? "-" : "") + ui.cellData.toLocaleString(sLocale, myObj);
 }
 
+//custom
 function renderBedragClassPq(ui) {
 	var rowData = ui.rowData;
 	var dataIndx = ui.dataIndx;
@@ -84,6 +85,7 @@ function renderBedragClassPq(ui) {
 	}
 }
 
+//custom
 function renderNaamClassPq(ui) {
 	var rowData = ui.rowData;
 	var dataIndx = ui.dataIndx;
