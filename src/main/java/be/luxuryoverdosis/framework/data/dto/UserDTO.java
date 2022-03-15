@@ -1,7 +1,5 @@
 package be.luxuryoverdosis.framework.data.dto;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -91,9 +89,21 @@ public class UserDTO extends BaseDTO {
 	public void setRegister(boolean isRegister) {
 		this.isRegister = isRegister;
 	}
-	public BigDecimal getBedrag() {
-		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
-	}
+//	public BigDecimal getBedrag() {
+//		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
+//	}
+//	public String getPq_rowcls() {
+//		return "lightgreen";
+//	}
+//	public PqUserCellcls getPq_cellcls() {
+//		PqUserCellcls pqUserCellcls = new PqUserCellcls();
+//		pqUserCellcls.setName("lightgreen");
+//		if(userName.startsWith("k")) {
+//			pqUserCellcls.setUserName("lightpink");
+//		}
+//		
+//		return pqUserCellcls;
+//	}
 	public ArrayList<String> getRoles() {
 		return roles;
 	}
