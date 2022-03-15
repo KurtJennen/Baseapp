@@ -441,6 +441,10 @@
 			<name>filterCondition</name>
 			<required>false</required>
 		</attribute>
+		<attribute>
+			<name>renderFunction</name>
+			<required>false</required>
+		</attribute>
 	</tag>
 	<tag>
 		<name>dialog</name>

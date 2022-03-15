@@ -42,3 +42,11 @@ button{
 .defaultheight{
 	height: 1%;
 }
+
+.lightgreen {
+	background-color: lightgreen;
+	color: black;
+}
+.lightpink {
+	background-color: lightpink;
+}

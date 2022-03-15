@@ -21,13 +21,25 @@
             	, totalizable: ${pqGridColumnObject.totalizable?string("true", "false")}
             	<#if pqGridColumnObject.dataType = "float">
             		<#if pqGridColumnObject.currency = true>
-            			, render: function formatCurrency(ui) {
-            				return formatCurrencyPq(ui, "${templateData.locale}", "${templateData.currency}");
+            			, render: function (ui) {
+	            			<#if pqGridColumnObject.renderFunction != "">
+	            				${pqGridColumnObject.renderFunction}(ui);
+	            			</#if>
+            				return renderFloatCurrencyPq(ui, "${templateData.locale}", "${templateData.currency}");
             			}
             		<#else>
-            			, render: function format(ui) {
-            				return formatPq(ui, "${templateData.locale}");
+            			, render: function (ui) {
+            				<#if pqGridColumnObject.renderFunction != "">
+	            				${pqGridColumnObject.renderFunction}(ui);
+	            			</#if>
+            				return renderFloatPq(ui, "${templateData.locale}");
             			}
+            		</#if>
+            	<#else>
+            		<#if pqGridColumnObject.renderFunction != "">
+	            		, render: function (ui) {
+	            			return ${pqGridColumnObject.renderFunction}(ui);
+	            		}
             		</#if>
             	</#if>
             },
