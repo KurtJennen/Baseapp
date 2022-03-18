@@ -10,7 +10,7 @@ function doAjaxSelect(sProperty, sMethodAll, sMethodOne, aFields, sNoResult) {
 	});
 	
 	if ($('#' + sProperty).val() > 0) {
-		doAjaxSelectClicked(sProperty, sMethodOne, $('#' + sProperty).val(), aFields);
+		doAjaxSelectClicked(sProperty, sMethodOne, $('#' + sProperty).val(), aFields, "");
 	}
 }
 
@@ -36,7 +36,7 @@ function doAjaxSelectCommon(sProperty, sMethodAll, sNoResult) {
 	})
 }
 
-function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields) {
+function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCalllbackActionMethod) {
 	$('#' + sProperty).val(sId);
 	
 	$.ajax({
@@ -52,6 +52,7 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields) {
 			});
 	
 			$('#' + sProperty + 'Value').val(val);
+			
 		},
 		error: function(e) {
 			alert('Error: ' + e);
@@ -59,6 +60,10 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields) {
 	})
 	
 	$('#' + sProperty + 'Result').text("");
+	
+	if(sCalllbackActionMethod != "") {
+		doActionDetail(sCalllbackActionMethod);
+	}
 };
 
 function doComposeAction(sMethod) {

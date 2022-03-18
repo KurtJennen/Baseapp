@@ -243,6 +243,10 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>calllbackActionMethod</name>
+			<required>false</required>
+		</attribute>
 	</tag>
 	<tag>
 		<name>enumSelect</name>

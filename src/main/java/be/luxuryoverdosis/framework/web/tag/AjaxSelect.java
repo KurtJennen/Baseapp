@@ -6,6 +6,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.taglib.TagUtils;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
@@ -26,6 +27,7 @@ public class AjaxSelect implements Tag {
     private String maxHeight = "500";
 	private String key;
 	private String roles;
+	private String calllbackActionMethod = StringUtils.EMPTY;
 	
 	public void setProperty(String property) {
 		this.property = property;
@@ -73,6 +75,10 @@ public class AjaxSelect implements Tag {
 	
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public void setCalllbackActionMethod(String calllbackActionMethod) {
+		this.calllbackActionMethod = calllbackActionMethod;
 	}
 
 	public void setParent(Tag t) {
@@ -140,7 +146,7 @@ public class AjaxSelect implements Tag {
 				seperatedArray = fieldsAll.split(",");
 				
 				out.println("<script id=\"" + property + "Tmpl\" type=\"text/x-query-tmpl\">");
-				out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ");\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
+				out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ", '" + calllbackActionMethod  + "');\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
 				for (int i = 0; i < seperatedArray.length; i++) {
 					out.println("<td>${" + seperatedArray[i] + "}</td>");
 				}
