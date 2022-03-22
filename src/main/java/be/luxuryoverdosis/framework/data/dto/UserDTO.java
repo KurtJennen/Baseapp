@@ -92,6 +92,18 @@ public class UserDTO extends BaseDTO {
 //	public BigDecimal getBedrag() {
 //		return new BigDecimal(Math.random() * 10000).setScale(1, RoundingMode.HALF_UP);
 //	}
+//	public String getPq_rowcls() {
+//		return "lightgreen";
+//	}
+//	public PqUserCellcls getPq_cellcls() {
+//		PqUserCellcls pqUserCellcls = new PqUserCellcls();
+//		pqUserCellcls.setName("lightgreen");
+//		if(userName.startsWith("k")) {
+//			pqUserCellcls.setUserName("lightpink");
+//		}
+//		
+//		return pqUserCellcls;
+//	}
 	public ArrayList<String> getRoles() {
 		return roles;
 	}

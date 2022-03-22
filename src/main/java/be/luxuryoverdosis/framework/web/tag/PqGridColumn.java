@@ -26,6 +26,7 @@ public class PqGridColumn implements Tag {
 	private boolean currency = false;
 	private String filterType = "textbox";
 	private String filterCondition = "contain";
+	private String renderFunction = StringUtils.EMPTY;
 
 	public void setTitle(String title) {
 		this.title = title;
@@ -54,6 +55,9 @@ public class PqGridColumn implements Tag {
 	public void setResizable(boolean resizable) {
 		this.resizable = resizable;
 	}
+	public void setCurrency(boolean currency) {
+		this.currency = currency;
+	}
 	public void setFilterType(String filterType) {
 		this.filterType = filterType;
 	}
@@ -63,9 +67,8 @@ public class PqGridColumn implements Tag {
 	public void setTotalizable(boolean totalizable) {
 		this.totalizable = totalizable;
 	}
-
-	public void setCurrency(boolean currency) {
-		this.currency = currency;
+	public void setRenderFunction(String renderFunction) {
+		this.renderFunction = renderFunction;
 	}
 	
 	public void setParent(Tag t) {
@@ -125,6 +128,7 @@ public class PqGridColumn implements Tag {
 			} else {
 				gridColumnObject.setFilterCondition(filterCondition);
 			}
+			gridColumnObject.setRenderFunction(renderFunction);
 			if (totalizable) {
 				pqGridTag.getPqGridObject().setSummary(true);
 			}

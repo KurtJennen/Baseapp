@@ -6,6 +6,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.taglib.TagUtils;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
@@ -26,6 +27,8 @@ public class AjaxSelect implements Tag {
     private String maxHeight = "500";
 	private String key;
 	private String roles;
+	private String callbackActionMethodOne = StringUtils.EMPTY;
+	private String callbackActionMethodBlur = StringUtils.EMPTY;
 	
 	public void setProperty(String property) {
 		this.property = property;
@@ -73,6 +76,14 @@ public class AjaxSelect implements Tag {
 	
 	public void setRoles(String roles) {
 		this.roles = roles;
+	}
+
+	public void setCallbackActionMethodOne(String callbackActionMethodOne) {
+		this.callbackActionMethodOne = callbackActionMethodOne;
+	}
+
+	public void setCallbackActionMethodBlur(String callbackActionMethodBlur) {
+		this.callbackActionMethodBlur = callbackActionMethodBlur;
 	}
 
 	public void setParent(Tag t) {
@@ -140,7 +151,7 @@ public class AjaxSelect implements Tag {
 				seperatedArray = fieldsAll.split(",");
 				
 				out.println("<script id=\"" + property + "Tmpl\" type=\"text/x-query-tmpl\">");
-				out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ");\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
+				out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ", '" + callbackActionMethodOne  + "');\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
 				for (int i = 0; i < seperatedArray.length; i++) {
 					out.println("<td>${" + seperatedArray[i] + "}</td>");
 				}
@@ -151,7 +162,7 @@ public class AjaxSelect implements Tag {
 				Object waarde = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
 				
 				out.println("<input type=\"hidden\" name=\"" + property + "\" value=\"" + waarde.toString() + "\" id=\"" + property + "\">");
-				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "')\" autocomplete=\"off\">");
+				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\">");
 				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
 				out.println("<img src=\"images/" + image + "\"/>");
 				out.println("</button>");

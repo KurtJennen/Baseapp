@@ -51,8 +51,8 @@ function unCheckPq(ui, sSelectedIdsName) {
 function createHiddenInputTag(id, sSelectedIdsName) {
 	$("<input>").attr("type", "hidden").attr("value", id).prop("name", sSelectedIdsName).appendTo("form");
 }
-
-function formatCurrencyPq(ui, sLocale, sCurrency) {
+	
+function renderFloatCurrencyPq(ui, sLocale, sCurrency) {
     var myObj = {
 	  style: "currency",
 	  currency: sCurrency
@@ -61,12 +61,48 @@ function formatCurrencyPq(ui, sLocale, sCurrency) {
     return ((ui.cellData < 0) ? "-" : "") + ui.cellData.toLocaleString(sLocale, myObj);
 }
 
-function formatPq(ui, sLocale) {
+function renderFloatPq(ui, sLocale) {
 	var myObj = {
 	  minimumFractionDigits: 2
 	}
 
     return ((ui.cellData < 0) ? "-" : "") + ui.cellData.toLocaleString(sLocale, myObj);
+}
+
+//custom
+function renderBedragClassPq(ui) {
+	var rowData = ui.rowData;
+	var dataIndx = ui.dataIndx;
+	
+	var value = rowData[dataIndx];
+	
+	rowData.pq_cellcls = rowData.pq_cellcls || {};
+	if(value > 5000) {
+		rowData.pq_cellcls[dataIndx] = 'lightgreen';
+	} else {
+		rowData.pq_cellcls[dataIndx] = 'lightpink';
+		
+	}
+}
+
+//custom
+function renderNaamClassPq(ui) {
+	var rowData = ui.rowData;
+	var dataIndx = ui.dataIndx;
+	
+	var value = rowData[dataIndx];
+	
+	if(value == "") {
+		return;
+	}
+	
+	rowData.pq_cellcls = rowData.pq_cellcls || {};
+	if(value != 'kurt') {
+		rowData.pq_cellcls[dataIndx] = 'lightgreen';
+	} else {
+		rowData.pq_cellcls[dataIndx] = 'lightpink';
+		
+	}
 }
 
 function totals(ui, sId, sSummary) {

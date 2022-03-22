@@ -49,11 +49,12 @@ $(document).ready(function() {
 			<hr />
 			<lo:pqGrid nameSelectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
+<%-- 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique" renderFunction="renderNaamClassPq"></lo:pqGridColumn> --%>
 				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
 				<lo:pqGridColumn width="200" dataIndx="email" dataType="string" titleKey="security.email"></lo:pqGridColumn>
 				<lo:pqGridColumn width="100" dataIndx="dateExpirationAsString" dataType="string" titleKey="security.date.expiration"></lo:pqGridColumn>
 <%-- 				<lo:pqGridColumn width="200" dataIndx="roleName" dataType="string" titleKey="security.role"></lo:pqGridColumn> --%>
-<%-- 				<lo:pqGridColumn width="200" dataIndx="bedrag" dataType="float" titleKey="file" align="right" totalizable="true" currency="true"></lo:pqGridColumn> --%>
+<%-- 				<lo:pqGridColumn width="200" dataIndx="bedrag" dataType="float" titleKey="bedrag" align="right" totalizable="true" currency="true" renderFunction="renderBedragClassPq"></lo:pqGridColumn> --%>
 			</lo:pqGrid>
 		</div>
 		<div id="tab2">

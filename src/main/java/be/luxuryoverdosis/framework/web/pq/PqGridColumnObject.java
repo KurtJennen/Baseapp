@@ -1,5 +1,7 @@
 package be.luxuryoverdosis.framework.web.pq;
 
+import org.apache.commons.lang.StringUtils;
+
 public class PqGridColumnObject {
 	private String title;
 	private String dataType;
@@ -12,6 +14,7 @@ public class PqGridColumnObject {
 	private boolean currency = true;
 	private String filterType = "textbox";
 	private String filterCondition = "contain";
+	private String renderFunction = StringUtils.EMPTY;
 	
 	public String getTitle() {
 		return title;
@@ -78,6 +81,12 @@ public class PqGridColumnObject {
 	}
 	public void setFilterCondition(String filterCondition) {
 		this.filterCondition = filterCondition;
+	}
+	public String getRenderFunction() {
+		return renderFunction;
+	}
+	public void setRenderFunction(String renderFunction) {
+		this.renderFunction = renderFunction;
 	}
 	
 }

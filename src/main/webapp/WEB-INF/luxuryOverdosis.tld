@@ -243,6 +243,14 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>callbackActionMethodOne</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>callbackActionMethodBlur</name>
+			<required>false</required>
+		</attribute>
 	</tag>
 	<tag>
 		<name>enumSelect</name>
@@ -439,6 +447,10 @@
 		</attribute>
 		<attribute>
 			<name>filterCondition</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>renderFunction</name>
 			<required>false</required>
 		</attribute>
 	</tag>
