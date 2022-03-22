@@ -36,7 +36,7 @@ function doAjaxSelectCommon(sProperty, sMethodAll, sNoResult) {
 	})
 }
 
-function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCalllbackActionMethod) {
+function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCallbackActionMethodOne) {
 	$('#' + sProperty).val(sId);
 	
 	$.ajax({
@@ -52,7 +52,6 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCalllbackActi
 			});
 	
 			$('#' + sProperty + 'Value').val(val);
-			
 		},
 		error: function(e) {
 			alert('Error: ' + e);
@@ -61,8 +60,8 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCalllbackActi
 	
 	$('#' + sProperty + 'Result').text("");
 	
-	if(sCalllbackActionMethod != "") {
-		doActionDetail(sCalllbackActionMethod);
+	if(sCallbackActionMethodOne != "") {
+		doActionDetail(sCallbackActionMethodOne);
 	}
 };
 
@@ -73,16 +72,20 @@ function doComposeAction(sMethod) {
 	return '/'+ actionsplit[1] + '/' + sMethod;
 }
 
-function doAjaxBlur(sProperty) {
+function doAjaxBlur(sProperty, callbackActionMethodBlur) {
 	if ($('#' + sProperty + 'Value').val() == "") {
 		$('#' + sProperty).val(-1);
+	}
+	
+	if(callbackActionMethodBlur != "") {
+		doActionDetail(callbackActionMethodBlur);
 	}
 };
 
 function doAjaxBlurNoResult(sProperty) {
 	$('#' + sProperty + 'Result').text("");
-	$('#' + sProperty + 'Value').val("");
-	$('#' + sProperty).val(-1);
+//	$('#' + sProperty + 'Value').val("");
+//	$('#' + sProperty).val(-1);
 };
 
 function doJQueryUiDatepicker(sProperty) {

@@ -244,7 +244,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>calllbackActionMethod</name>
+			<name>callbackActionMethodOne</name>
+			<required>false</required>
+		</attribute>
+		<attribute>
+			<name>callbackActionMethodBlur</name>
 			<required>false</required>
 		</attribute>
 	</tag>
