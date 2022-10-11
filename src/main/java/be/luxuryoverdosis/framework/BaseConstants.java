@@ -16,6 +16,7 @@ public class BaseConstants {
 	public static final String SLASH = "/";
 	public static final String PIPE = "|";
 	public static final String POINT = ".";
+	public static final String UNDERSCORE = "_";
 	public static final String DOUBLEPOINT = ":";
 	public static final String CARRIAGE_RETURN = "\r\n";
 	

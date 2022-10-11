@@ -15,6 +15,7 @@ import org.apache.struts.action.ActionRedirect;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
+import be.luxuryoverdosis.framework.base.tool.StringTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobExecutionParamsService;
 import be.luxuryoverdosis.framework.business.service.interfaces.BatchJobInstanceService;
@@ -65,7 +66,8 @@ public class DetailJobAction extends AjaxAction {
 		Logging.info(this, "Begin Back");
 		
 		String jobNiveau = (String)SessionManager.getFromSession(request, BaseWebConstants.JOB_NIVEAU);
-		ActionRedirect redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + jobNiveau.charAt(0) + jobNiveau.substring(1).toLowerCase()));
+		
+		ActionRedirect redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + StringTool.toCamelCase(jobNiveau)));
 			
 		Logging.info(this, "End Back Success");
 		
