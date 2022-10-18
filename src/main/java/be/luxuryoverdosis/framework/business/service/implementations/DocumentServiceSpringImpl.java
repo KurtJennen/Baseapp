@@ -118,7 +118,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return arrayList;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes" })
 	public File createDocument(final Document document, final Object data, final Class clazz) {
 		try {
 			DocumentTemplateFactory documentTemplateFactory = new DocumentTemplateFactory();

@@ -5,6 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -172,6 +177,14 @@ public class DateTool {
 		}
 		
 		return NOW;
+	}
+	
+	public static XMLGregorianCalendar getXMLGregorianCalendar() throws DatatypeConfigurationException {
+		Date now = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(now);
+		
+		return DatatypeFactory.newInstance().newXMLGregorianCalendar(gc);
 	}
 	
 }
