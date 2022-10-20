@@ -52,6 +52,7 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCallbackActio
 			});
 	
 			$('#' + sProperty + 'Value').val(val);
+			$('#' + sProperty + 'Value').focus();
 		},
 		error: function(e) {
 			alert('Error: ' + e);

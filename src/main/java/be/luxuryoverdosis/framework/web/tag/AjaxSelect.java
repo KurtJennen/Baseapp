@@ -20,6 +20,7 @@ public class AjaxSelect implements Tag {
 	private String methodOne;
 	private String fieldsAll;
 	private String fieldsOne;
+	private String tabindex = "1";
 	private String image = "zoom.png";
 	private String size;
 	private String maxLength;
@@ -48,6 +49,10 @@ public class AjaxSelect implements Tag {
 
 	public void setFieldsOne(String fieldsOne) {
 		this.fieldsOne = fieldsOne;
+	}
+
+	public void setTabindex(String tabindex) {
+		this.tabindex = tabindex;
 	}
 
 	public void setImage(String image) {
@@ -162,7 +167,7 @@ public class AjaxSelect implements Tag {
 				Object waarde = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
 				
 				out.println("<input type=\"hidden\" name=\"" + property + "\" value=\"" + waarde.toString() + "\" id=\"" + property + "\">");
-				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\">");
+				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" tabindex=\"" + tabindex + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\">");
 				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
 				out.println("<img src=\"images/" + image + "\"/>");
 				out.println("</button>");

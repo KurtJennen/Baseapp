@@ -199,10 +199,12 @@
 		<attribute>
 			<name>methodAll</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>methodOne</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>fieldsAll</name>
@@ -211,6 +213,11 @@
 		<attribute>
 			<name>fieldsOne</name>
 			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>image</name>
