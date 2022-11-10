@@ -73,13 +73,13 @@ function doComposeAction(sMethod) {
 	return '/'+ actionsplit[1] + '/' + sMethod;
 }
 
-function doAjaxBlur(sProperty, callbackActionMethodBlur) {
+function doAjaxInput(sProperty, callbackActionMethodBlur) {
 	if ($('#' + sProperty + 'Value').val() == "") {
 		$('#' + sProperty).val(-1);
-	}
-	
-	if(callbackActionMethodBlur != "") {
-		doActionDetail(callbackActionMethodBlur);
+		
+		if(callbackActionMethodBlur != "") {
+			doActionDetail(callbackActionMethodBlur);
+		}
 	}
 };
 
