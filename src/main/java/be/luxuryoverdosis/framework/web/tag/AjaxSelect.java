@@ -21,6 +21,7 @@ public class AjaxSelect implements Tag {
 	private String fieldsAll;
 	private String fieldsOne;
 	private String tabindex = "1";
+	private boolean disabled;
 	private String image = "zoom.png";
 	private String size;
 	private String maxLength;
@@ -53,6 +54,10 @@ public class AjaxSelect implements Tag {
 
 	public void setTabindex(String tabindex) {
 		this.tabindex = tabindex;
+	}
+	
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	public void setImage(String image) {
@@ -129,65 +134,59 @@ public class AjaxSelect implements Tag {
 				enabled = true;
 			}
 			
-			if(enabled) {
-				//JavaScript
-				
-				String[] seperatedArray = fieldsOne.split(",");
-				
-				StringBuffer concatenatedFields = new StringBuffer();
-				concatenatedFields.append("[");
-				for (int i = 0; i < seperatedArray.length; i++) {
-					concatenatedFields.append("'" + seperatedArray[i] + "'");
-					if (i != seperatedArray.length - 1) {
-						concatenatedFields.append(",");
-					}
+			
+			//JavaScript
+			
+			String[] seperatedArray = fieldsOne.split(",");
+			
+			StringBuffer concatenatedFields = new StringBuffer();
+			concatenatedFields.append("[");
+			for (int i = 0; i < seperatedArray.length; i++) {
+				concatenatedFields.append("'" + seperatedArray[i] + "'");
+				if (i != seperatedArray.length - 1) {
+					concatenatedFields.append(",");
 				}
-				concatenatedFields.append("]");
-				
-				String searchNoResultKey =  MessageLocator.getMessage(request, "search.no.result");
-				
-				out.println("<script type=\"text/javascript\">");
-				out.println("$(document).ready(function() {");
-				out.println("doAjaxSelect('" + property + "', '" + methodAll + "', '" + methodOne + "', " + concatenatedFields.toString() + ", '" + searchNoResultKey + "');");
-				out.println("});");
-				out.println("</script>");
-				
-				//Javascript template
-				seperatedArray = fieldsAll.split(",");
-				
-				out.println("<script id=\"" + property + "Tmpl\" type=\"text/x-query-tmpl\">");
-				out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ", '" + callbackActionMethodOne  + "');\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
-				for (int i = 0; i < seperatedArray.length; i++) {
-					out.println("<td>${" + seperatedArray[i] + "}</td>");
-				}
-				out.println("</tr>");
-				out.println("</script>");
-				
-				//Search
-				Object waarde = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
-				
-				out.println("<input type=\"hidden\" name=\"" + property + "\" value=\"" + waarde.toString() + "\" id=\"" + property + "\">");
-				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" tabindex=\"" + tabindex + "\" value=\"\" id=\"" + property + "Value\" onblur=\"javascript:doAjaxBlur('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\">");
-				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
-				out.println("<img src=\"images/" + image + "\"/>");
-				out.println("</button>");
-
-				//Template
-                out.println("<div style=\"width: " + width + "%; max-height:" + maxHeight + "px; position: fixed; overflow: auto; z-index: 1;\">");
-				out.println("<table id=\"" + property + "Result\" style=\"background-color: #e3e3e3; border: 1px solid white; width: 100%;\">");
-				out.println("</table>");
-				out.print("</div>");
-			} else {
-//				int pos = image.indexOf(".");
-//				StringBuffer newImage = new StringBuffer();
-//				newImage.append(image.substring(0, pos)); 
-//				newImage.append("_disabled");
-//				newImage.append(image.substring(pos)); 
-//				
-//				out.print("<button>");
-//				out.print("<img src=\"images/" + newImage.toString() + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" />");
-//				out.println("</button>");
 			}
+			concatenatedFields.append("]");
+			
+			String searchNoResultKey =  MessageLocator.getMessage(request, "search.no.result");
+			
+			out.println("<script type=\"text/javascript\">");
+			out.println("$(document).ready(function() {");
+			out.println("doAjaxSelect('" + property + "', '" + methodAll + "', '" + methodOne + "', " + concatenatedFields.toString() + ", '" + searchNoResultKey + "');");
+			out.println("});");
+			out.println("</script>");
+			
+			//Javascript template
+			seperatedArray = fieldsAll.split(",");
+			
+			out.println("<script id=\"" + property + "Tmpl\" type=\"text/x-query-tmpl\">");
+			out.println("<tr id=\"\\${id}\" onclick=\"javascript:doAjaxSelectClicked('" + property + "', '" + methodOne + "', ${id}, " + concatenatedFields.toString() + ", '" + callbackActionMethodOne  + "');\" onmouseover=\"this.style.background='#fdecae'\" onmouseout=\"this.style.background='#e3e3e3'\">");
+			for (int i = 0; i < seperatedArray.length; i++) {
+				out.println("<td>${" + seperatedArray[i] + "}</td>");
+			}
+			out.println("</tr>");
+			out.println("</script>");
+			
+			//Search
+			Object waarde = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
+				
+			out.println("<input type=\"hidden\" name=\"" + property + "\" value=\"" + waarde.toString() + "\" id=\"" + property + "\">");
+			if(enabled && !disabled) {
+				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" tabindex=\"" + tabindex + "\" value=\"\" id=\"" + property + "Value\" oninput=\"javascript:doAjaxInput('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\">");
+				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
+			} else {
+				out.println("<input type=\"text\" name=\"" + property + "Value\" maxlength=\"" + maxLength + "\" size=\"" + size + "\" tabindex=\"" + tabindex + "\" value=\"\" id=\"" + property + "Value\" oninput=\"javascript:doAjaxInput('" + property + "', '" + callbackActionMethodBlur  + "')\" autocomplete=\"off\" disabled=\"disabled\">");
+				out.println("<button id=\"" + property + "Button\" type=\"button\" title=\"" + MessageLocator.getMessage(request, key) + "\" disabled=\"disabled\">");
+			}
+			out.println("<img src=\"images/" + image + "\"/>");
+			out.println("</button>");
+				
+			//Template
+            out.println("<div style=\"width: " + width + "%; max-height:" + maxHeight + "px; position: fixed; overflow: auto; z-index: 1;\">");
+			out.println("<table id=\"" + property + "Result\" style=\"background-color: #e3e3e3; width: 100%;\" class=\".ui-widget-content\">");
+			out.println("</table>");
+			out.print("</div>");
 		}
 		catch (Exception e) {
 		}
