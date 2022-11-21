@@ -343,4 +343,26 @@ public class SqlStartup {
 	public final static String SQL_210525b = "UPDATE base_role SET name = 'UitgebreideGebruiker' where name = 'UITGEBREIDE_GEBRUIKER'";
 	public final static String SQL_210525c = "UPDATE base_role SET name = 'NormaleGebruiker' where name = 'NORMALE_GEBRUIKER'";
 	
+	public final static String SQL_221117a = "CREATE TABLE batch_job_hdr_selected ( " +
+			"Id int(10) unsigned NOT NULL AUTO_INCREMENT, " +
+			"Version int(10) unsigned NOT NULL DEFAULT '0', " +
+			"UserAdd varchar(45) NOT NULL DEFAULT '', " +
+			"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
+			"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+			"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
+			"Job_Name varchar(100) NOT NULL, " +
+			"PRIMARY KEY (Id))";
+	
+	public final static String SQL_221117b = "CREATE TABLE batch_job_dtl_selected ( " +
+			"Id int(10) unsigned NOT NULL AUTO_INCREMENT, " +
+			"Version int(10) unsigned NOT NULL DEFAULT '0', " +
+			"UserAdd varchar(45) NOT NULL DEFAULT '', " +
+			"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
+			"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
+			"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
+			"Batch_Job_Hdr_Selected_Id int(10) unsigned NOT NULL DEFAULT '0', " +
+			"Selected_Id int(10) unsigned NOT NULL DEFAULT '0', " +
+			"PRIMARY KEY (Id), " +
+			"CONSTRAINT JOB_HDR_SELECTED_FK FOREIGN KEY (Batch_Job_Hdr_Selected_Id) REFERENCES batch_job_hdr_selected (Id))";
+	
 }
