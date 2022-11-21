@@ -29,8 +29,10 @@ public class BaseConstants {
 	public static final String JOB_ID = "jobId";
 	public static final String JOB_EXPORT_USER = "userExportJob";
 	public static final String JOB_EXPORT_USER_FILENAME = "userExport.txt";
+	public static final String JOB_HEADERSELECTED_ID = "jobHeaderSelectedId";
 	public static final String JOB_IMPORT_USER = "userImportJob";
 	public static final String JOB_USER = "jobUser";
+	public static final String JOB_USER_ID = "jobUserId";
 	public static final String JOB_USER_ROOT = "root";
 	
 	public static final String REPORT_PATH = "/files/reports/";
