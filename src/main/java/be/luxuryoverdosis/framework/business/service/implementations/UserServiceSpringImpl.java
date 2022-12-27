@@ -357,8 +357,7 @@ public class UserServiceSpringImpl implements UserService {
 	@Transactional(readOnly=true)
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countUser");
-		Long countUser = new Long(0);
-		countUser = userHibernateDAO.count(name, id);
+		Long countUser = userHibernateDAO.count(name, id);
 		Logging.info(this, "End countUser");
 		return countUser.longValue();
 	}

@@ -183,13 +183,13 @@ public class SearchServiceSpringImpl implements SearchService {
 						}
 					} else if (searchParameter.getType().equals("java.lang.Integer")) {
 						try {
-							searchDTO.setObject(new Integer(values[i]));
+							searchDTO.setObject(Integer.parseInt(values[i]));
 						} catch (Exception e) {
 							throw new ServiceException("errors.integer", new String[] {searchParameter.getKey()});
 						}
 					} else if (searchParameter.getType().equals("java.lang.Long")) {
 						try {
-							searchDTO.setObject(new Long(values[i]));
+							searchDTO.setObject(Long.parseLong(values[i]));
 						} catch (Exception e) {
 							throw new ServiceException("errors.long", new String[] {searchParameter.getKey()});
 						}

@@ -65,8 +65,7 @@ public class SqlServiceSpringImpl implements SqlService {
 	@Transactional(readOnly=true)
 	public long count(final String name) {
 		Logging.info(this, "Begin countSql(String)");
-		Long countSql = new Long(0); 
-		countSql = sqlHibernateDAO.count(name);
+		Long countSql = sqlHibernateDAO.count(name);
 		Logging.info(this, "End countSql(String)");
 		return countSql.longValue();
 	}
@@ -74,8 +73,7 @@ public class SqlServiceSpringImpl implements SqlService {
 	@Transactional(readOnly=true)
 	public long count(final String name, final String application) {
 		Logging.info(this, "Begin countSql(String, String)");
-		Long countSql = new Long(0); 
-		countSql = sqlHibernateDAO.count(name, application);
+		Long  countSql = sqlHibernateDAO.count(name, application);
 		Logging.info(this, "End countSql(String, String)");
 		return countSql.longValue();
 	}
