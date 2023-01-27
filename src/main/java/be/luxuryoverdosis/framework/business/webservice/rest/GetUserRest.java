@@ -1,8 +1,10 @@
 package be.luxuryoverdosis.framework.business.webservice.rest;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,10 +15,11 @@ import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestServi
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"${rest.origin}"})
 public class GetUserRest {
 	@RequestMapping(value = "/readUserRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readUserRequest(@RequestHeader(value="name") String name) throws JsonProcessingException {
-		return getUserRestService().readUserRequest(name);
+	public String readUserRequest(@RequestParam(value="name") String name, @RequestParam(value="password") String password) throws JsonProcessingException {
+		return getUserRestService().readUserRequest(name, password);
 	}
 	
 	@RequestMapping(value = "/readAllUsersRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)

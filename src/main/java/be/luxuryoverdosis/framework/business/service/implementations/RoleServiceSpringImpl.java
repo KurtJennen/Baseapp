@@ -127,8 +127,7 @@ public class RoleServiceSpringImpl implements RoleService {
 	@Transactional(readOnly=true)
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
-		Long countRole = new Long(0); 
-		countRole = roleHibernateDAO.count(name, id);
+		Long countRole = roleHibernateDAO.count(name, id);
 		Logging.info(this, "End countRole");
 		return countRole.longValue();
 	}

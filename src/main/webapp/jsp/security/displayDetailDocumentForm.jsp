@@ -30,7 +30,7 @@
 		<tr>
 			<td><fmt:message key="document.type" />*:</td>
 			<td>
-				<lo:enumSelect clazz="be.luxuryoverdosis.baseapp.business.enumeration.DocumentTypeEnum" tabindex="1" property="type" value="${detailDocumentForm.type}" method="getAllCodes" />
+				<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.DocumentTypeEnum" tabindex="1" property="type" value="${detailDocumentForm.type}" method="getAllCodes" />
 			</td>
 		</tr>
 		<tr>

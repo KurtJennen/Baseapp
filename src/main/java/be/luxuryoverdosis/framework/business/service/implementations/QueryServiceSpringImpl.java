@@ -273,8 +273,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		UserDTO user = ThreadManager.getUserFromThread();
 		
-		Long countQuery = new Long(0);
-		countQuery = queryHibernateDAO.count(queryDTO.getName(), type, user.getId());
+		Long countQuery = queryHibernateDAO.count(queryDTO.getName(), type, user.getId());
 		
 		this.createOrUpdateDTO(queryDTO);
 		

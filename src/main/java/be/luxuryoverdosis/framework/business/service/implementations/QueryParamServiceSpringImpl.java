@@ -61,8 +61,7 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 	@Transactional(readOnly=true)
 	public long count(final int queryId) {
 		Logging.info(this, "Begin countQueryParam");
-		Long countQueryParam = new Long(0);
-		countQueryParam = queryParamHibernateDAO.count(queryId);
+		Long countQueryParam = queryParamHibernateDAO.count(queryId);
 		Logging.info(this, "End countQueryParam");
 		return countQueryParam.longValue();
 	}

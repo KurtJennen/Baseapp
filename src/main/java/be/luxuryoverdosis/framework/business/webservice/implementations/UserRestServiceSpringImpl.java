@@ -34,7 +34,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional(readOnly=true)
-	public String readUserRequest(String name) throws JsonProcessingException {
+	public String readUserRequest(String name, String password) throws JsonProcessingException {
 		Logging.info(this, "Begin readUserRequest");
 		
 		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
@@ -45,7 +45,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		}
 		
 		User user = userService.readName(name);
-		if (user == null) {
+		if (user == null || !user.getEncryptedPassword().equals(password)) {
 			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
 		}
