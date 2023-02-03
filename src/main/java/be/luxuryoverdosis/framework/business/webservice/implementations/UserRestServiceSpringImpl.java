@@ -1,5 +1,6 @@
 package be.luxuryoverdosis.framework.business.webservice.implementations;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -10,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import be.luxuryoverdosis.framework.base.tool.DateTool;
+import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
@@ -34,7 +37,30 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional(readOnly=true)
-	public String readUserRequest(String name, String password) throws JsonProcessingException {
+	public String readUserRequest(final int id) throws JsonProcessingException {
+		Logging.info(this, "Begin readUserRequest");
+		
+		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
+		
+		if(ThreadManager.getUserFromThread() == null) {
+			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
+			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
+		}
+		
+		User user = userService.read(id);
+		if (user == null) {
+			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
+			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
+		}
+		
+		userRestWrapperDTO.setUserDTO(produceUserDTO(user));
+		
+		Logging.info(this, "End readUserRequest");
+		return sendRestWrapperDto(userRestWrapperDTO);
+	}
+	
+	@Transactional(readOnly=true)
+	public String readUserRequest(final String name, final String password) throws JsonProcessingException {
 		Logging.info(this, "Begin readUserRequest");
 		
 		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
@@ -83,7 +109,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	}
 
 	@Transactional
-	public String createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String[] roleNames) throws JsonProcessingException {
+	public String createOrUpdateUserRequest(final UserDTO userDTO) throws JsonProcessingException {
 		Logging.info(this, "Begin createOrUpdateUserRequest");
 		
 		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
@@ -95,20 +121,27 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		
 		boolean isNew = false;
 		
-		User user = userService.readName(name);
+		User user = null;
+		if(userDTO.getId() > 0) {
+			user = userService.read(userDTO.getId());
+			isNew = true;
+		} 
+		if(user == null) {
+			user = userService.readName(userDTO.getName());
+		}
 		if (user == null) {
 			user = new User();
-			user.setId(-1);
 			isNew = true;
 		}
 		
-		user.setEmail(email);
-		user.setEncryptedPassword(encryptedPassword);
-		user.setName(name);
-		user.setUserName(userName);
+		user.setEmail(userDTO.getEmail());
+		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
+		user.setName(userDTO.getName());
+		user.setUserName(userDTO.getUserName());
+		user.setDateExpiration(userDTO.getDateExpiration());
 		
 		try {
-			user = userService.createOrUpdate(user, roleNames);
+			user = userService.createOrUpdate(user, userDTO.getRoles().toArray(new String[0]));
 			userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
 			if (isNew) {
 				Logging.info(this, "End createOrUpdateUserRequest");
@@ -166,6 +199,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	
 	private String sendRestWrapperDto(Object object) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.setDateFormat(new SimpleDateFormat(DateTool.UTIL_DATETIME_PATTERN));
 		return objectMapper.writeValueAsString(object);
 	}
 	
