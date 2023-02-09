@@ -1,6 +1,5 @@
 package be.luxuryoverdosis.framework.business.webservice.implementations;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
@@ -124,7 +122,6 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		User user = null;
 		if(userDTO.getId() > 0) {
 			user = userService.read(userDTO.getId());
-			isNew = true;
 		} 
 		if(user == null) {
 			user = userService.readName(userDTO.getName());
@@ -142,7 +139,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		
 		try {
 			user = userService.createOrUpdate(user, userDTO.getRoles().toArray(new String[0]));
-			userRestWrapperDTO.setUserDTO(UserFactory.produceUserDTO(user));
+			userRestWrapperDTO.setUserDTO(produceUserDTO(user));
 			if (isNew) {
 				Logging.info(this, "End createOrUpdateUserRequest");
 				String message = BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
@@ -158,7 +155,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	}
 
 	@Transactional
-	public String deleteUserRequest(String name) throws JsonProcessingException {
+	public String deleteUserRequest(int id) throws JsonProcessingException {
 		Logging.info(this, "Begin deleteUserRequest");
 		
 		UserRestWrapperDTO userRestWrapperDTO = createUserRestWrapperDTO();
@@ -168,7 +165,7 @@ public class UserRestServiceSpringImpl implements UserRestService {
 			return sendRestErrorWrapperDto(userRestWrapperDTO, error);
 		}
 		
-		User user = userService.readName(name);
+		User user = userService.read(id);
 		userRestWrapperDTO.setUserDTO(produceUserDTO(user));
 		if(user != null) {
 			userService.delete(user.getId());
@@ -199,7 +196,6 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	
 	private String sendRestWrapperDto(Object object) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.setDateFormat(new SimpleDateFormat(DateTool.UTIL_DATETIME_PATTERN));
 		return objectMapper.writeValueAsString(object);
 	}
 	
