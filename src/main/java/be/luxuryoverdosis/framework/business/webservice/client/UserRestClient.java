@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.business.webservice.client;
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestServiceClient;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.data.restwrapperdto.UserRestWrapperDTO;
+import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 
 public class UserRestClient {
 
@@ -11,11 +11,11 @@ public class UserRestClient {
 		SpringServiceLocator.getSpringServiceLocator();
 		
 		//ReadUserRequest (GET)
-		UserRestWrapperDTO userRestWrapperDTO  = getUserRestServiceClient().readUserRequest("root");
+		RestWrapperDTO<UserDTO> userRestWrapperDTO  = getUserRestServiceClient().readUserRequest("root");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
-		if(userRestWrapperDTO.getUserDTO() != null) {
-			print(userRestWrapperDTO.getUserDTO());
+		if(userRestWrapperDTO.getDto() != null) {
+			print(userRestWrapperDTO.getDto());
 		}
 		
 		
@@ -23,8 +23,8 @@ public class UserRestClient {
 		userRestWrapperDTO  = getUserRestServiceClient().readAllUsersRequest();
 		printErrorsAndMessages(userRestWrapperDTO);
 		
-		if(userRestWrapperDTO.getUserDTOList() != null) {
-			for(UserDTO userDTO : userRestWrapperDTO.getUserDTOList()) {
+		if(userRestWrapperDTO.getDtoList() != null) {
+			for(UserDTO userDTO : userRestWrapperDTO.getDtoList()) {
 				print(userDTO);
 			}
 		}
@@ -33,16 +33,16 @@ public class UserRestClient {
 		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "Beheerder,NormaleGebruiker");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
-		if(userRestWrapperDTO.getUserDTO() != null) {
-			print(userRestWrapperDTO.getUserDTO());
+		if(userRestWrapperDTO.getDto() != null) {
+			print(userRestWrapperDTO.getDto());
 		}
 		
 		//DeleteUserRequest (DELETE)
-		userRestWrapperDTO  = getUserRestServiceClient().deleteUserRequest("tst");
+		userRestWrapperDTO  = getUserRestServiceClient().deleteUserRequest(userRestWrapperDTO.getDto().getId());
 		printErrorsAndMessages(userRestWrapperDTO);
 		
-		if(userRestWrapperDTO.getUserDTO() != null) {
-			print(userRestWrapperDTO.getUserDTO());
+		if(userRestWrapperDTO.getDto() != null) {
+			print(userRestWrapperDTO.getDto());
 		}
 		
 		
@@ -58,7 +58,7 @@ public class UserRestClient {
 		System.out.println(userDTO.getPassword());
 	}
 
-	private static void printErrorsAndMessages(UserRestWrapperDTO userRestWrapperDTO) {
+	private static void printErrorsAndMessages(RestWrapperDTO<UserDTO> userRestWrapperDTO) {
 		for(String error : userRestWrapperDTO.getErrors()) {
 			System.out.println("Fout: " + error);
 		}
