@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
@@ -16,6 +17,7 @@ import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
+import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 import be.luxuryoverdosis.framework.data.factory.UserFactory;
@@ -25,7 +27,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @Service
-public class UserRestServiceSpringImpl implements UserRestService {
+public class UserRestServiceSpringImpl extends BaseRestService implements UserRestService  {
 	@Resource
 	private UserService userService;
 	@Resource
@@ -34,86 +36,84 @@ public class UserRestServiceSpringImpl implements UserRestService {
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
 	@Transactional(readOnly=true)
-	public String readUserRequest(final int id) throws JsonProcessingException {
-		Logging.info(this, "Begin readUserRequest");
+	public String readRequest(final int id) throws JsonProcessingException {
+		Logging.info(this, "Begin readRequest");
 		
-		RestWrapperDTO<UserDTO> userRestWrapperDTO = createUserRestWrapperDTO();
+		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
-			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return checkUserOnThread(restWrapperDTO);
 		}
 		
 		User user = userService.read(id);
 		if (user == null) {
 			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return restWrapperDTO.sendRestErrorWrapperDto(error);
 		}
 		
-		userRestWrapperDTO.setDto(produceUserDTO(user));
+		restWrapperDTO.setDto(produceUserDTO(user));
 		
-		Logging.info(this, "End readUserRequest");
-		return userRestWrapperDTO.sendRestWrapperDto();
+		fillLists(restWrapperDTO);
+		
+		Logging.info(this, "End readRequest");
+		return restWrapperDTO.sendRestWrapperDto();
 	}
 	
 	@Transactional(readOnly=true)
-	public String readUserRequest(final String name, final String password) throws JsonProcessingException {
-		Logging.info(this, "Begin readUserRequest");
+	public String readRequest(final String name, final String password) throws JsonProcessingException {
+		Logging.info(this, "Begin readRequest");
 		
-		RestWrapperDTO<UserDTO> userRestWrapperDTO = createUserRestWrapperDTO();
+		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
-			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
-			return userRestWrapperDTO.sendRestErrorWrapperDto( error);
+			return checkUserOnThread(restWrapperDTO);
 		}
 		
 		User user = userService.readName(name);
 		if (user == null || !user.getEncryptedPassword().equals(password)) {
 			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return restWrapperDTO.sendRestErrorWrapperDto(error);
 		}
 		
-		userRestWrapperDTO.setDto(produceUserDTO(user));
+		restWrapperDTO.setDto(produceUserDTO(user));
 		
-		Logging.info(this, "End readUserRequest");
-		return userRestWrapperDTO.sendRestWrapperDto();
+		Logging.info(this, "End readRequest");
+		return restWrapperDTO.sendRestWrapperDto();
 	}
 
 	@Transactional(readOnly=true)
-	public String readAllUsersRequest() throws JsonProcessingException {
-		Logging.info(this, "Begin readAllUsersRequest");
+	public String readAllRequest() throws JsonProcessingException {
+		Logging.info(this, "Begin readAllRequest");
 		
-		RestWrapperDTO<UserDTO> userRestWrapperDTO = createUserRestWrapperDTO();
+		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
-			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return checkUserOnThread(restWrapperDTO);
 		}
 		
 		ArrayList<UserDTO> userDTOList = userService.listDTO();
 		if (userDTOList == null) {
 			String error =  BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return restWrapperDTO.sendRestErrorWrapperDto(error);
 		}
 		for (UserDTO userDTO : userDTOList) {
 			fillUserRoles(userDTO);
 		}
 		
-		userRestWrapperDTO.setDtoList(userDTOList);
+		restWrapperDTO.setDtoList(userDTOList);
 		
-		Logging.info(this, "End readAllUsersRequest");
-		return userRestWrapperDTO.sendRestWrapperDto();
+		Logging.info(this, "End readAllRequest");
+		return restWrapperDTO.sendRestWrapperDto();
 	}
 
 	@Transactional
-	public String createOrUpdateUserRequest(final UserDTO userDTO) throws JsonProcessingException {
-		Logging.info(this, "Begin createOrUpdateUserRequest");
+	public String createOrUpdateRequest(final UserDTO userDTO) throws JsonProcessingException {
+		Logging.info(this, "Begin createOrUpdateRequest");
 		
-		RestWrapperDTO<UserDTO> userRestWrapperDTO = createUserRestWrapperDTO();
+		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
-			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
-			return userRestWrapperDTO.sendRestErrorWrapperDto(error);
+			return checkUserOnThread(restWrapperDTO);
 		}
 		
 		boolean isNew = false;
@@ -138,47 +138,50 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		
 		try {
 			user = userService.createOrUpdate(user, userDTO.getRoles().toArray(new String[0]));
-			userRestWrapperDTO.setDto(produceUserDTO(user));
+			restWrapperDTO.setDto(produceUserDTO(user));
+			
+			fillLists(restWrapperDTO);
+			
 			if (isNew) {
-				Logging.info(this, "End createOrUpdateUserRequest");
+				Logging.info(this, "End createOrUpdateRequest");
 				String message = BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-				return userRestWrapperDTO.sendRestMessageWrapperDto(message);
+				return restWrapperDTO.sendRestMessageWrapperDto(message);
 			} else {
-				Logging.info(this, "End createOrUpdateUserRequest");
+				Logging.info(this, "End createOrUpdateRequest");
 				String message = BaseSpringServiceLocator.getMessage("update.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-				return userRestWrapperDTO.sendRestMessageWrapperDto(message);
+				return restWrapperDTO.sendRestMessageWrapperDto(message);
 			}
 		} catch (ServiceException e) {
-			return userRestWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
+			//return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
+			throw e;
 		}
 	}
 
 	@Transactional
-	public String deleteUserRequest(int id) throws JsonProcessingException {
-		Logging.info(this, "Begin deleteUserRequest");
+	public String deleteRequest(int id) throws JsonProcessingException {
+		Logging.info(this, "Begin deleteRequest");
 		
-		RestWrapperDTO<UserDTO> userRestWrapperDTO = createUserRestWrapperDTO();
+		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
-			String error = BaseSpringServiceLocator.getMessage("security.access.denied");
-			return userRestWrapperDTO.sendRestErrorWrapperDto( error);
+			return checkUserOnThread(restWrapperDTO);
 		}
 		
 		User user = userService.read(id);
-		userRestWrapperDTO.setDto(produceUserDTO(user));
+		restWrapperDTO.setDto(produceUserDTO(user));
 		if(user != null) {
 			userService.delete(user.getId());
-			Logging.info(this, "Begin deleteUserRequest");
+			Logging.info(this, "Begin deleteRequest");
 			String message = BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return userRestWrapperDTO.sendRestMessageWrapperDto(message);
+			return restWrapperDTO.sendRestMessageWrapperDto(message);
 		} else {
-			Logging.info(this, "Begin deleteUserRequest");
+			Logging.info(this, "Begin deleteRequest");
 			String message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return userRestWrapperDTO.sendRestMessageWrapperDto(message);
+			return restWrapperDTO.sendRestMessageWrapperDto(message);
 		}
 	}
 
-	private RestWrapperDTO<UserDTO> createUserRestWrapperDTO() {
+	private RestWrapperDTO<UserDTO> createRestWrapperDTO() {
 		return new RestWrapperDTO<UserDTO>();
 	}
 	
@@ -195,5 +198,10 @@ public class UserRestServiceSpringImpl implements UserRestService {
 		}
 		
 		return userDTO;
+	}
+	
+	private void fillLists(RestWrapperDTO<UserDTO> restWrapperDTO) {
+		ArrayList<RoleDTO> roles = roleService.listDTO(SearchQuery.PROCENT);
+		restWrapperDTO.addList("roles", roles);
 	}
 }
