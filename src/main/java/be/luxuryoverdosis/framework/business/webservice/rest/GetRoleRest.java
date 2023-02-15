@@ -11,48 +11,42 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
-import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.business.webservice.interfaces.RoleRestService;
+import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/role")
 @CrossOrigin(origins = {"${rest.origin}"})
-public class GetUserRest {
+public class GetRoleRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
-		return getUserRestService().readRequest(id);
-	}
-	
-	@RequestMapping(value = "/readRequestName", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequestName(@RequestParam(value="name") String name, @RequestParam(value="password") String password) throws JsonProcessingException {
-		return getUserRestService().readRequest(name, password);
+		return getRoleRestService().readRequest(id);
 	}
 	
 	@RequestMapping(value = "/readAllRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readAllRequest() throws JsonProcessingException {
-		return getUserRestService().readAllRequest();
+		return getRoleRestService().readAllRequest();
 	}
 
 	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String createOrUpdateRequest(@RequestBody() UserDTO userDTO) throws JsonProcessingException {
+	public String createOrUpdateRequest(@RequestBody() RoleDTO roleDTO) throws JsonProcessingException {
 		try {
-			return getUserRestService().createOrUpdateRequest(userDTO);
+			return getRoleRestService().createOrUpdateRequest(roleDTO);
 		} catch (ServiceException e) {
-			RestWrapperDTO<UserDTO> restWrapperDTO = new RestWrapperDTO<UserDTO>();
+			RestWrapperDTO<RoleDTO> restWrapperDTO = new RestWrapperDTO<RoleDTO>();
 			return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
 		}
-		
 	}
 	
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
-		return getUserRestService().deleteRequest(id);
+		return getRoleRestService().deleteRequest(id);
 	}
 	
-	private UserRestService getUserRestService() {
-		return BaseSpringServiceLocator.getBean(UserRestService.class);
+	private RoleRestService getRoleRestService() {
+		return BaseSpringServiceLocator.getBean(RoleRestService.class);
 	}
 	
 }
