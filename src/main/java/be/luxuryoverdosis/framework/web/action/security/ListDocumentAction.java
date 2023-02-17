@@ -13,7 +13,7 @@ import org.apache.struts.action.ActionMessages;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
-import be.luxuryoverdosis.framework.data.to.Document;
+import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
@@ -56,7 +56,7 @@ public class ListDocumentAction extends AjaxAction {
 	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
         Logging.info(this, "Begin Ajax");
         
-        ArrayList<Document> documentList = getDocumentService().list();
+        ArrayList<DocumentDTO> documentList = getDocumentService().listDTO();
         if (documentList.size() > 0) {
             super.sendAsJson(response, documentList);
         }

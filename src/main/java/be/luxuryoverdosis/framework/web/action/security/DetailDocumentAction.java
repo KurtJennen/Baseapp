@@ -15,7 +15,6 @@ import org.apache.struts.upload.FormFile;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
-import be.luxuryoverdosis.framework.data.dto.FileDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.DetailDocumentForm;
@@ -40,9 +39,9 @@ public class DetailDocumentAction extends DispatchAction {
 		DetailDocumentForm documentForm = (DetailDocumentForm) form;
 		documentForm.setId(documentDTO.getId());
 		documentForm.setType(documentDTO.getType());
-		documentForm.setFileName(documentDTO.getFileDTO().getFileName());
-		documentForm.setFileSize(documentDTO.getFileDTO().getFileSize());
-		documentForm.setContentType(documentDTO.getFileDTO().getContentType());
+		documentForm.setFileName(documentDTO.getFileName());
+		documentForm.setFileSize(documentDTO.getFileSize());
+		documentForm.setContentType(documentDTO.getContentType());
 		
 		if(BaseWebConstants.SAVE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.document")));
@@ -82,12 +81,14 @@ public class DetailDocumentAction extends DispatchAction {
 		DetailDocumentForm documentForm = (DetailDocumentForm) form;
 		
 		FormFile formFile = documentForm.getFormFile();
-		FileDTO fileDTO = new FileDTO(formFile.getFileData(), formFile.getFileName(), formFile.getFileSize(), formFile.getContentType());
 		
 		DocumentDTO documentDTO = new DocumentDTO();
 		documentDTO.setId(documentForm.getId());
 		documentDTO.setType(documentForm.getType());
-		documentDTO.setFileDTO(fileDTO);
+		documentDTO.setFileData(formFile.getFileData());
+		documentDTO.setFileName(formFile.getFileName());
+		documentDTO.setFileSize(formFile.getFileSize());
+		documentDTO.setContentType(formFile.getContentType());
 		
 		documentDTO = getDocumentService().createOrUpdateDTO(documentDTO);
 		if(documentForm.getId() < 0) {

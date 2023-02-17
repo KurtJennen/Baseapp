@@ -11,9 +11,9 @@ public class DocumentFactory {
 		DocumentDTO documentDTO = new DocumentDTO();
 		documentDTO.setId(document.getId());
 		documentDTO.setType(document.getType());
-		documentDTO.getFileDTO().setFileName(document.getFileName());
-		documentDTO.getFileDTO().setFileSize(document.getFileSize());
-		documentDTO.getFileDTO().setContentType(document.getContentType());
+		documentDTO.setFileName(document.getFileName());
+		documentDTO.setFileSize(document.getFileSize());
+		documentDTO.setContentType(document.getContentType());
 		
 		return documentDTO;
 	}
@@ -24,12 +24,10 @@ public class DocumentFactory {
 		}
 		document.setId(documentDTO.getId());
 		document.setType(documentDTO.getType());
-		if(documentDTO.getFileDTO() != null) {
-			document.setFileName(documentDTO.getFileDTO().getFileName());
-			document.setFileData(documentDTO.getFileDTO().getFileData());
-			document.setFileSize(documentDTO.getFileDTO().getFileSize());
-			document.setContentType(documentDTO.getFileDTO().getContentType());
-		}
+		document.setFileName(documentDTO.getFileName());
+		document.setFileData(documentDTO.getFileData());
+		document.setFileSize(documentDTO.getFileSize());
+		document.setContentType(documentDTO.getContentType());
 		
 		return document;
 	}
