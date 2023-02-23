@@ -1,37 +1,30 @@
 package be.luxuryoverdosis.framework.business.webservice.rest;
 
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import be.luxuryoverdosis.framework.base.FileContentType;
+import be.luxuryoverdosis.framework.business.enumeration.DocumentTypeEnum;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
-import be.luxuryoverdosis.framework.data.dto.UserDTO;
+import be.luxuryoverdosis.framework.business.webservice.interfaces.DocumentRestService;
+import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/document")
 @CrossOrigin(origins = {"${rest.origin}"})
-public class GetUserRest {
+public class GetDocumentRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
 		try {
-			return getUserRestService().readRequest(id);
-		} catch (Exception e) {
-			return createWrapperDTO(e);
-		}
-	}
-	
-	@RequestMapping(value = "/readRequestName", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequestName(@RequestParam(value="name") String name, @RequestParam(value="password") String password) throws JsonProcessingException {
-		try {
-			return getUserRestService().readRequest(name, password);
+			return getDocumentRestService().readRequest(id);
 		} catch (Exception e) {
 			return createWrapperDTO(e);
 		}
@@ -40,17 +33,24 @@ public class GetUserRest {
 	@RequestMapping(value = "/readAllRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readAllRequest() throws JsonProcessingException {
 		try {
-			return getUserRestService().readAllRequest();
+			return getDocumentRestService().readAllRequest();
 		} catch (Exception e) {
 			return createWrapperDTO(e);
 		}
-		
 	}
 
-	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String createOrUpdateRequest(@RequestBody() UserDTO userDTO) throws JsonProcessingException {
+	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String createOrUpdateRequest(@RequestParam(value="id") int id, @RequestParam(value="myFile") MultipartFile file) throws JsonProcessingException {
 		try {
-			return getUserRestService().createOrUpdateRequest(userDTO);
+			DocumentDTO documentDTO = new DocumentDTO();
+			documentDTO.setId(id);
+			documentDTO.setType(DocumentTypeEnum.USER.getCode());
+			documentDTO.setFileData(file.getBytes());
+			documentDTO.setFileName(file.getOriginalFilename());
+			documentDTO.setFileSize(Long.valueOf(file.getSize()).intValue());
+			documentDTO.setContentType(file.getContentType());
+			
+			return getDocumentRestService().createOrUpdateRequest(documentDTO);
 		} catch (Exception e) {
 			return createWrapperDTO(e);
 		}
@@ -59,19 +59,18 @@ public class GetUserRest {
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
 		try {
-			return getUserRestService().deleteRequest(id);
+			return getDocumentRestService().deleteRequest(id);
 		} catch (Exception e) {
 			return createWrapperDTO(e);
 		}
 	}
 	
-	private UserRestService getUserRestService() {
-		return BaseSpringServiceLocator.getBean(UserRestService.class);
+	private DocumentRestService getDocumentRestService() {
+		return BaseSpringServiceLocator.getBean(DocumentRestService.class);
 	}
 	
 	private String createWrapperDTO(Exception e) throws JsonProcessingException {
-		RestWrapperDTO<UserDTO> restWrapperDTO = new RestWrapperDTO<UserDTO>();
+		RestWrapperDTO<DocumentDTO> restWrapperDTO = new RestWrapperDTO<DocumentDTO>();
 		return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
-	}	
-	
+	}
 }

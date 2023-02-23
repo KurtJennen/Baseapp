@@ -14,8 +14,8 @@ public interface DocumentService {
 	public Document read(int id);
 	public void delete(int id);
 	
-	public ArrayList<Document> list();
 	public ArrayList<Document> list(String type);
+	public ArrayList<DocumentDTO> listDTO();
 
 	@SuppressWarnings("rawtypes")
 	public File createDocument(final Document document, Object data, Class clazz);

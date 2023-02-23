@@ -21,31 +21,24 @@ public class FileDTO extends BaseDTO {
 	public byte[] getFileData() {
 		return fileData;
 	}
-
 	public void setFileData(byte[] fileData) {
 		this.fileData = fileData;
 	}
-
 	public String getFileName() {
 		return fileName;
 	}
-
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
 	}
-
 	public int getFileSize() {
 		return fileSize;
 	}
-
 	public void setFileSize(int fileSize) {
 		this.fileSize = fileSize;
 	}
-
 	public String getContentType() {
 		return contentType;
 	}
-
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
 	}

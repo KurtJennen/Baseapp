@@ -3,13 +3,14 @@ package be.luxuryoverdosis.framework.data.dao.implementations;
 import java.sql.Blob;
 import java.util.ArrayList;
 
-import org.hibernate.query.Query;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import be.luxuryoverdosis.framework.data.dao.AbstractHibernateDaoSupport;
 import be.luxuryoverdosis.framework.data.dao.BaseQueryParameters;
 import be.luxuryoverdosis.framework.data.dao.interfaces.DocumentHibernateDAO;
+import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -44,10 +45,11 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Document> list() {
+	public ArrayList<Document> list(final String type) {
 		Logging.info(this, "Begin listDocument");
 		
-		Query<Document> query = getCurrentSession().getNamedQuery(Document.SELECT_DOCUMENTS);
+		Query<Document> query = getCurrentSession().getNamedQuery(Document.SELECT_DOCUMENTS_BY_TYPE);
+		query.setParameter(BaseQueryParameters.TYPE, type);
 		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
 		
 		Logging.info(this, "End listDocument");
@@ -55,12 +57,11 @@ public class DocumentHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<Document> list(final String type) {
+	public ArrayList<DocumentDTO> listDTO() {
 		Logging.info(this, "Begin listDocument");
 		
-		Query<Document> query = getCurrentSession().getNamedQuery(Document.SELECT_DOCUMENTS_BY_TYPE);
-		query.setParameter(BaseQueryParameters.TYPE, type);
-		ArrayList<Document> arrayList = (ArrayList<Document>) query.list();
+		Query<DocumentDTO> query = getCurrentSession().getNamedQuery(Document.SELECT_DOCUMENTS_DTO);
+		ArrayList<DocumentDTO> arrayList = (ArrayList<DocumentDTO>) query.list();
 		
 		Logging.info(this, "End listDocument");
 		return arrayList;

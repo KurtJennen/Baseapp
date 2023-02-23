@@ -17,14 +17,14 @@ import org.hibernate.annotations.Proxy;
 @Table(name="base_document")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Document.SELECT_DOCUMENTS, query=Document.Queries.SELECT_DOCUMENTS),
 	@NamedQuery(name=Document.SELECT_DOCUMENTS_BY_TYPE, query=Document.Queries.SELECT_DOCUMENTS_BY_TYPE),
+	@NamedQuery(name=Document.SELECT_DOCUMENTS_DTO, query=Document.Queries.SELECT_DOCUMENTS_DTO),
 	@NamedQuery(name=Document.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME, query=Document.Queries.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME)
 })
 @Proxy(lazy=false)
 public class Document extends BaseTO {
-	public static final String SELECT_DOCUMENTS = "selectDocuments";
 	public static final String SELECT_DOCUMENTS_BY_TYPE = "selectDocumentsByType";
+	public static final String SELECT_DOCUMENTS_DTO = "selectDocumentsDto";
 	public static final String COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME = "countDocumentsByTypeAndFilename";
 	
 	@Column(name="type")
@@ -45,19 +45,6 @@ public class Document extends BaseTO {
 	@Column(name="Contenttype")
 	private String contentType;
 	
-	public Document() {
-		super();
-	}
-	
-	public Document(int id, String type, String fileName, int fileSize, String contentType) {
-		super();
-		setId(id);
-		this.type = type;
-		this.fileName = fileName;
-		this.fileSize = fileSize;
-		this.contentType = contentType;
-	}
-
 	public String getType() {
 		return type;
 	}
@@ -96,7 +83,11 @@ public class Document extends BaseTO {
 	}
 	
 	public static final class Queries {
-		public static final String SELECT_DOCUMENTS = "select new be.luxuryoverdosis.framework.data.to.Document( "
+		public static final String SELECT_DOCUMENTS_BY_TYPE = "from Document d "
+				+ "where d.type = :type "
+				+ "order by d.fileName asc";
+		
+		public static final String SELECT_DOCUMENTS_DTO = "select new be.luxuryoverdosis.framework.data.dto.DocumentDTO( "
 				+ "d.id, "
 				+ "d.type, "
 				+ "d.fileName, "
@@ -105,10 +96,6 @@ public class Document extends BaseTO {
 				+ ") "
 				+ "from Document d "
 				+ "order by d.type, d.fileName";
-		
-		public static final String SELECT_DOCUMENTS_BY_TYPE = "from Document d "
-				+ "where d.type = :type "
-				+ "order by d.fileName asc";
 		
 		public static final String COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME = "select count(*) "
 				+ "from Document d "

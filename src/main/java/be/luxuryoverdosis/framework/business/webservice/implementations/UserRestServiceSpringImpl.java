@@ -9,29 +9,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
-import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
+import be.luxuryoverdosis.framework.data.dao.interfaces.RoleHibernateDAO;
 import be.luxuryoverdosis.framework.data.dao.interfaces.UserRoleHibernateDAO;
-import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
-import be.luxuryoverdosis.framework.data.factory.UserFactory;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
-import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.logging.Logging;
-import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @Service
 public class UserRestServiceSpringImpl extends BaseRestService implements UserRestService  {
 	@Resource
 	private UserService userService;
 	@Resource
-	private RoleService roleService;
+	private RoleHibernateDAO roleHibernateDAO;
 	@Resource
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
@@ -45,15 +40,10 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		User user = userService.read(id);
-		if (user == null) {
-			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestErrorWrapperDto(error);
-		}
+		UserDTO userDTO = userService.readDTO(id);		
+		restWrapperDTO.setDto(userDTO);
 		
-		restWrapperDTO.setDto(produceUserDTO(user));
-		
-		fillLists(restWrapperDTO);
+		fillUserRoles(userDTO);
 		
 		Logging.info(this, "End readRequest");
 		return restWrapperDTO.sendRestWrapperDto();
@@ -69,13 +59,13 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		User user = userService.readName(name);
-		if (user == null || !user.getEncryptedPassword().equals(password)) {
+		UserDTO userDTO = userService.readNameDTO(name);
+		if (userDTO != null && !userDTO.getPassword().equals(Encryption.decode(password))) {
 			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 			return restWrapperDTO.sendRestErrorWrapperDto(error);
 		}
 		
-		restWrapperDTO.setDto(produceUserDTO(user));
+		restWrapperDTO.setDto(userDTO);
 		
 		Logging.info(this, "End readRequest");
 		return restWrapperDTO.sendRestWrapperDto();
@@ -92,14 +82,6 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 		}
 		
 		ArrayList<UserDTO> userDTOList = userService.listDTO();
-		if (userDTOList == null) {
-			String error =  BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestErrorWrapperDto(error);
-		}
-		for (UserDTO userDTO : userDTOList) {
-			fillUserRoles(userDTO);
-		}
-		
 		restWrapperDTO.setDtoList(userDTOList);
 		
 		Logging.info(this, "End readAllRequest");
@@ -116,45 +98,12 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		boolean isNew = false;
+		UserDTO savedUserDTO = userService.createOrUpdateDTO(userDTO, userDTO.getRoles().toArray(new String[0]));
+		fillUserRoles(savedUserDTO);
+		restWrapperDTO.setDto(savedUserDTO);
 		
-		User user = null;
-		if(userDTO.getId() > 0) {
-			user = userService.read(userDTO.getId());
-		} 
-		if(user == null) {
-			user = userService.readName(userDTO.getName());
-		}
-		if (user == null) {
-			user = new User();
-			isNew = true;
-		}
-		
-		user.setEmail(userDTO.getEmail());
-		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
-		user.setName(userDTO.getName());
-		user.setUserName(userDTO.getUserName());
-		user.setDateExpiration(userDTO.getDateExpiration());
-		
-		try {
-			user = userService.createOrUpdate(user, userDTO.getRoles().toArray(new String[0]));
-			restWrapperDTO.setDto(produceUserDTO(user));
-			
-			fillLists(restWrapperDTO);
-			
-			if (isNew) {
-				Logging.info(this, "End createOrUpdateRequest");
-				String message = BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-				return restWrapperDTO.sendRestMessageWrapperDto(message);
-			} else {
-				Logging.info(this, "End createOrUpdateRequest");
-				String message = BaseSpringServiceLocator.getMessage("update.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-				return restWrapperDTO.sendRestMessageWrapperDto(message);
-			}
-		} catch (ServiceException e) {
-			//return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
-			throw e;
-		}
+		Logging.info(this, "End createOrUpdateRequest");
+		return restWrapperDTO.sendRestWrapperDto();
 	}
 
 	@Transactional
@@ -167,41 +116,24 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		User user = userService.read(id);
-		restWrapperDTO.setDto(produceUserDTO(user));
-		if(user != null) {
-			userService.delete(user.getId());
-			Logging.info(this, "Begin deleteRequest");
-			String message = BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestMessageWrapperDto(message);
-		} else {
-			Logging.info(this, "Begin deleteRequest");
-			String message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestMessageWrapperDto(message);
-		}
+		userService.delete(id);
+		
+		Logging.info(this, "End deleteRequest");
+		return restWrapperDTO.sendRestWrapperDto();
 	}
 
 	private RestWrapperDTO<UserDTO> createRestWrapperDTO() {
 		return new RestWrapperDTO<UserDTO>();
 	}
 	
-	private UserDTO produceUserDTO(User user) {
-		UserDTO userDTO = UserFactory.produceUserDTO(user);
-		
-		return fillUserRoles(userDTO);
-	}
-	
 	private UserDTO fillUserRoles(UserDTO userDTO) {
+		userDTO.setRoles(new ArrayList<String>());
+		
 		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
 		for (UserRoleDTO userRoleDTO : userRolesList) {
 			userDTO.getRoles().add(userRoleDTO.getRoleName());
 		}
 		
 		return userDTO;
-	}
-	
-	private void fillLists(RestWrapperDTO<UserDTO> restWrapperDTO) {
-		ArrayList<RoleDTO> roles = roleService.listDTO(SearchQuery.PROCENT);
-		restWrapperDTO.addList("roles", roles);
 	}
 }

@@ -9,31 +9,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import be.luxuryoverdosis.framework.base.SearchQuery;
-import be.luxuryoverdosis.framework.business.service.interfaces.RoleService;
+import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
-import be.luxuryoverdosis.framework.business.webservice.interfaces.RoleRestService;
-import be.luxuryoverdosis.framework.data.dto.RoleDTO;
+import be.luxuryoverdosis.framework.business.webservice.interfaces.DocumentRestService;
+import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 import be.luxuryoverdosis.framework.logging.Logging;
 
 @Service
-public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRestService {
+public class DocumentRestServiceSpringImpl extends BaseRestService implements DocumentRestService {
 	@Resource
-	private RoleService roleService;
+	private DocumentService documentService;
 	
 	@Transactional(readOnly=true)
 	public String readRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin readRequest");
 		
-		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
+		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		RoleDTO roleDTO = roleService.readDTO(id);
-		restWrapperDTO.setDto(roleDTO);
+		DocumentDTO documentDTO = documentService.readDTO(id);
+		restWrapperDTO.setDto(documentDTO);
 		
 		Logging.info(this, "End readRequest");
 		return restWrapperDTO.sendRestWrapperDto();
@@ -43,54 +42,54 @@ public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRe
 	public String readAllRequest() throws JsonProcessingException {
 		Logging.info(this, "Begin readAllRequest");
 		
-		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
+		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		ArrayList<RoleDTO> roleDTOList = roleService.listDTO(SearchQuery.PROCENT);
-		restWrapperDTO.setDtoList(roleDTOList);
+		ArrayList<DocumentDTO> documentDTOList = documentService.listDTO();
+		restWrapperDTO.setDtoList(documentDTOList);
 		
 		Logging.info(this, "End readAllUserRequest");
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 
 	@Transactional
-	public String createOrUpdateRequest(final RoleDTO roleDTO) throws JsonProcessingException {
+	public String createOrUpdateRequest(final DocumentDTO documentDTO) throws JsonProcessingException {
 		Logging.info(this, "Begin createOrUpdateRequest");
 		
-		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
+		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		RoleDTO savedRoleDTO =  roleService.createOrUpdateDTO(roleDTO);
-		restWrapperDTO.setDto(savedRoleDTO);
+		DocumentDTO	savedDocumentDTO = documentService.createOrUpdateDTO(documentDTO);
+		restWrapperDTO.setDto(savedDocumentDTO);
 		
 		Logging.info(this, "End createOrUpdateRequest");
-		return restWrapperDTO.sendRestWrapperDto();
+		return restWrapperDTO.sendRestWrapperDto(); 
 	}
 
 	@Transactional
 	public String deleteRequest(final int id) throws JsonProcessingException {
-		Logging.info(this, "Begin deleteRequest");
+		Logging.info(this, "Begin deleterRequest");
 		
-		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
+		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
 		if(ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		roleService.delete(id);
+		documentService.delete(id);
 		
-		Logging.info(this, "End deleteRequest");
-		return restWrapperDTO.sendRestWrapperDto();
+		Logging.info(this, "Begin deleterRequest");
+		return restWrapperDTO.sendRestWrapperDto(); 
 	}
 
-	private RestWrapperDTO<RoleDTO> createRestWrapperDTO() {
-		return new RestWrapperDTO<RoleDTO>();
+	private RestWrapperDTO<DocumentDTO> createRestWrapperDTO() {
+		return new RestWrapperDTO<DocumentDTO>();
 	}
 	
 }

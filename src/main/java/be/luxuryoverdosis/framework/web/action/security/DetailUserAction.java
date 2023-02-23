@@ -29,7 +29,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class DetailUserAction extends NavigationAction {
 	private void storeListsInSession(HttpServletRequest request, DetailUserForm detailUserForm) {
-		 ArrayList<UserRoleDTO> linkedRolesList = getUserRoleService().listDTO(detailUserForm.getId());
+		ArrayList<UserRoleDTO> linkedRolesList = getUserRoleService().listDTO(detailUserForm.getId());
         SessionManager.putInSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST, linkedRolesList);
         
         ArrayList<RoleDTO> unlinkedRolesList = getRoleService().listNotInUserRoleForUserDTO(detailUserForm.getId());

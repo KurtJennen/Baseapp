@@ -97,6 +97,20 @@ public class UserServiceSpringImpl implements UserService {
 		return this.readDTO(user.getId());
 	}
 	
+	public UserDTO createOrUpdateDTO(final UserDTO userDTO, final String[] unlinkedRoleName) {
+		Logging.info(this, "Begin createUserDTO");
+		
+		User user = new User();
+		if(userDTO.getId() > 0) {
+			user = this.read(userDTO.getId());
+		}
+		user = UserFactory.produceUser(user, userDTO);
+		user = this.createOrUpdate(user, unlinkedRoleName);
+		
+		Logging.info(this, "End createUserDTO");
+		return this.readDTO(user.getId());
+	}
+	
 	@Transactional(readOnly=true)
 	public UserDTO readDTO(final int id) {
 		Logging.info(this, "Begin readUserDTO");

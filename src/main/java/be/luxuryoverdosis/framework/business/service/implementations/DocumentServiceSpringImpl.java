@@ -101,10 +101,10 @@ public class DocumentServiceSpringImpl implements DocumentService {
 	}
 
 	@Transactional(readOnly=true)
-	public ArrayList<Document> list() {
+	public ArrayList<DocumentDTO> listDTO() {
 		Logging.info(this, "Begin listJob");
-		ArrayList<Document> arrayList = null;
-		arrayList = documentHibernateDAO.list();
+		ArrayList<DocumentDTO> arrayList = null;
+		arrayList = documentHibernateDAO.listDTO();
 		Logging.info(this, "End listJob");
 		return arrayList;
 	}
