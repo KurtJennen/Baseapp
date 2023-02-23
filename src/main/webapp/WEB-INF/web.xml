@@ -116,6 +116,8 @@
 		<servlet-name>spring-rest</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+		</multipart-config>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring-rest</servlet-name>

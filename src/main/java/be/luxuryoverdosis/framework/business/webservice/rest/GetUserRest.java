@@ -14,7 +14,6 @@ import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.UserRestService;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
-import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @RestController
 @RequestMapping("/user")
@@ -22,37 +21,57 @@ import be.luxuryoverdosis.framework.web.exception.ServiceException;
 public class GetUserRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
-		return getUserRestService().readRequest(id);
+		try {
+			return getUserRestService().readRequest(id);
+		} catch (Exception e) {
+			return createWrapperDTO(e);
+		}
 	}
 	
 	@RequestMapping(value = "/readRequestName", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readRequestName(@RequestParam(value="name") String name, @RequestParam(value="password") String password) throws JsonProcessingException {
-		return getUserRestService().readRequest(name, password);
+		try {
+			return getUserRestService().readRequest(name, password);
+		} catch (Exception e) {
+			return createWrapperDTO(e);
+		}
 	}
 	
 	@RequestMapping(value = "/readAllRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String readAllRequest() throws JsonProcessingException {
-		return getUserRestService().readAllRequest();
+		try {
+			return getUserRestService().readAllRequest();
+		} catch (Exception e) {
+			return createWrapperDTO(e);
+		}
+		
 	}
 
 	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String createOrUpdateRequest(@RequestBody() UserDTO userDTO) throws JsonProcessingException {
 		try {
 			return getUserRestService().createOrUpdateRequest(userDTO);
-		} catch (ServiceException e) {
-			RestWrapperDTO<UserDTO> restWrapperDTO = new RestWrapperDTO<UserDTO>();
-			return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
+		} catch (Exception e) {
+			return createWrapperDTO(e);
 		}
-		
 	}
 	
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
 	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
-		return getUserRestService().deleteRequest(id);
+		try {
+			return getUserRestService().deleteRequest(id);
+		} catch (Exception e) {
+			return createWrapperDTO(e);
+		}
 	}
 	
 	private UserRestService getUserRestService() {
 		return BaseSpringServiceLocator.getBean(UserRestService.class);
 	}
+	
+	private String createWrapperDTO(Exception e) throws JsonProcessingException {
+		RestWrapperDTO<UserDTO> restWrapperDTO = new RestWrapperDTO<UserDTO>();
+		return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
+	}	
 	
 }

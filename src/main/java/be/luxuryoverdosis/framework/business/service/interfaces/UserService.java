@@ -21,6 +21,7 @@ public interface UserService {
 	public void validate(User user);
 	
 	public UserDTO createOrUpdateDTO(UserDTO userDTO);
+	public UserDTO createOrUpdateDTO(UserDTO userDTO,  String[] unlinkedRoleName);
 	public UserDTO readDTO(int id);
 	public UserDTO readNameDTO(String name);
 	

@@ -5,21 +5,16 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.UnexpectedRollbackException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
 import be.luxuryoverdosis.framework.business.webservice.interfaces.DocumentRestService;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
-import be.luxuryoverdosis.framework.data.factory.DocumentFactory;
 import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
-import be.luxuryoverdosis.framework.data.to.Document;
 import be.luxuryoverdosis.framework.logging.Logging;
-import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
 @Service
 public class DocumentRestServiceSpringImpl extends BaseRestService implements DocumentRestService {
@@ -36,13 +31,8 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		Document document = documentService.read(id);
-		if (document == null) {
-			String error = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.document")});
-			return restWrapperDTO.sendRestErrorWrapperDto(error);
-		}
-		
-		restWrapperDTO.setDto(produceDocumentDTO(document));
+		DocumentDTO documentDTO = documentService.readDTO(id);
+		restWrapperDTO.setDto(documentDTO);
 		
 		Logging.info(this, "End readRequest");
 		return restWrapperDTO.sendRestWrapperDto();
@@ -59,18 +49,13 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		}
 		
 		ArrayList<DocumentDTO> documentDTOList = documentService.listDTO();
-		if (documentDTOList == null) {
-			String error =  BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.document")});
-			return restWrapperDTO.sendRestErrorWrapperDto(error);
-		}
-		
 		restWrapperDTO.setDtoList(documentDTOList);
 		
 		Logging.info(this, "End readAllUserRequest");
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 
-	@Transactional(rollbackFor = UnexpectedRollbackException.class)
+	@Transactional
 	public String createOrUpdateRequest(final DocumentDTO documentDTO) throws JsonProcessingException {
 		Logging.info(this, "Begin createOrUpdateRequest");
 		
@@ -80,36 +65,11 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		boolean isNew = false;
+		DocumentDTO	savedDocumentDTO = documentService.createOrUpdateDTO(documentDTO);
+		restWrapperDTO.setDto(savedDocumentDTO);
 		
-		Document document = null;
-		if(documentDTO.getId() > 0) {
-			document = documentService.read(documentDTO.getId());
-		} 
-		if (document == null) {
-			document = new Document();
-			isNew = true;
-		}
-		
-		document = DocumentFactory.produceDocument(document, documentDTO);
-		//document.setName(documentDTO.getName());
-		
-		try {
-			document = documentService.createOrUpdate(document);
-			restWrapperDTO.setDto(produceDocumentDTO(document));
-			if (isNew) {
-				Logging.info(this, "End createOrUpdateRequest");
-				String message = BaseSpringServiceLocator.getMessage("save.success", new Object[]{BaseSpringServiceLocator.getMessage("table.document")});
-				return restWrapperDTO.sendRestMessageWrapperDto(message);
-			} else {
-				Logging.info(this, "End createOrUpdateRequest");
-				String message = BaseSpringServiceLocator.getMessage("update.success", new Object[]{BaseSpringServiceLocator.getMessage("table.document")});
-				return restWrapperDTO.sendRestMessageWrapperDto(message);
-			}
-		} catch (ServiceException e) {
-			//return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
-			throw e;
-		}
+		Logging.info(this, "End createOrUpdateRequest");
+		return restWrapperDTO.sendRestWrapperDto(); 
 	}
 
 	@Transactional
@@ -122,25 +82,14 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
-		Document document = documentService.read(id);
-		restWrapperDTO.setDto(produceDocumentDTO(document));
-		if(document != null) {
-			documentService.delete(document.getId());
-			Logging.info(this, "Begin deleteRequest");
-			String message = BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestMessageWrapperDto(message);
-		} else {
-			Logging.info(this, "Begin deleteRequest");
-			String message = BaseSpringServiceLocator.getMessage("exists.not", new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
-			return restWrapperDTO.sendRestMessageWrapperDto(message);
-		}
+		documentService.delete(id);
+		
+		Logging.info(this, "Begin deleterRequest");
+		return restWrapperDTO.sendRestWrapperDto(); 
 	}
 
 	private RestWrapperDTO<DocumentDTO> createRestWrapperDTO() {
 		return new RestWrapperDTO<DocumentDTO>();
 	}
 	
-	private DocumentDTO produceDocumentDTO(Document document) {
-		return DocumentFactory.produceDocumentDTO(document);
-	}
 }

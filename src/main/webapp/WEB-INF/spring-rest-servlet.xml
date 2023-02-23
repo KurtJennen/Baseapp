@@ -17,4 +17,8 @@
 	
 	<context:property-placeholder location="classpath:be/luxuryoverdosis/resources/properties/ng.properties"/>
 	
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property name="maxUploadSize" value="-1"></property>
+	</bean>
+	
 </beans> 
