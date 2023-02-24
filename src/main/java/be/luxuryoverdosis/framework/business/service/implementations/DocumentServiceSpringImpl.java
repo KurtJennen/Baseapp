@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
 import be.luxuryoverdosis.framework.base.FileType;
+import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.base.tool.JaxbTool;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.DocumentHibernateDAO;
@@ -98,6 +99,18 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		documentHibernateDAO.delete(id);
 		
 		Logging.info(this, "End deleteDocument");
+	}
+	
+	@Transactional(readOnly=true)
+	public byte[] downloadFile(int id){
+		Logging.info(this, "Begin downloadFileDocument");
+		
+		Document document = documentHibernateDAO.read(id);
+		byte[] fileData = BlobTool.convertBlobToBytes(document.getFile());
+		
+		Logging.info(this, "End downloadFileDocument");
+		
+		return fileData;
 	}
 
 	@Transactional(readOnly=true)

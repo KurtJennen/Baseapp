@@ -9,4 +9,5 @@ public interface DocumentRestService {
 	public String readAllRequest() throws JsonProcessingException;
 	public String createOrUpdateRequest(DocumentDTO DocumentDTO) throws JsonProcessingException;
 	public String deleteRequest(int id) throws JsonProcessingException;
+	public byte[] downloadRequest(int id) throws JsonProcessingException;
 }

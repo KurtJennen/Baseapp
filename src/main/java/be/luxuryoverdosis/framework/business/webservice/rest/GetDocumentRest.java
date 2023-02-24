@@ -1,6 +1,13 @@
 package be.luxuryoverdosis.framework.business.webservice.rest;
 
+import java.io.ByteArrayInputStream;
+
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,6 +69,25 @@ public class GetDocumentRest {
 			return getDocumentRestService().deleteRequest(id);
 		} catch (Exception e) {
 			return createWrapperDTO(e);
+		}
+	}
+	
+	@RequestMapping(value = "/downloadRequest", method = RequestMethod.GET)
+	public ResponseEntity<Resource> downloadRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+		try {
+			byte [] fileData = getDocumentRestService().downloadRequest(id);
+			
+			InputStreamResource inputStreamResource = new InputStreamResource(new ByteArrayInputStream(fileData));
+//			return ResponseEntity.ok().contentType(MediaType.APPLICATION_OCTET_STREAM).body(inputStreamResource);
+			
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentLength(fileData.length);
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.set(HttpHeaders.CONTENT_DISPOSITION, "\"attachment;filename=Test.odt");
+			
+			return new ResponseEntity<Resource>(inputStreamResource, headers, HttpStatus.OK);
+		} catch (Exception e) {
+			return null;
 		}
 	}
 	

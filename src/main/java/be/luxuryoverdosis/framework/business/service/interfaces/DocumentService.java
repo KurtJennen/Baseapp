@@ -13,6 +13,7 @@ public interface DocumentService {
 	public Document createOrUpdate(Document document);
 	public Document read(int id);
 	public void delete(int id);
+	public byte[] downloadFile(int id);
 	
 	public ArrayList<Document> list(String type);
 	public ArrayList<DocumentDTO> listDTO();
