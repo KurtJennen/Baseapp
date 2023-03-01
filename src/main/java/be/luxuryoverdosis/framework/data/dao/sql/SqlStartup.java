@@ -365,4 +365,7 @@ public class SqlStartup {
 			"PRIMARY KEY (Id), " +
 			"CONSTRAINT JOB_HDR_SELECTED_FK FOREIGN KEY (Batch_Job_Hdr_Selected_Id) REFERENCES batch_job_hdr_selected (Id))";
 	
+	public final static String SQL_230228a = "ALTER TABLE base_document MODIFY COLUMN " +
+			"Contenttype varchar(256) DEFAULT NULL";
+	
 }

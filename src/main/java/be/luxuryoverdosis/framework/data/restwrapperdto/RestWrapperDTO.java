@@ -14,6 +14,7 @@ public class RestWrapperDTO<T> {
 	private T dto;
 	private ArrayList<T> dtoList = new ArrayList<T>();
 	private HashMap<String, ArrayList<? extends BaseDTO>> lists = new HashMap<>();
+	private byte[] fileData;
 
 	public ArrayList<String> getErrors() {
 		return errors;
@@ -47,6 +48,12 @@ public class RestWrapperDTO<T> {
 	}
 	public void addList(String name, ArrayList<? extends BaseDTO> list) {
 		this.lists.put(name, list);
+	}
+	public byte[] getFileData() {
+		return fileData;
+	}
+	public void setFileData(byte[] fileData) {
+		this.fileData = fileData;
 	}
 	
 	public String sendRestMessageWrapperDto(String message) throws JsonProcessingException {

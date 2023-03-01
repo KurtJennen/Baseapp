@@ -87,6 +87,15 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		Logging.info(this, "Begin deleterRequest");
 		return restWrapperDTO.sendRestWrapperDto(); 
 	}
+	
+	@Transactional(readOnly=true)
+	public byte[] downloadRequest(final int id) throws JsonProcessingException {
+		Logging.info(this, "Begin downloadRequest");
+		
+		byte[] fileData = documentService.downloadFile(id);
+		
+		return fileData;
+	}
 
 	private RestWrapperDTO<DocumentDTO> createRestWrapperDTO() {
 		return new RestWrapperDTO<DocumentDTO>();

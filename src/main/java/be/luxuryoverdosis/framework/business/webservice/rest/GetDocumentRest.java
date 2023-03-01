@@ -65,6 +65,15 @@ public class GetDocumentRest {
 		}
 	}
 	
+	@RequestMapping(value = "/downloadRequest", method = RequestMethod.GET)
+	public byte[] downloadRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+		try {
+			return getDocumentRestService().downloadRequest(id);
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
 	private DocumentRestService getDocumentRestService() {
 		return BaseSpringServiceLocator.getBean(DocumentRestService.class);
 	}
