@@ -9,9 +9,14 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.hibernate.annotations.Proxy;
+
+import be.luxuryoverdosis.framework.base.tool.adapter.DateAdapter;
 
 @Entity
 @Table(name="base_user")
@@ -25,6 +30,7 @@ import org.hibernate.annotations.Proxy;
 })
 @Proxy(lazy=false)
 @XmlType
+@XmlAccessorType(XmlAccessType.FIELD)
 public class User extends BaseTO {
 	public static final String SELECT_USERS = "selectUsers";
 	public static final String SELECT_USERS_BY_NAME = "selectUsersByName";
@@ -45,6 +51,7 @@ public class User extends BaseTO {
 	private String email;
 	
 	@Column(name="DateExp")
+	@XmlJavaTypeAdapter(value = DateAdapter.class)
 	private Date dateExpiration;
 	
 	public User() {
