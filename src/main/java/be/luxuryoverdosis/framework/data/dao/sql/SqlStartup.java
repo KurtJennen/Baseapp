@@ -368,4 +368,7 @@ public class SqlStartup {
 	public final static String SQL_230228a = "ALTER TABLE base_document MODIFY COLUMN " +
 			"Contenttype varchar(256) DEFAULT NULL";
 	
+	public final static String SQL_230320a = "ALTER TABLE base_number MODIFY COLUMN " +
+			"Type varchar(4) NOT NULL DEFAULT ''";
+	
 }
