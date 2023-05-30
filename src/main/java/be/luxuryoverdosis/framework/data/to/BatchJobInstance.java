@@ -16,11 +16,13 @@ import org.hibernate.annotations.Proxy;
 @Access(AccessType.FIELD)
 @NamedQueries({
 	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME),
+	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER),
 	@NamedQuery(name=BatchJobInstance.DELETE_BATCH_JOB_INSTANCES_BY_ID, query=BatchJobInstance.Queries.DELETE_BATCH_JOB_INSTANCES_BY_ID)
 })
 @Proxy(lazy=false)
 public class BatchJobInstance {
 	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "selectBatchJobInstancesByJobName";
+	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER = "selectBatchJobInstancesByJobNameAndJobParameter";
 	public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "deleteBatchJobInstancesById";
 	
 	@Id
@@ -62,7 +64,7 @@ public class BatchJobInstance {
 	}
 	
 	public static final class Queries {
-		public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "select new be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO( "
+		private static final String SELECT_BATCH_JOB_INSTANCES = "select new be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO( "
 				+ "bji.id, "
 				+ "bji.jobName, "
 				+ "bje.id, "
@@ -74,10 +76,21 @@ public class BatchJobInstance {
 				+ "bje.exitCode, "
 				+ "bje.exitMessage, "
 				+ "bje.lastUpdated "
-				+ ") "
+				+ ") ";
+		
+		public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = SELECT_BATCH_JOB_INSTANCES
 				+ "from BatchJobExecution bje "
 				+ "inner join bje.batchJobInstance bji "
 				+ "where bji.jobName in (:jobNames) "
+				+ "order by bje.createTime desc";
+		
+		public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER = SELECT_BATCH_JOB_INSTANCES
+				+ "from BatchJobExecutionParams bjep "
+				+ "inner join bjep.batchJobExecution bje "
+				+ "inner join bje.batchJobInstance bji "
+				+ "where bji.jobName in (:jobNames) "
+				+ "and bjep.keyName = :keyName "
+				+ "and bjep.longValue = :longValue "
 				+ "order by bje.createTime desc";
 		
 		public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "delete "

@@ -14,6 +14,7 @@ public class BaseQueryParameters {
 	public static final String JOB_HEADER_SELECTED_ID = "jobHeaderSelectedId";
 	public static final String JOB_NAMES = "jobNames";
 	public static final String KEY_NAME = "keyName";
+	public static final String LONG_VALUE = "longValue";
 	public static final String NAME = "name";
 	public static final String NUMBER = "number";
 	public static final String PAYED = "payed";

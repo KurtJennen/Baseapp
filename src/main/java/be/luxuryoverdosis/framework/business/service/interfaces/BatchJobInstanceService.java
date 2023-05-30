@@ -9,4 +9,5 @@ public interface BatchJobInstanceService {
 	public BatchJobInstance read(long id);
 	
 	public ArrayList<BatchJobInstanceDTO> list(String... jobNames);
+	public ArrayList<BatchJobInstanceDTO> list(String keyName, long longValue, String... jobNames);
 }
