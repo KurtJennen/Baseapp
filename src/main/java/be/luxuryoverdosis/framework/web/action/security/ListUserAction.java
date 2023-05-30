@@ -70,22 +70,22 @@ public class ListUserAction extends AjaxAction {
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public ActionForward readExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin ReadJob");
-		Logging.info(this, "End ReadJob Success");
+	public ActionForward readExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin ReadExportUserJob");
+		Logging.info(this, "End ReadExportUserJob Success");
 		
 		ListUserForm userForm = (ListUserForm) form;
-		int jobId = userForm.getSelectedIdsExportJob()[0];
+		int jobId = userForm.getSelectedIdsExportUserJob()[0];
 		
 		return readJob(mapping, request, jobId);
 	}
 	
-	public ActionForward readImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin ReadJob");
-		Logging.info(this, "End ReadJob Success");
+	public ActionForward readImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin ReadImportUserJob");
+		Logging.info(this, "End ReadImportUserJob Success");
 		
 		ListUserForm userForm = (ListUserForm) form;
-		int jobId = userForm.getSelectedIdsImportJob()[0];
+		int jobId = userForm.getSelectedIdsImportUserJob()[0];
 		
 		return readJob(mapping, request, jobId);
 	}
@@ -99,30 +99,30 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward deleteExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin delete");
+	public ActionForward deleteExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin DeleteExportUserJob");
 		
 		ListUserForm userForm = (ListUserForm) form;
-		getJobService().delete(userForm.getSelectedIdsExportJob());
+		getJobService().delete(userForm.getSelectedIdsExportUserJob());
 		
-		Logging.info(this, "End delete");
+		Logging.info(this, "End DeleteExportUserJob");
 		
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward deleteImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin delete");
+	public ActionForward deleteImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin DeleteImportUserJob");
 		
 		ListUserForm userForm = (ListUserForm) form;
-		getJobService().delete(userForm.getSelectedIdsImportJob());
+		getJobService().delete(userForm.getSelectedIdsImportUserJob());
 		
-		Logging.info(this, "End delete");
+		Logging.info(this, "End DeleteImportUserJob");
 		
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward exportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin ExportUserJob");
+	public ActionForward createExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin CreateExportUserJob");
 		
 		ListUserForm listUserForm = (ListUserForm) form;
 		
@@ -134,13 +134,13 @@ public class ListUserAction extends AjaxAction {
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		actionRedirect.addParameter(BaseWebConstants.SELECTED_TAB, listUserForm.getSelectedTab());
 		
-		Logging.info(this, "End ExportUserJob Success");
+		Logging.info(this, "End CreateExportUserJob Success");
 		
 		return actionRedirect;
 	}
 	
-	public ActionForward importUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Logging.info(this, "Begin ImportUserJob");
+	public ActionForward createImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin CreateImportUserJob");
 		
 		ListUserForm listUserForm = (ListUserForm) form;
 		
@@ -153,7 +153,7 @@ public class ListUserAction extends AjaxAction {
 		actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.JOB);
 		actionRedirect.addParameter(BaseWebConstants.SELECTED_TAB, listUserForm.getSelectedTab());
 		
-		Logging.info(this, "End ImportUserJob Success");
+		Logging.info(this, "End CreateImportUserJob Success");
 		
 		return actionRedirect;
 	}
@@ -174,7 +174,7 @@ public class ListUserAction extends AjaxAction {
 	    return null;
 	}
 	
-	public ActionForward ajaxListExportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxListExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		ajaxListJob(response, BaseConstants.JOB_EXPORT_USER);
@@ -184,7 +184,7 @@ public class ListUserAction extends AjaxAction {
 		return null;
 	}
 	
-	public ActionForward ajaxListImportJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxListImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		ajaxListJob(response, BaseConstants.JOB_IMPORT_USER);

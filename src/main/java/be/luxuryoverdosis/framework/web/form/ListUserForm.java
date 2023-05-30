@@ -16,8 +16,8 @@ public class ListUserForm extends ListForm {
 	private static final long serialVersionUID = 1L;
 	
 	private FormFile formFile;
-	private int[] selectedIdsExportJob;
-	private int[] selectedIdsImportJob;
+	private int[] selectedIdsExportUserJob;
+	private int[] selectedIdsImportUserJob;
 	
 	public FormFile getFormFile() {
 		return formFile;
@@ -25,17 +25,17 @@ public class ListUserForm extends ListForm {
 	public void setFormFile(FormFile formFile) {
 		this.formFile = formFile;
 	}
-	public int[] getSelectedIdsExportJob() {
-		return selectedIdsExportJob;
+	public int[] getSelectedIdsExportUserJob() {
+		return selectedIdsExportUserJob;
 	}
-	public void setSelectedIdsExportJob(int[] selectedIdsExportJob) {
-		this.selectedIdsExportJob = selectedIdsExportJob;
+	public void setSelectedIdsExportUserJob(int[] selectedIdsExportUserJob) {
+		this.selectedIdsExportUserJob = selectedIdsExportUserJob;
 	}
-	public int[] getSelectedIdsImportJob() {
-		return selectedIdsImportJob;
+	public int[] getSelectedIdsImportUserJob() {
+		return selectedIdsImportUserJob;
 	}
-	public void setSelectedIdsImportJob(int[] selectedIdsImportJob) {
-		this.selectedIdsImportJob = selectedIdsImportJob;
+	public void setSelectedIdsImportUserJob(int[] selectedIdsImportUserJob) {
+		this.selectedIdsImportUserJob = selectedIdsImportUserJob;
 	}
 	
 	public void reset(ActionMapping mapping, HttpServletRequest request) {
@@ -55,10 +55,10 @@ public class ListUserForm extends ListForm {
 		}
 		
 		//super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
-		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_JOB, getSelectedIdsExportJob());
-		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_JOB, getSelectedIdsImportJob());
-		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_EXPORT_JOB, getSelectedIdsExportJob());
-		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_IMPORT_JOB, getSelectedIdsImportJob());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_JOB, getSelectedIdsExportUserJob());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_JOB, getSelectedIdsImportUserJob());
+		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_EXPORT_JOB, getSelectedIdsExportUserJob());
+		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_IMPORT_JOB, getSelectedIdsImportUserJob());
 		
 		if(errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);

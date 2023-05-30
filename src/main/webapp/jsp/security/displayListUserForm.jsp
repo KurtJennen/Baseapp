@@ -11,13 +11,13 @@ $(document).ready(function() {
 	        $("#selectedTab").prop("value", index);
 	        
 			if(ui.newPanel.selector=="#tab1") {
-				$("#usersGrid").pqGrid("refresh");
+				$("#userGrid").pqGrid("refresh");
 			}
 			if(ui.newPanel.selector=="#tab2") {
-				$("#usersExportJobGrid").pqGrid("refresh");
+				$("#exportUserJobGrid").pqGrid("refresh");
 			}
 			if(ui.newPanel.selector=="#tab3") {
-				$("#usersImportJobGrid").pqGrid("refresh");
+				$("#importUserJobGrid").pqGrid("refresh");
 			}
 		}
 	});
@@ -47,7 +47,7 @@ $(document).ready(function() {
 			<lo:button image="table_add.png" method="create" key="button.create"></lo:button>
 			<lo:button image="table_edit.png" method="read" key="button.edit"></lo:button>
 			<hr />
-			<lo:pqGrid nameSelectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="users" rPP="15">
+			<lo:pqGrid nameSelectedIds="selectedIds" url="/listUser.do?method=ajaxList" titleKey="displayUser.title" id="user" rPP="15">
 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique"></lo:pqGridColumn>
 <%-- 				<lo:pqGridColumn width="200" dataIndx="name" dataType="string" titleKey="security.name.unique" renderFunction="renderNaamClassPq"></lo:pqGridColumn> --%>
 				<lo:pqGridColumn width="200" dataIndx="userName" dataType="string" titleKey="security.username"></lo:pqGridColumn>
@@ -58,40 +58,19 @@ $(document).ready(function() {
 			</lo:pqGrid>
 		</div>
 		<div id="tab2">
-			<lo:button image="table_edit.png" method="readExportJob" key="button.edit"></lo:button>
-			<lo:button image="cog.png" method="exportUserJob" key="button.export"></lo:button>
-			<lo:button image="table_delete.png" method="deleteExportJob" key="button.delete"></lo:button>
-			<hr />
-			<lo:pqGrid nameSelectedIds="selectedIdsExportJob" url="/listUser.do?method=ajaxListExportJob" titleKey="displayJob.title" id="usersExportJob" rPP="15" rowClickMethod="readExportJob">
-				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCodeTranslated" dataType="string" titleKey="batchjobexecution.exit.code"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.exit.message"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
-			</lo:pqGrid>
+			<jsp:include page="../job/exportBatchJob.jsp">
+				<jsp:param value="exportUser" name="id"/>
+				<jsp:param value="User" name="url"/>
+				<jsp:param value="ExportUser" name="name"/>
+			</jsp:include>
 		</div>
 		<div id="tab3">
-			<lo:button image="table_edit.png" method="readImportJob" key="button.edit"></lo:button>
-			<fmt:message key="file" />*:
-			<html:file property="formFile" size="100" maxlength="256" tabindex="1"></html:file>
-			<lo:button image="cog.png" method="importUserJob" key="button.import"></lo:button>
-			<lo:button image="table_delete.png" method="deleteImportJob" key="button.delete"></lo:button>
-			<hr />
-			<lo:pqGrid nameSelectedIds="selectedIdsImportJob" url="/listUser.do?method=ajaxListImportJob" titleKey="displayJob.title" id="usersImportJob" rPP="15" rowClickMethod="readImportJob">
-				<lo:pqGridColumn width="200" dataIndx="jobName" dataType="string" titleKey="batchjobinstance.name"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionVersion" dataType="string" titleKey="batchjobexecution.version"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionCreateTimeAsString" dataType="string" titleKey="batchjobexecution.create.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStartTimeAsString" dataType="string" titleKey="batchjobexecution.start.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionEndTimeAsString" dataType="string" titleKey="batchjobexecution.end.time"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionStatusTranslated" dataType="string" titleKey="batchjobexecution.status"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitCodeTranslated" dataType="string" titleKey="batchjobexecution.exit.code"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionExitMessage" dataType="string" titleKey="batchjobexecution.exit.message"></lo:pqGridColumn>
-				<lo:pqGridColumn width="200" dataIndx="batchJobExecutionLastUpdatedAsString" dataType="string" titleKey="batchjobexecution.last.updated"></lo:pqGridColumn>
-			</lo:pqGrid>
+			<jsp:include page="../job/importBatchJob.jsp">
+				<jsp:param value="importUser" name="id"/>
+				<jsp:param value="User" name="url"/>
+				<jsp:param value="ImportUser" name="name"/>
+				<jsp:param value="button.import" name="cogKey"/>
+			</jsp:include>
 		</div>
 	</div>
 </html:form>
