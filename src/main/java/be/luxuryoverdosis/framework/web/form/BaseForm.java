@@ -16,6 +16,7 @@ public class BaseForm extends ValidatorForm {
 	private int[] ids;
     private int[] selectedIds;
     private int selectedTab = 0;
+    private int selectedTab1 = 0;
 	private int id;
 	private int version;
 	private int documentId;
@@ -41,6 +42,12 @@ public class BaseForm extends ValidatorForm {
 	}
 	public void setSelectedTab(int selectedTab) {
 		this.selectedTab = selectedTab;
+	}
+	public int getSelectedTab1() {
+		return selectedTab1;
+	}
+	public void setSelectedTab1(int selectedTab1) {
+		this.selectedTab1 = selectedTab1;
 	}
 	public String getMethod() {
 		return method;

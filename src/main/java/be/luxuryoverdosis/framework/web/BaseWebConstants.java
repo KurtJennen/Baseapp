@@ -36,6 +36,7 @@ public class BaseWebConstants {
 	public static final String RESET = "reset";
 	public static final String SAVE = "save";
 	public static final String SELECTED_TAB = "selectedTab";
+	public static final String SELECTED_TAB1 = "selectedTab1";
 	public static final String SEARCH = "search";
 	public static final String SUCCESS = "success";
 	
