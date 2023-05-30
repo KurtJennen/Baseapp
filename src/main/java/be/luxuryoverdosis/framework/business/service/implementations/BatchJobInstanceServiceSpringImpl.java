@@ -27,10 +27,19 @@ public class BatchJobInstanceServiceSpringImpl implements BatchJobInstanceServic
 	}
 	
 	@Transactional
-	public ArrayList<BatchJobInstanceDTO> list(String... jobNames) {
+	public ArrayList<BatchJobInstanceDTO> list(final String... jobNames) {
 		Logging.info(this, "Begin listBatchJobInstance");
 		ArrayList<BatchJobInstanceDTO> arrayList = null;
 		arrayList = batchJobInstanceHibernateDAO.list(jobNames);
+		Logging.info(this, "End listBatchJobInstance");
+		return arrayList;
+	}
+	
+	@Transactional
+	public ArrayList<BatchJobInstanceDTO> list(final String keyName, final long longValue, final String... jobNames) {
+		Logging.info(this, "Begin listBatchJobInstance");
+		ArrayList<BatchJobInstanceDTO> arrayList = null;
+		arrayList = batchJobInstanceHibernateDAO.list(keyName, longValue, jobNames);
 		Logging.info(this, "End listBatchJobInstance");
 		return arrayList;
 	}
