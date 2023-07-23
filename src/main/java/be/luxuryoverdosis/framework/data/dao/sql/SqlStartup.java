@@ -54,7 +54,7 @@ public class SqlStartup {
 		"UserUpdate varchar(45) NOT NULL DEFAULT '', " +
 		"DateAdd datetime NOT NULL DEFAULT '0000-00-00', " +
 		"DateUpdate datetime NOT NULL DEFAULT '0000-00-00', " +
-		"Name varchar(45) NOT NULL DEFAULT '', " +
+		"Name varchar(60) NOT NULL DEFAULT '', " +
 		"Filename varchar(256) DEFAULT '', " +
 		"File longblob, " +
 		"Filesize int(10) unsigned DEFAULT NULL, " +
