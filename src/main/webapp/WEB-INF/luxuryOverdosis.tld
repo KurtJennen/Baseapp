@@ -13,6 +13,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>buttonType</name>
+			<required>false</required>
+			<type>be.luxuryoverdosis.framework.web.enumeration.ButtonTypeEnum</type>
+		</attribute>
+		<attribute>
 			<name>image</name>
 			<required>true</required>
 		</attribute>

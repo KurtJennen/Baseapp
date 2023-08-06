@@ -61,17 +61,18 @@ public class UiDialog extends BodyTagSupport {
 	public void setModal(boolean modal) {
 		this.modal = modal;
 	}
-	public UiDialogObject getUiDialogObject() {
-		return uiDialogObject;
-	}
-	public void setUiDialogObject(UiDialogObject uiDialogObject) {
-		this.uiDialogObject = uiDialogObject;
-	}
 	public void setDefaultSaveButton(boolean defaultSaveButton) {
 		this.defaultSaveButton = defaultSaveButton;
 	}
 	public void setDefaultCancelButton(boolean defaultCancelButton) {
 		this.defaultCancelButton = defaultCancelButton;
+	}
+	
+	public UiDialogObject getUiDialogObject() {
+		return uiDialogObject;
+	}
+	public void setUiDialogObject(UiDialogObject uiDialogObject) {
+		this.uiDialogObject = uiDialogObject;
 	}
 	
 	public void setParent(Tag t) {

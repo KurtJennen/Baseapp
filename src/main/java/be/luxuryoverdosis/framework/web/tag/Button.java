@@ -1,19 +1,30 @@
 package be.luxuryoverdosis.framework.web.tag;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.Tag;
-
-import org.springframework.util.StringUtils;
 
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.enumeration.ButtonTypeEnum;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
+import be.luxuryoverdosis.framework.web.ui.ButtonObject;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 
-public class Button implements Tag {
+public class Button extends BodyTagSupport {
+	private static final long serialVersionUID = 1L;
+	
 	PageContext pageContext;
+	private ButtonTypeEnum buttonType = ButtonTypeEnum.DEFAULT;
 	private String method;
 	private String image;
 	private String key;
@@ -22,6 +33,11 @@ public class Button implements Tag {
 	private String type = "submit";
 	private String dialogId;
 	
+	private ButtonObject buttonObject;
+	
+	public void setButtonType(ButtonTypeEnum buttonType) {
+		this.buttonType = buttonType;
+	}
 	public void setMethod(String method) {
 		this.method = method;
 	}
@@ -44,6 +60,13 @@ public class Button implements Tag {
 		this.dialogId = dialogId;
 	}
 	
+	public ButtonObject getButtonObject() {
+		return buttonObject;
+	}
+	public void setButtonObject(ButtonObject buttonObject) {
+		this.buttonObject = buttonObject;
+	}
+	
 	public void setParent(Tag t) {
 	}
 	
@@ -60,7 +83,7 @@ public class Button implements Tag {
 	
 	public int doStartTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
+//			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
 			
@@ -69,12 +92,10 @@ public class Button implements Tag {
 				if(roles != null) {
 					String[] seperatedRoles = roles.split(",");
 					for(int i = 0; i < seperatedRoles.length; i++) {
-						//if(seperatedRoles[i].equals(user.getRole().getName())) {
 						if(userDTO.getRoles().contains(seperatedRoles[i])) {
 							enabled = true;
 						}
 					}
-					//pos1 = roles.indexOf(user.getRole().getName());
 				} else {
 					enabled = true;
 				}
@@ -83,39 +104,51 @@ public class Button implements Tag {
 			}
 			
 			if(enabled) {
-//				if(submit) {
-					if(StringUtils.isEmpty(dialogId)) {
-						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
-//					} else {
-//						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
-//					}
-				} else {
-					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
-				}
-				out.print("<img src=\"images/" + image + "\"/>");
-				if(showKey) {
-					out.print("&nbsp;");
-					out.print(MessageLocator.getMessage(request, key));
-				}
-				out.println("</button>");
-			} else {
-//				int pos = image.indexOf(".");
-//				StringBuffer newImage = new StringBuffer();
-//				newImage.append(image.substring(0, pos)); 
-//				newImage.append("_disabled");
-//				newImage.append(image.substring(pos)); 
-//				
-//				out.print("<button>");
-//				out.print("<img src=\"images/" + newImage.toString() + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" />");
+//				if(StringUtils.isEmpty(dialogId)) {
+//					out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+//				} else {
+//					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+//				}
+//				out.print("<img src=\"images/" + image + "\"/>");
+//				if(showKey) {
+//					out.print("&nbsp;");
+//					out.print(MessageLocator.getMessage(request, key));
+//				}
 //				out.println("</button>");
+				buttonObject = new ButtonObject();
+				buttonObject.setButtonType(buttonType.getCode());
+				buttonObject.setMethod(method);
+				buttonObject.setImage(image);
+				buttonObject.setKey(MessageLocator.getMessage(request, key));
+				buttonObject.setShowKey(showKey);
+				buttonObject.setType(type);
+				buttonObject.setDialogId(dialogId);
 			}
 		}
 		catch (Exception e) {
 		}
-		return EVAL_BODY_INCLUDE;
+		return EVAL_BODY_BUFFERED;
 	}
 
 	public int doEndTag() throws JspException {
+		try {
+			JspWriter out = pageContext.getOut();
+			
+			Configuration configuration = new Configuration();
+			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
+			configuration.setDefaultEncoding("UTF-8");
+			configuration.setLocale(Locale.US);
+			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+			
+			Map<String, Object> templateData = new HashMap<String, Object>();
+			templateData.put("templateData", buttonObject);
+			
+			Template template = configuration.getTemplate("buttonTemplate.ftl");
+			template.process(templateData, out);
+		}
+		catch (Exception e) {
+		}
+		
 		return EVAL_PAGE;
 	}
 }
