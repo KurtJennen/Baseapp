@@ -85,6 +85,54 @@ public class Button extends BodyTagSupport {
 		try {
 //			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+//			
+//			boolean enabled = false;
+//			if(userDTO != null) {
+//				if(roles != null) {
+//					String[] seperatedRoles = roles.split(",");
+//					for(int i = 0; i < seperatedRoles.length; i++) {
+//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+//							enabled = true;
+//						}
+//					}
+//				} else {
+//					enabled = true;
+//				}
+//			} else {
+//				enabled = true;
+//			}
+//			
+//			if(enabled) {
+//				if(StringUtils.isEmpty(dialogId)) {
+//					out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+//				} else {
+//					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+//				}
+//				out.print("<img src=\"images/" + image + "\"/>");
+//				if(showKey) {
+//					out.print("&nbsp;");
+//					out.print(MessageLocator.getMessage(request, key));
+//				}
+//				out.println("</button>");
+				buttonObject = new ButtonObject();
+				buttonObject.setButtonType(buttonType.getCode());
+				buttonObject.setMethod(method);
+				buttonObject.setImage(image);
+				buttonObject.setTitle(MessageLocator.getMessage(request, key));
+				buttonObject.setShowKey(showKey);
+				buttonObject.setType(type);
+				buttonObject.setDialogId(dialogId);
+//			}
+		}
+		catch (Exception e) {
+		}
+		return EVAL_BODY_BUFFERED;
+	}
+
+	public int doEndTag() throws JspException {
+		try {
+			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
 			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
 			
 			boolean enabled = false;
@@ -104,47 +152,20 @@ public class Button extends BodyTagSupport {
 			}
 			
 			if(enabled) {
-//				if(StringUtils.isEmpty(dialogId)) {
-//					out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
-//				} else {
-//					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
-//				}
-//				out.print("<img src=\"images/" + image + "\"/>");
-//				if(showKey) {
-//					out.print("&nbsp;");
-//					out.print(MessageLocator.getMessage(request, key));
-//				}
-//				out.println("</button>");
-				buttonObject = new ButtonObject();
-				buttonObject.setButtonType(buttonType.getCode());
-				buttonObject.setMethod(method);
-				buttonObject.setImage(image);
-				buttonObject.setKey(MessageLocator.getMessage(request, key));
-				buttonObject.setShowKey(showKey);
-				buttonObject.setType(type);
-				buttonObject.setDialogId(dialogId);
+				JspWriter out = pageContext.getOut();
+				
+				Configuration configuration = new Configuration();
+				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
+				configuration.setDefaultEncoding("UTF-8");
+				configuration.setLocale(Locale.US);
+				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+				
+				Map<String, Object> templateData = new HashMap<String, Object>();
+				templateData.put("templateData", buttonObject);
+				
+				Template template = configuration.getTemplate("buttonTemplate.ftl");
+				template.process(templateData, out);
 			}
-		}
-		catch (Exception e) {
-		}
-		return EVAL_BODY_BUFFERED;
-	}
-
-	public int doEndTag() throws JspException {
-		try {
-			JspWriter out = pageContext.getOut();
-			
-			Configuration configuration = new Configuration();
-			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-			configuration.setDefaultEncoding("UTF-8");
-			configuration.setLocale(Locale.US);
-			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			
-			Map<String, Object> templateData = new HashMap<String, Object>();
-			templateData.put("templateData", buttonObject);
-			
-			Template template = configuration.getTemplate("buttonTemplate.ftl");
-			template.process(templateData, out);
 		}
 		catch (Exception e) {
 		}

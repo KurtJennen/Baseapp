@@ -174,3 +174,8 @@ function copyDialogInput(oTextInput) {
 		inputExists.val(oTextInput.value);
 	}
 }
+
+function doConfirm(dialogId, dialogMethod) {
+	doDialogCopy(dialogId, dialogMethod)
+    $("#" + sMethod +"ConfirmDialog").dialog("open");
+}

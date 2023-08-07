@@ -4,7 +4,7 @@ public class ButtonObject {
 	private String buttonType;
 	private String method;
 	private String image;
-	private String key;
+	private String title;
 	private boolean showKey = false;
 	private String type = "submit";
 	private String dialogId;
@@ -27,11 +27,11 @@ public class ButtonObject {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public String getKey() {
-		return key;
+	public String getTitle() {
+		return title;
 	}
-	public void setKey(String key) {
-		this.key = key;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public boolean isShowKey() {
 		return showKey;
