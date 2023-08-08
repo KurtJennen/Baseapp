@@ -32,8 +32,8 @@ public class UiDialog extends BodyTagSupport {
 	private String height = "500";
 	private boolean autoOpen = false;
 	private boolean modal = true;
-	private boolean defaultSaveButton = false;
-	private boolean defaultCancelButton = false;
+	private boolean defaultYesButton = false;
+	private boolean defaultNoButton = false;
 	
 	private UiDialogObject uiDialogObject;
 
@@ -61,11 +61,11 @@ public class UiDialog extends BodyTagSupport {
 	public void setModal(boolean modal) {
 		this.modal = modal;
 	}
-	public void setDefaultSaveButton(boolean defaultSaveButton) {
-		this.defaultSaveButton = defaultSaveButton;
+	public void setDefaultYesButton(boolean defaultYesButton) {
+		this.defaultYesButton = defaultYesButton;
 	}
-	public void setDefaultCancelButton(boolean defaultCancelButton) {
-		this.defaultCancelButton = defaultCancelButton;
+	public void setDefaultNoButton(boolean defaultNoButton) {
+		this.defaultNoButton = defaultNoButton;
 	}
 	
 	public UiDialogObject getUiDialogObject() {
@@ -103,15 +103,15 @@ public class UiDialog extends BodyTagSupport {
 			uiDialogObject.setTitle(MessageLocator.getMessage(request, titleKey));
 		}
 		
-		uiDialogObject.setSaveLabel(MessageLocator.getMessage(request, "button.update"));
-		uiDialogObject.setCancelLabel(MessageLocator.getMessage(request, "button.cancel"));
+		uiDialogObject.setYesLabel(MessageLocator.getMessage(request, "button.update"));
+		uiDialogObject.setNoLabel(MessageLocator.getMessage(request, "button.cancel"));
 		
 		uiDialogObject.setWidth(width);
 		uiDialogObject.setHeight(height);
 		uiDialogObject.setAutoOpen(autoOpen);
 		uiDialogObject.setModal(modal);
-		uiDialogObject.setDefaultSaveButton(defaultSaveButton);
-		uiDialogObject.setDefaultCancelButton(defaultCancelButton);
+		uiDialogObject.setDefaultYesButton(defaultYesButton);
+		uiDialogObject.setDefaultNoButton(defaultNoButton);
 		
 		Object dialog = request.getAttribute(id + StringUtils.capitalize(BaseWebConstants.DIALOG));
 		if(dialog != null && (boolean)dialog) {

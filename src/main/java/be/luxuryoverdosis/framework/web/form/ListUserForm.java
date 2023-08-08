@@ -55,10 +55,10 @@ public class ListUserForm extends ListForm {
 		}
 		
 		//super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
-		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_JOB, getSelectedIdsExportUserJob());
-		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_JOB, getSelectedIdsImportUserJob());
-		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_EXPORT_JOB, getSelectedIdsExportUserJob());
-		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_IMPORT_JOB, getSelectedIdsImportUserJob());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_EXPORT_USER_JOB, getSelectedIdsExportUserJob());
+		super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ_IMPORT_USER_JOB, getSelectedIdsImportUserJob());
+		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_EXPORT_USER_JOB, getSelectedIdsExportUserJob());
+		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_IMPORT_USER_JOB, getSelectedIdsImportUserJob());
 		
 		if(errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);

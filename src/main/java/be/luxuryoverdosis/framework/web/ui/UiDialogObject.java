@@ -6,14 +6,15 @@ public class UiDialogObject {
 	private String id;
 	private String method  = BaseWebConstants.UPDATE;
 	private String title;
-	private String saveLabel;
-	private String cancelLabel;
+	private String message;
+	private String yesLabel;
+	private String noLabel;
 	private String width = "500";
 	private String height = "500";
 	private boolean autoOpen = false;
 	private boolean modal = true;
-	private boolean defaultSaveButton = false;
-	private boolean defaultCancelButton = false;
+	private boolean defaultYesButton = false;
+	private boolean defaultNoButton = false;
 	
 	public String getId() {
 		return id;
@@ -45,17 +46,23 @@ public class UiDialogObject {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getSaveLabel() {
-		return saveLabel;
+	public String getMessage() {
+		return message;
 	}
-	public void setSaveLabel(String saveLabel) {
-		this.saveLabel = saveLabel;
+	public void setMessage(String message) {
+		this.message = message;
 	}
-	public String getCancelLabel() {
-		return cancelLabel;
+	public String getYesLabel() {
+		return yesLabel;
 	}
-	public void setCancelLabel(String cancelLabel) {
-		this.cancelLabel = cancelLabel;
+	public void setYesLabel(String yesLabel) {
+		this.yesLabel = yesLabel;
+	}
+	public String getNoLabel() {
+		return noLabel;
+	}
+	public void setNoLabel(String noLabel) {
+		this.noLabel = noLabel;
 	}
 	public boolean isAutoOpen() {
 		return autoOpen;
@@ -69,16 +76,16 @@ public class UiDialogObject {
 	public void setModal(boolean modal) {
 		this.modal = modal;
 	}
-	public boolean isDefaultSaveButton() {
-		return defaultSaveButton;
+	public boolean isDefaultYesButton() {
+		return defaultYesButton;
 	}
-	public void setDefaultSaveButton(boolean defaultSaveButton) {
-		this.defaultSaveButton = defaultSaveButton;
+	public void setDefaultYesButton(boolean defaultYesButton) {
+		this.defaultYesButton = defaultYesButton;
 	}
-	public boolean isDefaultCancelButton() {
-		return defaultCancelButton;
+	public boolean isDefaultNoButton() {
+		return defaultNoButton;
 	}
-	public void setDefaultCancelButton(boolean defaultCancelButton) {
-		this.defaultCancelButton = defaultCancelButton;
+	public void setDefaultNoButton(boolean defaultNoButton) {
+		this.defaultNoButton = defaultNoButton;
 	}
 }

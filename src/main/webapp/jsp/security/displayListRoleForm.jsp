@@ -20,7 +20,7 @@
 <lo:dialog id="role" titleKey="table.role"/>
 <div id="roleDialog">
 	<html:form action="/listRole.do">
-		<lo:button image="table_save.png" method="updateRole" key="button.update" dialogId="roleDialog" type="button" buttonType="dialog"></lo:button>
+		<lo:button image="table_save.png" method="updateRole" key="button.update" dialogId="roleDialog" type="button" buttonType="DIALOG"></lo:button>
 		<table class="tiletable">
 			<tr>
 				<td><fmt:message key="security.name" />*:</td>

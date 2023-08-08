@@ -32,6 +32,11 @@
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
+			<name>messageKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>roles</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -514,12 +519,12 @@
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<name>defaultSaveButton</name>
+			<name>defaultYesButton</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<name>defaultCancelButton</name>
+			<name>defaultNoButton</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
