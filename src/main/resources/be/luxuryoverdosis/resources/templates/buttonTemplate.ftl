@@ -9,8 +9,8 @@
 		onclick="javascript:doConfirm('${templateData.method}')"
 	</#if>
 
-	title = "${templateData.title}"
-	type = "${templateData.type}"
+	title="${templateData.title}"
+	type="${templateData.type}"
  >
  	<img src="images/${templateData.image}" />
  	
