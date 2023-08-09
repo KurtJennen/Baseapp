@@ -1,12 +1,17 @@
 package be.luxuryoverdosis.framework.web.tag;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.tagext.BodyTagSupport;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,48 +21,51 @@ import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
+import be.luxuryoverdosis.framework.web.ui.EnumSelectObject;
+import be.luxuryoverdosis.framework.web.ui.EnumSelectOptionObject;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateExceptionHandler;
 
-public class EnumSelect implements Tag {
+public class EnumSelect extends BodyTagSupport {
+	private static final long serialVersionUID = 1L;
+	
 	PageContext pageContext;
 	private String clazz;
 	private String method;
 	private String property;
 	private String tabindex;
 	private String value;
+	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
 	private String roles;
-	private String onchange = StringUtils.EMPTY;
+	
+	private EnumSelectObject enumSelectObject;
+	private ArrayList<EnumSelectOptionObject> options; 
 	
 	public void setClazz(String clazz) {
 		this.clazz = clazz;
 	}
-
 	public void setMethod(String method) {
 		this.method = method;
 	}
-
 	public void setProperty(String property) {
 		this.property = property;
 	}
-
 	public void setTabindex(String tabindex) {
 		this.tabindex = tabindex;
 	}
-	
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+	public void setOnchange(String onchange) {
+		this.onchange = onchange;
+	}
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-
 	public void setRoles(String roles) {
 		this.roles = roles;
-	}
-
-	public void setOnchange(String onchange) {
-		this.onchange = onchange;
 	}
 
 	public void setParent(Tag t) {
@@ -76,50 +84,69 @@ public class EnumSelect implements Tag {
 	
 	public int doStartTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
+//			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+//			
+//			boolean enabled = false;
+//			if(userDTO != null) {
+//				if(roles != null) {
+//					String[] seperatedRoles = roles.split(",");
+//					for(int i = 0; i < seperatedRoles.length; i++) {
+//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+//							enabled = true;
+//						}
+//					}
+//				} else {
+//					enabled = true;
+//				}
+//			} else {
+//				enabled = true;
+//			}
 			
-			boolean enabled = false;
-			if(userDTO != null) {
-				if(roles != null) {
-					String[] seperatedRoles = roles.split(",");
-					for(int i = 0; i < seperatedRoles.length; i++) {
-						//if(seperatedRoles[i].equals(user.getRole().getName())) {
-						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-							enabled = true;
-						}
-					}
-					//pos1 = roles.indexOf(user.getRole().getName());
-				} else {
-					enabled = true;
-				}
-			} else {
-				enabled = true;
-			}
+//			List<String> keyList = getKeysForClass();
+//			
+//			if(enabled && !disabled) {
+//				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\">");
+//			} else {
+//				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\" disabled=\"disabled\">");
+//			}
+//	    	
+//			for(String key : keyList) {
+//				String keyMessage = getKeyMessage(request, key);
+//				if(key.equals(value)) {
+//					out.print("<option value=\"" + key + "\" selected=\"selected\">" + keyMessage + "</option>");
+//				} else {
+//					out.print("<option value=\"" + key + "\">" + keyMessage + "</option>");
+//				}
+//			}
+//			
+//			out.println("</select>");
+			enumSelectObject = new EnumSelectObject();
+			enumSelectObject.setProperty(property);
+			enumSelectObject.setTabindex(tabindex);
+			enumSelectObject.setOnchange(onchange);
+			enumSelectObject.setDisabled(disabled);
+			
+			options = new ArrayList<EnumSelectOptionObject>();
 			
 			List<String> keyList = getKeysForClass();
-			
-			if(enabled && !disabled) {
-				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\">");
-			} else {
-				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\" disabled=\"disabled\">");
-			}
-	    	
 			for(String key : keyList) {
-				String keyMessage = getKeyMessage(request, key);
+				EnumSelectOptionObject enumSelectOptionObject = new EnumSelectOptionObject();
+				enumSelectOptionObject.setKey(key);
+				enumSelectOptionObject.setKeyMessage(getKeyMessage(request, key));
 				if(key.equals(value)) {
-					out.print("<option value=\"" + key + "\" selected=\"selected\">" + keyMessage + "</option>");
-				} else {
-					out.print("<option value=\"" + key + "\">" + keyMessage + "</option>");
+					enumSelectOptionObject.setSelected(true);
 				}
+				
+				options.add(enumSelectOptionObject);
 			}
 			
-			out.println("</select>");
+			enumSelectObject.setOptions(options);
 		}
 		catch (Exception e) {
 		}
-		return EVAL_BODY_INCLUDE;
+		return EVAL_BODY_BUFFERED;
 	}
 
 	private String getKeyMessage(HttpServletRequest request, String key) {
@@ -138,6 +165,45 @@ public class EnumSelect implements Tag {
 	}
 
 	public int doEndTag() throws JspException {
+		try {
+			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+			
+			boolean enabled = false;
+			if(userDTO != null) {
+				if(roles != null) {
+					String[] seperatedRoles = roles.split(",");
+					for(int i = 0; i < seperatedRoles.length; i++) {
+						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+							enabled = true;
+						}
+					}
+				} else {
+					enabled = true;
+				}
+			} else {
+				enabled = true;
+			}
+			
+			if(enabled) {
+				JspWriter out = pageContext.getOut();
+				
+				Configuration configuration = new Configuration();
+				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
+				configuration.setDefaultEncoding("UTF-8");
+				configuration.setLocale(Locale.US);
+				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+				
+				Map<String, Object> templateData = new HashMap<String, Object>();
+				templateData.put("templateData", enumSelectObject);
+				
+				Template template = configuration.getTemplate("enumSelectTemplate.ftl");
+				template.process(templateData, out);
+			}
+		}
+		catch (Exception e) {
+		}
+		
 		return EVAL_PAGE;
 	}
 }
