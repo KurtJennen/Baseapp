@@ -48,7 +48,7 @@
 		<tr>
 			<td><fmt:message key="security.date.expiration" />*:</td>
 			<td><c:out value="${detailUserForm.date}"/></td>
-<%-- 			<td><lo:dateButton tabindex="6" value="${detailUserForm.date}" property="date"></lo:dateButton> </td> --%>
+<%-- 			<td><lo:dateButton tabindex="6" value="${detailUserForm.date}" property="date" disabled="false"></lo:dateButton> </td> --%>
 		</tr>
 <!-- 		<tr> -->
 <%-- 			<td><fmt:message key="security.role" />*:</td> --%>

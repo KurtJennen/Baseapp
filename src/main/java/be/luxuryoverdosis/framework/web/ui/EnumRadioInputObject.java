@@ -1,16 +1,12 @@
 package be.luxuryoverdosis.framework.web.ui;
 
-import java.util.ArrayList;
-
-import org.apache.commons.lang.StringUtils;
-
-public class EnumSelectObject {
+public class EnumRadioInputObject {
 	private String property;
 	private String tabindex;
 	private String value;
-	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
-	private ArrayList<EnumSelectOptionObject> options = new ArrayList<EnumSelectOptionObject>();
+	private boolean checked;
+	private String keyMessage;
 	
 	public String getProperty() {
 		return property;
@@ -30,23 +26,23 @@ public class EnumSelectObject {
 	public void setValue(String value) {
 		this.value = value;
 	}
-	public String getOnchange() {
-		return onchange;
-	}
-	public void setOnchange(String onchange) {
-		this.onchange = onchange;
-	}
 	public boolean isDisabled() {
 		return disabled;
 	}
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	public ArrayList<EnumSelectOptionObject> getOptions() {
-		return options;
+	public boolean isChecked() {
+		return checked;
 	}
-	public void setOptions(ArrayList<EnumSelectOptionObject> options) {
-		this.options = options;
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	public String getKeyMessage() {
+		return keyMessage;
+	}
+	public void setKeyMessage(String keyMessage) {
+		this.keyMessage = keyMessage;
 	}
 	
 }

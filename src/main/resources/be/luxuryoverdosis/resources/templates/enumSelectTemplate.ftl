@@ -2,10 +2,12 @@
 	name="${templateData.property}"
 	tabindex="${templateData.tabindex}"
 	onchange="${templateData.onchange}"
- >	
+	
 	<#if templateData.disabled = true>
-		disabled = "${templateData.disabled}"
+		disabled="disabled"
 	</#if>
+ >	
+	
 	
 	<#list templateData.options as option>
 		<option 

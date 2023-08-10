@@ -6,7 +6,7 @@
 	id="${templateData.property}"
  	
 	<#if templateData.disabled = true>
-		disabled = "${templateData.disabled}"
+		disabled="disabled"
 	</#if>
 </input>
 
