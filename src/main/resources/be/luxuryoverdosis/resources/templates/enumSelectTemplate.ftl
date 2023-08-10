@@ -7,8 +7,6 @@
 		disabled="disabled"
 	</#if>
  >	
-	
-	
 	<#list templateData.options as option>
 		<option 
 			value="${option.key}"
