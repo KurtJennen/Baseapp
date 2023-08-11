@@ -10,8 +10,9 @@ import org.apache.commons.lang.StringUtils;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.pq.PqGridColumnObject;
 
-public class PqGridColumn implements Tag {
-	PageContext pageContext;
+public class PqGridColumn extends CommonTag {
+	private static final long serialVersionUID = 1L;
+	
 	private Tag parent;
 	private String title;
 	private String titleKey;
@@ -135,8 +136,6 @@ public class PqGridColumn implements Tag {
 			
 			pqGridTag.getPqGridObject().getPqGridColumnObjects().add(gridColumnObject);
 		}
-		
-		
 			
 		return EVAL_BODY_INCLUDE;
 	}

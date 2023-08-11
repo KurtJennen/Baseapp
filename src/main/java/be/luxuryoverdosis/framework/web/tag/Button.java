@@ -2,26 +2,33 @@ package be.luxuryoverdosis.framework.web.tag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.Tag;
 
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
-import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.enumeration.ButtonTypeEnum;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
+import be.luxuryoverdosis.framework.web.ui.ButtonObject;
+import be.luxuryoverdosis.framework.web.ui.UiDialogObject;
 
-public class Button implements Tag {
-	PageContext pageContext;
+public class Button extends CommonTag {
+	private static final long serialVersionUID = 1L;
+	
+	private ButtonTypeEnum buttonType = ButtonTypeEnum.DEFAULT;
 	private String method;
 	private String image;
 	private String key;
 	private boolean showKey = false;
-	private String roles;
+	private String messageKey =  "message.confirm";
 	private String type = "submit";
 	private String dialogId;
 	
+	private ButtonObject buttonObject;
+	private UiDialogObject uiDialogObject;
+	
+	public void setButtonType(ButtonTypeEnum buttonType) {
+		this.buttonType = buttonType;
+	}
 	public void setMethod(String method) {
 		this.method = method;
 	}
@@ -34,8 +41,8 @@ public class Button implements Tag {
 	public void setShowKey(boolean showKey) {
 		this.showKey = showKey;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
+	public void setMessageKey(String messageKey) {
+		this.messageKey = messageKey;
 	}
 	public void setType(String type) {
 		this.type = type;
@@ -44,78 +51,66 @@ public class Button implements Tag {
 		this.dialogId = dialogId;
 	}
 	
-	public void setParent(Tag t) {
-	}
-	
-	public void setPageContext(PageContext p) {
-		pageContext = p;
-	}
-	
-	public void release() {
-	}
-	
-	public Tag getParent() {
-		return null;
-	}
-	
 	public int doStartTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
 			
-			boolean enabled = false;
-			if(userDTO != null) {
-				if(roles != null) {
-					String[] seperatedRoles = roles.split(",");
-					for(int i = 0; i < seperatedRoles.length; i++) {
-						//if(seperatedRoles[i].equals(user.getRole().getName())) {
-						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-							enabled = true;
-						}
-					}
-					//pos1 = roles.indexOf(user.getRole().getName());
-				} else {
-					enabled = true;
-				}
-			} else {
-				enabled = true;
+			buttonObject = new ButtonObject();
+			buttonObject.setButtonType(buttonType.getCode());
+			if(StringUtils.contains(method, BaseWebConstants.DELETE)) {
+				buttonObject.setButtonType(ButtonTypeEnum.CONFIRM.getCode());
 			}
+			buttonObject.setMethod(method);
+			buttonObject.setImage(image);
+			buttonObject.setTitle(MessageLocator.getMessage(request, key));
+			buttonObject.setShowKey(showKey);
+			buttonObject.setType(type);
+			buttonObject.setDialogId(dialogId);
 			
-			if(enabled) {
-//				if(submit) {
-					if(StringUtils.isEmpty(dialogId)) {
-						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
-//					} else {
-//						out.print("<button onclick=\"javascript:doAction('" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
-//					}
-				} else {
-					out.print("<button onclick=\"javascript:doDialogCopy('" + dialogId + "','" + method + "');\" title=\"" + MessageLocator.getMessage(request, key) + "\" type=\"" + type + "\">");
+			if(ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
+				buttonObject.setType("button");
+				
+				uiDialogObject = new UiDialogObject();
+				uiDialogObject.setId(method);
+				uiDialogObject.setMethod(method);
+				
+				uiDialogObject.setTitle(MessageLocator.getMessage(request, key));
+				uiDialogObject.setMessage(MessageLocator.getMessage(request, messageKey));
+				
+				uiDialogObject.setYesLabel(MessageLocator.getMessage(request, "yes"));
+				uiDialogObject.setNoLabel(MessageLocator.getMessage(request, "no"));
+				
+				uiDialogObject.setWidth("250");
+				uiDialogObject.setHeight("150");
+				uiDialogObject.setAutoOpen(false);
+				uiDialogObject.setModal(true);
+				uiDialogObject.setDefaultYesButton(true);
+				uiDialogObject.setDefaultNoButton(true);
+				
+				Object dialog = request.getAttribute(id + StringUtils.capitalize(BaseWebConstants.DIALOG));
+				if(dialog != null && (boolean)dialog) {
+					uiDialogObject.setAutoOpen(true);
 				}
-				out.print("<img src=\"images/" + image + "\"/>");
-				if(showKey) {
-					out.print("&nbsp;");
-					out.print(MessageLocator.getMessage(request, key));
-				}
-				out.println("</button>");
-			} else {
-//				int pos = image.indexOf(".");
-//				StringBuffer newImage = new StringBuffer();
-//				newImage.append(image.substring(0, pos)); 
-//				newImage.append("_disabled");
-//				newImage.append(image.substring(pos)); 
-//				
-//				out.print("<button>");
-//				out.print("<img src=\"images/" + newImage.toString() + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" />");
-//				out.println("</button>");
 			}
 		}
 		catch (Exception e) {
 		}
-		return EVAL_BODY_INCLUDE;
+		return EVAL_BODY_BUFFERED;
 	}
 
 	public int doEndTag() throws JspException {
+		try {
+			if(isEnabled()) {
+				produceTemplate("buttonTemplate.ftl", buttonObject);
+				
+				if(ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
+					produceTemplate("uiConfirmDialogTemplate.ftl", uiDialogObject);
+				}
+			}
+		}
+		catch (Exception e) {
+		}
+		
 		return EVAL_PAGE;
 	}
 }

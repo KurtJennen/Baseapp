@@ -13,6 +13,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>buttonType</name>
+			<required>false</required>
+			<type>be.luxuryoverdosis.framework.web.enumeration.ButtonTypeEnum</type>
+		</attribute>
+		<attribute>
 			<name>image</name>
 			<required>true</required>
 		</attribute>
@@ -25,6 +30,11 @@
 			<name>showKey</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>messageKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>roles</name>
@@ -195,6 +205,7 @@
 		<attribute>
 			<name>property</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>methodAll</name>
@@ -258,10 +269,12 @@
 		<attribute>
 			<name>callbackActionMethodOne</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>callbackActionMethodBlur</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>
@@ -509,12 +522,12 @@
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<name>defaultSaveButton</name>
+			<name>defaultYesButton</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<name>defaultCancelButton</name>
+			<name>defaultNoButton</name>
 			<required>false</required>
 			<type>java.lang.Boolean</type>
 		</attribute>

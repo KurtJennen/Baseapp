@@ -213,46 +213,46 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-//	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin Ajax");
-//		
-//		DetailUserForm userForm = (DetailUserForm) form;
-//		
-//		ArrayList<RoleDTO> roleList = getRoleService().listDTO(userForm.getRoleIdValue());
-//		if (roleList.size() > 0) {
-//			super.sendAsJson(response, roleList);
-//		}
-//		
-//		Logging.info(this, "End Ajax Success");
-//		
-//		return null;
-//	}
-//	
-//	public ActionForward ajaxSearchOneRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin Ajax");
-//		
-//		DetailUserForm userForm = (DetailUserForm) form;
-//		
-//		RoleDTO roleDTO = getRoleService().readDTO(userForm.getRoleId());
-//		
-//		super.sendAsJson(response, roleDTO);
-//		
-//		Logging.info(this, "End Ajax Success");
-//		
-//		return null;
-//	}
-//	
-//	public ActionForward ajaxSelectTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		Logging.info(this, "Begin AjaxSelectTest");
-//		
-//		DetailUserForm userForm = (DetailUserForm) form;
-//		
-//		userForm.setEmail("ajaxselecttest@skynet.be");
-//		
-//		Logging.info(this, "End AjaxSelectTest");
-//		
-//		return mapping.getInputForward();
-//	}
+	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		DetailUserForm userForm = (DetailUserForm) form;
+		
+		ArrayList<RoleDTO> roleList = getRoleService().listDTO(userForm.getRoleIdValue());
+		if (roleList.size() > 0) {
+			super.sendAsJson(response, roleList);
+		}
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
+	public ActionForward ajaxSearchOneRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin Ajax");
+		
+		DetailUserForm userForm = (DetailUserForm) form;
+		
+		RoleDTO roleDTO = getRoleService().readDTO(userForm.getRoleId());
+		
+		super.sendAsJson(response, roleDTO);
+		
+		Logging.info(this, "End Ajax Success");
+		
+		return null;
+	}
+	
+	public ActionForward ajaxSelectTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin AjaxSelectTest");
+		
+		DetailUserForm userForm = (DetailUserForm) form;
+		
+		userForm.setEmail("ajaxselecttest@skynet.be");
+		
+		Logging.info(this, "End AjaxSelectTest");
+		
+		return mapping.getInputForward();
+	}
 	
 	private UserService getUserService() {
 		return BaseSpringServiceLocator.getBean(UserService.class);

@@ -7,11 +7,11 @@
 	        width: ${templateData.width},
 	        modal: ${templateData.modal?string("true", "false")},
 	        buttons: {
-	        	<#if templateData.defaultSaveButton = true>
-	           		"${templateData.saveLabel}": ${templateData.id}Add,
+	        	<#if templateData.defaultYesButton = true>
+	           		"${templateData.yesLabel}": ${templateData.id}Add,
 	        	</#if>
-	        	<#if templateData.defaultCancelButton = true>
-	        		"${templateData.cancelLabel}": function() {
+	        	<#if templateData.defaultNoButton = true>
+	        		"${templateData.noLabel}": function() {
 			          ${templateData.id}Dialog.dialog( "close" );
 			          }
 	        	</#if>

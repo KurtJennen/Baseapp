@@ -11,8 +11,8 @@ public class BaseWebConstants {
 	public static final String CREATE = "create";
 	public static final String CREATE_DOCUMENT = "createDocument";
 	public static final String DELETE = "delete";
-	public static final String DELETE_EXPORT_JOB = "deleteExportJob";
-	public static final String DELETE_IMPORT_JOB = "deleteImportJob";
+	public static final String DELETE_EXPORT_USER_JOB = "deleteExportUserJob";
+	public static final String DELETE_IMPORT_USER_JOB = "deleteImportUserJob";
 	public static final String DISABLED = "disabled";
 	public static final String DOWNLOAD_FILE_LOG = "downloadFileLog";
 	public static final String FAILED = "failed";
@@ -30,8 +30,8 @@ public class BaseWebConstants {
 	public static final String UPDATE = "update";
 	public static final String READ = "read";
 	public static final String READ_JOB = "readJob";
-	public static final String READ_EXPORT_JOB = "readExportJob";
-	public static final String READ_IMPORT_JOB = "readImportJob";
+	public static final String READ_EXPORT_USER_JOB = "readExportUserJob";
+	public static final String READ_IMPORT_USER_JOB = "readImportUserJob";
 	public static final String REGISTER = "register";
 	public static final String RESET = "reset";
 	public static final String SAVE = "save";
