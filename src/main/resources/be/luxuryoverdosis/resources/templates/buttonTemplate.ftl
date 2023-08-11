@@ -15,6 +15,6 @@
  	<img src="images/${templateData.image}" />
  	
 	<#if templateData.showKey = true>
-		&nbsp; ${templateData.key}
+		&nbsp; ${templateData.title}
 	</#if>
 </button>

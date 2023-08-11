@@ -205,6 +205,7 @@
 		<attribute>
 			<name>property</name>
 			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>methodAll</name>
@@ -268,10 +269,12 @@
 		<attribute>
 			<name>callbackActionMethodOne</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>callbackActionMethodBlur</name>
 			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
 	<tag>

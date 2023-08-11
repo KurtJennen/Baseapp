@@ -21,8 +21,8 @@ public class DetailUserForm extends BaseForm {
 	private String email;
 	private String date;
 	private boolean isActivation;
-//	private int roleId;
-//	private String roleIdValue;
+	private int roleId;
+	private String roleIdValue;
 	
 	private int[] linkedRoleIds;
 	private int[] unlinkedRoleIds;
@@ -69,18 +69,18 @@ public class DetailUserForm extends BaseForm {
 	public void setActivation(boolean isActivation) {
 		this.isActivation = isActivation;
 	}
-//	public int getRoleId() {
-//		return roleId;
-//	}
-//	public void setRoleId(int roleId) {
-//		this.roleId = roleId;
-//	}
-//	public String getRoleIdValue() {
-//		return roleIdValue;
-//	}
-//	public void setRoleIdValue(String roleIdValue) {
-//		this.roleIdValue = roleIdValue;
-//	}
+	public int getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+	public String getRoleIdValue() {
+		return roleIdValue;
+	}
+	public void setRoleIdValue(String roleIdValue) {
+		this.roleIdValue = roleIdValue;
+	}
 	
 	public int[] getLinkedRoleIds() {
 		return linkedRoleIds;

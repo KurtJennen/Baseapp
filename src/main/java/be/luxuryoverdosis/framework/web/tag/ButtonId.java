@@ -10,6 +10,7 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
+@Deprecated
 public class ButtonId implements Tag {
 	PageContext pageContext;
 	private String method;
