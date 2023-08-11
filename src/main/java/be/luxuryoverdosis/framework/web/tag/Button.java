@@ -14,14 +14,12 @@ import be.luxuryoverdosis.framework.web.ui.UiDialogObject;
 public class Button extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-//	PageContext pageContext;
 	private ButtonTypeEnum buttonType = ButtonTypeEnum.DEFAULT;
 	private String method;
 	private String image;
 	private String key;
 	private boolean showKey = false;
 	private String messageKey =  "message.confirm";
-//	private String roles;
 	private String type = "submit";
 	private String dialogId;
 	
@@ -46,42 +44,12 @@ public class Button extends CommonTag {
 	public void setMessageKey(String messageKey) {
 		this.messageKey = messageKey;
 	}
-//	public void setRoles(String roles) {
-//		this.roles = roles;
-//	}
 	public void setType(String type) {
 		this.type = type;
 	}
 	public void setDialogId(String dialogId) {
 		this.dialogId = dialogId;
 	}
-	
-//	public ButtonObject getButtonObject() {
-//		return buttonObject;
-//	}
-//	public void setButtonObject(ButtonObject buttonObject) {
-//		this.buttonObject = buttonObject;
-//	}
-//	public UiDialogObject getUiDialogObject() {
-//		return uiDialogObject;
-//	}
-//	public void setUiDialogObject(UiDialogObject uiDialogObject) {
-//		this.uiDialogObject = uiDialogObject;
-//	}
-	
-//	public void setParent(Tag t) {
-//	}
-//	
-//	public void setPageContext(PageContext p) {
-//		pageContext = p;
-//	}
-//	
-//	public void release() {
-//	}
-//	
-//	public Tag getParent() {
-//		return null;
-//	}
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -132,47 +100,10 @@ public class Button extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-//			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
-//			
-//			boolean enabled = false;
-//			if(userDTO != null) {
-//				if(roles != null) {
-//					String[] seperatedRoles = roles.split(",");
-//					for(int i = 0; i < seperatedRoles.length; i++) {
-//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-//							enabled = true;
-//						}
-//					}
-//				} else {
-//					enabled = true;
-//				}
-//			} else {
-//				enabled = true;
-//			}
-			
 			if(isEnabled()) {
-//				JspWriter out = pageContext.getOut();
-//				
-//				Configuration configuration = new Configuration();
-//				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-//				configuration.setDefaultEncoding("UTF-8");
-//				configuration.setLocale(Locale.US);
-//				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-//				
-//				Map<String, Object> templateData = new HashMap<String, Object>();
-//				templateData.put("templateData", buttonObject);
-//				
-//				Template template = configuration.getTemplate("buttonTemplate.ftl");
-//				template.process(templateData, out);
 				produceTemplate("buttonTemplate.ftl", buttonObject);
 				
 				if(ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
-//					templateData = new HashMap<String, Object>();
-//					templateData.put("templateData", uiDialogObject);
-//					
-//					template = configuration.getTemplate("uiConfirmDialogTemplate.ftl");
-//					template.process(templateData, out);
 					produceTemplate("uiConfirmDialogTemplate.ftl", uiDialogObject);
 				}
 			}

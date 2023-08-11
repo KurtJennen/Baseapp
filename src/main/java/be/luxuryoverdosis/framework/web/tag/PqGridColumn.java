@@ -13,7 +13,6 @@ import be.luxuryoverdosis.framework.web.pq.PqGridColumnObject;
 public class PqGridColumn extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-//	PageContext pageContext;
 	private Tag parent;
 	private String title;
 	private String titleKey;

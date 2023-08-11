@@ -17,7 +17,6 @@ import be.luxuryoverdosis.framework.web.sessionmanager.UrlManager;
 public class PqGrid extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-//	PageContext pageContext;
 	private String id;
 	private String title;
 	private String titleKey;
@@ -29,7 +28,6 @@ public class PqGrid extends CommonTag {
 	private int freezeCols = 1;
 	private boolean paging = true;
 	private int rPP = 14;
-//	private String roles;
 	private boolean clickable = true;
 	
 	private PqGridObject pqGridObject;
@@ -70,9 +68,6 @@ public class PqGrid extends CommonTag {
 	public void setrPP(int rPP) {
 		this.rPP = rPP;
 	}
-//	public void setRoles(String roles) {
-//		this.roles = roles;
-//	}
 	public void setClickable(boolean clickable) {
 		this.clickable = clickable;
 	}
@@ -81,40 +76,8 @@ public class PqGrid extends CommonTag {
 		return pqGridObject;
 	}
 	
-//	public void setParent(Tag t) {
-//	}
-//	
-//	public void setPageContext(PageContext p) {
-//		pageContext = p;
-//	}
-//	
-//	public void release() {
-//	}
-//	
-//	public Tag getParent() {
-//		return null;
-//	}
-	
 	public int doStartTag() throws JspException {
 		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-//		UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
-//		
-//		boolean roleClickable = false;
-//		if(userDTO != null) {
-//			if(roles != null) {
-//				String[] seperatedRoles = roles.split(",");
-//				for(int i = 0; i < seperatedRoles.length; i++) {
-//					//if(seperatedRoles[i].equals(user.getRole().getName())) {
-//					if(userDTO.getRoles().contains(seperatedRoles[i])) {
-//						roleClickable = true;
-//					}
-//				}
-//			} else {
-//				roleClickable = true;
-//			}
-//		} else {
-//			roleClickable = false;
-//		}
 		
 		BaseForm baseForm = (BaseForm) request.getAttribute("org.apache.struts.taglib.html.BEAN");
 		
@@ -159,21 +122,7 @@ public class PqGrid extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-//			JspWriter out = pageContext.getOut();
-//			
-//			Configuration configuration = new Configuration();
-//			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-//			configuration.setDefaultEncoding("UTF-8");
-//			configuration.setLocale(Locale.US);
-//			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-//			
-//			Map<String, Object> templateData = new HashMap<String, Object>();
-//			templateData.put("templateData", pqGridObject);
-//			
-//			Template template = configuration.getTemplate("pqTemplate.ftl");
-//			template.process(templateData, out);
 			produceTemplate("pqTemplate.ftl", pqGridObject);
-			
 		}
 		catch (Exception e) {
 		}

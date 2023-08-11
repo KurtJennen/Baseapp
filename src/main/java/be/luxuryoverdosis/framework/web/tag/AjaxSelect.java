@@ -12,7 +12,6 @@ import be.luxuryoverdosis.framework.web.ui.AjaxSelectObject;
 public class AjaxSelect extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-//	PageContext pageContext;
 	private String property;
 	private String methodAll;
 	private String methodOne;
@@ -26,7 +25,6 @@ public class AjaxSelect extends CommonTag {
     private String width = "90";
     private String maxHeight = "500";
 	private String key;
-//	private String roles;
 	private String callbackActionMethodOne = StringUtils.EMPTY;
 	private String callbackActionMethodBlur = StringUtils.EMPTY;
 	
@@ -71,9 +69,6 @@ public class AjaxSelect extends CommonTag {
 	public void setKey(String key) {
 		this.key = key;
 	}
-//	public void setRoles(String roles) {
-//		this.roles = roles;
-//	}
 	public void setCallbackActionMethodOne(String callbackActionMethodOne) {
 		this.callbackActionMethodOne = callbackActionMethodOne;
 	}
@@ -81,20 +76,6 @@ public class AjaxSelect extends CommonTag {
 		this.callbackActionMethodBlur = callbackActionMethodBlur;
 	}
 
-//	public void setParent(Tag t) {
-//	}
-//	
-//	public void setPageContext(PageContext p) {
-//		pageContext = p;
-//	}
-//	
-//	public void release() {
-//	}
-//	
-//	public Tag getParent() {
-//		return null;
-//	}
-	
 	public int doStartTag() throws JspException {
 		try {
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
@@ -148,38 +129,7 @@ public class AjaxSelect extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-//			JspWriter out = pageContext.getOut();
-//			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
-//			
-//			boolean enabled = false;
-//			if(userDTO != null) {
-//				if(roles != null) {
-//					String[] seperatedRoles = roles.split(",");
-//					for(int i = 0; i < seperatedRoles.length; i++) {
-//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-//							enabled = true;
-//						}
-//					}
-//				} else {
-//					enabled = true;
-//				}
-//			} else {
-//				enabled = true;
-//			}
-			
 			if(isEnabled()) {
-//				Configuration configuration = new Configuration();
-//				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-//				configuration.setDefaultEncoding("UTF-8");
-//				configuration.setLocale(Locale.US);
-//				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-//				
-//				Map<String, Object> templateData = new HashMap<String, Object>();
-//				templateData.put("templateData", ajaxSelectObject);
-//				
-//				Template template = configuration.getTemplate("ajaxSelectTemplate.ftl");
-//				template.process(templateData, out);
 				produceTemplate("ajaxSelectTemplate.ftl", ajaxSelectObject);
 			}
 		}
