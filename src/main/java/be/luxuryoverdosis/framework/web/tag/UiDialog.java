@@ -1,29 +1,18 @@
 package be.luxuryoverdosis.framework.web.tag;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyTagSupport;
-import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.commons.lang.StringUtils;
 
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.ui.UiDialogObject;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 
-public class UiDialog extends BodyTagSupport {
+public class UiDialog extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-	PageContext pageContext;
+//	PageContext pageContext;
 	private String id;
 	private String method = BaseWebConstants.UPDATE;
 	private String title;
@@ -75,19 +64,19 @@ public class UiDialog extends BodyTagSupport {
 		this.uiDialogObject = uiDialogObject;
 	}
 	
-	public void setParent(Tag t) {
-	}
-	
-	public void setPageContext(PageContext p) {
-		pageContext = p;
-	}
-	
-	public void release() {
-	}
-	
-	public Tag getParent() {
-		return null;
-	}
+//	public void setParent(Tag t) {
+//	}
+//	
+//	public void setPageContext(PageContext p) {
+//		pageContext = p;
+//	}
+//	
+//	public void release() {
+//	}
+//	
+//	public Tag getParent() {
+//		return null;
+//	}
 	
 	public int doStartTag() throws JspException {
 		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
@@ -123,19 +112,20 @@ public class UiDialog extends BodyTagSupport {
 
 	public int doEndTag() throws JspException {
 		try {
-			JspWriter out = pageContext.getOut();
-			
-			Configuration configuration = new Configuration();
-			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-			configuration.setDefaultEncoding("UTF-8");
-			configuration.setLocale(Locale.US);
-			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-			
-			Map<String, Object> templateData = new HashMap<String, Object>();
-			templateData.put("templateData", uiDialogObject);
-			
-			Template template = configuration.getTemplate("uiDialogTemplate.ftl");
-			template.process(templateData, out);
+//			JspWriter out = pageContext.getOut();
+//			
+//			Configuration configuration = new Configuration();
+//			configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
+//			configuration.setDefaultEncoding("UTF-8");
+//			configuration.setLocale(Locale.US);
+//			configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+//			
+//			Map<String, Object> templateData = new HashMap<String, Object>();
+//			templateData.put("templateData", uiDialogObject);
+//			
+//			Template template = configuration.getTemplate("uiDialogTemplate.ftl");
+//			template.process(templateData, out);
+			produceTemplate("uiDialogTemplate.ftl", uiDialogObject);
 		}
 		catch (Exception e) {
 		}

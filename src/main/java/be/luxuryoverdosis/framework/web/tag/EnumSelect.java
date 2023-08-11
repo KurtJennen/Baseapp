@@ -2,35 +2,23 @@ package be.luxuryoverdosis.framework.web.tag;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-import javax.servlet.jsp.tagext.BodyTagSupport;
-import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
-import be.luxuryoverdosis.framework.data.dto.UserDTO;
-import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.ui.EnumSelectObject;
 import be.luxuryoverdosis.framework.web.ui.EnumSelectOptionObject;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import freemarker.template.TemplateExceptionHandler;
 
-public class EnumSelect extends BodyTagSupport {
+public class EnumSelect extends CommonTag {
 	private static final long serialVersionUID = 1L;
 	
-	PageContext pageContext;
+//	PageContext pageContext;
 	private String clazz;
 	private String method;
 	private String property;
@@ -38,7 +26,7 @@ public class EnumSelect extends BodyTagSupport {
 	private String value;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
-	private String roles;
+//	private String roles;
 	
 	private EnumSelectObject enumSelectObject;
 	private ArrayList<EnumSelectOptionObject> options; 
@@ -64,64 +52,28 @@ public class EnumSelect extends BodyTagSupport {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	public void setRoles(String roles) {
-		this.roles = roles;
-	}
+//	public void setRoles(String roles) {
+//		this.roles = roles;
+//	}
 
-	public void setParent(Tag t) {
-	}
-	
-	public void setPageContext(PageContext p) {
-		pageContext = p;
-	}
-	
-	public void release() {
-	}
-	
-	public Tag getParent() {
-		return null;
-	}
+//	public void setParent(Tag t) {
+//	}
+//	
+//	public void setPageContext(PageContext p) {
+//		pageContext = p;
+//	}
+//	
+//	public void release() {
+//	}
+//	
+//	public Tag getParent() {
+//		return null;
+//	}
 	
 	public int doStartTag() throws JspException {
 		try {
-//			JspWriter out = pageContext.getOut();
 			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
-//			
-//			boolean enabled = false;
-//			if(userDTO != null) {
-//				if(roles != null) {
-//					String[] seperatedRoles = roles.split(",");
-//					for(int i = 0; i < seperatedRoles.length; i++) {
-//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-//							enabled = true;
-//						}
-//					}
-//				} else {
-//					enabled = true;
-//				}
-//			} else {
-//				enabled = true;
-//			}
 			
-//			List<String> keyList = getKeysForClass();
-//			
-//			if(enabled && !disabled) {
-//				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\">");
-//			} else {
-//				out.print("<select name=\"" + property + "\" tabindex=\"" + tabindex + "\" onchange=\"" + onchange + "\" disabled=\"disabled\">");
-//			}
-//	    	
-//			for(String key : keyList) {
-//				String keyMessage = getKeyMessage(request, key);
-//				if(key.equals(value)) {
-//					out.print("<option value=\"" + key + "\" selected=\"selected\">" + keyMessage + "</option>");
-//				} else {
-//					out.print("<option value=\"" + key + "\">" + keyMessage + "</option>");
-//				}
-//			}
-//			
-//			out.println("</select>");
 			enumSelectObject = new EnumSelectObject();
 			enumSelectObject.setProperty(property);
 			enumSelectObject.setTabindex(tabindex);
@@ -166,39 +118,40 @@ public class EnumSelect extends BodyTagSupport {
 
 	public int doEndTag() throws JspException {
 		try {
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+//			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+//			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+//			
+//			boolean enabled = false;
+//			if(userDTO != null) {
+//				if(roles != null) {
+//					String[] seperatedRoles = roles.split(",");
+//					for(int i = 0; i < seperatedRoles.length; i++) {
+//						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+//							enabled = true;
+//						}
+//					}
+//				} else {
+//					enabled = true;
+//				}
+//			} else {
+//				enabled = true;
+//			}
 			
-			boolean enabled = false;
-			if(userDTO != null) {
-				if(roles != null) {
-					String[] seperatedRoles = roles.split(",");
-					for(int i = 0; i < seperatedRoles.length; i++) {
-						if(userDTO.getRoles().contains(seperatedRoles[i])) {
-							enabled = true;
-						}
-					}
-				} else {
-					enabled = true;
-				}
-			} else {
-				enabled = true;
-			}
-			
-			if(enabled) {
-				JspWriter out = pageContext.getOut();
-				
-				Configuration configuration = new Configuration();
-				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
-				configuration.setDefaultEncoding("UTF-8");
-				configuration.setLocale(Locale.US);
-				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-				
-				Map<String, Object> templateData = new HashMap<String, Object>();
-				templateData.put("templateData", enumSelectObject);
-				
-				Template template = configuration.getTemplate("enumSelectTemplate.ftl");
-				template.process(templateData, out);
+			if(isEnabled()) {
+//				JspWriter out = pageContext.getOut();
+//				
+//				Configuration configuration = new Configuration();
+//				configuration.setClassForTemplateLoading(this.getClass(), "../../../resources/templates/");
+//				configuration.setDefaultEncoding("UTF-8");
+//				configuration.setLocale(Locale.US);
+//				configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+//				
+//				Map<String, Object> templateData = new HashMap<String, Object>();
+//				templateData.put("templateData", enumSelectObject);
+//				
+//				Template template = configuration.getTemplate("enumSelectTemplate.ftl");
+//				template.process(templateData, out);
+				produceTemplate("enumSelectTemplate.ftl", enumSelectObject);
 			}
 		}
 		catch (Exception e) {
