@@ -16,6 +16,7 @@
 			<Item name="menu1item4" title="displayNumber.title" action="listNumber.do?method=list" />
 			<Item name="menu1item5" title="displayDocument.title" action="listDocument.do?method=list" />
 			<Item name="menu1item6" title="displayPdf.title" action="listPdf.do?method=list" />
+			<Item name="menu1item7" title="displayKeycloak.title" action="keycloak.do?method=list" />
 		</Menu>
 		<Menu name="menu3Beheerder" title="menu2.title">
 			<Item name="menu1item1" title="displayRole.title" action="listRole.do?method=list" />

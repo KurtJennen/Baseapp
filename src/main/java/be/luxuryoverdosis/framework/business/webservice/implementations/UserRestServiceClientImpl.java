@@ -28,10 +28,10 @@ public class UserRestServiceClientImpl extends BaseRestServiceClient implements 
 	private String password;
 	
 	private static final String USER = "/user";
-	private static final String READ_USER_REQUEST = USER + "/readUserRequestName";
-	private static final String READ_ALL_USERS_REQUEST = USER + "/readAllUsersRequest";
-	private static final String CREATE_OR_UPDATE_USER_REQUEST = USER + "/createOrUpdateUserRequest";
-	private static final String DELETE_USER_REQUEST = USER + "/deleteUserRequest";
+	private static final String READ_USER_REQUEST = USER + "/readRequestName";
+	private static final String READ_ALL_USERS_REQUEST = USER + "/readAllRequest";
+	private static final String CREATE_OR_UPDATE_USER_REQUEST = USER + "/createOrUpdateRequest";
+	private static final String DELETE_USER_REQUEST = USER + "/deleteRequest";
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public RestWrapperDTO<UserDTO> readUserRequest(final String name) {

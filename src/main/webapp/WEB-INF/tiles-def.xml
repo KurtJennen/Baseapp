@@ -42,6 +42,9 @@
 	<definition name="display.detail.document.form" extends="myTile">
 		<put name="body" value="/jsp/security/displayDetailDocumentForm.jsp" />
 	</definition>
+	<definition name="display.keycloak.form" extends="myTile">
+		<put name="body" value="/jsp/security/displayKeycloakForm.jsp" />
+	</definition>
 	<definition name="display.list.number.form" extends="myTile">
 		<put name="body" value="/jsp/security/displayListNumberForm.jsp" />
 	</definition>
