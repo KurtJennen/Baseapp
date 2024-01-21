@@ -5,7 +5,7 @@ public class Constants extends be.luxuryoverdosis.framework.BaseConstants {
 	public static final String NAME = "BASEAPP";
 	
 	public static final String MAIL_FROM = "baseapp@skynet.be";
-	
+
 	//Application
 	
 	//Job

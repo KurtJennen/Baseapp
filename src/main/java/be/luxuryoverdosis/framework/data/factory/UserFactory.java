@@ -2,6 +2,8 @@ package be.luxuryoverdosis.framework.data.factory;
 
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
@@ -54,7 +56,12 @@ public class UserFactory {
 		user.setId(userDTO.getId());
 		user.setName(userDTO.getName());
 		user.setUserName(userDTO.getUserName());
-		user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
+		if(!StringUtils.isEmpty(userDTO.getPassword())) {
+			user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
+		}
+		if(!StringUtils.isEmpty(userDTO.getEncryptedPassword())) {
+			user.setEncryptedPassword(userDTO.getEncryptedPassword());
+		}
 		user.setEmail(userDTO.getEmail());
 		user.setDateExpiration(userDTO.getDateExpiration());
 		try {

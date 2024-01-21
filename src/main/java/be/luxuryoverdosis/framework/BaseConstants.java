@@ -18,6 +18,8 @@ public class BaseConstants {
 	public static final String POINT = ".";
 	public static final String UNDERSCORE = "_";
 	public static final String DOUBLEPOINT = ":";
+	public static final String AMPERSAND = "&";
+	public static final String QUESTION = "?";
 	public static final String CARRIAGE_RETURN = "\r\n";
 	
 	public static final String MAIL_FROM = "baseapp@skynet.be";
@@ -39,4 +41,6 @@ public class BaseConstants {
 	public static final String REPORT_USERS = "Users";
 	public static final String REPORT_USERS_PATH = REPORT_PATH + REPORT_USERS + FileType.JRXML;
 	public static final String FILE_USERS = REPORT_USERS + FileType.PDF;
+	
+	public static final int DUIZEND = 1000;
 }

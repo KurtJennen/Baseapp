@@ -11,15 +11,16 @@ public class UserRestClient {
 		SpringServiceLocator.getSpringServiceLocator();
 		
 		//ReadUserRequest (GET)
-		RestWrapperDTO<UserDTO> userRestWrapperDTO  = getUserRestServiceClient().readUserRequest("root");
+		System.out.println("ReadUserRequest:");
+		RestWrapperDTO<UserDTO> userRestWrapperDTO = getUserRestServiceClient().readUserRequest("root", "cm9vdA==");
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getDto() != null) {
 			print(userRestWrapperDTO.getDto());
 		}
 		
-		
 		//ReadAllUsersRequest (GET)
+		System.out.println("ReadAllUsersRequest:");
 		userRestWrapperDTO  = getUserRestServiceClient().readAllUsersRequest();
 		printErrorsAndMessages(userRestWrapperDTO);
 		
@@ -30,7 +31,8 @@ public class UserRestClient {
 		}
 		
 		//CreateOrUpdateUserRequest (POST)
-		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", "Beheerder,NormaleGebruiker");
+		System.out.println("CreateOrUpdateUserRequest:");
+		userRestWrapperDTO  = getUserRestServiceClient().createOrUpdateUserRequest("tst", "Test", "cm9vdA==", "kurt.jennen@skynet.be", new String[]{"Beheerder", "NormaleGebruiker"});
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getDto() != null) {
@@ -38,13 +40,13 @@ public class UserRestClient {
 		}
 		
 		//DeleteUserRequest (DELETE)
+		System.out.println("DeleteUserRequest:");
 		userRestWrapperDTO  = getUserRestServiceClient().deleteUserRequest(userRestWrapperDTO.getDto().getId());
 		printErrorsAndMessages(userRestWrapperDTO);
 		
 		if(userRestWrapperDTO.getDto() != null) {
 			print(userRestWrapperDTO.getDto());
 		}
-		
 		
 	}
 

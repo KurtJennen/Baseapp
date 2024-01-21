@@ -9,6 +9,7 @@ public class UserDTO extends BaseDTO {
 	private String name;
 	private String userName;
 	private String password;
+	private String encryptedPassword;
 	private String email;
 	private Date dateExpiration;
 	private String dateExpirationAsString;
@@ -58,6 +59,12 @@ public class UserDTO extends BaseDTO {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public String getEncryptedPassword() {
+		return encryptedPassword;
+	}
+	public void setEncryptedPassword(String encryptedPassword) {
+		this.encryptedPassword = encryptedPassword;
 	}
 	public String getEmail() {
 		return email;
