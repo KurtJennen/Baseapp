@@ -1,17 +1,18 @@
-function doAjaxSelect(sProperty, sMethodAll, sMethodOne, aFields, sNoResult) {
+function doAjaxSelect(sProperty, sMethodAll, sMethodOne, aFields, sNoResult, iMinLength) {
 	$('#' + sProperty + 'Button').click(function(e) {
 		doAjaxSelectCommon(sProperty, sMethodAll, sNoResult);
 	});
 	
 	$('#' + sProperty + 'Value').keyup(function(e) {
-		if(e.keyCode == 40) {
+		if(doAjaxButton(sProperty, iMinLength) && e.keyCode == 40) {
 			doAjaxSelectCommon(sProperty, sMethodAll, sNoResult);
 		}
 	});
 	
 	if ($('#' + sProperty).val() > 0) {
-		doAjaxSelectClicked(sProperty, sMethodOne, $('#' + sProperty).val(), aFields, "");
+		doAjaxSelectClicked(sProperty, sMethodOne, $('#' + sProperty).val(), aFields, "", iMinLength);
 	}
+	doAjaxButton(sProperty, iMinLength);
 }
 
 function doAjaxSelectCommon(sProperty, sMethodAll, sNoResult) {
@@ -36,7 +37,7 @@ function doAjaxSelectCommon(sProperty, sMethodAll, sNoResult) {
 	})
 }
 
-function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCallbackActionMethodOne) {
+function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCallbackActionMethodOne, iMinLength) {
 	$('#' + sProperty).val(sId);
 	
 	$.ajax({
@@ -53,6 +54,8 @@ function doAjaxSelectClicked(sProperty, sMethodOne, sId, aFields, sCallbackActio
 	
 			$('#' + sProperty + 'Value').val(val);
 			$('#' + sProperty + 'Value').focus();
+			
+			doAjaxButton(sProperty, iMinLength);
 		},
 		error: function(e) {
 			alert('Error: ' + e);
@@ -82,6 +85,18 @@ function doAjaxInput(sProperty, callbackActionMethodBlur) {
 		}
 	}
 };
+
+function doAjaxButton(sProperty, iMinLength) {
+	var iLength = $('#' + sProperty + 'Value').val().length;
+	
+	if(iLength < iMinLength) {
+		$('#' + sProperty + 'Button').prop("disabled", true);
+		return false;
+	} else {
+		$('#' + sProperty + 'Button').prop("disabled", false);
+		return true;
+	}
+}
 
 function doAjaxBlurNoResult(sProperty) {
 	$('#' + sProperty + 'Result').text("");

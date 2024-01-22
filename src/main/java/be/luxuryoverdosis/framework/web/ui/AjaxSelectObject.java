@@ -8,6 +8,7 @@ public class AjaxSelectObject {
 	private boolean disabled;
 	private String image;
 	private String size;
+	private int minLength = 0;
 	private String maxLength;
 	private String width = "90";
 	private String maxHeight = "500";
@@ -61,6 +62,12 @@ public class AjaxSelectObject {
 	}
 	public void setSize(String size) {
 		this.size = size;
+	}
+	public int getMinLength() {
+		return minLength;
+	}
+	public void setMinLength(int minLength) {
+		this.minLength = minLength;
 	}
 	public String getMaxLength() {
 		return maxLength;
