@@ -8,7 +8,7 @@ public class AjaxSelectObject {
 	private boolean disabled;
 	private String image;
 	private String size;
-	private int minLength = 0;
+	private int minLength = 3;
 	private String maxLength;
 	private String width = "90";
 	private String maxHeight = "500";
