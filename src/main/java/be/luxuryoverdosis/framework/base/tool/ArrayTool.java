@@ -1,5 +1,8 @@
 package be.luxuryoverdosis.framework.base.tool;
 
+import be.luxuryoverdosis.baseapp.Constants;
+import be.luxuryoverdosis.framework.web.exception.ServiceException;
+
 public class ArrayTool {
 	public static int[] sortArray(int[] number) {
 		for(int i = 0; i < number.length - 1; i++) {
@@ -89,5 +92,15 @@ public class ArrayTool {
 		}
 		
 		return false;
+	}
+	
+	public static void isJobLength(Integer[] ids) {
+		isLengthOk(ids, Constants.DUIZEND);
+	}
+	
+	public static void isLengthOk(Integer[] ids, int length) {
+		if(ids.length > length) {
+			throw new ServiceException("errors.arraylength", new String[] {String.valueOf(length)});
+		}
 	}
 }

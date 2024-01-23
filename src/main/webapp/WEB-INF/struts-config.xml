@@ -16,6 +16,7 @@
 		<form-bean name="detailNumberForm" type="be.luxuryoverdosis.framework.web.form.DetailNumberForm" />
 		<form-bean name="detailDocumentForm" type="be.luxuryoverdosis.framework.web.form.DetailDocumentForm" />
 		<form-bean name="pdfForm" type="be.luxuryoverdosis.framework.web.form.PdfForm" />
+		<form-bean name="keycloakForm" type="be.luxuryoverdosis.framework.web.form.KeycloakForm" />
 	</form-beans>
 	
 	<global-exceptions>
@@ -80,6 +81,16 @@
 				<forward name="failed" path="display.error.form" />
 				<forward name="list" path="/listDocument.do?method=list" />
 				<forward name="read" path="/detailDocument.do?method=read" />
+		</action>
+		
+		<action path="/keycloak"
+				name="keycloakForm"
+				validate="true"
+				scope="request"
+				input="display.keycloak.form"
+				type="be.luxuryoverdosis.framework.web.action.security.KeycloakAction"
+				parameter="method">
+				<forward name="failed" path="display.error.form" />
 		</action>
 		
 		<action path="/listNumber"

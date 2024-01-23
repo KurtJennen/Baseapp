@@ -244,6 +244,9 @@
 			<required>true</required>
 		</attribute>
 		<attribute>
+			<name>minLength</name>
+		</attribute>
+		<attribute>
 			<name>maxLength</name>
 			<required>true</required>
 		</attribute>

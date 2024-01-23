@@ -4,7 +4,8 @@
 			'${templateData.methodAll}', 
 			'${templateData.methodOne}', 
 			${templateData.concatenatedFields}, 
-			'${templateData.searchNoResultKey}');
+			'${templateData.searchNoResultKey}',
+			${templateData.minLength});
 	});
 </script>
 
@@ -14,7 +15,8 @@
 			'${templateData.methodOne}', 
 			${r"${id}"}, 
 			${templateData.concatenatedFields}, 
-			'${templateData.callbackActionMethodOne}');" 
+			'${templateData.callbackActionMethodOne}',
+			${templateData.minLength});" 
 		onmouseover="this.style.background='#fdecae'"
 		onmouseout="this.style.background='#e3e3e3'">
 	<#list templateData.seperatedArray as column>
@@ -43,9 +45,14 @@
 		disabled="disabled"
 	</#if>
 	/>
+	
 <button id="${templateData.property}Button" 
 	type="button" 
-	title="${templateData.title}">
+	title="${templateData.title}"
+	<#if templateData.disabled = true>
+		disabled="disabled"
+	</#if>
+	>
 	<img src="images/${templateData.image}"/>
 </button>
 

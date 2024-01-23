@@ -10,6 +10,7 @@ public class BaseWebConstants {
 	public static final String BACK = "back";
 	public static final String CREATE = "create";
 	public static final String CREATE_DOCUMENT = "createDocument";
+	public static final String CONFIGURATION = "configuration";
 	public static final String DELETE = "delete";
 	public static final String DELETE_EXPORT_USER_JOB = "deleteExportUserJob";
 	public static final String DELETE_IMPORT_USER_JOB = "deleteImportUserJob";

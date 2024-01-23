@@ -135,6 +135,12 @@ public class DateTool {
 		return calendar.getTime();
 	}
 
+	public static Date getCurrentDateTimeFromCalendar() {
+		Calendar today =  Calendar.getInstance();
+		
+		return today.getTime();
+	}
+	
 	public static Date getCurrentDateFromCalendar() {
 		Calendar today =  Calendar.getInstance();
 		today.set(Calendar.HOUR_OF_DAY, 0);

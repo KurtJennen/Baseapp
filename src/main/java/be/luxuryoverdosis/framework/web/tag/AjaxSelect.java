@@ -21,6 +21,7 @@ public class AjaxSelect extends CommonTag {
 	private boolean disabled;
 	private String image = "zoom.png";
 	private String size;
+	private int minLength = 3;
 	private String maxLength;
     private String width = "90";
     private String maxHeight = "500";
@@ -57,6 +58,9 @@ public class AjaxSelect extends CommonTag {
 	public void setSize(String size) {
 		this.size = size;
 	}
+	public void setMinLength(int minLength) {
+		this.minLength = minLength;
+	}
 	public void setMaxLength(String maxLength) {
 		this.maxLength = maxLength;
 	}
@@ -90,6 +94,7 @@ public class AjaxSelect extends CommonTag {
 			ajaxSelectObject.setDisabled(disabled);
 			ajaxSelectObject.setImage(image);
 			ajaxSelectObject.setSize(size);
+			ajaxSelectObject.setMinLength(minLength);
 			ajaxSelectObject.setMaxLength(maxLength);
 			ajaxSelectObject.setWidth(width);
 			ajaxSelectObject.setMaxHeight(maxHeight);
