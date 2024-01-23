@@ -94,11 +94,11 @@ public class ArrayTool {
 		return false;
 	}
 	
-	public static void isJobLength(int[] ids) {
+	public static void isJobLength(Integer[] ids) {
 		isLengthOk(ids, Constants.DUIZEND);
 	}
 	
-	public static void isLengthOk(int[] ids, int length) {
+	public static void isLengthOk(Integer[] ids, int length) {
 		if(ids.length > length) {
 			throw new ServiceException("errors.arraylength", new String[] {String.valueOf(length)});
 		}
