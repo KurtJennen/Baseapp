@@ -87,14 +87,18 @@ function doAjaxInput(sProperty, callbackActionMethodBlur) {
 };
 
 function doAjaxButton(sProperty, iMinLength) {
-	var iLength = $('#' + sProperty + 'Value').val().length;
+	var isDisabled = $('#' + sProperty + 'Value').prop("disabled");
 	
-	if(iLength < iMinLength) {
-		$('#' + sProperty + 'Button').prop("disabled", true);
-		return false;
-	} else {
-		$('#' + sProperty + 'Button').prop("disabled", false);
-		return true;
+	if(!isDisabled) {
+		var iLength = $('#' + sProperty + 'Value').val().length;
+	
+		if(iLength < iMinLength) {
+			$('#' + sProperty + 'Button').prop("disabled", true);
+			return false;
+		} else {
+			$('#' + sProperty + 'Button').prop("disabled", false);
+			return true;
+		}
 	}
 }
 
