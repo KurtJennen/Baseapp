@@ -4,6 +4,7 @@
 	tabindex="${templateData.tabindex}"
 	value="${templateData.value}"
 	id="${templateData.property}"
+	onchange="${templateData.onchange}"
  	
 	<#if templateData.disabled = true>
 		disabled="disabled"

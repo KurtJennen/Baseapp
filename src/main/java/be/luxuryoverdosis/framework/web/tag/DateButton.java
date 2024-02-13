@@ -2,6 +2,8 @@ package be.luxuryoverdosis.framework.web.tag;
 
 import javax.servlet.jsp.JspException;
 
+import org.apache.commons.lang.StringUtils;
+
 import be.luxuryoverdosis.framework.web.ui.DateButtonObject;
 
 public class DateButton extends CommonTag {
@@ -11,6 +13,7 @@ public class DateButton extends CommonTag {
 	private String tabindex;
 	private String value;
 	private boolean disabled;
+	private String onchange = StringUtils.EMPTY;
 	
 	private DateButtonObject dateButtonObject;
 
@@ -26,6 +29,9 @@ public class DateButton extends CommonTag {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	public void setOnchange(String onchange) {
+		this.onchange = onchange;
+	}
 
 	public int doStartTag() throws JspException {
 		try {
@@ -34,6 +40,7 @@ public class DateButton extends CommonTag {
 			dateButtonObject.setTabindex(tabindex);
 			dateButtonObject.setValue(value);
 			dateButtonObject.setDisabled(disabled);
+			dateButtonObject.setOnchange(onchange);
 		}
 		catch (Exception e) {
 		}

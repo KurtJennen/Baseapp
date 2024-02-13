@@ -97,6 +97,9 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+		<attribute>
+			<name>onchange</name>
+		</attribute>
 	</tag>
 	<tag>
 		<name>menuButton</name>
