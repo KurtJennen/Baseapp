@@ -1,10 +1,13 @@
 package be.luxuryoverdosis.framework.web.ui;
 
+import org.apache.commons.lang.StringUtils;
+
 public class DateButtonObject {
 	private String property;
 	private String tabindex;
 	private String value;
 	private boolean disabled;
+	private String onchange = StringUtils.EMPTY;
 	
 	public String getProperty() {
 		return property;
@@ -30,6 +33,11 @@ public class DateButtonObject {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	
+	public String getOnchange() {
+		return onchange;
+	}
+	public void setOnchange(String onchange) {
+		this.onchange = onchange;
+	}
 	
 }

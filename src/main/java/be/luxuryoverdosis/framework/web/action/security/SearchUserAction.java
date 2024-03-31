@@ -106,6 +106,22 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "End CreateDocument Success");
 	}
 	
+	public void createDocumentAndConvertToPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Logging.info(this, "Begin CreateDocument");
+		ActionMessages actionMessages = new ActionMessages();
+		
+		SearchUserForm searchUserForm = (SearchUserForm) form;
+		
+		File file = getUserService().createDocumentAndConvertToPdf(searchUserForm.getDocumentId());
+		
+		ResponseTool.writeResponseForDownloadDocument(response, file);
+		
+		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("reset.success", MessageLocator.getMessage(request, "table.query")));
+		saveMessages(request, actionMessages);
+		
+		Logging.info(this, "End CreateDocument Success");
+	}
+	
 	public ActionForward ajaxSearchAllUser(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		

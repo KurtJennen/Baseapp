@@ -496,6 +496,19 @@ public class UserServiceSpringImpl implements UserService {
 		return documentService.createDocument(document, userDocument, UserDocument.class);
 	}
 	
+
+	@Transactional(readOnly=true)
+	public File createDocumentAndConvertToPdf(final int documentId) {
+		//Template
+		Document document = documentService.read(documentId);
+		
+		//Data
+		UserDocument userDocument = new UserDocument();
+		userDocument.setUsers(userHibernateDAO.list());
+		
+		return documentService.createDocumentAndConvertToPdf(document, userDocument, UserDocument.class);
+	}
+	
 //	private JavaMailSenderImpl getJavaMailSenderImpl() {
 //		return (JavaMailSenderImpl)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SENDER_SERVICE);
 //	}

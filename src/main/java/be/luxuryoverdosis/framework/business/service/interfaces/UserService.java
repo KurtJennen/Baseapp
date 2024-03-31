@@ -41,6 +41,7 @@ public interface UserService {
 	public long count(String name, int id);
 	
 	public File createDocument(int documentId);
+	public File createDocumentAndConvertToPdf(int documentId);
 	
 	public boolean isActiviation();
 	public User activate(int id, int period);

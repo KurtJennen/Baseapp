@@ -2,4 +2,4 @@ Make searchselect JPA compliant
 pqgrid select values in grid
 pqgrid custom column order
 
-Create pdf from odt
+Create pdf from odt jodconverter

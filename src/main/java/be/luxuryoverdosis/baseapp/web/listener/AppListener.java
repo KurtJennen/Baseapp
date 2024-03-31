@@ -10,9 +10,10 @@ import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.baseapp.business.service.interfaces.SqlExecuterService;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
+import be.luxuryoverdosis.framework.business.service.interfaces.OfficeService;
 import be.luxuryoverdosis.framework.logging.Logging;
 
-public class AppListener implements ServletContextListener{
+public class AppListener implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
 		try {
@@ -28,6 +29,8 @@ public class AppListener implements ServletContextListener{
 			SpringServiceLocator.getSpringServiceLocator();
 			
 			getSqlExecuterService().execute();
+			
+			getOfficeService().startOfficeManager();
 		} catch (DataAccessException e) {
 			Logging.error(this, "AppListener error " + e.getMessage());
 			throw e;
@@ -37,10 +40,15 @@ public class AppListener implements ServletContextListener{
 	}
 
 	public void contextDestroyed(ServletContextEvent sce) {
+		getOfficeService().stopOfficeManager();
 	}
 	
 	private SqlExecuterService getSqlExecuterService() {
 		return BaseSpringServiceLocator.getBean(SqlExecuterService.class);
+	}
+	
+	private OfficeService getOfficeService() {
+		return BaseSpringServiceLocator.getBean(OfficeService.class);
 	}
 	
 }

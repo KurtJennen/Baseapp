@@ -8,14 +8,19 @@ import java.util.ArrayList;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang.StringUtils;
+import org.jodconverter.core.DocumentConverter;
+import org.jodconverter.core.office.OfficeException;
+import org.jodconverter.core.util.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
+import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.base.tool.JaxbTool;
 import be.luxuryoverdosis.framework.business.service.interfaces.DocumentService;
+import be.luxuryoverdosis.framework.business.service.interfaces.OfficeService;
 import be.luxuryoverdosis.framework.data.dao.interfaces.DocumentHibernateDAO;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.factory.DocumentFactory;
@@ -30,6 +35,8 @@ import net.sf.jooreports.templates.DocumentTemplateFactory;
 public class DocumentServiceSpringImpl implements DocumentService {
 	@Resource
 	private DocumentHibernateDAO documentHibernateDAO;
+	@Resource
+	private OfficeService officeService;
 	
 	@Transactional
 	public DocumentDTO createOrUpdateDTO(final DocumentDTO documentDTO) {
@@ -153,5 +160,22 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		} catch (Exception e) {
 			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
 		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public File createDocumentAndConvertToPdf(final Document document, final Object data, final Class clazz) {
+		File inputFile = createDocument(document, data, clazz);
+		
+		String baseName = FileUtils.getBaseName(document.getFileName());
+		File outputFile = new File(baseName + Constants.POINT + FileType.PDF);
+		
+		DocumentConverter documentConverter = officeService.getDocumentConverter();
+		try {
+			documentConverter.convert(inputFile).to(outputFile).execute();
+		} catch (OfficeException e) {
+			e.printStackTrace();
+		}
+		
+		return outputFile;
 	}
 }

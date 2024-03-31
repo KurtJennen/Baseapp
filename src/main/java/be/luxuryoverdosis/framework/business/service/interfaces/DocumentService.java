@@ -20,4 +20,6 @@ public interface DocumentService {
 
 	@SuppressWarnings("rawtypes")
 	public File createDocument(final Document document, Object data, Class clazz);
+	@SuppressWarnings("rawtypes")
+	public File createDocumentAndConvertToPdf(final Document document, final Object data, final Class clazz);
 }
