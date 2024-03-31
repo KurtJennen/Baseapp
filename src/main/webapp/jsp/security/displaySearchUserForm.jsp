@@ -15,6 +15,7 @@
 		<html:optionsCollection name="documentList" label="fileName" value="id" />
 	</html:select>
 	<lo:button image="page_white_text.png" method="createDocument" key="button.document"></lo:button>
+	<lo:button image="page_white_acrobat.png" method="createDocumentAndConvertToPdf" key="button.document"></lo:button>
 	<hr />
 	<lo:search searchService="<%= BaseSpringServiceConstants.SEARCH_USER %>" searchName="<%= BaseWebConstants.SEARCH_USER_FORM %>"></lo:search>
 </html:form>

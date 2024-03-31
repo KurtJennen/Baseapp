@@ -17,6 +17,7 @@
        			<value>/be/luxuryoverdosis/resources/properties/ws.properties</value>
        			<value>/be/luxuryoverdosis/resources/properties/rest.properties</value>
        			<value>/be/luxuryoverdosis/resources/properties/security.properties</value>
+       			<value>/be/luxuryoverdosis/resources/properties/office.properties</value>
     		</list>
     	</property>
 	</bean>
