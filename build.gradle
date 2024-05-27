@@ -74,7 +74,7 @@ dependencies {
     testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.9.5'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.22.0'
     testImplementation group: 'org.easymock', name: 'easymock', version: '3.0'
-    //testImplementation group: 'org.springframework', name: 'spring-test', version: '5.1.1.RELEASE'
+    testImplementation group: 'org.springframework', name: 'spring-test', version: '5.1.1.RELEASE'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {

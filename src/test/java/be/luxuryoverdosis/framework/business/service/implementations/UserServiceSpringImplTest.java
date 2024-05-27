@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import be.luxuryoverdosis.baseapp.business.service.SpringServiceLocator;
 import be.luxuryoverdosis.framework.base.Config;
@@ -67,6 +68,7 @@ public class UserServiceSpringImplTest {
 		config.addKeyValue(javax.servlet.jsp.jstl.core.Config.FMT_LOCALE, "nl_BE");
 		
 //		ReflectionTestUtils.setField(userServiceSpringImpl, "activateRoleName", "BEHEERDER");
+		ReflectionTestUtils.setField(userServiceSpringImpl, "roleEnumClass", "be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum");
 		
 		SpringServiceLocator.getSpringServiceLocator();
 	}
