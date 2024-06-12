@@ -1,5 +1,8 @@
-apply plugin: 'eclipse-wtp'
-apply plugin: 'war'
+plugins {
+	id 'eclipse-wtp'
+	id 'war'
+ 	id 'net.saliman.cobertura' version '4.0.0'
+}
 
 java {
     sourceCompatibility = 11
