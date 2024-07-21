@@ -4,12 +4,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.logging.Logging;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
+import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class SearchUserForm extends SearchForm {
 	private static final long serialVersionUID = 1L;
@@ -43,6 +45,12 @@ public class SearchUserForm extends SearchForm {
 		ActionErrors errors = new ActionErrors();
 		
 		errors = super.validate(mapping, request);
+		
+		if(this.getMethod().equals(BaseWebConstants.CREATE_DOCUMENT_AND_CONVERT_TO_PDF)) {
+			if(getDocumentId() < 0) {
+				errors.add("documentId", new ActionMessage("errors.required", MessageLocator.getMessage(request, "document")));
+			}
+		}
 		
 		if(errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
