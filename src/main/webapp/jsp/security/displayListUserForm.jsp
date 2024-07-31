@@ -62,6 +62,8 @@ $(document).ready(function() {
 				<jsp:param value="exportUser" name="id"/>
 				<jsp:param value="User" name="url"/>
 				<jsp:param value="ExportUser" name="name"/>
+				<jsp:param value="true" name="cogVisible"/>
+				<jsp:param value="button.export" name="cogKey"/>
 			</jsp:include>
 		</div>
 		<div id="tab3">
