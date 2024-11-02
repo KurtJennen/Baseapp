@@ -22,7 +22,7 @@ public class BatchJobExecutionParamsServiceSpringImpl implements BatchJobExecuti
 	private BatchJobExecutionParamsHibernateDAO batchJobExecutionParamsHibernateDAO;
 	
 	@Transactional(readOnly = true)
-	public ArrayList<BatchJobExecutionParams> list(long jobInstanceId) {
+	public ArrayList<BatchJobExecutionParams> list(final long jobInstanceId) {
 		Logging.info(this, "Begin listBatchJobParams");
 		
 		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);

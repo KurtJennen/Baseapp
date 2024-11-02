@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 
 public interface RoleRestService {
-	public String readRequest(int id) throws JsonProcessingException;
-	public String readAllRequest() throws JsonProcessingException;
-	public String createOrUpdateRequest(RoleDTO roleDTO) throws JsonProcessingException;
-	public String deleteRequest(int id) throws JsonProcessingException;
+	String readRequest(int id) throws JsonProcessingException;
+	String readAllRequest() throws JsonProcessingException;
+	String createOrUpdateRequest(RoleDTO roleDTO) throws JsonProcessingException;
+	String deleteRequest(int id) throws JsonProcessingException;
 }

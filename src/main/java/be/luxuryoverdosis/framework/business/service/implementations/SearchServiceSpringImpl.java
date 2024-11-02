@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ReflectionUtils;
 
 import be.luxuryoverdosis.baseapp.Constants;
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
@@ -28,7 +29,7 @@ public class SearchServiceSpringImpl implements SearchService {
 	@Resource
 	private SearchHibernateDAO searchHibernateDAO;
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Object> search(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
 		Logging.info(this, "Begin searchSearch");
 		
@@ -36,13 +37,13 @@ public class SearchServiceSpringImpl implements SearchService {
 		return search(searchSelect, searchCriteria, new ArrayList<SearchDTO>());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Object> search(final SearchSelect searchSelect, final SearchCriteria searchCriteria, final ArrayList<SearchDTO> extraSearchDTOs) {
 		Logging.info(this, "Begin searchSearch");
 		
 		String select = constructSelect(searchSelect, searchCriteria);
 		ArrayList<SearchDTO> searchDTOs = constructObjects(searchSelect, searchCriteria);
-		if(extraSearchDTOs != null) {
+		if (extraSearchDTOs != null) {
 			searchDTOs.addAll(extraSearchDTOs);
 		}
 		
@@ -67,28 +68,28 @@ public class SearchServiceSpringImpl implements SearchService {
 		
 		search.append(searchSelect.getSelect());
 		search.append(SearchQuery.SPACE);
-		if(!StringUtils.isEmpty(addOnSelect)) {
+		if (!StringUtils.isEmpty(addOnSelect)) {
 			search.append(addOnSelect);
 			search.append(SearchQuery.SPACE);
 		}
 		
-		if(names != null) {
+		if (names != null) {
 			int fromPos = searchSelect.getSelect().lastIndexOf(SearchQuery.FROM);
 			String from = searchSelect.getSelect().substring(fromPos);
 			
-			if(!from.contains(SearchQuery.WHERE) && !addOnSelect.contains(SearchQuery.WHERE)) {
+			if (!from.contains(SearchQuery.WHERE) && !addOnSelect.contains(SearchQuery.WHERE)) {
 				search.append(SearchQuery.WHERE);
 			} else {
 				search.append(SearchQuery.AND);
 			}
 			search.append(SearchQuery.SPACE);
 			
-			for(int i = 0; i < names.length; i++) {
-				if(!names[i].equals(SearchQuery.MINUS_ONE)) {
+			for (int i = 0; i < names.length; i++) {
+				if (!names[i].equals(SearchQuery.MINUS_ONE)) {
 					SearchParameter searchParameter = searchSelect.getSearchParameter(names[i]);
 					
-					if(i > 0) {
-						if(complexQuery.equals(SearchQuery.ONE)) {
+					if (i > 0) {
+						if (complexQuery.equals(SearchQuery.ONE)) {
 							search.append(SearchQuery.DEFAULT_ADD[Integer.valueOf(addAndOrs[i - 1])]);
 						} else {
 							search.append(SearchQuery.AND);
@@ -96,8 +97,8 @@ public class SearchServiceSpringImpl implements SearchService {
 						search.append(SearchQuery.SPACE);
 					}
 					
-					if(complexQuery.equals(SearchQuery.ONE)) {
-						if(!openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+					if (complexQuery.equals(SearchQuery.ONE)) {
+						if (!openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 							search.append(SearchQuery.OPEN_BRACKET);
 							search.append(SearchQuery.SPACE);
 						}
@@ -105,29 +106,29 @@ public class SearchServiceSpringImpl implements SearchService {
 					
 					search.append(searchParameter.getName());
 					search.append(SearchQuery.SPACE);
-					if(Integer.valueOf(operators[i]) < 6) {
+					if (Integer.valueOf(operators[i]) < BaseConstants.ZES) {
 						search.append(SearchQuery.DEFAULT_OPERATORS[Integer.valueOf(operators[i])]);
 					} 
-					if(Integer.valueOf(operators[i]) >= 6 && Integer.valueOf(operators[i]) <= 8) {
+					if (Integer.valueOf(operators[i]) >= BaseConstants.ZES && Integer.valueOf(operators[i]) <= BaseConstants.ACHT) {
 						search.append(SearchQuery.LIKE);
 					}
-					if(Integer.valueOf(operators[i]) == 9) {
+					if (Integer.valueOf(operators[i]) == BaseConstants.NEGEN) {
 						search.append(SearchQuery.IS_NULL);
 					}
-					if(Integer.valueOf(operators[i]) == 10) {
+					if (Integer.valueOf(operators[i]) == BaseConstants.TIEN) {
 						search.append(SearchQuery.IS_NOT_NULL);
 					}
 					search.append(SearchQuery.SPACE);
 					
-					if(Integer.valueOf(operators[i]) < 9) {
+					if (Integer.valueOf(operators[i]) < BaseConstants.NEGEN) {
 //						search.append(SearchQuery.QUESTION);
 						search.append(Constants.DOUBLEPOINT);
 						search.append(produceParameterName(searchParameter.getName()));
 						search.append(SearchQuery.SPACE);
 					}
 					
-					if(complexQuery.equals(SearchQuery.ONE)) {
-						if(!closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+					if (complexQuery.equals(SearchQuery.ONE)) {
+						if (!closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 							search.append(SearchQuery.CLOSE_BRACKET);
 							search.append(SearchQuery.SPACE);
 						}
@@ -148,7 +149,7 @@ public class SearchServiceSpringImpl implements SearchService {
 		
 		ArrayList<SearchDTO> searchDTOs = new ArrayList<SearchDTO>();
 		
-		if(names != null) {
+		if (names != null) {
 //			int teller = 0;
 			
 //			for(int i = 0; i < names.length; i++) {
@@ -161,21 +162,21 @@ public class SearchServiceSpringImpl implements SearchService {
 			
 //			teller = 0;
 			
-			for(int i = 0; i < names.length; i++) {
-				if(!names[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < 9) {
+			for (int i = 0; i < names.length; i++) {
+				if (!names[i].equals(SearchQuery.MINUS_ONE) && Integer.valueOf(operators[i]) < BaseConstants.NEGEN) {
 					SearchDTO searchDTO = new SearchDTO();
 					
 					SearchParameter searchParameter = searchSelect.getSearchParameter(names[i]);
 					
-					if(searchParameter.getType() == null || searchParameter.getType().equals("java.lang.String")) {
-						if(Integer.valueOf(operators[i]) >= 6 && Integer.valueOf(operators[i]) <= 8) {
-							if(Integer.valueOf(operators[i]) == 6) {
+					if (searchParameter.getType() == null || searchParameter.getType().equals("java.lang.String")) {
+						if (Integer.valueOf(operators[i]) >= BaseConstants.ZES && Integer.valueOf(operators[i]) <= BaseConstants.ACHT) {
+							if (Integer.valueOf(operators[i]) == BaseConstants.ZES) {
 								searchDTO.setObject(values[i] + SearchQuery.PROCENT);
 							}
-							if(Integer.valueOf(operators[i]) == 7) {
+							if (Integer.valueOf(operators[i]) == BaseConstants.ZEVEN) {
 								searchDTO.setObject(SearchQuery.PROCENT + values[i]);
 							}
-							if(Integer.valueOf(operators[i]) == 8) {
+							if (Integer.valueOf(operators[i]) == BaseConstants.ACHT) {
 								searchDTO.setObject(SearchQuery.PROCENT + values[i] + SearchQuery.PROCENT);
 							}
 						} else {
@@ -232,7 +233,7 @@ public class SearchServiceSpringImpl implements SearchService {
 		return searchDTOs;
 	}
 	
-	private String produceParameterName(String key) {
+	private String produceParameterName(final String key) {
 		String[] parts = StringUtils.split(key, Constants.POINT);
 		
 		for (int i = 1; i < parts.length; i++) {

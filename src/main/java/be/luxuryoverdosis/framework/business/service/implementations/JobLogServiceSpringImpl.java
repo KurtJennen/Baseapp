@@ -43,16 +43,16 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		Logging.info(this, "Begin createJobLog");
 		JobLog result = null;
 		
-		if(jobLog.getInput() == null) {
+		if (jobLog.getInput() == null) {
 			jobLog.setInput(StringUtils.EMPTY);
 		}
-		if(jobLog.getOutput() == null) {
+		if (jobLog.getOutput() == null) {
 			jobLog.setOutput(StringUtils.EMPTY);
 		}
-		if(jobLog.getInput().length() > LENGTH) {
+		if (jobLog.getInput().length() > LENGTH) {
 			jobLog.setInput(jobLog.getInput().substring(0, LENGTH));
 		}
-		if(jobLog.getOutput().length() > LENGTH) {
+		if (jobLog.getOutput().length() > LENGTH) {
 			jobLog.setOutput(jobLog.getOutput().substring(0, LENGTH));
 		}
 		
@@ -61,7 +61,7 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public JobLog read(final int id) {
 		Logging.info(this, "Begin readJobLog");
 		JobLog result = null;
@@ -84,15 +84,15 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		Logging.info(this, "End deleteForJobJobLog");
 	}
 	
-	@Transactional(readOnly=true)
-	public JobLog downloadFile(int jobLogId) {
+	@Transactional(readOnly = true)
+	public JobLog downloadFile(final int jobLogId) {
 		Logging.info(this, "Begin downloadFileLog");
 		
 		JobLog jobLog = null;
 		
 		jobLog = read(jobLogId);
 		
-		if(jobLog != null) {
+		if (jobLog != null) {
 			byte[] bytes = BlobTool.convertBlobToBytes(jobLog.getFile());
 			jobLog.setFileData(bytes);
 		}
@@ -102,7 +102,7 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		return jobLog;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<JobLog> list(final int jobId) {
 		Logging.info(this, "Begin listJobLog");
 		ArrayList<JobLog> arrayList = null;
@@ -111,7 +111,7 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<JobLog> listForBatch(final int jobInstanceId) {
 		Logging.info(this, "Begin listJobLog");
 		ArrayList<JobLog> arrayList = null;
@@ -121,11 +121,11 @@ public class JobLogServiceSpringImpl implements JobLogService {
 		BatchJobParams batchJobParams = batchJobParamsHibernateDAO.read(jobInstanceId, BaseConstants.JOB_ID);
 		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
 		
-		if(batchJobParams != null) {
-			arrayList = jobLogHibernateDAO.list((int)batchJobParams.getLongValue());
+		if (batchJobParams != null) {
+			arrayList = jobLogHibernateDAO.list((int) batchJobParams.getLongValue());
 		}
-		if(batchJobExecutionParams != null) {
-			arrayList = jobLogHibernateDAO.list((int)batchJobExecutionParams.getLongValue());
+		if (batchJobExecutionParams != null) {
+			arrayList = jobLogHibernateDAO.list((int) batchJobExecutionParams.getLongValue());
 		}
 		
 		Logging.info(this, "End listJobLog");

@@ -18,38 +18,38 @@ public class LoginForm extends BaseForm {
 	public boolean isActivation() {
 		return activation;
 	}
-	public void setActivation(boolean activation) {
+	public void setActivation(final boolean activation) {
 		this.activation = activation;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setName("");
 		this.setPassword("");
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors =  new ActionErrors();
 		
-		if(this.getMethod().equals(BaseWebConstants.LOGIN)) {
+		if (this.getMethod().equals(BaseWebConstants.LOGIN)) {
 			errors = super.validate(mapping, request);
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 		

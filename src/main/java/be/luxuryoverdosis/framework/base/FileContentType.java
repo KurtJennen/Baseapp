@@ -1,6 +1,9 @@
 package be.luxuryoverdosis.framework.base;
 
-public class FileContentType {
+public final class FileContentType {
+	private FileContentType() {
+	}
+	
 	public static final String CHARSET = "CHARSET";
 
 	public static final String APPLICATION_JSON = "application/json";

@@ -1,6 +1,9 @@
 package be.luxuryoverdosis.framework.base;
 
-public class SearchQuery {
+public final class SearchQuery {
+	private SearchQuery() {
+	}
+	
 	public static final String FIELD = "FIELD";
 	
 	public static final String SPACE = " ";

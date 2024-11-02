@@ -10,7 +10,7 @@ public class FileDTO extends BaseDTO {
 		super();
 	}
 	
-	public FileDTO(byte[] fileData, String fileName, int fileSize, String contentType) {
+	public FileDTO(final byte[] fileData, final String fileName, final int fileSize, final String contentType) {
 		super();
 		this.fileData = fileData;
 		this.fileName = fileName;
@@ -21,25 +21,25 @@ public class FileDTO extends BaseDTO {
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	public String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 	public int getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(final int fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getContentType() {
 		return contentType;
 	}
-	public void setContentType(String contentType) {
+	public void setContentType(final String contentType) {
 		this.contentType = contentType;
 	}
 	

@@ -11,7 +11,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 @Service
 public class SqlExecuterServiceSpringImpl extends AbstractSqlExecuterServiceSpringImpl implements SqlExecuterService {
 	
-	public void executeSql(SqlService sqlService) throws DataAccessException {
+	public void executeSql(final SqlService sqlService) throws DataAccessException {
 		Logging.info(this, "Begin executeSql");
 		
 		//application sql's

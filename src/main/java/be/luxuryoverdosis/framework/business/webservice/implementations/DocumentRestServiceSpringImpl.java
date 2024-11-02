@@ -21,13 +21,13 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 	@Resource
 	private DocumentService documentService;
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin readRequest");
 		
 		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -38,13 +38,13 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readAllRequest() throws JsonProcessingException {
 		Logging.info(this, "Begin readAllRequest");
 		
 		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -61,7 +61,7 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		
 		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -78,7 +78,7 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		
 		RestWrapperDTO<DocumentDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -88,7 +88,7 @@ public class DocumentRestServiceSpringImpl extends BaseRestService implements Do
 		return restWrapperDTO.sendRestWrapperDto(); 
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public byte[] downloadRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin downloadRequest");
 		

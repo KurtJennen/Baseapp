@@ -26,7 +26,7 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public QueryParam read(final int id) {
 		Logging.info(this, "Begin readQueryParam");
 		QueryParam result = null;
@@ -49,7 +49,7 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 		Logging.info(this, "End deleteForQueryQueryParam");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<QueryParam> list(final int queryId) {
 		Logging.info(this, "Begin listQueryParam");
 		ArrayList<QueryParam> arrayList = null;
@@ -58,7 +58,7 @@ public class QueryParamServiceSpringImpl implements QueryParamService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public long count(final int queryId) {
 		Logging.info(this, "Begin countQueryParam");
 		Long countQueryParam = queryParamHibernateDAO.count(queryId);

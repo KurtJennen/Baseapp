@@ -16,61 +16,61 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_job_log")
+@Table(name = "base_job_log")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=JobLog.SELECT_JOBLOGS_BY_JOB, query=JobLog.Queries.SELECT_JOBLOGS_BY_JOB),
-	@NamedQuery(name=JobLog.DELETE_JOBLOGS_BY_JOB, query=JobLog.Queries.DELETE_JOBLOGS_BY_JOB)
+	@NamedQuery(name = JobLog.SELECT_JOBLOGS_BY_JOB, query = JobLog.Queries.SELECT_JOBLOGS_BY_JOB),
+	@NamedQuery(name = JobLog.DELETE_JOBLOGS_BY_JOB, query = JobLog.Queries.DELETE_JOBLOGS_BY_JOB)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class JobLog extends BaseTO {
 	public static final String SELECT_JOBLOGS_BY_JOB = "selectJobLogsByJob";
 	public static final String DELETE_JOBLOGS_BY_JOB = "deleteJobLogsByJob";
 	
-	@Column(name="Input")
+	@Column(name = "Input")
 	private String input;
 	
-	@Column(name="Output")
+	@Column(name = "Output")
 	private String output;
 	
-	@Column(name="File")
+	@Column(name = "File")
 	private Blob file;
 	
 	@Transient
 	private byte[] fileData;
 	
 	@ManyToOne
-	@JoinColumn(name="Job_Id")
+	@JoinColumn(name = "Job_Id")
 	private Job job;
 	
 	public String getInput() {
 		return input;
 	}
-	public void setInput(String input) {
+	public void setInput(final String input) {
 		this.input = input;
 	}
 	public String getOutput() {
 		return output;
 	}
-	public void setOutput(String output) {
+	public void setOutput(final String output) {
 		this.output = output;
 	}
 	public Blob getFile() {
 		return file;
 	}
-	public void setFile(Blob file) {
+	public void setFile(final Blob file) {
 		this.file = file;
 	}
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	public Job getJob() {
 		return job;
 	}
-	public void setJob(Job job) {
+	public void setJob(final Job job) {
 		this.job = job;
 	}
 	

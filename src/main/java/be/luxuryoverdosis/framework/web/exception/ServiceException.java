@@ -15,20 +15,20 @@ public class ServiceException extends RuntimeException {
 		return values;
 	}
 	
-	public ServiceException(String key) {
+	public ServiceException(final String key) {
 		super();
 		this.key = key;
 		this.values = null;
 	}
 
-	public ServiceException(String key, String[] values) {
+	public ServiceException(final String key, final String[] values) {
 		super();
 		this.key = key;
 		this.values = values;
 	}
 	
 	public String getMessage() {
-		if(values == null) {
+		if (values == null) {
 			return BaseSpringServiceLocator.getMessage(key);
 		} else {
 			String[] translatedValues = new String[values.length];

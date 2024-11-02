@@ -28,96 +28,95 @@ public class KeycloakDTO extends BaseDTO {
 	public String getDefaultUri() {
 		return defaultUri;
 	}
-	public void setDefaultUri(String defaultUri) {
+	public void setDefaultUri(final String defaultUri) {
 		this.defaultUri = defaultUri;
 	}
 	public String getConfiguration() {
 		return configuration;
 	}
-	public void setConfiguration(String configuration) {
+	public void setConfiguration(final String configuration) {
 		this.configuration = configuration;
 	}
 	public String getResult() {
 		return result;
 	}
-	public void setResult(String result) {
+	public void setResult(final String result) {
 		this.result = result;
 	}
 
 	public String getAuthentication() {
 		return authentication;
 	}
-	public void setAuthentication(String authentication) {
+	public void setAuthentication(final String authentication) {
 		this.authentication = authentication;
 	}
 	public String getClientId() {
 		return clientId;
 	}
-	public void setClientId(String clientId) {
+	public void setClientId(final String clientId) {
 		this.clientId = clientId;
 	}
 	public String getResponseType() {
 		return responseType;
 	}
-	public void setResponseType(String responseType) {
+	public void setResponseType(final String responseType) {
 		this.responseType = responseType;
 	}
 	public String getRedirectUri() {
 		return redirectUri;
 	}
-	public void setRedirectUri(String redirectUri) {
+	public void setRedirectUri(final String redirectUri) {
 		this.redirectUri = redirectUri;
 	}
 	public String getScope() {
 		return scope;
 	}
-	public void setScope(String scope) {
+	public void setScope(final String scope) {
 		this.scope = scope;
 	}
 
 	public String getToken() {
 		return token;
 	}
-	public void setToken(String token) {
+	public void setToken(final String token) {
 		this.token = token;
 	}
 	public String getGrantType() {
 		return grantType;
 	}
-	public void setGrantType(String grantType) {
+	public void setGrantType(final String grantType) {
 		this.grantType = grantType;
 	}
 	public String getTokenRedirectUri() {
 		return tokenRedirectUri;
 	}
-	public void setTokenRedirectUri(String tokenRedirectUri) {
+	public void setTokenRedirectUri(final String tokenRedirectUri) {
 		this.tokenRedirectUri = tokenRedirectUri;
 	}
 	public String getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public void setCode(final String code) {
 		this.code = code;
 	}
 	public String getIdToken() {
 		return idToken;
 	}
-	public void setIdToken(String idToken) {
+	public void setIdToken(final String idToken) {
 		this.idToken = idToken;
 	}
 
 	public String getRefreshToken() {
 		return refreshToken;
 	}
-	public void setRefreshToken(String refreshToken) {
+	public void setRefreshToken(final String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
 	
 	public String getUserinfo() {
 		return userinfo;
 	}
-	public void setUserinfo(String userinfo) {
+	public void setUserinfo(final String userinfo) {
 		this.userinfo = userinfo;
 	}
-	
 }

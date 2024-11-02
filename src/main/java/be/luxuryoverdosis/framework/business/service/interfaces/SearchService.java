@@ -7,7 +7,7 @@ import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.data.dto.SearchDTO;
 
 public interface SearchService {
-	public ArrayList<Object> search(SearchSelect searchSelect, SearchCriteria searchCriteria);
-	public ArrayList<Object> search(SearchSelect searchSelect, SearchCriteria searchCriteria, final ArrayList<SearchDTO> defaultSearchDTOs);
-	public ArrayList<SearchDTO> constructObjects(final SearchSelect searchSelect, final SearchCriteria searchCriteria);
+	ArrayList<Object> search(SearchSelect searchSelect, SearchCriteria searchCriteria);
+	ArrayList<Object> search(SearchSelect searchSelect, SearchCriteria searchCriteria, ArrayList<SearchDTO> defaultSearchDTOs);
+	ArrayList<SearchDTO> constructObjects(SearchSelect searchSelect, SearchCriteria searchCriteria);
 }

@@ -24,7 +24,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 public abstract class SearchAction extends AjaxAction {
 	public abstract String getSearchServiceName();
 	
-	public ActionForward createLine(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward createLine(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateLine");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -39,7 +39,7 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward deleteLine(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward deleteLine(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin DeleteLine");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -54,13 +54,13 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward complexLine(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward complexLine(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ComplexLine");
 		ActionMessages actionMessages = new ActionMessages();
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(SearchQuery.ZERO.equals(searchForm.getComplexQuery())) {
+		if (SearchQuery.ZERO.equals(searchForm.getComplexQuery())) {
 			searchForm.setComplexQuery(SearchQuery.ONE);
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("complex.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
@@ -75,7 +75,7 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward updateSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward updateSearch(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -93,7 +93,7 @@ public abstract class SearchAction extends AjaxAction {
 		queryDTO.setCloseBrackets(searchForm.getSearchCriteria().getCloseBrackets());
 		
 		long count = getQueryService().countAndCreateOrUpdateDTO(this.getSearchServiceName(), queryDTO);
-		if(count == 0) {
+		if (count == 0) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.query")));
 		} else {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.query")));
@@ -108,13 +108,13 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward readSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward readSearch(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
+		if (!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
 			Integer id = Integer.valueOf(searchForm.getSelectQuery());
 			
 			QueryDTO queryDTO = getQueryService().readDTO(id);
@@ -137,13 +137,13 @@ public abstract class SearchAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward deleteSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward deleteSearch(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		ActionMessages actionMessages = new ActionMessages();
 		
 		SearchForm searchForm = (SearchForm) form;
 		
-		if(!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
+		if (!SearchQuery.MINUS_ONE.equals(searchForm.getSelectQuery())) {
 			getQueryService().delete(Integer.valueOf(searchForm.getSelectQuery()));
 		}
 		
@@ -156,7 +156,7 @@ public abstract class SearchAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward resetSearch(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward resetSearch(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Reset");
 		ActionMessages actionMessages = new ActionMessages();
 		

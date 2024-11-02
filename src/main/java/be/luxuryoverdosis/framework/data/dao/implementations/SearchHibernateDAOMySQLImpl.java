@@ -18,7 +18,7 @@ public class SearchHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		
 		Query<Object> query = getCurrentSession().createQuery(select);
 		
-		if(searchDTOs != null) {
+		if (searchDTOs != null) {
 			for (SearchDTO searchDTO : searchDTOs) {
 				query.setParameter(searchDTO.getParameterName(), searchDTO.getObject());
 			}

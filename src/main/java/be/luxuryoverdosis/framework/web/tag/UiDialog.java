@@ -25,46 +25,46 @@ public class UiDialog extends CommonTag {
 	
 	private UiDialogObject uiDialogObject;
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	public void setTitleKey(String titleKey) {
+	public void setTitleKey(final String titleKey) {
 		this.titleKey = titleKey;
 	}
-	public void setWidth(String width) {
+	public void setWidth(final String width) {
 		this.width = width;
 	}
-	public void setHeight(String height) {
+	public void setHeight(final String height) {
 		this.height = height;
 	}
-	public void setAutoOpen(boolean autoOpen) {
+	public void setAutoOpen(final boolean autoOpen) {
 		this.autoOpen = autoOpen;
 	}
-	public void setModal(boolean modal) {
+	public void setModal(final boolean modal) {
 		this.modal = modal;
 	}
-	public void setDefaultYesButton(boolean defaultYesButton) {
+	public void setDefaultYesButton(final boolean defaultYesButton) {
 		this.defaultYesButton = defaultYesButton;
 	}
-	public void setDefaultNoButton(boolean defaultNoButton) {
+	public void setDefaultNoButton(final boolean defaultNoButton) {
 		this.defaultNoButton = defaultNoButton;
 	}
 	
 	public UiDialogObject getUiDialogObject() {
 		return uiDialogObject;
 	}
-	public void setUiDialogObject(UiDialogObject uiDialogObject) {
+	public void setUiDialogObject(final UiDialogObject uiDialogObject) {
 		this.uiDialogObject = uiDialogObject;
 	}
 	
 	public int doStartTag() throws JspException {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 		
 		uiDialogObject = new UiDialogObject();
 		uiDialogObject.setId(id);
@@ -88,7 +88,7 @@ public class UiDialog extends CommonTag {
 		uiDialogObject.setDefaultNoButton(defaultNoButton);
 		
 		Object dialog = request.getAttribute(id + StringUtils.capitalize(BaseWebConstants.DIALOG));
-		if(dialog != null && (boolean)dialog) {
+		if (dialog != null && (boolean) dialog) {
 			uiDialogObject.setAutoOpen(true);
 		}
 		
@@ -98,8 +98,7 @@ public class UiDialog extends CommonTag {
 	public int doEndTag() throws JspException {
 		try {
 			produceTemplate("uiDialogTemplate.ftl", uiDialogObject);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

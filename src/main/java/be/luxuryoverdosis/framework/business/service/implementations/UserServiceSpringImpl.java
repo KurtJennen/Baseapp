@@ -83,11 +83,11 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin createUserDTO");
 		
 		User user = new User();
-		if(userDTO.getId() > 0) {
+		if (userDTO.getId() > 0) {
 			user = this.read(userDTO.getId());
 		}
 		user = UserFactory.produceUser(user, userDTO);
-		if(userDTO.isRegister()) {
+		if (userDTO.isRegister()) {
 			user = this.createOrUpdate(user, new String[]{defaultRoleName});
 		} else {
 			user = this.createOrUpdate(user, userDTO.getLinkedRoleIds(), userDTO.getUnlinkedRoleIds());
@@ -101,7 +101,7 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "Begin createUserDTO");
 		
 		User user = new User();
-		if(userDTO.getId() > 0) {
+		if (userDTO.getId() > 0) {
 			user = this.read(userDTO.getId());
 		}
 		user = UserFactory.produceUser(user, userDTO);
@@ -111,7 +111,7 @@ public class UserServiceSpringImpl implements UserService {
 		return this.readDTO(user.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDTO readDTO(final int id) {
 		Logging.info(this, "Begin readUserDTO");
 		
@@ -125,14 +125,14 @@ public class UserServiceSpringImpl implements UserService {
 		return userDTO;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public UserDTO readNameDTO(final String name) {
 		Logging.info(this, "Begin readUserDTO");
 		
 		User user = userHibernateDAO.readName(name);
 		UserDTO userDTO = null;
 		
-		if(user != null) {
+		if (user != null) {
 			userDTO = UserFactory.produceUserDTO(user);
 			userDTO.setActivation(activation);
 			userDTO.setRoles(getMaxRangRoles(userDTO));
@@ -149,21 +149,21 @@ public class UserServiceSpringImpl implements UserService {
 		validate(user);
 		
 		User result = userHibernateDAO.createOrUpdate(user);
-		if(result != null) {
+		if (result != null) {
 			sendUserMail(result);
 		}
 		
-		if(linkedRoleIds != null) {
+		if (linkedRoleIds != null) {
 			for (int i = 0; i < linkedRoleIds.length; i++) {
-				if(linkedRoleIds[i] > 0) {
+				if (linkedRoleIds[i] > 0) {
 					userRoleHibernateDAO.delete(user.getId(), linkedRoleIds[i]);
 				}
 			}
 		}
 		
-		if(unlinkedRoleIds != null) {
+		if (unlinkedRoleIds != null) {
 			for (int i = 0; i < unlinkedRoleIds.length; i++) {
-				if(unlinkedRoleIds[i] > 0) {
+				if (unlinkedRoleIds[i] > 0) {
 					UserRole userRole = new UserRole();
 					userRole.setUser(user);
 					userRole.setRole(roleHibernateDAO.read(unlinkedRoleIds[i]));
@@ -172,7 +172,7 @@ public class UserServiceSpringImpl implements UserService {
 			}
 		}
 		
-		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
+		if (userRoleHibernateDAO.countUser(user.getId()) == 0) {
 			throw new ServiceException("errors.selected.one.more.role");
 		}
 		
@@ -187,16 +187,16 @@ public class UserServiceSpringImpl implements UserService {
 		validate(user);
 		
 		User result = userHibernateDAO.createOrUpdate(user);
-		if(result != null) {
+		if (result != null) {
 			sendUserMail(result);
 		}
 		
 		userRoleHibernateDAO.delete(user.getId());
 		
-		if(unlinkedRoleNames != null) {
+		if (unlinkedRoleNames != null) {
 			for (int i = 0; i < unlinkedRoleNames.length; i++) {
 				Role role = roleHibernateDAO.readName(unlinkedRoleNames[i]);
-				if(role != null) {
+				if (role != null) {
 					UserRole userRole = new UserRole();
 					userRole.setUser(user);
 					userRole.setRole(role);
@@ -205,7 +205,7 @@ public class UserServiceSpringImpl implements UserService {
 			}
 		}
 		
-		if(userRoleHibernateDAO.countUser(user.getId()) == 0) {
+		if (userRoleHibernateDAO.countUser(user.getId()) == 0) {
 			throw new ServiceException("errors.selected.one.more.role");
 		}
 		
@@ -214,28 +214,28 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	public void validate(final User user) {
-		if(userHibernateDAO.count(user.getName(), user.getId()) > 0) {
+		if (userHibernateDAO.count(user.getName(), user.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.user"});
 		}
-		if(StringUtils.isEmpty(user.getName())) {
+		if (StringUtils.isEmpty(user.getName())) {
 			throw new ServiceException("errors.required", new String[] {"security.name.unique"});
 		}
-		if(StringUtils.isEmpty(user.getUserName())) {
+		if (StringUtils.isEmpty(user.getUserName())) {
 			throw new ServiceException("errors.required", new String[] {"security.username"});
 		}
-		if(StringUtils.isEmpty(user.getEncryptedPassword())) {
+		if (StringUtils.isEmpty(user.getEncryptedPassword())) {
 			throw new ServiceException("errors.required", new String[] {"security.password"});
 		}
-		if(StringUtils.isEmpty(user.getEmail())) {
+		if (StringUtils.isEmpty(user.getEmail())) {
 			throw new ServiceException("errors.required", new String[] {"security.email"});
 		}
 		
-		if(user.getDateExpiration() == null) {
+		if (user.getDateExpiration() == null) {
 			user.setDateExpiration(DateTool.getDefaultDateFromCalendar());
 		}
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public User read(final int id) {
 		Logging.info(this, "Begin readUser");
 		User result = null;
@@ -244,7 +244,7 @@ public class UserServiceSpringImpl implements UserService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public User readName(final String name) {
 		Logging.info(this, "Begin readNameUser");
 		User result = null;
@@ -262,7 +262,7 @@ public class UserServiceSpringImpl implements UserService {
 		Logging.info(this, "End deleteUser");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<User> list() {
 		Logging.info(this, "Begin listUser");
 		ArrayList<User> arrayList = null;
@@ -271,7 +271,7 @@ public class UserServiceSpringImpl implements UserService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<UserDTO> listDTO() {
 		Logging.info(this, "Begin listUser");
 		ArrayList<UserDTO> arrayList = null;
@@ -280,8 +280,8 @@ public class UserServiceSpringImpl implements UserService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
-	public ArrayList<UserDTO> listDTO(String searchValue) {
+	@Transactional(readOnly = true)
+	public ArrayList<UserDTO> listDTO(final String searchValue) {
 		Logging.info(this, "Begin listUser");
 		ArrayList<UserDTO> arrayList = null;
 		arrayList = userHibernateDAO.listDTO(searchValue);
@@ -290,21 +290,21 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 	@Transactional
-	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository) {
+	public LoginWrapperDTO getLoginWrapperDTO(final String name, final MenuRepository menuRepository) {
 		Logging.info(this, "Begin getLoginWrapperDTO");
 		
 		LoginWrapperDTO loginWrapperDTO = new LoginWrapperDTO();
 		loginWrapperDTO.setActivation(activation);
 		
 		UserDTO userDTO = this.readNameDTO(name);
-		if(userDTO != null) {
+		if (userDTO != null) {
 //			ArrayList<String> roleNames = getMaxRangRoles(userDTO);
 //			userDTO.setRoles(roleNames);
 			loginWrapperDTO.setUserDTO(userDTO);
 			
 			int days = daysBeforeDeactivate(userDTO);
 			loginWrapperDTO.setDays(days);
-			if(userDTO != null && days == 0) {
+			if (userDTO != null && days == 0) {
 				deactivate(userDTO.getId());
 			}
 			
@@ -315,7 +315,7 @@ public class UserServiceSpringImpl implements UserService {
 		return loginWrapperDTO;
 	}
 
-	private ArrayList<String> getMaxRangRoles(UserDTO userDTO) {
+	private ArrayList<String> getMaxRangRoles(final UserDTO userDTO) {
 		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());
 		HashMap<Integer, String> maxRangRoles = new HashMap<Integer, String>();
 		
@@ -330,11 +330,11 @@ public class UserServiceSpringImpl implements UserService {
 				Object[] objects = enumClass.getEnumConstants();
 				for (Object object : objects) {
 					String code = (String) ReflectionUtils.invokeMethod(codeMethod, object);
-					if(userRoleDTO.getRoleName().equals(code)) {
+					if (userRoleDTO.getRoleName().equals(code)) {
 						int type = (int) ReflectionUtils.invokeMethod(typeMethod, object);
 						int rang = (int) ReflectionUtils.invokeMethod(rangMethod, object);
 						
-						if(maxRangRoles.containsKey(type)) {
+						if (maxRangRoles.containsKey(type)) {
 							String[] rangAndCode = maxRangRoles.get(type).split(BaseConstants.DOUBLEPOINT);
 							if (rang < Integer.valueOf(rangAndCode[0])) {
 								maxRangRoles.put(type, rang + BaseConstants.DOUBLEPOINT + code);
@@ -357,8 +357,8 @@ public class UserServiceSpringImpl implements UserService {
 		return roleNames;
 	}
 	
-	@Transactional(readOnly=true)
-	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria) {
+	@Transactional(readOnly = true)
+	public ListUserWrapperDTO getListUserWrapperDTO(final SearchSelect searchSelect, final SearchCriteria searchCriteria) {
 		Logging.info(this, "Begin getListUserDTO");
 		ListUserWrapperDTO listUserWrapperDTO = new ListUserWrapperDTO();
 		listUserWrapperDTO.setSearchUserList(searchService.search(searchSelect, searchCriteria));
@@ -368,7 +368,7 @@ public class UserServiceSpringImpl implements UserService {
 		return listUserWrapperDTO;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countUser");
 		Long countUser = userHibernateDAO.count(name, id);
@@ -420,16 +420,16 @@ public class UserServiceSpringImpl implements UserService {
 		
 		Calendar expCalendar = DateTool.getCalendar(user.getDateExpiration());
 		
-		if(defaultCalendar.compareTo(expCalendar) == 0) {
+		if (defaultCalendar.compareTo(expCalendar) == 0) {
 			Calendar calendar = Calendar.getInstance();
-			if(period == YEAR) {
+			if (period == YEAR) {
 				calendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_YEAR);
 			} else {
 				calendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_HALF_YEAR);
 			}
 			user.setDateExpiration(calendar.getTime());
 		} else {
-			if(period == YEAR) {
+			if (period == YEAR) {
 				expCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_YEAR);
 			} else {
 				expCalendar.add(Calendar.DAY_OF_YEAR, DAYS_OF_HALF_YEAR);
@@ -460,7 +460,7 @@ public class UserServiceSpringImpl implements UserService {
 		
 		int days = -1;
 		
-		if(userDTO == null) {
+		if (userDTO == null) {
 			return 0;
 		}
 		
@@ -470,7 +470,7 @@ public class UserServiceSpringImpl implements UserService {
 		Calendar expCalendar = Calendar.getInstance();
 		expCalendar.setTime(userDTO.getDateExpiration());
 		
-		if(defaultCalendar.after(expCalendar)) {
+		if (defaultCalendar.after(expCalendar)) {
 			int daysExp = expCalendar.get(Calendar.DAY_OF_YEAR);
 			int daysDefault = defaultCalendar.get(Calendar.DAY_OF_YEAR);
 			days = daysExp - daysDefault + DAYS_OF_WARNING;
@@ -484,7 +484,7 @@ public class UserServiceSpringImpl implements UserService {
 		return days;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public File createDocument(final int documentId) {
 		//Template
 		Document document = documentService.read(documentId);
@@ -497,7 +497,7 @@ public class UserServiceSpringImpl implements UserService {
 	}
 	
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public File createDocumentAndConvertToPdf(final int documentId) {
 		//Template
 		Document document = documentService.read(documentId);

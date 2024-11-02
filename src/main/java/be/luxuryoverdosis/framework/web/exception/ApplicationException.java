@@ -9,7 +9,7 @@ public class ApplicationException extends RuntimeException {
 		return applicationMessage;
 	}
 
-	public ApplicationException(String applicationMessage) {
+	public ApplicationException(final String applicationMessage) {
 		super();
 		this.applicationMessage = applicationMessage;
 	}

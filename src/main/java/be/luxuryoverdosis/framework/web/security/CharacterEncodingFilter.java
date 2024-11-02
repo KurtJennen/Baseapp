@@ -11,10 +11,10 @@ import javax.servlet.ServletResponse;
 
 public class CharacterEncodingFilter implements Filter {
 	
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(final FilterConfig filterConfig) throws ServletException {
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain) throws IOException, ServletException {
 		request.setCharacterEncoding("UTF-8");
 		filterChain.doFilter(request, response);
 	}

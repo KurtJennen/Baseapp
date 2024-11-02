@@ -21,7 +21,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class ListNumberAction extends AjaxAction {
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -29,7 +29,7 @@ public class ListNumberAction extends AjaxAction {
 		
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_IDS);
 				
-		if(BaseWebConstants.DELETE.equals(previous)) {
+		if (BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.number")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.number")));
@@ -40,14 +40,14 @@ public class ListNumberAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         Logging.info(this, "Begin Ajax");
         
         ArrayList<Number> numberList = getNumberService().list();

@@ -23,8 +23,8 @@ public class BatchJobParamsHibernateDAOMySQLImpl extends AbstractHibernateDaoSup
 		ArrayList<BatchJobParams> arrayList = (ArrayList<BatchJobParams>) query.list();
 		
 		BatchJobParams batchJobParams = null;
-		if(!arrayList.isEmpty()) {
-			batchJobParams = (BatchJobParams)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			batchJobParams = (BatchJobParams) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readBatchJobParams");
 		return batchJobParams;

@@ -28,7 +28,7 @@ import be.luxuryoverdosis.framework.data.dto.TokenPayloadDTO;
 
 @Service
 public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implements KeycloackRestServiceClient {
-	@Resource(name="restTemplate")
+	@Resource(name = "restTemplate")
 	private RestTemplate restTemplate;
 	
 	private static final String CLIENT_ID = "client_id=";
@@ -43,7 +43,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 	
 	private static final String AUTHORIZATION_TOKEN = "Authorization: Bearer ";
 	
-	public String configuration(KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
+	public String configuration(final KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
 		StringBuffer url = new StringBuffer();
 		url.append(keycloakDTO.getDefaultUri());
 		url.append(keycloakDTO.getConfiguration());
@@ -57,7 +57,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		return result;
 	}
 	
-	public String authenticationUrl(KeycloakDTO keycloakDTO) {
+	public String authenticationUrl(final KeycloakDTO keycloakDTO) {
 		StringBuffer url = new StringBuffer();
 		url.append(keycloakDTO.getDefaultUri());
 		url.append(keycloakDTO.getAuthentication());
@@ -70,7 +70,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		return url.toString();
 	}
 	
-	public TokenDTO tokenUrl(KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
+	public TokenDTO tokenUrl(final KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
 		StringBuffer url = new StringBuffer();
 		url.append(keycloakDTO.getDefaultUri());
 		url.append(keycloakDTO.getToken());
@@ -90,7 +90,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		TokenDTO tokenDTO = convertJsonToObject(responseEntity.getBody(), TokenDTO.class);
 		tokenDTO.setTokenResult(prettyPrintJsonString(tokenDTO));
 		
-		String[] idTokens = StringUtils.split(tokenDTO.getId_token(), Constants.POINT);
+		String[] idTokens = StringUtils.split(tokenDTO.getIdToken(), Constants.POINT);
 		TokenHeaderDTO tokenHeaderDTO = convertJsonToObject(Encryption.decode(idTokens[0]), TokenHeaderDTO.class);
 		tokenDTO.setIdTokenHeader(prettyPrintJsonString(tokenHeaderDTO));
 		
@@ -102,7 +102,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		return tokenDTO;
 	}
 	
-	public TokenDTO refresh(KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
+	public TokenDTO refresh(final KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
 		StringBuffer url = new StringBuffer();
 		url.append(keycloakDTO.getDefaultUri());
 		url.append(keycloakDTO.getToken());
@@ -125,7 +125,7 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		
 	}
 	
-	public TokenDTO userinfo(KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
+	public TokenDTO userinfo(final KeycloakDTO keycloakDTO) throws JsonParseException, JsonMappingException, IOException {
 		StringBuffer url = new StringBuffer();
 		url.append(keycloakDTO.getDefaultUri());
 		url.append(keycloakDTO.getUserinfo());
@@ -144,13 +144,13 @@ public class KeycloackRestServiceClientImpl extends BaseRestServiceClient implem
 		return tokenDTO;
 	}
 
-	private <T> T convertJsonToObject(String body, Class<T> clazz) throws IOException, JsonParseException, JsonMappingException, JsonProcessingException {
+	private <T> T convertJsonToObject(final String body, final Class<T> clazz) throws IOException, JsonParseException, JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		return objectMapper.readValue(body, clazz);
 	}
 	
-	private <T> String prettyPrintJsonString(T object) throws IOException, JsonParseException, JsonMappingException, JsonProcessingException {
+	private <T> String prettyPrintJsonString(final T object) throws IOException, JsonParseException, JsonMappingException, JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
 		
 		String result = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);

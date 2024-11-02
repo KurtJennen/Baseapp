@@ -15,7 +15,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 
 public class AppListener implements ServletContextListener {
 
-	public void contextInitialized(ServletContextEvent sce) {
+	public void contextInitialized(final ServletContextEvent sce) {
 		try {
 			ServletContext servletContext = sce.getServletContext();
 			String dbType = servletContext.getInitParameter("dbType");
@@ -39,7 +39,7 @@ public class AppListener implements ServletContextListener {
 		}
 	}
 
-	public void contextDestroyed(ServletContextEvent sce) {
+	public void contextDestroyed(final ServletContextEvent sce) {
 		getOfficeService().stopOfficeManager();
 	}
 	

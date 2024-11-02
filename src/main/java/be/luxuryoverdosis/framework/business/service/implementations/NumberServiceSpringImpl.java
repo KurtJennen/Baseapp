@@ -26,7 +26,7 @@ public class NumberServiceSpringImpl implements NumberService {
 		Logging.info(this, "Begin createNumberDTO");
 		
 		Number number = new Number();
-		if(numberDTO.getId() > 0) {
+		if (numberDTO.getId() > 0) {
 			number = this.read(numberDTO.getId());
 		}
 		number = NumberFactory.produceNumber(number, numberDTO);
@@ -37,7 +37,7 @@ public class NumberServiceSpringImpl implements NumberService {
 		return this.readDTO(number.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public NumberDTO readDTO(final int id) {
 		Logging.info(this, "Begin readNumberDTO");
 		
@@ -52,16 +52,16 @@ public class NumberServiceSpringImpl implements NumberService {
 	@Transactional
 	public Number createOrUpdate(final Number number) {
 		Logging.info(this, "Begin createNumber");
-		if(numberHibernateDAO.count(number.getApplicationCode(), number.getYear(), number.getType(), number.getId()) > 0) {
+		if (numberHibernateDAO.count(number.getApplicationCode(), number.getYear(), number.getType(), number.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.number"});
 		}
-		if(StringUtils.isEmpty(number.getApplicationCode())) {
+		if (StringUtils.isEmpty(number.getApplicationCode())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.application.code"});
 		}
-		if(StringUtils.isEmpty(number.getYear())) {
+		if (StringUtils.isEmpty(number.getYear())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.year"});
 		}
-		if(StringUtils.isEmpty(number.getType())) {
+		if (StringUtils.isEmpty(number.getType())) {
 			throw new ServiceException("errors.required", new String[] {"security.number.type"});
 		}
 		Number result = null;
@@ -70,7 +70,7 @@ public class NumberServiceSpringImpl implements NumberService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Number read(final int id) {
 		Logging.info(this, "Begin readNumber");
 		Number result = null;
@@ -79,7 +79,7 @@ public class NumberServiceSpringImpl implements NumberService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Number read(final String applicationCode, final String year, final String type) {
 		Logging.info(this, "Begin readNumber");
 		Number result = null;
@@ -95,7 +95,7 @@ public class NumberServiceSpringImpl implements NumberService {
 		Logging.info(this, "End deleteNumber");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Number> list() {
 		Logging.info(this, "Begin listNumber");
 		ArrayList<Number> arrayList = null;

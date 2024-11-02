@@ -38,8 +38,8 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		ArrayList<Role> arrayList = (ArrayList<Role>) query.list();
 		
 		Role role = null;
-		if(!arrayList.isEmpty()) {
-			role = (Role)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			role = (Role) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNameRole");
 		return role;
@@ -63,7 +63,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<RoleDTO> listDTO(String searchValue) {
+	public ArrayList<RoleDTO> listDTO(final String searchValue) {
 		Logging.info(this, "Begin listRole");
 		
 		Query<RoleDTO> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_DTO_BY_NAME);
@@ -75,7 +75,7 @@ public class RoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(int userId) {
+	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(final int userId) {
 		Logging.info(this, "Begin listRole");
 		
 		Query<RoleDTO> query = getCurrentSession().getNamedQuery(Role.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER);

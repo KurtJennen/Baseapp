@@ -8,7 +8,7 @@ public class SearchDTO extends BaseDTO {
 		super();
 	}
 
-	public SearchDTO(Object object, String parameterName) {
+	public SearchDTO(final Object object, final String parameterName) {
 		super();
 		this.object = object;
 		this.parameterName = parameterName;
@@ -17,14 +17,13 @@ public class SearchDTO extends BaseDTO {
 	public Object getObject() {
 		return object;
 	}
-	public void setObject(Object object) {
+	public void setObject(final Object object) {
 		this.object = object;
 	}
 	public String getParameterName() {
 		return parameterName;
 	}
-	public void setParameterName(String parameterName) {
+	public void setParameterName(final String parameterName) {
 		this.parameterName = parameterName;
 	}
-	
 }

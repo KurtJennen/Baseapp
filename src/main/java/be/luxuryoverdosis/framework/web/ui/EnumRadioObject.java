@@ -9,7 +9,7 @@ public class EnumRadioObject {
 		return inputs;
 	}
 
-	public void setInputs(ArrayList<EnumRadioInputObject> inputs) {
+	public void setInputs(final ArrayList<EnumRadioInputObject> inputs) {
 		this.inputs = inputs;
 	}
 

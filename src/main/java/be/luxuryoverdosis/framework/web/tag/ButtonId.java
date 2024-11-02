@@ -12,32 +12,32 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 @Deprecated
 public class ButtonId implements Tag {
-	PageContext pageContext;
+	private PageContext pageContext;
 	private String method;
 	private String image;
 	private String key;
 	private String roles;
 	
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
 
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
 
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
 	
-	public void setRoles(String roles) {
+	public void setRoles(final String roles) {
 		this.roles = roles;
 	}
 
-	public void setParent(Tag t) {
+	public void setParent(final Tag t) {
 	}
 	
-	public void setPageContext(PageContext p) {
+	public void setPageContext(final PageContext p) {
 		pageContext = p;
 	}
 	
@@ -51,16 +51,16 @@ public class ButtonId implements Tag {
 	public int doStartTag() throws JspException {
 		try {
 			JspWriter out = pageContext.getOut();
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+			UserDTO userDTO = (UserDTO) request.getSession().getAttribute(BaseWebConstants.USER);
 			
 			boolean enabled = false;
-			if(userDTO != null) {
-				if(roles != null) {
+			if (userDTO != null) {
+				if (roles != null) {
 					String[] seperatedRoles = roles.split(",");
-					for(int i = 0; i < seperatedRoles.length; i++) {
-						//if(seperatedRoles[i].equals(user.getRole().getName())) {
-						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+					for (int i = 0; i < seperatedRoles.length; i++) {
+						//if (seperatedRoles[i].equals(user.getRole().getName())) {
+						if (userDTO.getRoles().contains(seperatedRoles[i])) {
 							enabled = true;
 						}
 					}
@@ -72,11 +72,11 @@ public class ButtonId implements Tag {
 				enabled = true;
 			}
 			
-			if(enabled) {
+			if (enabled) {
 				out.print("<button onclick=\"javascript:doActionId('" + method + "',this);\" title=\"" + MessageLocator.getMessage(request, key) + "\">");
 				out.print("<img src=\"images/" + image + "\"/>");
 				out.println("</button>");
-			} else {
+//			} else {
 //				int pos = image.indexOf(".");
 //				StringBuffer newImage = new StringBuffer();
 //				newImage.append(image.substring(0, pos)); 
@@ -87,8 +87,7 @@ public class ButtonId implements Tag {
 //				out.print("<img src=\"images/" + newImage.toString() + "\" title=\"" + MessageLocator.getMessage(request, key) + "\" />");
 //				out.println("</button>");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_INCLUDE;
 	}

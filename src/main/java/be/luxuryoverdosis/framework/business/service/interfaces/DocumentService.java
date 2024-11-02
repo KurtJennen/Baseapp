@@ -7,19 +7,19 @@ import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.to.Document;
 
 public interface DocumentService {
-	public DocumentDTO createOrUpdateDTO(DocumentDTO documentDTO);
-	public DocumentDTO readDTO(int id);
+	DocumentDTO createOrUpdateDTO(DocumentDTO documentDTO);
+	DocumentDTO readDTO(int id);
 	
-	public Document createOrUpdate(Document document);
-	public Document read(int id);
-	public void delete(int id);
-	public byte[] downloadFile(int id);
+	Document createOrUpdate(Document document);
+	Document read(int id);
+	void delete(int id);
+	byte[] downloadFile(int id);
 	
-	public ArrayList<Document> list(String type);
-	public ArrayList<DocumentDTO> listDTO();
+	ArrayList<Document> list(String type);
+	ArrayList<DocumentDTO> listDTO();
 
 	@SuppressWarnings("rawtypes")
-	public File createDocument(final Document document, Object data, Class clazz);
+	File createDocument(Document document, Object data, Class clazz);
 	@SuppressWarnings("rawtypes")
-	public File createDocumentAndConvertToPdf(final Document document, final Object data, final Class clazz);
+	File createDocumentAndConvertToPdf(Document document, Object data, Class clazz);
 }

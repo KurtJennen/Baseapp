@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.factory;
 import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.to.Document;
 
-public class DocumentFactory {
+public final class DocumentFactory {
 	private DocumentFactory() {
 	}
 	
@@ -19,7 +19,7 @@ public class DocumentFactory {
 	}
 	
 	public static Document produceDocument(Document document, final DocumentDTO documentDTO) {
-		if(document == null) {
+		if (document == null) {
 			document = new Document();
 		}
 		document.setId(documentDTO.getId());

@@ -13,7 +13,7 @@ public enum JobStatusEnum {
 	private static final List<String> JOB_STATUS_CODES = new ArrayList<String>();
 	
 	static {
-		for(JobStatusEnum value : values()) {
+		for (JobStatusEnum value : values()) {
 			JOB_STATUS_CODES.add(value.getCode());
 		}
 	}
@@ -28,7 +28,7 @@ public enum JobStatusEnum {
 		return BaseSpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 
-	private JobStatusEnum (String code) {
+	JobStatusEnum(final String code) {
 		this.code = code;
 	}
 	
@@ -37,9 +37,9 @@ public enum JobStatusEnum {
 		return JOB_STATUS_CODES;
 	}
 	
-	public static JobStatusEnum convert(String code) {
+	public static JobStatusEnum convert(final String code) {
 		for (JobStatusEnum jobStatusEnum: values()) {
-			if(jobStatusEnum.getCode().equals(code)) {
+			if (jobStatusEnum.getCode().equals(code)) {
 				return jobStatusEnum;
 			}
 		}
@@ -47,8 +47,8 @@ public enum JobStatusEnum {
 		return JobStatusEnum.NOT_STARTED;
 	}
 	
-	public static JobStatusEnum[] convert(String[] array) {
-		JobStatusEnum jobStatusEnum[] = new JobStatusEnum[array.length];
+	public static JobStatusEnum[] convert(final String[] array) {
+		JobStatusEnum[] jobStatusEnum = new JobStatusEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
 			jobStatusEnum[i] = convert(array[i]);

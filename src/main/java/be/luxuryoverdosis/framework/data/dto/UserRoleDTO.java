@@ -9,7 +9,7 @@ public class UserRoleDTO extends BaseDTO {
 		super();
 	}
 	
-	public UserRoleDTO(int id, int roleId, String roleName) {
+	public UserRoleDTO(final int id, final int roleId, final String roleName) {
 		super();
 		setId(id);
 		this.roleId = roleId;
@@ -19,13 +19,13 @@ public class UserRoleDTO extends BaseDTO {
 	public int getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(final int roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleName() {
 		return roleName;
 	}
-	public void setRoleName(String roleName) {
+	public void setRoleName(final String roleName) {
 		this.roleName = roleName;
 	}
 }

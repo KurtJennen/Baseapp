@@ -14,25 +14,24 @@ public class PdfForm extends BaseForm {
 	
 	private FormFile formFile;
 	
-	
 	public FormFile getFormFile() {
 		return formFile;
 	}
-	public void setFormFile(FormFile formFile) {
+	public void setFormFile(final FormFile formFile) {
 		this.formFile = formFile;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setFormFile(null);
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = new ActionErrors();
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

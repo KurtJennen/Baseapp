@@ -13,7 +13,7 @@ public enum ButtonTypeEnum {
 	private static final List<String> BUTTON_TYPE_CODES = new ArrayList<String>();
 	
 	static {
-		for(ButtonTypeEnum value : values()) {
+		for (ButtonTypeEnum value : values()) {
 			BUTTON_TYPE_CODES.add(value.getCode());
 		}
 	}
@@ -28,7 +28,7 @@ public enum ButtonTypeEnum {
 		return BaseSpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 	
-	private ButtonTypeEnum (String code) {
+	ButtonTypeEnum(final String code) {
 		this.code = code;
 	}
 	
@@ -36,9 +36,9 @@ public enum ButtonTypeEnum {
 		return BUTTON_TYPE_CODES;
 	}
 	
-	public static ButtonTypeEnum convert(String code) {
+	public static ButtonTypeEnum convert(final String code) {
 		for (ButtonTypeEnum buttonTypeEnum: values()) {
-			if(buttonTypeEnum.getCode().equals(code)) {
+			if (buttonTypeEnum.getCode().equals(code)) {
 				return buttonTypeEnum;
 			}
 		}
@@ -46,8 +46,8 @@ public enum ButtonTypeEnum {
 		return ButtonTypeEnum.DEFAULT;
 	}
 	
-	public static ButtonTypeEnum[] convert(String[] array) {
-		ButtonTypeEnum buttonTypeEnum[] = new ButtonTypeEnum[array.length];
+	public static ButtonTypeEnum[] convert(final String[] array) {
+		ButtonTypeEnum[] buttonTypeEnum = new ButtonTypeEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
 			buttonTypeEnum[i] = convert(array[i]);

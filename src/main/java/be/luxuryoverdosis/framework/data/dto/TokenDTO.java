@@ -3,16 +3,24 @@ package be.luxuryoverdosis.framework.data.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TokenDTO extends BaseDTO {
-	private String access_token;
-	private String expires_in;
-	private String refresh_expires_in;
-	private String refresh_token;
-	private String token_type;
-	private String id_token;
-	private String session_state;
+	@JsonProperty(value = "access_token")
+	private String accessToken;
+	@JsonProperty(value = "expires_in")
+	private String expiresIn;
+	@JsonProperty(value = "refresh_expires_in")
+	private String refreshExpiresIn;
+	@JsonProperty(value = "refresh_token")
+	private String refreshToken;
+	@JsonProperty(value = "token_type")
+	private String tokenType;
+	@JsonProperty(value = "id_token")
+	private String idToken;
+	@JsonProperty(value = "session_state")
+	private String sessionState;
+	@JsonProperty(value = "scope")
 	private String scope;
 	@JsonProperty(value = "not-before-policy")
-	private String not_before_policy;
+	private String notBeforePolicy;
 	
 	private String tokenResult;
 	private String idTokenHeader;
@@ -24,84 +32,83 @@ public class TokenDTO extends BaseDTO {
 		super();
 	}
 
-	public String getAccess_token() {
-		return access_token;
+	public String getAccessToken() {
+		return accessToken;
 	}
-	public void setAccess_token(String access_token) {
-		this.access_token = access_token;
+	public void setAccessToken(final String accessToken) {
+		this.accessToken = accessToken;
 	}
-	public String getExpires_in() {
-		return expires_in;
+	public String getExpiresIn() {
+		return expiresIn;
 	}
-	public void setExpires_in(String expires_in) {
-		this.expires_in = expires_in;
+	public void setExpiresIn(final String expiresIn) {
+		this.expiresIn = expiresIn;
 	}
-	public String getRefresh_expires_in() {
-		return refresh_expires_in;
+	public String getRefreshExpiresIn() {
+		return refreshExpiresIn;
 	}
-	public void setRefresh_expires_in(String refresh_expires_in) {
-		this.refresh_expires_in = refresh_expires_in;
+	public void setRefreshExpiresIn(final String refreshExpiresIn) {
+		this.refreshExpiresIn = refreshExpiresIn;
 	}
-	public String getRefresh_token() {
-		return refresh_token;
+	public String getRefreshToken() {
+		return refreshToken;
 	}
-	public void setRefresh_token(String refresh_token) {
-		this.refresh_token = refresh_token;
+	public void setRefreshToken(final String refreshToken) {
+		this.refreshToken = refreshToken;
 	}
-	public String getToken_type() {
-		return token_type;
+	public String getTokenType() {
+		return tokenType;
 	}
-	public void setToken_type(String token_type) {
-		this.token_type = token_type;
+	public void setTokenType(final String tokenType) {
+		this.tokenType = tokenType;
 	}
-	public String getId_token() {
-		return id_token;
+	public String getIdToken() {
+		return idToken;
 	}
-	public void setId_token(String id_token) {
-		this.id_token = id_token;
+	public void setIdToken(final String idToken) {
+		this.idToken = idToken;
 	}
-	public String getSession_state() {
-		return session_state;
+	public String getSessionState() {
+		return sessionState;
 	}
-	public void setSession_state(String session_state) {
-		this.session_state = session_state;
+	public void setSessionState(final String sessionState) {
+		this.sessionState = sessionState;
 	}
 	public String getScope() {
 		return scope;
 	}
-	public void setScope(String scope) {
+	public void setScope(final String scope) {
 		this.scope = scope;
 	}
-	public String getNot_before_policy() {
-		return not_before_policy;
+	public String getNotBeforePolicy() {
+		return notBeforePolicy;
 	}
-	public void setNot_before_policy(String not_before_policy) {
-		this.not_before_policy = not_before_policy;
+	public void setNotBeforePolicy(final String notBeforePolicy) {
+		this.notBeforePolicy = notBeforePolicy;
 	}
 
 	public String getTokenResult() {
 		return tokenResult;
 	}
-	public void setTokenResult(String tokenResult) {
+	public void setTokenResult(final String tokenResult) {
 		this.tokenResult = tokenResult;
 	}
 	public String getIdTokenHeader() {
 		return idTokenHeader;
 	}
-	public void setIdTokenHeader(String idTokenHeader) {
+	public void setIdTokenHeader(final String idTokenHeader) {
 		this.idTokenHeader = idTokenHeader;
 	}
 	public String getIdTokenPayload() {
 		return idTokenPayload;
 	}
-	public void setIdTokenPayload(String idTokenPayload) {
+	public void setIdTokenPayload(final String idTokenPayload) {
 		this.idTokenPayload = idTokenPayload;
 	}
 	public String getIdTokenSignature() {
 		return idTokenSignature;
 	}
-	public void setIdTokenSignature(String idTokenSignature) {
+	public void setIdTokenSignature(final String idTokenSignature) {
 		this.idTokenSignature = idTokenSignature;
 	}
-	
 }

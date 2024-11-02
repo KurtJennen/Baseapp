@@ -23,96 +23,96 @@ import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
 
 @Entity
-@Table(name="batch_step_execution")
+@Table(name = "batch_step_execution")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchStepExecution.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query=BatchStepExecution.Queries.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE)
+	@NamedQuery(name = BatchStepExecution.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query = BatchStepExecution.Queries.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE)
 })
 @NamedNativeQueries({
-	@NamedNativeQuery(name=BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query=BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE),
-	@NamedNativeQuery(name=BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE, query=BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE)
+	@NamedNativeQuery(name = BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE, query = BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE),
+	@NamedNativeQuery(name = BatchStepExecution.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE, query = BatchStepExecution.NativeQueries.DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchStepExecution {
 	public static final String SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchStepExecutionsByJobInstance";
 	public static final String DELETE_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE = "deleteBatchStepExecutionsByJobInstance";
 	public static final String DELETE_BATCH_STEP_EXECUTIONS_CONTEXTS_BY_JOB_INSTANCE = "deleteBatchStepExecutionsContextsByJobInstance";
 	
 	@Id
-	@Column(name="Step_Execution_Id")
+	@Column(name = "Step_Execution_Id")
 	private long id;
 	
-	@Column(name="Version")
+	@Column(name = "Version")
 	private long version;
 	
-	@Column(name="Step_Name")
+	@Column(name = "Step_Name")
 	private String stepName;
 	
-	@Column(name="Start_Time")
+	@Column(name = "Start_Time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 	
-	@Column(name="End_Time")
+	@Column(name = "End_Time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 	
-	@Column(name="Status")
+	@Column(name = "Status")
 	private String status;
 	
-	@Column(name="Commit_Count")
+	@Column(name = "Commit_Count")
 	private long commitCount;
 	
-	@Column(name="Read_Count")
+	@Column(name = "Read_Count")
 	private long readCount;
 	
-	@Column(name="Filter_Count")
+	@Column(name = "Filter_Count")
 	private long filterCount;
 	
-	@Column(name="Write_Count")
+	@Column(name = "Write_Count")
 	private long writeCount;
 	
-	@Column(name="Read_Skip_Count")
+	@Column(name = "Read_Skip_Count")
 	private long readSkipCount;
 	
-	@Column(name="Write_Skip_Count")
+	@Column(name = "Write_Skip_Count")
 	private long writeSkipCount;
 	
-	@Column(name="Process_Skip_Count")
+	@Column(name = "Process_Skip_Count")
 	private long processSkipCount;
 	
-	@Column(name="Rollback_Count")
+	@Column(name = "Rollback_Count")
 	private long rollbackCount;
 	
-	@Column(name="Exit_Code")
+	@Column(name = "Exit_Code")
 	private String exitCode;
 	
-	@Column(name="Exit_Message")
+	@Column(name = "Exit_Message")
 	private String exitMessage;
 	
-	@Column(name="Last_Updated")
+	@Column(name = "Last_Updated")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastUpdated;
 	
 	@ManyToOne
-	@JoinColumn(name="Job_Execution_Id")
+	@JoinColumn(name = "Job_Execution_Id")
 	private BatchJobExecution batchJobExecution;
 	
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 	public long getVersion() {
 		return version;
 	}
-	public void setVersion(long version) {
+	public void setVersion(final long version) {
 		this.version = version;
 	}
 	public String getStepName() {
 		return stepName;
 	}
-	public void setStepName(String stepName) {
+	public void setStepName(final String stepName) {
 		this.stepName = stepName;
 	}
 	public Date getStartTime() {
@@ -121,13 +121,13 @@ public class BatchStepExecution {
 	public String getStartTimeAsString() {
 		return DateTool.formatUtilDateTime(startTime);
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(final Date startTime) {
 		this.startTime = startTime;
 	}
 	public Date getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(final Date endTime) {
 		this.endTime = endTime;
 	}
 	public String getEndTimeAsString() {
@@ -139,55 +139,55 @@ public class BatchStepExecution {
 	public String getStatusTranslated() {
 		return BatchJobTranslater.getBatchJobStatusTranslated(status);
 	}
-	public void setStatus(String status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 	public long getCommitCount() {
 		return commitCount;
 	}
-	public void setCommitCount(long commitCount) {
+	public void setCommitCount(final long commitCount) {
 		this.commitCount = commitCount;
 	}
 	public long getReadCount() {
 		return readCount;
 	}
-	public void setReadCount(long readCount) {
+	public void setReadCount(final long readCount) {
 		this.readCount = readCount;
 	}
 	public long getFilterCount() {
 		return filterCount;
 	}
-	public void setFilterCount(long filterCount) {
+	public void setFilterCount(final long filterCount) {
 		this.filterCount = filterCount;
 	}
 	public long getWriteCount() {
 		return writeCount;
 	}
-	public void setWriteCount(long writeCount) {
+	public void setWriteCount(final long writeCount) {
 		this.writeCount = writeCount;
 	}
 	public long getReadSkipCount() {
 		return readSkipCount;
 	}
-	public void setReadSkipCount(long readSkipCount) {
+	public void setReadSkipCount(final long readSkipCount) {
 		this.readSkipCount = readSkipCount;
 	}
 	public long getWriteSkipCount() {
 		return writeSkipCount;
 	}
-	public void setWriteSkipCount(long writeSkipCount) {
+	public void setWriteSkipCount(final long writeSkipCount) {
 		this.writeSkipCount = writeSkipCount;
 	}
 	public long getProcessSkipCount() {
 		return processSkipCount;
 	}
-	public void setProcessSkipCount(long processSkipCount) {
+	public void setProcessSkipCount(final long processSkipCount) {
 		this.processSkipCount = processSkipCount;
 	}
 	public long getRollbackCount() {
 		return rollbackCount;
 	}
-	public void setRollbackCount(long rollbackCount) {
+	public void setRollbackCount(final long rollbackCount) {
 		this.rollbackCount = rollbackCount;
 	}
 	public String getExitCode() {
@@ -196,19 +196,19 @@ public class BatchStepExecution {
 	public String getExitCodeTranslated() {
 		return BatchJobTranslater.getBatchJobExitCodeTranslated(exitCode);
 	}
-	public void setExitCode(String exitCode) {
+	public void setExitCode(final String exitCode) {
 		this.exitCode = exitCode;
 	}
 	public String getExitMessage() {
 		return exitMessage;
 	}
-	public void setExitMessage(String exitMessage) {
+	public void setExitMessage(final String exitMessage) {
 		this.exitMessage = exitMessage;
 	}
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(final Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 	public String getLastUpdatedAsString() {
@@ -217,7 +217,7 @@ public class BatchStepExecution {
 	public BatchJobExecution getBatchJobExecution() {
 		return batchJobExecution;
 	}
-	public void setBatchJobExecution(BatchJobExecution batchJobExecution) {
+	public void setBatchJobExecution(final BatchJobExecution batchJobExecution) {
 		this.batchJobExecution = batchJobExecution;
 	}
 	

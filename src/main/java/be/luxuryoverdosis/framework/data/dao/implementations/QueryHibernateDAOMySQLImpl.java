@@ -37,8 +37,8 @@ public class QueryHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport impl
 		ArrayList<Query> arrayList = (ArrayList<Query>) hibernateQuery.list();
 		
 		Query query = null;
-		if(!arrayList.isEmpty()) {
-			query = (Query)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			query = (Query) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readQuery(name, type)");
 		return query;

@@ -9,19 +9,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 
+import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.base.Encoding;
 import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
-public class ResponseTool {
+public final class ResponseTool {
+	private ResponseTool() {
+	}
 	
-	public static void initializeResponseForDownload(HttpServletResponse response, final String attachmentName, final String contentType, final int contentLength) {
+	public static void initializeResponseForDownload(final HttpServletResponse response, final String attachmentName, final String contentType, final int contentLength) {
 		response.setHeader("Content-Disposition", "attachment;filename=\"" + attachmentName + "\"");
 	    response.setContentType(contentType);
 		response.setContentLength(contentLength);
 	}
 	
-	public static void writeResponseForDownload(HttpServletResponse response, final String attachmentName, final String contentType, final byte[] bytes) throws Exception {
+	public static void writeResponseForDownload(final HttpServletResponse response, final String attachmentName, final String contentType, final byte[] bytes) throws Exception {
 		initializeResponseForDownload(response, attachmentName, contentType, bytes.length);
 		
 		ServletOutputStream out = response.getOutputStream();
@@ -32,13 +35,13 @@ public class ResponseTool {
 		response.flushBuffer();
 	}
 	
-	public static void initializeResponseForAuthentication(HttpServletResponse response) {
+	public static void initializeResponseForAuthentication(final HttpServletResponse response) {
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		response.setContentType(FileContentType.APPLICATION_JSON);
 		response.setCharacterEncoding(Encoding.UTF_8);
 	}
 	
-	public static void writeResponseForAuthentication(HttpServletResponse response, String message) throws Exception {
+	public static void writeResponseForAuthentication(final HttpServletResponse response, final String message) throws Exception {
 		initializeResponseForAuthentication(response);
 		
 		ServletOutputStream out = response.getOutputStream();
@@ -56,9 +59,9 @@ public class ResponseTool {
             ServletOutputStream out = response.getOutputStream();
             
             InputStream inputStream = new FileInputStream(file);
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[Constants.DUIZENDVIERENTWINTIG];
             int lengte;
-            while((lengte = inputStream.read(buffer)) > 0) {
+            while ((lengte = inputStream.read(buffer)) > 0) {
                 out.write(buffer, 0, lengte);
             }
             inputStream.close();

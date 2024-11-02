@@ -3,6 +3,9 @@ package be.luxuryoverdosis.framework.mother;
 import be.luxuryoverdosis.framework.data.to.UserRole;
 
 public class UserRoleMother {
+	protected UserRoleMother() {
+	}
+	
 	public static UserRole produceUserRole() {
 		UserRole userRole = new UserRole();
 		userRole.setId(0);

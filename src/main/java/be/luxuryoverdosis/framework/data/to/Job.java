@@ -23,57 +23,57 @@ import be.luxuryoverdosis.framework.data.convertor.JobStatusConvertor;
 import be.luxuryoverdosis.framework.data.dto.FileDTO;
 
 @Entity
-@Table(name="base_job")
+@Table(name = "base_job")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Job.SELECT_JOBS_BY_NAME, query=Job.Queries.SELECT_JOBS_BY_NAME),
-	@NamedQuery(name=Job.SELECT_JOBS_STARTED_BY_NAME, query=Job.Queries.SELECT_JOBS_STARTED_BY_NAME),
-	@NamedQuery(name=Job.SELECT_JOBS_NOT_STARTED_BY_NAME, query=Job.Queries.SELECT_JOBS_NOT_STARTED_BY_NAME)
+	@NamedQuery(name = Job.SELECT_JOBS_BY_NAME, query = Job.Queries.SELECT_JOBS_BY_NAME),
+	@NamedQuery(name = Job.SELECT_JOBS_STARTED_BY_NAME, query = Job.Queries.SELECT_JOBS_STARTED_BY_NAME),
+	@NamedQuery(name = Job.SELECT_JOBS_NOT_STARTED_BY_NAME, query = Job.Queries.SELECT_JOBS_NOT_STARTED_BY_NAME)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Job extends BaseTO {
 	public static final String SELECT_JOBS_BY_NAME = "selectJobsByName";
 	public static final String SELECT_JOBS_STARTED_BY_NAME = "selectJobsStartedByName";
 	public static final String SELECT_JOBS_NOT_STARTED_BY_NAME = "selectJobsNotStartedByName";
 	
-	@Column(name="Name")
+	@Column(name = "Name")
 	private String name;
 	
-	@Column(name="Filename")
+	@Column(name = "Filename")
 	private String fileName;
 	
-	@Column(name="File")
+	@Column(name = "File")
 	private Blob file;
 	
 	@Transient
 	private byte[] fileData;
 	
-	@Column(name="Filesize")
+	@Column(name = "Filesize")
 	private int fileSize;
 	
-	@Column(name="Contenttype")
+	@Column(name = "Contenttype")
 	private String contentType;
 	
-	@Column(name="Executed")
+	@Column(name = "Executed")
 	private boolean executed;
 	
-	@Column(name="Started")
+	@Column(name = "Started")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date started;
 	
-	@Column(name="Ended")
+	@Column(name = "Ended")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date ended;
 	
-	@Column(name="Status")
-	@Convert(converter=JobStatusConvertor.class)
+	@Column(name = "Status")
+	@Convert(converter = JobStatusConvertor.class)
 	private JobStatusEnum status;
 	
 	public Job() {
 		super();
 	}
 	
-	public Job(String name) {
+	public Job(final String name) {
 		super();
 		
 		this.setName(name);
@@ -81,7 +81,7 @@ public class Job extends BaseTO {
 		this.setStatus(JobStatusEnum.NOT_STARTED);
 	}
 	
-	public Job(String name, FileDTO fileDTO) {
+	public Job(final String name, final FileDTO fileDTO) {
 		super();
 		this.setName(name);
 		this.setFileData(fileDTO.getFileData());
@@ -95,43 +95,43 @@ public class Job extends BaseTO {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 	public Blob getFile() {
 		return file;
 	}
-	public void setFile(Blob file) {
+	public void setFile(final Blob file) {
 		this.file = file;
 	}
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	public int getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(final int fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getContentType() {
 		return contentType;
 	}
-	public void setContentType(String contentType) {
+	public void setContentType(final String contentType) {
 		this.contentType = contentType;
 	}
 	public boolean isExecuted() {
 		return executed;
 	}
-	public void setExecuted(boolean executed) {
+	public void setExecuted(final boolean executed) {
 		this.executed = executed;
 	}
 	public Date getStarted() {
@@ -140,7 +140,7 @@ public class Job extends BaseTO {
 	public String getStartedAsString() {
 		return DateTool.formatUtilDateTime(started);
 	}
-	public void setStarted(Date started) {
+	public void setStarted(final Date started) {
 		this.started = started;
 	}
 	public Date getEnded() {
@@ -149,7 +149,7 @@ public class Job extends BaseTO {
 	public String getEndedAsString() {
 		return DateTool.formatUtilDateTime(ended);
 	}
-	public void setEnded(Date ended) {
+	public void setEnded(final Date ended) {
 		this.ended = ended;
 	}
 	public JobStatusEnum getStatus() {
@@ -158,7 +158,7 @@ public class Job extends BaseTO {
 	public String getStatusAsKey() {
 		return status.getCodeAsKey();
 	}
-	public void setStatus(JobStatusEnum status) {
+	public void setStatus(final JobStatusEnum status) {
 		this.status = status;
 	}
 	

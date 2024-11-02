@@ -38,8 +38,8 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 		ArrayList<Number> arrayList = (ArrayList<Number>) query.list();
 		
 		Number number = null;
-		if(!arrayList.isEmpty()) {
-			number = (Number)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			number = (Number) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNumber");
 		return number;
@@ -77,7 +77,7 @@ public class NumberHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	}
 	
 	@SuppressWarnings("unchecked")
-	public int nextNumber(String applicationCode, String year, String type) {
+	public int nextNumber(final String applicationCode, final String year, final String type) {
         Query<Integer> query = getCurrentSession().getNamedNativeQuery(Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE);
         query.setParameter(BaseQueryParameters.APPLICATION_CODE, applicationCode);
         query.setParameter(BaseQueryParameters.YEAR, year);

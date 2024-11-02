@@ -12,39 +12,39 @@ import be.luxuryoverdosis.framework.data.wrapperdto.LoginWrapperDTO;
 import net.sf.navigator.menu.MenuRepository;
 
 public interface UserService {
-	public static final int YEAR = 0;
-	public static final int HALF_YEAR = 1;
-	public static final int DAYS_OF_YEAR = 365;
-	public static final int DAYS_OF_HALF_YEAR = 183;
-	public static final int DAYS_OF_WARNING = 10;
+	int YEAR = 0;
+	int HALF_YEAR = 1;
+	int DAYS_OF_YEAR = 365;
+	int DAYS_OF_HALF_YEAR = 183;
+	int DAYS_OF_WARNING = 10;
 	
-	public void validate(User user);
+	void validate(User user);
 	
-	public UserDTO createOrUpdateDTO(UserDTO userDTO);
-	public UserDTO createOrUpdateDTO(UserDTO userDTO,  String[] unlinkedRoleName);
-	public UserDTO readDTO(int id);
-	public UserDTO readNameDTO(String name);
+	UserDTO createOrUpdateDTO(UserDTO userDTO);
+	UserDTO createOrUpdateDTO(UserDTO userDTO,  String[] unlinkedRoleName);
+	UserDTO readDTO(int id);
+	UserDTO readNameDTO(String name);
 	
-	public User createOrUpdate(User user, int[] linkedRoleIds, int[] unlinkedRoleIds);
-	public User createOrUpdate(User user, String[] unlinkedRoleNames);
-	public User read(int id);
-	public User readName(String name);
-	public void delete(int id);
+	User createOrUpdate(User user, int[] linkedRoleIds, int[] unlinkedRoleIds);
+	User createOrUpdate(User user, String[] unlinkedRoleNames);
+	User read(int id);
+	User readName(String name);
+	void delete(int id);
 	
-	public ArrayList<User> list();
-	public ArrayList<UserDTO> listDTO();
-	public ArrayList<UserDTO> listDTO(String searchValue);
+	ArrayList<User> list();
+	ArrayList<UserDTO> listDTO();
+	ArrayList<UserDTO> listDTO(String searchValue);
 	
-	public LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository);
-	public ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria);
+	LoginWrapperDTO getLoginWrapperDTO(String name, MenuRepository menuRepository);
+	ListUserWrapperDTO getListUserWrapperDTO(SearchSelect searchSelect, SearchCriteria searchCriteria);
 	
-	public long count(String name, int id);
+	long count(String name, int id);
 	
-	public File createDocument(int documentId);
-	public File createDocumentAndConvertToPdf(int documentId);
+	File createDocument(int documentId);
+	File createDocumentAndConvertToPdf(int documentId);
 	
-	public boolean isActiviation();
-	public User activate(int id, int period);
-	public User deactivate(int id);
-	public int daysBeforeDeactivate(UserDTO userDTO);
+	boolean isActiviation();
+	User activate(int id, int period);
+	User deactivate(int id);
+	int daysBeforeDeactivate(UserDTO userDTO);
 }

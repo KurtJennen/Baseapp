@@ -30,17 +30,17 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 	
 	private int jobId;
 
-	public void setJobId(long jobId) {
-		this.jobId = (int)jobId;
+	public void setJobId(final long jobId) {
+		this.jobId = (int) jobId;
 	}
 
-	protected void doWrite(SessionFactory sessionFactory, List<? extends User> users) {
+	protected void doWrite(final SessionFactory sessionFactory, final List<? extends User> users) {
 		Job job = jobService.read(jobId);
 		try {
 			StringBuffer exportBuffer = new StringBuffer();
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			
-			if(job.getFile() != null) {
+			if (job.getFile() != null) {
 				byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 				baos.write(bytes);
 			}
@@ -79,14 +79,11 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 		}
 	}
 
-	private String getInput(String key) {
+	private String getInput(final String key) {
 		return BaseSpringServiceLocator.getMessage(key,  new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 	}
 
-	private String getOutput(User user) {
+	private String getOutput(final User user) {
 		return user.getName() + BaseConstants.SPACE + user.getUserName();
 	}
-
-	
-
 }

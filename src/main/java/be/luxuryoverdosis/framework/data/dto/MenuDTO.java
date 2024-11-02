@@ -17,7 +17,7 @@ public class MenuDTO extends BaseDTO {
 	public MenuDTO() {
 	}
 	
-	public MenuDTO(int id, String fullName, String name, String title, String fullLevel, int level, JaNeeEnum hidden, JaNeeEnum disabled, JaNeeEnum forPay, JaNeeEnum payed,int userId) {
+	public MenuDTO(final int id, final String fullName, final String name, final String title, final String fullLevel, final int level, final JaNeeEnum hidden, final JaNeeEnum disabled, final JaNeeEnum forPay, final JaNeeEnum payed, final int userId) {
 		super();
 		setId(id);
 		this.fullLevel = fullLevel;
@@ -35,61 +35,61 @@ public class MenuDTO extends BaseDTO {
 	public String getFullName() {
 		return fullName;
 	}
-	public void setFullName(String fullName) {
+	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 	public String getFullLevel() {
 		return fullLevel;
 	}
-	public void setFullLevel(String fullLevel) {
+	public void setFullLevel(final String fullLevel) {
 		this.fullLevel = fullLevel;
 	}
 	public int getLevel() {
 		return level;
 	}
-	public void setLevel(int level) {
+	public void setLevel(final int level) {
 		this.level = level;
 	}
 	public JaNeeEnum getHidden() {
 		return hidden;
 	}
-	public void setHidden(JaNeeEnum hidden) {
+	public void setHidden(final JaNeeEnum hidden) {
 		this.hidden = hidden;
 	}
 	public JaNeeEnum getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(JaNeeEnum disabled) {
+	public void setDisabled(final JaNeeEnum disabled) {
 		this.disabled = disabled;
 	}
 	public JaNeeEnum getForPay() {
 		return forPay;
 	}
-	public void setForPay(JaNeeEnum forPay) {
+	public void setForPay(final JaNeeEnum forPay) {
 		this.forPay = forPay;
 	}
 	public JaNeeEnum getPayed() {
 		return payed;
 	}
-	public void setPayed(JaNeeEnum payed) {
+	public void setPayed(final JaNeeEnum payed) {
 		this.payed = payed;
 	}
 	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(final int userId) {
 		this.userId = userId;
 	}
 	

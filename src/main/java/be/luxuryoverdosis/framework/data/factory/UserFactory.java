@@ -11,7 +11,7 @@ import be.luxuryoverdosis.framework.data.dto.UserImportDTO;
 import be.luxuryoverdosis.framework.data.to.User;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
-public class UserFactory {
+public final class UserFactory {
 	private UserFactory() {
 	}
 	
@@ -29,7 +29,7 @@ public class UserFactory {
 	}
 	
 	public static UserDTO produceUserDTO(UserDTO userDTO, final UserImportDTO userImportDTO) {
-		if(userDTO == null) {
+		if (userDTO == null) {
 			userDTO = new UserDTO();
 			userDTO.setRegister(true);
 		}
@@ -50,22 +50,22 @@ public class UserFactory {
 	}
 	
 	public static User produceUser(User user, final UserDTO userDTO) {
-		if(user == null) {
+		if (user == null) {
 			user = new User();
 		}
 		user.setId(userDTO.getId());
 		user.setName(userDTO.getName());
 		user.setUserName(userDTO.getUserName());
-		if(!StringUtils.isEmpty(userDTO.getPassword())) {
+		if (!StringUtils.isEmpty(userDTO.getPassword())) {
 			user.setEncryptedPassword(Encryption.encode(userDTO.getPassword()));
 		}
-		if(!StringUtils.isEmpty(userDTO.getEncryptedPassword())) {
+		if (!StringUtils.isEmpty(userDTO.getEncryptedPassword())) {
 			user.setEncryptedPassword(userDTO.getEncryptedPassword());
 		}
 		user.setEmail(userDTO.getEmail());
 		user.setDateExpiration(userDTO.getDateExpiration());
 		try {
-			if(userDTO.getDateExpirationAsString() != null) {
+			if (userDTO.getDateExpirationAsString() != null) {
 				user.setDateExpiration(DateTool.parseUtilTimestamp(userDTO.getDateExpirationAsString()));
 			}
 		} catch (Exception e) {

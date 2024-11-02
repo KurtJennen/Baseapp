@@ -7,17 +7,17 @@ import org.springframework.dao.DataAccessException;
 import be.luxuryoverdosis.framework.data.to.Sql;
 
 public interface SqlHibernateDAO {
-	public Sql createOrUpdate(Sql sql);
-	public Sql read(int id);
-	public Sql readName(String name);
-	public void delete(int id);
+	Sql createOrUpdate(Sql sql);
+	Sql read(int id);
+	Sql readName(String name);
+	void delete(int id);
 	
-	public ArrayList<Sql> list();
+	ArrayList<Sql> list();
 	
-	public long count(String name);
-	public long count(String name, String application);
+	long count(String name);
+	long count(String name, String application);
 	
-	public int countJdbc(String name, String application) throws DataAccessException;
-	public void executeJdbc(String sqlStatement) throws DataAccessException;
-	public void insertJdbc(String sqlStatement, String name, String application) throws DataAccessException;
+	int countJdbc(String name, String application) throws DataAccessException;
+	void executeJdbc(String sqlStatement) throws DataAccessException;
+	void insertJdbc(String sqlStatement, String name, String application) throws DataAccessException;
 }

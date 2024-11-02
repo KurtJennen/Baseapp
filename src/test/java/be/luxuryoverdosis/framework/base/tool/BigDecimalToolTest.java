@@ -8,11 +8,15 @@ import java.math.RoundingMode;
 import org.junit.Test;
 
 public class BigDecimalToolTest {
+	public static final BigDecimal AMOUNT1 = new BigDecimal(12.35);
+	public static final BigDecimal AMOUNT2 = new BigDecimal(123.45);
+	public static final BigDecimal AMOUNT3 = new BigDecimal(123.4567);
+	public static final BigDecimal AMOUNT4 = new BigDecimal(123.4568);
+	public static final BigDecimal AMOUNT5 = new BigDecimal(2020.00);
+	
 	@Test
 	public void testToStringBigDecimal() {
-		BigDecimal decimal = new BigDecimal(123.45);
-		
-		String result = BigDecimalTool.toString(decimal);
+		String result = BigDecimalTool.toString(AMOUNT2);
 		
 		assertThat("123,45").isEqualTo(result);
 		//assertEquals("123,45", result);
@@ -30,28 +34,23 @@ public class BigDecimalToolTest {
 	
 	@Test
 	public void testToStringBigDecimalWithFractionAndNoGrouping() {
-		BigDecimal decimal = new BigDecimal(2020.00);
-		
-		String result = BigDecimalTool.toString(decimal, 0, false);
+		String result = BigDecimalTool.toString(AMOUNT5, 0, false);
 		
 		assertThat("2020").isEqualTo(result);
 	}
 	
 	@Test
 	public void testToStringDouble() {
-		BigDecimal decimal = new BigDecimal(123.4567);
-		
-		String result = BigDecimalTool.toStringDouble(decimal);
+		String result = BigDecimalTool.toStringDouble(AMOUNT3);
 		
 		assertThat("123,4567").isEqualTo(result);
 	}
 	
 	@Test
 	public void testToBigDecimal() {
-		String string = "123,45";
-		BigDecimal decimal = new BigDecimal(123.45).setScale(BigDecimalTool.FRACTION, RoundingMode.HALF_UP);
+		BigDecimal decimal = AMOUNT2.setScale(BigDecimalTool.FRACTION, RoundingMode.HALF_UP);
 		
-		BigDecimal result = BigDecimalTool.toBigDecimal(string);
+		BigDecimal result = BigDecimalTool.toBigDecimal("123,45");
 		
 		assertThat(decimal).isEqualByComparingTo(result);
 	}
@@ -76,30 +75,27 @@ public class BigDecimalToolTest {
 	
 	@Test
 	public void testToBigDecimalLongString() {
-		String string = "12,3456";
-		BigDecimal decimal = new BigDecimal(12.35).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
+		BigDecimal decimal = AMOUNT1.setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
 		
-		BigDecimal result = BigDecimalTool.toBigDecimal(string);
+		BigDecimal result = BigDecimalTool.toBigDecimal("12,3456");
 		
 		assertThat(decimal).isEqualByComparingTo(result);
 	}
 	
 	@Test
 	public void testToBigDecimalDouble() {
-		String string = "123,4567";
-		BigDecimal decimal = new BigDecimal(123.4567).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
+		BigDecimal decimal = AMOUNT3.setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
 		
-		BigDecimal result = BigDecimalTool.toBigDecimalDouble(string);
+		BigDecimal result = BigDecimalTool.toBigDecimalDouble("123,4567");
 		
 		assertThat(decimal).isEqualByComparingTo(result);
 	}
 	
 	@Test
 	public void testToBigDecimalLongDouble() {
-		String string = "123,456789";
-		BigDecimal decimal = new BigDecimal(123.4568).setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
+		BigDecimal decimal = AMOUNT4.setScale(BigDecimalTool.FRACTION_DOUBLE, RoundingMode.HALF_UP);
 		
-		BigDecimal result = BigDecimalTool.toBigDecimalDouble(string);
+		BigDecimal result = BigDecimalTool.toBigDecimalDouble("123,456789");
 		
 		assertThat(decimal).isEqualByComparingTo(result);
 	}

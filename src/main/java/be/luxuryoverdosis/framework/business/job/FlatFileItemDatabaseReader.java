@@ -32,7 +32,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	
 	//added by luxuryoverdosis
 	@Resource
-	JobService jobService;
+	private JobService jobService;
 	
 	//added by luxuryoverdosis
 	private int jobId;
@@ -48,7 +48,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 
 	private int lineCount = 0;
 
-	private String[] comments = new String[] { "#" };
+	private String[] comments = new String[] {"#"};
 
 	private boolean noInput = false;
 
@@ -69,7 +69,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	}
 
 	//added by luxuryoverdosis
-	public void setJobId(int jobId) {
+	public void setJobId(final int jobId) {
 		this.jobId = jobId;
 	}
 
@@ -79,7 +79,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * input resource does not exist.
 	 * @param strict false by default
 	 */
-	public void setStrict(boolean strict) {
+	public void setStrict(final boolean strict) {
 		this.strict = strict;
 	}
 
@@ -87,7 +87,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * @param skippedLinesCallback will be called for each one of the initial
 	 * skipped lines before any items are read.
 	 */
-	public void setSkippedLinesCallback(LineCallbackHandler skippedLinesCallback) {
+	public void setSkippedLinesCallback(final LineCallbackHandler skippedLinesCallback) {
 		this.skippedLinesCallback = skippedLinesCallback;
 	}
 
@@ -99,7 +99,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * 
 	 * @param linesToSkip the number of lines to skip
 	 */
-	public void setLinesToSkip(int linesToSkip) {
+	public void setLinesToSkip(final int linesToSkip) {
 		this.linesToSkip = linesToSkip;
 	}
 
@@ -107,7 +107,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * Setter for line mapper. This property is required to be set.
 	 * @param lineMapper maps line to item
 	 */
-	public void setLineMapper(LineMapper<T> lineMapper) {
+	public void setLineMapper(final LineMapper<T> lineMapper) {
 		this.lineMapper = lineMapper;
 	}
 
@@ -118,7 +118,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * @param encoding a properties object which possibly contains the encoding
 	 * for this input file;
 	 */
-	public void setEncoding(String encoding) {
+	public void setEncoding(final String encoding) {
 		this.encoding = encoding;
 	}
 
@@ -130,7 +130,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * 
 	 * @param bufferedReaderFactory the bufferedReaderFactory to set
 	 */
-	public void setBufferedReaderFactory(BufferedReaderFactory bufferedReaderFactory) {
+	public void setBufferedReaderFactory(final BufferedReaderFactory bufferedReaderFactory) {
 		this.bufferedReaderFactory = bufferedReaderFactory;
 	}
 
@@ -140,7 +140,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * 
 	 * @param comments an array of comment line prefixes.
 	 */
-	public void setComments(String[] comments) {
+	public void setComments(final String[] comments) {
 		this.comments = new String[comments.length];
 		System.arraycopy(comments, 0, this.comments, 0, comments.length);
 	}
@@ -148,7 +148,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	/**
 	 * Public setter for the input resource.
 	 */
-	public void setResource(org.springframework.core.io.Resource resource) {
+	public void setResource(final org.springframework.core.io.Resource resource) {
 		this.resource = resource;
 	}
 
@@ -159,7 +159,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	 * 
 	 * @param recordSeparatorPolicy the recordSeparatorPolicy to set
 	 */
-	public void setRecordSeparatorPolicy(RecordSeparatorPolicy recordSeparatorPolicy) {
+	public void setRecordSeparatorPolicy(final RecordSeparatorPolicy recordSeparatorPolicy) {
 		this.recordSeparatorPolicy = recordSeparatorPolicy;
 	}
 
@@ -178,12 +178,10 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 
 		if (line == null) {
 			return null;
-		}
-		else {
+		} else {
 			try {
 				return lineMapper.mapLine(line, lineCount);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				Logging.error("Parsing error at line: " + lineCount + " in resource=" + resource.getDescription()
 						+ ", input=[" + line + "]", ex);
 				throw ex;
@@ -217,8 +215,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 			}
 
 			line = applyRecordSeparatorPolicy(line);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// Prevent IOException from recurring indefinitely
 			// if client keeps catching and re-calling
 			noInput = true;
@@ -227,7 +224,7 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 		return line;
 	}
 
-	private boolean isComment(String line) {
+	private boolean isComment(final String line) {
 		for (String prefix : comments) {
 			if (line.startsWith(prefix)) {
 				return true;
@@ -289,34 +286,33 @@ public class FlatFileItemDatabaseReader<T> extends AbstractItemCountingItemStrea
 	}
 
 	@Override
-	protected void jumpToItem(int itemIndex) throws Exception {
+	protected void jumpToItem(final int itemIndex) throws Exception {
 		for (int i = 0; i < itemIndex; i++) {
 			readLine();
 		}
 	}
 
-	private String applyRecordSeparatorPolicy(String line) throws IOException {
-
-		String record = line;
-		while (line != null && !recordSeparatorPolicy.isEndOfRecord(record)) {
-			line = this.reader.readLine();
-			if (line == null) {
+	private String applyRecordSeparatorPolicy(final String line) throws IOException {
+		String l = line;
+		String record = l;
+		
+		while (l != null && !recordSeparatorPolicy.isEndOfRecord(record)) {
+			l = this.reader.readLine();
+			if (l == null) {
 				if (StringUtils.hasText(record)) {
 					// A record was partially complete since it hasn't ended but
 					// the line is null
 					throw new FlatFileParseException("Unexpected end of file before record complete", record, lineCount);
-				}
-				else {
+				} 				else {
 					// Record has no text but it might still be post processed
 					// to something (skipping preProcess since that was already
 					// done)
 					break;
 				}
-			}
-			else {
+			} else {
 				lineCount++;
 			}
-			record = recordSeparatorPolicy.preProcess(record) + line;
+			record = recordSeparatorPolicy.preProcess(record) + l;
 		}
 
 		return recordSeparatorPolicy.postProcess(record);

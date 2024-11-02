@@ -11,7 +11,7 @@ public enum DocumentTypeEnum {
 	private static final List<String> DOCUMENT_TYPE_CODES = new ArrayList<String>();
 	
 	static {
-		for(DocumentTypeEnum value : values()) {
+		for (DocumentTypeEnum value : values()) {
 			DOCUMENT_TYPE_CODES.add(value.getCode());
 		}
 	}
@@ -26,7 +26,7 @@ public enum DocumentTypeEnum {
 		return SpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 	
-	private DocumentTypeEnum (String code) {
+	DocumentTypeEnum(final String code) {
 		this.code = code;
 	}
 	
@@ -34,9 +34,9 @@ public enum DocumentTypeEnum {
 		return DOCUMENT_TYPE_CODES;
 	}
 	
-	public static DocumentTypeEnum convert(String code) {
+	public static DocumentTypeEnum convert(final String code) {
 		for (DocumentTypeEnum documentTypeEnum: values()) {
-			if(documentTypeEnum.getCode().equals(code)) {
+			if (documentTypeEnum.getCode().equals(code)) {
 				return documentTypeEnum;
 			}
 		}
@@ -44,8 +44,8 @@ public enum DocumentTypeEnum {
 		return DocumentTypeEnum.USER;
 	}
 	
-	public static DocumentTypeEnum[] convert(String[] array) {
-		DocumentTypeEnum documentTypeEnum[] = new DocumentTypeEnum[array.length];
+	public static DocumentTypeEnum[] convert(final String[] array) {
+		DocumentTypeEnum[] documentTypeEnum = new DocumentTypeEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
 			documentTypeEnum[i] = convert(array[i]);

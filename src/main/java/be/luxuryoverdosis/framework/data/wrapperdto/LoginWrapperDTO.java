@@ -12,25 +12,25 @@ public class LoginWrapperDTO {
 	public UserDTO getUserDTO() {
 		return userDTO;
 	}
-	public void setUserDTO(UserDTO userDTO) {
+	public void setUserDTO(final UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
 	public boolean isActivation() {
 		return activation;
 	}
-	public void setActivation(boolean activation) {
+	public void setActivation(final boolean activation) {
 		this.activation = activation;
 	}
 	public int getDays() {
 		return days;
 	}
-	public void setDays(int days) {
+	public void setDays(final int days) {
 		this.days = days;
 	}
 	public MenuRepository getMenuRepository() {
 		return menuRepository;
 	}
-	public void setMenuRepository(MenuRepository menuRepository) {
+	public void setMenuRepository(final MenuRepository menuRepository) {
 		this.menuRepository = menuRepository;
 	}
 }

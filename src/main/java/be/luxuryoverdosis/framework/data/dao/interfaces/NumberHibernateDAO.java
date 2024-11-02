@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.Number;
 
 public interface NumberHibernateDAO {
-	public Number createOrUpdate(Number number);
-	public Number read(int id);
-	public Number read(String applicationCode, String year, String type);
-	public void delete(int id);
+	Number createOrUpdate(Number number);
+	Number read(int id);
+	Number read(String applicationCode, String year, String type);
+	void delete(int id);
 	
-	public ArrayList<Number> list();
+	ArrayList<Number> list();
 	
-	public long count(String applicationCode, String year, String type, int id);
+	long count(String applicationCode, String year, String type, int id);
 	
-	public int nextNumber(String applicationCode, String year, String type);
+	int nextNumber(String applicationCode, String year, String type);
 }

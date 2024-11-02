@@ -51,7 +51,7 @@ public class BatchJobDetailSelectedServiceSpringImpl implements BatchJobDetailSe
 		Logging.info(this, "End deleteBatchJobDetailSelected");
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Integer> list(final int batchJobHeaderSelectedId) {
 		Logging.info(this, "Begin readBatchJobDetailSelected");
 		ArrayList<Integer> arrayList = null;

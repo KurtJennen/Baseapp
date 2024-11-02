@@ -38,8 +38,8 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		ArrayList<User> arrayList = (ArrayList<User>) query.list();
 		
 		User user = null;
-		if(!arrayList.isEmpty()) {
-			user = (User)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			user = (User) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNameUser");
 		return user;
@@ -74,7 +74,7 @@ public class UserHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<UserDTO> listDTO(String searchValue) {
+	public ArrayList<UserDTO> listDTO(final String searchValue) {
 		Logging.info(this, "Begin listUser");
 		
 		Query<UserDTO> query = getCurrentSession().getNamedQuery(User.SELECT_USERS_DTO_BY_NAME);

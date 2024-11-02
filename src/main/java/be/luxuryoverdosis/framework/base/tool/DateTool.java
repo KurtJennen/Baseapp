@@ -13,7 +13,10 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.apache.commons.lang.StringUtils;
 
-public class DateTool {
+public final class DateTool {
+	private DateTool() {
+	}
+	
 	public static final String UTIL_DATE_NO_PATTERN = "ddMMyyyy";
 	public static final String UTIL_DATE_PATTERN = "dd/MM/yyyy";
 	public static final String UTIL_DATE_PATTERN_DAY_NAME = "EE";
@@ -30,30 +33,30 @@ public class DateTool {
 	public static final int NOW = 2;
 	
 	
-	public static java.sql.Date toSqlDate(java.util.Date utilDate) {
+	public static java.sql.Date toSqlDate(final java.util.Date utilDate) {
 		return new java.sql.Date(utilDate.getTime());
 	}
 	
-	public static java.util.Date toUtilDate(java.sql.Date sqlDate) {
+	public static java.util.Date toUtilDate(final java.sql.Date sqlDate) {
 		return new java.util.Date(sqlDate.getTime());
 	}
 	
 	
 	
-	public static String formatUtilDate(java.util.Date date) {
+	public static String formatUtilDate(final java.util.Date date) {
 		return formatDate(date, UTIL_DATE_PATTERN);
 	}
 	
-	public static String formatUtilDateTime(java.util.Date date) {
+	public static String formatUtilDateTime(final java.util.Date date) {
 		return formatDate(date, UTIL_DATETIME_PATTERN);
 	}
 	
-	public static String formatSqlDate(java.util.Date date) {
+	public static String formatSqlDate(final java.util.Date date) {
 		return formatDate(date, SQL_DATE_PATTERN);
 	}
 	
-	public static String formatDate(java.util.Date date, String datePattern) {
-		if(date == null) {
+	public static String formatDate(final java.util.Date date, final String datePattern) {
+		if (date == null) {
 			return StringUtils.EMPTY;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -63,18 +66,18 @@ public class DateTool {
 	
 	
 	@Deprecated
-	public static java.util.Date parseUtilDate(String date) throws ParseException {
+	public static java.util.Date parseUtilDate(final String date) throws ParseException {
 		return parseDate(date, UTIL_DATE_PATTERN);
 	}
 	
 	@Deprecated
-	public static java.util.Date parseSqlDate(String date) throws ParseException {
+	public static java.util.Date parseSqlDate(final String date) throws ParseException {
 		return parseDate(date, SQL_DATE_PATTERN);
 	}
 	
 	@Deprecated
-	public static java.util.Date parseDate(String date, String datePattern) throws ParseException {
-		if(StringUtils.isEmpty(date)) {
+	public static java.util.Date parseDate(final String date, final String datePattern) throws ParseException {
+		if (StringUtils.isEmpty(date)) {
 			return null;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -84,16 +87,16 @@ public class DateTool {
 	}
 	
 	
-	public static Timestamp parseUtilTimestamp(String date) throws ParseException {
+	public static Timestamp parseUtilTimestamp(final String date) throws ParseException {
 		return parseTimestamp(date, UTIL_DATE_PATTERN);
 	}
 	
-	public static Timestamp parseSqlTimestamp(String date) throws ParseException {
+	public static Timestamp parseSqlTimestamp(final String date) throws ParseException {
 		return parseTimestamp(date, SQL_DATE_PATTERN);
 	}
 	
-	public static Timestamp parseTimestamp(String date, String datePattern) throws ParseException {
-		if(StringUtils.isEmpty(date)) {
+	public static Timestamp parseTimestamp(final String date, final String datePattern) throws ParseException {
+		if (StringUtils.isEmpty(date)) {
 			return null;
 		}
 		SimpleDateFormat dateFormat = new SimpleDateFormat(datePattern);
@@ -107,7 +110,7 @@ public class DateTool {
 		return getCalendar(YEAR, Calendar.JANUARY, DAY);
 	}
 	
-	public static Calendar getCalendar(int year, int month, int day) {
+	public static Calendar getCalendar(final int year, final int month, final int day) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
 		calendar.set(year, month, day);
@@ -115,7 +118,7 @@ public class DateTool {
 		return calendar;
 	}
 	
-	public static Calendar getCalendar(java.util.Date date) {
+	public static Calendar getCalendar(final java.util.Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
 		calendar.setTime(date);
@@ -127,7 +130,7 @@ public class DateTool {
 		return getDateFromCalendar(YEAR, Calendar.JANUARY, DAY);
 	}
 	
-	public static java.util.Date getDateFromCalendar(int year, int month, int day) {
+	public static java.util.Date getDateFromCalendar(final int year, final int month, final int day) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.clear();
 		calendar.set(year, month, day);
@@ -152,22 +155,22 @@ public class DateTool {
 	}
 	
 	
-	public static boolean isDateInYear(Date date, String year) {
-		if(date == null) {
+	public static boolean isDateInYear(final Date date, final String year) {
+		if (date == null) {
 			return true;
 		}
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
 		
-		if(year.equals(String.valueOf(calendar.get(Calendar.YEAR)))) {
+		if (year.equals(String.valueOf(calendar.get(Calendar.YEAR)))) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public static int locateDate(String date, String datePattern) {
+	public static int locateDate(final String date, final String datePattern) {
 		Calendar calendar = Calendar.getInstance();
 		try {
 			calendar.setTime(DateTool.parseTimestamp(date, datePattern));
@@ -175,10 +178,10 @@ public class DateTool {
 			return NOT_VALID;
 		}
 		
-		if(calendar.getTimeInMillis() > getCurrentDateFromCalendar().getTime()) {
+		if (calendar.getTimeInMillis() > getCurrentDateFromCalendar().getTime()) {
 			return FUTURE;
 		}
-		if(calendar.getTimeInMillis() < getCurrentDateFromCalendar().getTime()) {
+		if (calendar.getTimeInMillis() < getCurrentDateFromCalendar().getTime()) {
 			return PAST;
 		}
 		

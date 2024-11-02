@@ -22,17 +22,17 @@ import org.hibernate.annotations.Proxy;
 import be.luxuryoverdosis.framework.data.translater.BatchJobTranslater;
 
 @Entity
-@Table(name="batch_job_execution")
+@Table(name = "batch_job_execution")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobExecution.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query=BatchJobExecution.Queries.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE),
-	@NamedQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query=BatchJobExecution.Queries.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE)
+	@NamedQuery(name = BatchJobExecution.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query = BatchJobExecution.Queries.SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE),
+	@NamedQuery(name = BatchJobExecution.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE, query = BatchJobExecution.Queries.DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE)
 })
 @NamedNativeQueries({
-	@NamedNativeQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE, query=BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE),
-	@NamedNativeQuery(name=BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE, query=BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE)
+	@NamedNativeQuery(name = BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE, query = BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_CONTEXTS_BY_JOB_INSTANCE),
+	@NamedNativeQuery(name = BatchJobExecution.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE, query = BatchJobExecution.NativeQueries.DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchJobExecution {
 	public static final String SELECT_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE = "selectBatchJobExecutionsByJobInstance";
 	public static final String DELETE_BATCH_JOB_EXECUTIONS_BY_JOB_INSTANCE = "deleteBatchJobExecutionsByJobInstance";
@@ -40,68 +40,68 @@ public class BatchJobExecution {
 	public static final String DELETE_BATCH_JOB_EXECUTION_PARAMS_BY_JOB_INSTANCE = "deleteBatchJobExecutionParamssByJobInstance";
 	
 	@Id
-	@Column(name="Job_Execution_Id")
+	@Column(name = "Job_Execution_Id")
 	private long id;
 	
-	@Column(name="Version")
+	@Column(name = "Version")
 	private long version;
 	
-	@Column(name="Create_Time")
+	@Column(name = "Create_Time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTime;
 	
-	@Column(name="Start_Time")
+	@Column(name = "Start_Time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date startTime;
 	
-	@Column(name="End_Time")
+	@Column(name = "End_Time")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date endTime;
 	
-	@Column(name="Status")
+	@Column(name = "Status")
 	private String status;
 	
-	@Column(name="Exit_Code")
+	@Column(name = "Exit_Code")
 	private String exitCode;
 	
-	@Column(name="Exit_Message")
+	@Column(name = "Exit_Message")
 	private String exitMessage;
 	
-	@Column(name="Last_Updated")
+	@Column(name = "Last_Updated")
 	private Date lastUpdated;
 	
 	@ManyToOne
-	@JoinColumn(name="Job_Instance_Id")
+	@JoinColumn(name = "Job_Instance_Id")
 	private BatchJobInstance batchJobInstance;
 	
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 	public long getVersion() {
 		return version;
 	}
-	public void setVersion(long version) {
+	public void setVersion(final long version) {
 		this.version = version;
 	}
 	public Date getCreateTime() {
 		return createTime;
 	}
-	public void setCreateTime(Date createTime) {
+	public void setCreateTime(final Date createTime) {
 		this.createTime = createTime;
 	}
 	public Date getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(final Date startTime) {
 		this.startTime = startTime;
 	}
 	public Date getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(final Date endTime) {
 		this.endTime = endTime;
 	}
 	public String getStatus() {
@@ -110,7 +110,7 @@ public class BatchJobExecution {
 	public String getStatusTranslated() {
 		return BatchJobTranslater.getBatchJobStatusTranslated(status);
 	}
-	public void setStatus(String status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 	public String getExitCode() {
@@ -119,25 +119,25 @@ public class BatchJobExecution {
 	public String getExitCodeTranslated() {
 		return BatchJobTranslater.getBatchJobExitCodeTranslated(exitCode);
 	}
-	public void setExitCode(String exitCode) {
+	public void setExitCode(final String exitCode) {
 		this.exitCode = exitCode;
 	}
 	public String getExitMessage() {
 		return exitMessage;
 	}
-	public void setExitMessage(String exitMessage) {
+	public void setExitMessage(final String exitMessage) {
 		this.exitMessage = exitMessage;
 	}
 	public Date getLastUpdated() {
 		return lastUpdated;
 	}
-	public void setLastUpdated(Date lastUpdated) {
+	public void setLastUpdated(final Date lastUpdated) {
 		this.lastUpdated = lastUpdated;
 	}
 	public BatchJobInstance getBatchJobInstance() {
 		return batchJobInstance;
 	}
-	public void setBatchJobInstance(BatchJobInstance batchJobInstance) {
+	public void setBatchJobInstance(final BatchJobInstance batchJobInstance) {
 		this.batchJobInstance = batchJobInstance;
 	}
 	

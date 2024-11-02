@@ -39,8 +39,8 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 		ArrayList<Menu> arrayList = (ArrayList<Menu>) query.list();
 		
 		Menu menu = null;
-		if(!arrayList.isEmpty()) {
-			menu = (Menu)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			menu = (Menu) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readFullName");
 		return menu;
@@ -53,7 +53,7 @@ public class MenuHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imple
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void deleteForUser(int userId) {
+	public void deleteForUser(final int userId) {
 		Logging.info(this, "Begin deleteForUserMenu");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(Menu.DELETE_MENUS_BY_USER);

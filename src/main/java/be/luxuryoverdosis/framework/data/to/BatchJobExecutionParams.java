@@ -21,13 +21,13 @@ import org.hibernate.annotations.Proxy;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 
 @Entity
-@Table(name="batch_job_execution_params")
+@Table(name = "batch_job_execution_params")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION, query=BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION),
-	@NamedQuery(name=BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME, query=BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME)
+	@NamedQuery(name = BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION, query = BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION),
+	@NamedQuery(name = BatchJobExecutionParams.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME, query = BatchJobExecutionParams.Queries.SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION_AND_KEY_NAME)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchJobExecutionParams implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public static final String SELECT_JOB_EXECUTION_PARAMS_BY_JOB_EXECUTION = "selectJobExecutionParamsByJobExecution";
@@ -35,60 +35,60 @@ public class BatchJobExecutionParams implements Serializable {
 	
 	@Id
 	@ManyToOne
-	@JoinColumn(name="Job_Execution_Id")
+	@JoinColumn(name = "Job_Execution_Id")
 	private BatchJobExecution batchJobExecution;
 	
-	@Column(name="Type_Cd")
+	@Column(name = "Type_Cd")
 	private String typeCode;
 	
 	@Id
-	@Column(name="Key_name")
+	@Column(name = "Key_name")
 	private String keyName;
 	
-	@Column(name="String_Val")
+	@Column(name = "String_Val")
 	private String stringValue;
 	
-	@Column(name="Date_Val")
+	@Column(name = "Date_Val")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateValue;
 	
-	@Column(name="Long_Val")
+	@Column(name = "Long_Val")
 	private long longValue;
 	
-	@Column(name="Double_Val")
+	@Column(name = "Double_Val")
 	private double doubleValue;
 	
-	@Column(name="Identifying")
+	@Column(name = "Identifying")
 	private String identifying;
 	
 	public BatchJobExecution getBatchJobExecution() {
 		return batchJobExecution;
 	}
-	public void setBatchJobExecution(BatchJobExecution batchJobExecution) {
+	public void setBatchJobExecution(final BatchJobExecution batchJobExecution) {
 		this.batchJobExecution = batchJobExecution;
 	}
 	public String getTypeCode() {
 		return typeCode;
 	}
-	public void setTypeCode(String typeCode) {
+	public void setTypeCode(final String typeCode) {
 		this.typeCode = typeCode;
 	}
 	public String getKeyName() {
 		return keyName;
 	}
-	public void setKeyName(String keyName) {
+	public void setKeyName(final String keyName) {
 		this.keyName = keyName;
 	}
 	public String getStringValue() {
 		return stringValue;
 	}
-	public void setStringValue(String stringValue) {
+	public void setStringValue(final String stringValue) {
 		this.stringValue = stringValue;
 	}
 	public Date getDateValue() {
 		return dateValue;
 	}
-	public void setDateValue(Date dateValue) {
+	public void setDateValue(final Date dateValue) {
 		this.dateValue = dateValue;
 	}
 	public String getDateValueAsString() {
@@ -97,19 +97,19 @@ public class BatchJobExecutionParams implements Serializable {
 	public long getLongValue() {
 		return longValue;
 	}
-	public void setLongValue(long longValue) {
+	public void setLongValue(final long longValue) {
 		this.longValue = longValue;
 	}
 	public double getDoubleValue() {
 		return doubleValue;
 	}
-	public void setDoubleValue(double doubleValue) {
+	public void setDoubleValue(final double doubleValue) {
 		this.doubleValue = doubleValue;
 	}
 	public String getIdentifying() {
 		return identifying;
 	}
-	public void setIdentifying(String identifying) {
+	public void setIdentifying(final String identifying) {
 		this.identifying = identifying;
 	}
 	

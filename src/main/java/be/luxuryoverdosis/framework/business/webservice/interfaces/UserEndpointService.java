@@ -10,8 +10,8 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadUserRequest;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 
 public interface UserEndpointService {
-	public ReadUserResponse readUserRequest(ReadUserRequest request);
-	public ReadAllUsersResponse readAllUsersRequest(ReadAllUsersRequest request);
-	public CreateOrUpdateUserResponse createOrUpdateUserRequest(CreateOrUpdateUserRequest request);
-	public DeleteUserResponse deleteUserRequest(DeleteUserRequest request);
+	ReadUserResponse readUserRequest(ReadUserRequest request);
+	ReadAllUsersResponse readAllUsersRequest(ReadAllUsersRequest request);
+	CreateOrUpdateUserResponse createOrUpdateUserRequest(CreateOrUpdateUserRequest request);
+	DeleteUserResponse deleteUserRequest(DeleteUserRequest request);
 }

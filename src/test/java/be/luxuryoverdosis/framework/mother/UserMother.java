@@ -8,6 +8,12 @@ import be.luxuryoverdosis.framework.business.encryption.Encryption;
 import be.luxuryoverdosis.framework.data.to.User;
 
 public class UserMother {
+	public static final int YEAR = 2100;
+	public static final int MONTH = 0;
+	public static final int DAY = 1;
+	
+	protected UserMother() {
+	}
 
 	public static User produceUser() {
 		User user = new User();
@@ -32,7 +38,7 @@ public class UserMother {
 		
 		Calendar defaultCalendar = Calendar.getInstance();
 		defaultCalendar.clear();
-		defaultCalendar.set(2100, 0, 1);
+		defaultCalendar.set(YEAR, MONTH, DAY);
 		
 		user.setDateExpiration(defaultCalendar.getTime());
 		

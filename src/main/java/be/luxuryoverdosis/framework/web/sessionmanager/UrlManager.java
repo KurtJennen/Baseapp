@@ -2,8 +2,13 @@ package be.luxuryoverdosis.framework.web.sessionmanager;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class UrlManager {
-	public static String composeUrl(HttpServletRequest request, String servletPath) {
+import be.luxuryoverdosis.framework.BaseConstants;
+
+public final class UrlManager {
+	private UrlManager() {
+	}
+	
+	public static String composeUrl(final HttpServletRequest request, final String servletPath) {
 	 	String scheme = request.getScheme();
 	    String serverName = request.getServerName();
 	    int serverPort = request.getServerPort();
@@ -15,7 +20,7 @@ public class UrlManager {
 	    StringBuilder url = new StringBuilder();
 	    url.append(scheme).append("://").append(serverName);
 
-	    if (serverPort != 80 && serverPort != 443) {
+	    if (serverPort != BaseConstants.TACHTIG && serverPort != BaseConstants.VIERHONDERDRIEENVEERTIG) {
 	        url.append(":").append(serverPort);
 	    }
 

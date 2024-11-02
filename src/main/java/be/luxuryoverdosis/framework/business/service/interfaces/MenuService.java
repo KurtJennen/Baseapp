@@ -10,21 +10,21 @@ import net.sf.navigator.menu.MenuRepository;
 import net.sf.navigator.util.LoadableResourceException;
 
 public interface MenuService {
-	public MenuDTO createOrUpdateDTO(MenuDTO menuDTO);
-	public MenuDTO readDTO(int id);
+	MenuDTO createOrUpdateDTO(MenuDTO menuDTO);
+	MenuDTO readDTO(int id);
 	
-	public Menu createOrUpdate(Menu menu);
-	public Menu read(int id);
-	public Menu readFullName(String fullName, int userId);
-	public void delete(int id);
-	public void deleteForUser(int userId);
+	Menu createOrUpdate(Menu menu);
+	Menu read(int id);
+	Menu readFullName(String fullName, int userId);
+	void delete(int id);
+	void deleteForUser(int userId);
 	
-	public ArrayList<MenuDTO> list(int userId);
+	ArrayList<MenuDTO> list(int userId);
 	
-	public MenuWrapperDTO getMenuWrapperDTO(MenuRepository menuRepository, int userId)  throws LoadableResourceException;
+	MenuWrapperDTO getMenuWrapperDTO(MenuRepository menuRepository, int userId)  throws LoadableResourceException;
 	
-	public ArrayList<MenuDTO> produceMenu(MenuRepository menuRepository, int userId) throws LoadableResourceException;
-	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeEnum[] hidden, JaNeeEnum[] disabled, JaNeeEnum[] forPay, JaNeeEnum[] payed, int userId) throws LoadableResourceException;
+	ArrayList<MenuDTO> produceMenu(MenuRepository menuRepository, int userId) throws LoadableResourceException;
+	ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeEnum[] hidden, JaNeeEnum[] disabled, JaNeeEnum[] forPay, JaNeeEnum[] payed, int userId) throws LoadableResourceException;
 	
-	public MenuRepository produceAlterredMenu(MenuRepository menuRepository, int userId);
+	MenuRepository produceAlterredMenu(MenuRepository menuRepository, int userId);
 }

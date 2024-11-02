@@ -20,7 +20,7 @@ import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 
 @Service
 public class UserRestServiceClientImpl extends BaseRestServiceClient implements UserRestServiceClient {
-	@Resource(name="restTemplate")
+	@Resource(name = "restTemplate")
 	private RestTemplate restTemplate;
 	@Value("${rest.user.defaultUri}")
 	private String defaultUri;
@@ -47,18 +47,18 @@ public class UserRestServiceClientImpl extends BaseRestServiceClient implements 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(defaultUri + READ_USER_REQUEST).queryParam("name", name).queryParam("password", password);
 		
 //		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + READ_USER_REQUEST, HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){}, params);
-		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){});
+		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>() { });
 		
 		return responseEntity.getBody();
 	}
 	
 	public RestWrapperDTO<UserDTO> readAllUsersRequest() {
 		HttpHeaders httpHeaders = getHttpHeaders(user, password);
-		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + READ_ALL_USERS_REQUEST, HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){});
+		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + READ_ALL_USERS_REQUEST, HttpMethod.GET, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>() { });
 		return responseEntity.getBody();
 	}
 	
-	public RestWrapperDTO<UserDTO> createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String[] roleNames) {
+	public RestWrapperDTO<UserDTO> createOrUpdateUserRequest(final String name, final String userName, final String encryptedPassword, final String email, final String[] roleNames) {
 		HttpHeaders httpHeaders = getHttpHeaders(user, password);
 		
 		UserDTO body = new UserDTO();
@@ -72,11 +72,11 @@ public class UserRestServiceClientImpl extends BaseRestServiceClient implements 
 		}
 		body.setRoles(roles);
 		
-		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + CREATE_OR_UPDATE_USER_REQUEST, HttpMethod.POST, new HttpEntity<>(body, httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){});
+		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + CREATE_OR_UPDATE_USER_REQUEST, HttpMethod.POST, new HttpEntity<>(body, httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>() { });
 		return responseEntity.getBody();
 	}
 	
-	public RestWrapperDTO<UserDTO> deleteUserRequest(int id) {
+	public RestWrapperDTO<UserDTO> deleteUserRequest(final int id) {
 		HttpHeaders httpHeaders = getHttpHeaders(user, password);
 		
 //		HashMap<String, Integer> params = new HashMap<String, Integer>();
@@ -84,8 +84,8 @@ public class UserRestServiceClientImpl extends BaseRestServiceClient implements 
 		
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(defaultUri + DELETE_USER_REQUEST).queryParam("id", id);
 		
-//		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + DELETE_USER_REQUEST, HttpMethod.DELETE, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){}, params);
-		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>(){});
+//		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(defaultUri + DELETE_USER_REQUEST, HttpMethod.DELETE, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>() { }, params);
+		ResponseEntity<RestWrapperDTO<UserDTO>> responseEntity = restTemplate.exchange(builder.toUriString(), HttpMethod.DELETE, new HttpEntity<>(httpHeaders), new ParameterizedTypeReference<RestWrapperDTO<UserDTO>>() { });
 		return responseEntity.getBody();
 	}
 	

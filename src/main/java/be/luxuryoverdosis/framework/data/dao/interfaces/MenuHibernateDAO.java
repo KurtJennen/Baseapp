@@ -7,17 +7,17 @@ import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
 
 public interface MenuHibernateDAO {
-	public Menu createOrUpdate(Menu menu);
-	public Menu read(int id);
-	public Menu readFullName(String fullName, int userId);
-	public void delete(int id);
-	public void deleteForUser(int userId);
+	Menu createOrUpdate(Menu menu);
+	Menu read(int id);
+	Menu readFullName(String fullName, int userId);
+	void delete(int id);
+	void deleteForUser(int userId);
 	
-	public ArrayList<MenuDTO> list(int userId);
-	public ArrayList<MenuDTO> listHidden(int userId, JaNeeEnum hidden);
-	public ArrayList<MenuDTO> listDisabled(int userId, JaNeeEnum disabled);
-	public ArrayList<MenuDTO> listForPayAndPayed(int userId, JaNeeEnum payed);
+	ArrayList<MenuDTO> list(int userId);
+	ArrayList<MenuDTO> listHidden(int userId, JaNeeEnum hidden);
+	ArrayList<MenuDTO> listDisabled(int userId, JaNeeEnum disabled);
+	ArrayList<MenuDTO> listForPayAndPayed(int userId, JaNeeEnum payed);
 	
-	public long count(int userId);
-	public long count(String fullName, int userId);
+	long count(int userId);
+	long count(String fullName, int userId);
 }

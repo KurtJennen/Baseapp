@@ -20,11 +20,11 @@ import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
 public class SpringSecurityFilter implements Filter {
 	
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(final FilterConfig filterConfig) throws ServletException {
 		//System.out.println("SpringSecurityFilter Initialized");
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain) throws IOException, ServletException {
 		//System.out.println("SpringSecurityFilter");
 		
 		HttpServletRequest httpServletRequest = (HttpServletRequest) request;
@@ -34,10 +34,10 @@ public class SpringSecurityFilter implements Filter {
 		if (authorizationHeader != null) {
 			String base64Credentials = authorizationHeader.substring(BaseConstants.BASIC.length()).trim();
 	        String credentials = Encryption.decode(base64Credentials);
-	        final String[] values = credentials.split(":",2);
+	        final String[] values = credentials.split(":", 2);
 	        
 	        UserDTO userDTO = getUserService().readNameDTO(values[0]);
-	        if(userDTO != null && userDTO.getPassword().equals(values[1])) {
+	        if (userDTO != null && userDTO.getPassword().equals(values[1])) {
 	        	ThreadManager.setUserOnThread(userDTO);
 	        	filterChain.doFilter(request, response);
 //	        	try {

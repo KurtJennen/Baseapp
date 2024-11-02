@@ -20,12 +20,12 @@ public class SecurityFilter implements Filter {
 	
 	private FilterConfig filterConfig = null;
 	
-	public void init(FilterConfig filterConfig) throws ServletException {
+	public void init(final FilterConfig filterConfig) throws ServletException {
 		//System.out.println("SecurityFilter Initialized");
 		this.filterConfig = filterConfig;
 	}
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
+	public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain) throws IOException, ServletException {
 		//System.out.println("SecurityFilter");
 		
 		String unsecurePath = filterConfig.getInitParameter(SecurityFilter.UNSECURED);
@@ -34,9 +34,9 @@ public class SecurityFilter implements Filter {
 		String path = httpServletRequest.getServletPath();
 		UserDTO userDTO = (UserDTO) httpServletRequest.getSession().getAttribute(BaseWebConstants.USER);
 		
-		if(!path.startsWith(unsecurePath)) {
-			if(userDTO == null) {
-				request.getRequestDispatcher(loginPath).forward(request,response);
+		if (!path.startsWith(unsecurePath)) {
+			if (userDTO == null) {
+				request.getRequestDispatcher(loginPath).forward(request, response);
 			} else {
 				ThreadManager.setUserOnThread(userDTO);
 			}

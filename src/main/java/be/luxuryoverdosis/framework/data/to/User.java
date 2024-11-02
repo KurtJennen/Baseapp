@@ -19,16 +19,16 @@ import org.hibernate.annotations.Proxy;
 import be.luxuryoverdosis.framework.base.tool.adapter.DateAdapter;
 
 @Entity
-@Table(name="base_user")
+@Table(name = "base_user")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=User.SELECT_USERS, query=User.Queries.SELECT_USERS),
-	@NamedQuery(name=User.SELECT_USERS_BY_NAME, query=User.Queries.SELECT_USERS_BY_NAME),
-	@NamedQuery(name=User.SELECT_USERS_DTO, query=User.Queries.SELECT_USERS_DTO),
-	@NamedQuery(name=User.SELECT_USERS_DTO_BY_NAME, query=User.Queries.SELECT_USERS_DTO_BY_NAME),
-	@NamedQuery(name=User.COUNT_USERS_BY_NAME, query=User.Queries.COUNT_USERS_BY_NAME)
+	@NamedQuery(name = User.SELECT_USERS, query = User.Queries.SELECT_USERS),
+	@NamedQuery(name = User.SELECT_USERS_BY_NAME, query = User.Queries.SELECT_USERS_BY_NAME),
+	@NamedQuery(name = User.SELECT_USERS_DTO, query = User.Queries.SELECT_USERS_DTO),
+	@NamedQuery(name = User.SELECT_USERS_DTO_BY_NAME, query = User.Queries.SELECT_USERS_DTO_BY_NAME),
+	@NamedQuery(name = User.COUNT_USERS_BY_NAME, query = User.Queries.COUNT_USERS_BY_NAME)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 @XmlType
 @XmlAccessorType(XmlAccessType.FIELD)
 public class User extends BaseTO {
@@ -38,19 +38,19 @@ public class User extends BaseTO {
 	public static final String SELECT_USERS_DTO_BY_NAME = "selectUsersDtoByName";
 	public static final String COUNT_USERS_BY_NAME = "countUsersByName";
 	
-	@Column(name="Name")
+	@Column(name = "Name")
 	private String name;
 	
-	@Column(name="UserName")
+	@Column(name = "UserName")
 	private String userName;
 	
-	@Column(name="Password")
+	@Column(name = "Password")
 	private String encryptedPassword;
 	
-	@Column(name="Email")
+	@Column(name = "Email")
 	private String email;
 	
-	@Column(name="DateExp")
+	@Column(name = "DateExp")
 	@XmlJavaTypeAdapter(value = DateAdapter.class)
 	private Date dateExpiration;
 	
@@ -61,31 +61,31 @@ public class User extends BaseTO {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getUserName() {
 		return userName;
 	}
-	public void setUserName(String userName) {
+	public void setUserName(final String userName) {
 		this.userName = userName;
 	}
 	public String getEncryptedPassword() {
 		return encryptedPassword;
 	}
-	public void setEncryptedPassword(String encryptedPassword) {
+	public void setEncryptedPassword(final String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 	public Date getDateExpiration() {
 		return dateExpiration;
 	}
-	public void setDateExpiration(Date dateExpiration) {
+	public void setDateExpiration(final Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
 

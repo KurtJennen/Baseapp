@@ -1,6 +1,9 @@
 package be.luxuryoverdosis.framework.base;
 
-public class FileType {
+public final class FileType {
+	private FileType() {
+	}
+	
 	public static final String DOC = ".doc";
 	public static final String JRXML = ".jrxml";
 	public static final String ODT = ".odt";

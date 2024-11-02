@@ -25,7 +25,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class ListRoleAction extends AjaxAction {
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -33,7 +33,7 @@ public class ListRoleAction extends AjaxAction {
 		
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_IDS);
 				
-		if(BaseWebConstants.DELETE.equals(previous)) {
+		if (BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.role")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.role")));
@@ -44,14 +44,14 @@ public class ListRoleAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-    public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward ajaxList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         Logging.info(this, "Begin Ajax");
         
         ArrayList<Role> roleList = getRoleService().list();
@@ -65,7 +65,7 @@ public class ListRoleAction extends AjaxAction {
         return null;
     }
     
-    public ActionForward createRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward createRole(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateRole");
 		
 		request.setAttribute(WebConstants.ROLE_DIALOG, true);
@@ -78,7 +78,7 @@ public class ListRoleAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
     
-    public ActionForward updateRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ActionForward updateRole(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		request.setAttribute(BaseWebConstants.ROLE_DIALOG, true);
@@ -92,7 +92,7 @@ public class ListRoleAction extends AjaxAction {
 		roleDTO.setName(listRoleForm.getDialogName());
 		
 		roleDTO = getRoleService().createOrUpdateDTO(roleDTO);
-		if(listRoleForm.getId() < 0) {
+		if (listRoleForm.getId() < 0) {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);

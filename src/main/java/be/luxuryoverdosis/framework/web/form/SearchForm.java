@@ -7,6 +7,7 @@ import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.query.SearchCriteria;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
@@ -39,153 +40,153 @@ public abstract class SearchForm extends BaseForm {
 	private boolean isButton4Allowed = false;
 	private boolean isButton5Allowed = false;
 	
-	abstract public SearchSelect getSearchSelect();
+	public abstract SearchSelect getSearchSelect();
 	
 	public int getDefaultLines() {
 		return defaultLines;
 	}
-	public void setDefaultLines(int defaultLines) {
+	public void setDefaultLines(final int defaultLines) {
 		this.defaultLines = defaultLines;
 	}
 	public String[] getOperators() {
 		return operators;
 	}
-	public void setOperators(String[] operators) {
+	public void setOperators(final String[] operators) {
 		this.operators = operators;
 	}
 	public String[] getNames() {
 		return names;
 	}
-	public void setNames(String[] names) {
+	public void setNames(final String[] names) {
 		this.names = names;
 	}
 	public String[] getValues() {
 		return values;
 	}
-	public void setValues(String[] values) {
+	public void setValues(final String[] values) {
 		this.values = values;
 	}	
 	public String[] getOpenBrackets() {
 		return openBrackets;
 	}
-	public void setOpenBrackets(String[] openBrackets) {
+	public void setOpenBrackets(final String[] openBrackets) {
 		this.openBrackets = openBrackets;
 	}
 	public String[] getCloseBrackets() {
 		return closeBrackets;
 	}
-	public void setCloseBrackets(String[] closeBrackets) {
+	public void setCloseBrackets(final String[] closeBrackets) {
 		this.closeBrackets = closeBrackets;
 	}
 	public String[] getAddAndOrs() {
 		return addAndOrs;
 	}
-	public void setAddAndOrs(String[] addAndOrs) {
+	public void setAddAndOrs(final String[] addAndOrs) {
 		this.addAndOrs = addAndOrs;
 	}
 	public String getSearchName() {
 		return searchName;
 	}
-	public void setSearchName(String searchName) {
+	public void setSearchName(final String searchName) {
 		this.searchName = searchName;
 	}	
 	public String getQueryName() {
 		return queryName;
 	}
-	public void setQueryName(String queryName) {
+	public void setQueryName(final String queryName) {
 		this.queryName = queryName;
 	}
 	public String getSelectQuery() {
 		return selectQuery;
 	}
-	public void setSelectQuery(String selectQuery) {
+	public void setSelectQuery(final String selectQuery) {
 		this.selectQuery = selectQuery;
 	}	
 	public String getComplexQuery() {
 		return complexQuery;
 	}
-	public void setComplexQuery(String complexQuery) {
+	public void setComplexQuery(final String complexQuery) {
 		this.complexQuery = complexQuery;
 	}	
 	public SearchCriteria getSearchCriteria() {
 		return searchCriteria;
 	}
-	public void setSearchCriteria(SearchCriteria searchCriteria) {
+	public void setSearchCriteria(final SearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
 	}
 	
 	public boolean isButton1Allowed() {
 		return isButton1Allowed;
 	}
-	public void setButton1Allowed(boolean isButton1Allowed) {
+	public void setButton1Allowed(final boolean isButton1Allowed) {
 		this.isButton1Allowed = isButton1Allowed;
 	}
 	public boolean isButton2Allowed() {
 		return isButton2Allowed;
 	}
-	public void setButton2Allowed(boolean isButton2Allowed) {
+	public void setButton2Allowed(final boolean isButton2Allowed) {
 		this.isButton2Allowed = isButton2Allowed;
 	}
 	public boolean isButton3Allowed() {
 		return isButton3Allowed;
 	}
-	public void setButton3Allowed(boolean isButton3Allowed) {
+	public void setButton3Allowed(final boolean isButton3Allowed) {
 		this.isButton3Allowed = isButton3Allowed;
 	}
 	public boolean isButton4Allowed() {
 		return isButton4Allowed;
 	}
-	public void setButton4Allowed(boolean isButton4Allowed) {
+	public void setButton4Allowed(final boolean isButton4Allowed) {
 		this.isButton4Allowed = isButton4Allowed;
 	}
 	public boolean isButton5Allowed() {
 		return isButton5Allowed;
 	}
-	public void setButton5Allowed(boolean isButton5Allowed) {
+	public void setButton5Allowed(final boolean isButton5Allowed) {
 		this.isButton5Allowed = isButton5Allowed;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		searchCriteria = new SearchCriteria();
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 				
 		ActionErrors errors = new ActionErrors();
 		
 		errors.add(super.validate(mapping, request));
 		
-		if(this.getMethod().equals(BaseWebConstants.LIST) || this.getMethod().equals(BaseWebConstants.LIST_JMESA) || this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
+		if (this.getMethod().equals(BaseWebConstants.LIST) || this.getMethod().equals(BaseWebConstants.LIST_JMESA) || this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
 			int aantalNames = 0;
 			int aantalOpenBrackets = 0;
 			int aantalCloseBrackets = 0;
 			
-			for(int i = 0; i < names.length; i++) {
-				if(!names[i].equals(SearchQuery.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < 9) {
+			for (int i = 0; i < names.length; i++) {
+				if (!names[i].equals(SearchQuery.MINUS_ONE) && StringUtils.isEmpty(values[i]) && Integer.valueOf(operators[i]) < BaseConstants.NEGEN) {
 					errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.value")));
 				}
-				if(names[i].equals(SearchQuery.MINUS_ONE)) {
+				if (names[i].equals(SearchQuery.MINUS_ONE)) {
 					aantalNames++;
 				}
-				if(complexQuery.equals(SearchQuery.ONE)) {
-					if(i > 0 && !names[i].equals(SearchQuery.MINUS_ONE) && addAndOrs[i - 1].equals(SearchQuery.MINUS_ONE)) {
+				if (complexQuery.equals(SearchQuery.ONE)) {
+					if (i > 0 && !names[i].equals(SearchQuery.MINUS_ONE) && addAndOrs[i - 1].equals(SearchQuery.MINUS_ONE)) {
 						errors.add(SearchQuery.FIELD + i, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.and.or")));
 					}
-					if(openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+					if (openBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 						aantalOpenBrackets++;
 					}
-					if(closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
+					if (closeBrackets[i].equals(SearchQuery.MINUS_ONE)) {
 						aantalCloseBrackets++;
 					}
 				}
 			}
-			if(aantalNames == names.length) {
+			if (aantalNames == names.length) {
 				errors.add(SearchQuery.FIELD + SearchQuery.ZERO, new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.parameter")));
 			}
-			if(complexQuery.equals(SearchQuery.ONE)) {
-				if(aantalOpenBrackets != aantalCloseBrackets) {
+			if (complexQuery.equals(SearchQuery.ONE)) {
+				if (aantalOpenBrackets != aantalCloseBrackets) {
 					errors.add(SearchQuery.FIELD + SearchQuery.ZERO, new ActionMessage("errors.bracket"));
 				}
 			}
@@ -201,19 +202,19 @@ public abstract class SearchForm extends BaseForm {
 			getSearchService().constructObjects(getSearchSelect(), searchCriteria);
 		}
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
-			if(StringUtils.isEmpty(queryName)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE_SEARCH)) {
+			if (StringUtils.isEmpty(queryName)) {
 				errors.add("queryName", new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.query.name")));
 			}
 		}
 		
-		if(this.getMethod().equals(BaseWebConstants.DELETE_SEARCH)) {
-			if(SearchQuery.MINUS_ONE.equals(selectQuery)) {
+		if (this.getMethod().equals(BaseWebConstants.DELETE_SEARCH)) {
+			if (SearchQuery.MINUS_ONE.equals(selectQuery)) {
 				errors.add("queryName", new ActionMessage("errors.required", MessageLocator.getMessage(request, "search.query.name")));
 			}
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 		

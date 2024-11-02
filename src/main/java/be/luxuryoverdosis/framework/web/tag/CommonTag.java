@@ -19,20 +19,23 @@ import freemarker.template.TemplateExceptionHandler;
 public class CommonTag extends BodyTagSupport {
 	private static final long serialVersionUID = 1L;
 	
-	PageContext pageContext;
+	private PageContext pageContext;
 	private String roles;
 	
-	public void setRoles(String roles) {
+	public void setRoles(final String roles) {
 		this.roles = roles;
 	}
 	
-	public void setParent(Tag t) {
+	public void setParent(final Tag t) {
 	}
 	
-	public void setPageContext(PageContext p) {
+	public void setPageContext(final PageContext p) {
 		pageContext = p;
 	}
-	
+	public PageContext getPageContext() {
+		return pageContext;
+	}
+
 	public void release() {
 	}
 	
@@ -41,15 +44,15 @@ public class CommonTag extends BodyTagSupport {
 	}
 
 	public boolean isEnabled() {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-		UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+		HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+		UserDTO userDTO = (UserDTO) request.getSession().getAttribute(BaseWebConstants.USER);
 		
 		boolean enabled = false;
-		if(userDTO != null) {
-			if(roles != null) {
+		if (userDTO != null) {
+			if (roles != null) {
 				String[] seperatedRoles = roles.split(",");
-				for(int i = 0; i < seperatedRoles.length; i++) {
-					if(userDTO.getRoles().contains(seperatedRoles[i])) {
+				for (int i = 0; i < seperatedRoles.length; i++) {
+					if (userDTO.getRoles().contains(seperatedRoles[i])) {
 						enabled = true;
 					}
 				}
@@ -63,7 +66,7 @@ public class CommonTag extends BodyTagSupport {
 		return enabled;
 	}
 	
-	public void produceTemplate(String name, Object object) {
+	public void produceTemplate(final String name, final Object object) {
 		try {
 			JspWriter out = pageContext.getOut();
 			
@@ -78,8 +81,7 @@ public class CommonTag extends BodyTagSupport {
 			
 			Template template = configuration.getTemplate(name);
 			template.process(templateData, out);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 	}
 }

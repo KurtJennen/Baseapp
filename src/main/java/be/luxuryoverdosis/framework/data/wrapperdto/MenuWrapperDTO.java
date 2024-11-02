@@ -12,13 +12,13 @@ public class MenuWrapperDTO {
 	public ArrayList<User> getUserList() {
 		return userList;
 	}
-	public void setUserList(ArrayList<User> userList) {
+	public void setUserList(final ArrayList<User> userList) {
 		this.userList = userList;
 	}
 	public ArrayList<MenuDTO> getMenuDTOList() {
 		return menuDTOList;
 	}
-	public void setMenuDTOList(ArrayList<MenuDTO> menuDTOList) {
+	public void setMenuDTOList(final ArrayList<MenuDTO> menuDTOList) {
 		this.menuDTOList = menuDTOList;
 	}
 }

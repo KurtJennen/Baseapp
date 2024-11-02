@@ -22,8 +22,8 @@ public class BatchJobInstanceDTO {
 		super();
 	}
 	
-	public BatchJobInstanceDTO(long id, String jobName, long batchJobExecutionId, long batchJobExecutionVersion, Date batchJobExecutionCreateTime, Date batchJobExecutionStartTime, 
-			Date batchJobExecutionEndTime, String batchJobExecutionStatus, String batchJobExecutionExitCode, String batchJobExecutionExitMessage, Date batchJobExecutionLastUpdated) {
+	public BatchJobInstanceDTO(final long id, final String jobName, final long batchJobExecutionId, final long batchJobExecutionVersion, final Date batchJobExecutionCreateTime, final Date batchJobExecutionStartTime, 
+			final Date batchJobExecutionEndTime, final String batchJobExecutionStatus, final String batchJobExecutionExitCode, final String batchJobExecutionExitMessage, final Date batchJobExecutionLastUpdated) {
 		super();
 		setId(id);
 		this.jobName = jobName;
@@ -41,31 +41,31 @@ public class BatchJobInstanceDTO {
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 	public String getJobName() {
 		return jobName;
 	}
-	public void setJobName(String jobName) {
+	public void setJobName(final String jobName) {
 		this.jobName = jobName;
 	}
 	public long getBatchJobExecutionId() {
 		return batchJobExecutionId;
 	}
-	public void setBatchJobExecutionId(long batchJobExecutionId) {
+	public void setBatchJobExecutionId(final long batchJobExecutionId) {
 		this.batchJobExecutionId = batchJobExecutionId;
 	}
 	public long getBatchJobExecutionVersion() {
 		return batchJobExecutionVersion;
 	}
-	public void setBatchJobExecutionVersion(long batchJobExecutionVersion) {
+	public void setBatchJobExecutionVersion(final long batchJobExecutionVersion) {
 		this.batchJobExecutionVersion = batchJobExecutionVersion;
 	}
 	public Date getBatchJobExecutionCreateTime() {
 		return batchJobExecutionCreateTime;
 	}
-	public void setBatchJobExecutionCreateTime(Date batchJobExecutionCreateTime) {
+	public void setBatchJobExecutionCreateTime(final Date batchJobExecutionCreateTime) {
 		this.batchJobExecutionCreateTime = batchJobExecutionCreateTime;
 	}
 	public String getBatchJobExecutionCreateTimeAsString() {
@@ -74,7 +74,7 @@ public class BatchJobInstanceDTO {
 	public Date getBatchJobExecutionStartTime() {
 		return batchJobExecutionStartTime;
 	}
-	public void setBatchJobExecutionStartTime(Date batchJobExecutionStartTime) {
+	public void setBatchJobExecutionStartTime(final Date batchJobExecutionStartTime) {
 		this.batchJobExecutionStartTime = batchJobExecutionStartTime;
 	}
 	public String getBatchJobExecutionStartTimeAsString() {
@@ -83,7 +83,7 @@ public class BatchJobInstanceDTO {
 	public Date getBatchJobExecutionEndTime() {
 		return batchJobExecutionEndTime;
 	}
-	public void setBatchJobExecutionEndTime(Date batchJobExecutionEndTime) {
+	public void setBatchJobExecutionEndTime(final Date batchJobExecutionEndTime) {
 		this.batchJobExecutionEndTime = batchJobExecutionEndTime;
 	}
 	public String getBatchJobExecutionEndTimeAsString() {
@@ -95,7 +95,7 @@ public class BatchJobInstanceDTO {
 	public String getBatchJobExecutionStatusTranslated() {
 		return BatchJobTranslater.getBatchJobStatusTranslated(batchJobExecutionStatus);
 	}
-	public void setBatchJobExecutionStatus(String batchJobExecutionStatus) {
+	public void setBatchJobExecutionStatus(final String batchJobExecutionStatus) {
 		this.batchJobExecutionStatus = batchJobExecutionStatus;
 	}
 	public String getBatchJobExecutionExitCode() {
@@ -104,19 +104,19 @@ public class BatchJobInstanceDTO {
 	public String getBatchJobExecutionExitCodeTranslated() {
 		return BatchJobTranslater.getBatchJobExitCodeTranslated(batchJobExecutionExitCode);
 	}
-	public void setBatchJobExecutionExitCode(String batchJobExecutionExitCode) {
+	public void setBatchJobExecutionExitCode(final String batchJobExecutionExitCode) {
 		this.batchJobExecutionExitCode = batchJobExecutionExitCode;
 	}
 	public String getBatchJobExecutionExitMessage() {
 		return batchJobExecutionExitMessage;
 	}
-	public void setBatchJobExecutionExitMessage(String batchJobExecutionExitMessage) {
+	public void setBatchJobExecutionExitMessage(final String batchJobExecutionExitMessage) {
 		this.batchJobExecutionExitMessage = batchJobExecutionExitMessage;
 	}
 	public Date getBatchJobExecutionLastUpdated() {
 		return batchJobExecutionLastUpdated;
 	}
-	public void setBatchJobExecutionLastUpdated(Date batchJobExecutionLastUpdated) {
+	public void setBatchJobExecutionLastUpdated(final Date batchJobExecutionLastUpdated) {
 		this.batchJobExecutionLastUpdated = batchJobExecutionLastUpdated;
 	}
 	public String getBatchJobExecutionLastUpdatedAsString() {

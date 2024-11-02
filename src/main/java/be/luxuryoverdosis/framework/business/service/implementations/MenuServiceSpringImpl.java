@@ -36,11 +36,11 @@ public class MenuServiceSpringImpl implements MenuService {
 		Logging.info(this, "Begin createMenuDTO");
 		
 		Menu menu = new Menu();
-		if(menuDTO.getId() > 0) {
+		if (menuDTO.getId() > 0) {
 			menu = this.read(menuDTO.getId());
 		}
 		menu = MenuFactory.produceMenu(menu, menuDTO);
-		if(menuDTO.getUserId() > 0) {
+		if (menuDTO.getUserId() > 0) {
 			menu.setUser(userHibernateDAO.read(menuDTO.getUserId()));
 		}
 		
@@ -50,7 +50,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		return this.readDTO(menu.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public MenuDTO readDTO(final int id) {
 		Logging.info(this, "Begin readMenuDTO");
 		
@@ -72,7 +72,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Menu read(final int id) {
 		Logging.info(this, "Begin readMenu");
 		Menu result = null;
@@ -81,7 +81,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Menu readFullName(final String fullName, final int userId) {
 		Logging.info(this, "Begin readFullNameMenu");
 		Menu result = null;
@@ -98,14 +98,14 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	@Transactional
-	public void deleteForUser(int userId) {
+	public void deleteForUser(final int userId) {
 		Logging.info(this, "Begin deleteForUserMenu");
 		menuHibernateDAO.deleteForUser(userId);
 		Logging.info(this, "End deleteForUserMenu");	
 	}
 
-	@Transactional(readOnly=true)
-	public ArrayList<MenuDTO> list(int userId) {
+	@Transactional(readOnly = true)
+	public ArrayList<MenuDTO> list(final int userId) {
 		Logging.info(this, "Begin listMenu");
 		ArrayList<MenuDTO> arrayList = null;
 		arrayList = menuHibernateDAO.list(userId);
@@ -113,8 +113,8 @@ public class MenuServiceSpringImpl implements MenuService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
-	public MenuWrapperDTO getMenuWrapperDTO(MenuRepository menuRepository, int userId) throws LoadableResourceException {
+	@Transactional(readOnly = true)
+	public MenuWrapperDTO getMenuWrapperDTO(final MenuRepository menuRepository, final int userId) throws LoadableResourceException {
 		Logging.info(this, "Begin geMenuWrapperDTO");
 		MenuWrapperDTO menuWrapperDTO = new MenuWrapperDTO();
 		menuWrapperDTO.setUserList(userHibernateDAO.list());
@@ -123,14 +123,14 @@ public class MenuServiceSpringImpl implements MenuService {
 		return menuWrapperDTO;
 	}
 	
-	@Transactional(readOnly=true)
-	public ArrayList<MenuDTO> produceMenu(MenuRepository menuRepository, int userId) throws LoadableResourceException {
+	@Transactional(readOnly = true)
+	public ArrayList<MenuDTO> produceMenu(final MenuRepository menuRepository, final int userId) throws LoadableResourceException {
 		menuRepository.reload();
 		ArrayList<MenuDTO> defaultMenuList = produceDefaultMenu(menuRepository);
 		
 		for (MenuDTO menuDTO : defaultMenuList) {
 			Menu menu = menuHibernateDAO.readFullName(menuDTO.getFullName(), userId);
-			if(menu != null) {
+			if (menu != null) {
 				MenuFactory.produceMenuDTO(menu, menuDTO);
 			}
 		}
@@ -141,7 +141,7 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 
 	@SuppressWarnings("unchecked")
-	private ArrayList<MenuDTO> produceDefaultMenu(MenuRepository menuRepository) {
+	private ArrayList<MenuDTO> produceDefaultMenu(final MenuRepository menuRepository) {
 		int level = 0;
 		
 		MenuLevel menuLevel = new MenuLevel();
@@ -151,7 +151,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		
 		MenuComponent[] menuComponents = menuRepository.getTopMenusAsArray();
 		
-		for(MenuComponent menuComponent : menuComponents) {
+		for (MenuComponent menuComponent : menuComponents) {
 			MenuDTO menuDTO = MenuFactory.produceMenuDTO(menuComponent, "", menuLevel.current(), level);
 			menuList.add(menuDTO);
 			recursiveMenuComponent(menuList, menuComponent.getComponents(), menuComponent.getName() + BaseConstants.SLASH, menuLevel, level);
@@ -162,20 +162,20 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 	
 	@SuppressWarnings("unchecked")
-	private void recursiveMenuComponent(List<MenuDTO> menuList, List<MenuComponent> menuComponents, String parentTitle, MenuLevel menuLevel, int level) {
-		level++;
-		for(MenuComponent menuComponent : menuComponents) {
-			menuLevel.next(level);
-			MenuDTO menuDTO = MenuFactory.produceMenuDTO(menuComponent, parentTitle, menuLevel.current(), level);
+	private void recursiveMenuComponent(final List<MenuDTO> menuList, final List<MenuComponent> menuComponents, final String parentTitle, final MenuLevel menuLevel, final int level) {
+		int l = level + 1;
+		for (MenuComponent menuComponent : menuComponents) {
+			menuLevel.next(l);
+			MenuDTO menuDTO = MenuFactory.produceMenuDTO(menuComponent, parentTitle, menuLevel.current(), l);
 			menuList.add(menuDTO);
-			if(menuComponent.getComponents().size() > 0) {
-				recursiveMenuComponent(menuList, menuComponent.getComponents(), parentTitle + menuComponent.getName() + BaseConstants.SLASH, menuLevel, level);
+			if (menuComponent.getComponents().size() > 0) {
+				recursiveMenuComponent(menuList, menuComponent.getComponents(), parentTitle + menuComponent.getName() + BaseConstants.SLASH, menuLevel, l);
 			}
 		}
 	}
 	
 	@Transactional
-	public ArrayList<MenuDTO> updateMenu(MenuRepository menuRepository, int[] id, JaNeeEnum[] hidden, JaNeeEnum[] disabled, JaNeeEnum[] forPay, JaNeeEnum[] payed, int userId) throws LoadableResourceException {
+	public ArrayList<MenuDTO> updateMenu(final MenuRepository menuRepository, final int[] id, final JaNeeEnum[] hidden, final JaNeeEnum[] disabled, final JaNeeEnum[] forPay, final JaNeeEnum[] payed, final int userId) throws LoadableResourceException {
 		menuRepository.reload();
 		ArrayList<MenuDTO> defaulMenuList = produceDefaultMenu(menuRepository);
 		
@@ -194,8 +194,8 @@ public class MenuServiceSpringImpl implements MenuService {
 		return produceMenu(menuRepository, userId);
 	}
 	
-	@Transactional(readOnly=true)
-	public MenuRepository produceAlterredMenu(MenuRepository menuRepository, int userId) {
+	@Transactional(readOnly = true)
+	public MenuRepository produceAlterredMenu(final MenuRepository menuRepository, final int userId) {
 		//User user = ThreadManager.getUserFromThread();
 		//int userId = user.getId();
 		
@@ -206,7 +206,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		return menuRepository;
 	}
 	
-	private void disableMenuItems(MenuRepository menuRepository, int userId) {
+	private void disableMenuItems(final MenuRepository menuRepository, final int userId) {
 		ArrayList<MenuDTO> disabledMenuList = menuHibernateDAO.listDisabled(userId, JaNeeEnum.JA);
 		
 		for (MenuDTO menuDTO : disabledMenuList) {
@@ -215,7 +215,7 @@ public class MenuServiceSpringImpl implements MenuService {
 		}
 	}
 	
-	private void forPayMenuItems(MenuRepository menuRepository, int userId) {
+	private void forPayMenuItems(final MenuRepository menuRepository, final int userId) {
 		ArrayList<MenuDTO> forPayMenuList = menuHibernateDAO.listForPayAndPayed(userId, JaNeeEnum.NEE);
 		
 		for (MenuDTO menuDTO : forPayMenuList) {
@@ -225,27 +225,27 @@ public class MenuServiceSpringImpl implements MenuService {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private void hiddenMenuItems(MenuRepository menuRepository, int userId) {
+	private void hiddenMenuItems(final MenuRepository menuRepository, final int userId) {
 		ArrayList<MenuDTO> hiddenMenuList = menuHibernateDAO.listHidden(userId, JaNeeEnum.JA);
 		
 		for (MenuDTO menuDTO : hiddenMenuList) {
 			MenuComponent menuComponent = menuRepository.getMenu(menuDTO.getFullName(), BaseConstants.SLASH);
-			if(menuComponent != null) {
+			if (menuComponent != null) {
 				MenuComponent parent = menuComponent.getParent();
-				if(parent != null) {
+				if (parent != null) {
 					for (Iterator iterator = parent.getComponents().iterator(); iterator.hasNext();) {
 			            MenuComponent child = (MenuComponent) iterator.next();
-			            if(child.getName().equals(menuDTO.getName())) {
+			            if (child.getName().equals(menuDTO.getName())) {
 			            	child.setParent(null);
 			            	iterator.remove();
 			            }
 			        }
-					if(parent.getComponents().size() == 0) {
+					if (parent.getComponents().size() == 0) {
 						MenuComponent grandParent = parent.getParent();
-						if(grandParent != null) {
+						if (grandParent != null) {
 							for (Iterator iterator = grandParent.getComponents().iterator(); iterator.hasNext();) {
 								MenuComponent child = (MenuComponent) iterator.next();
-								if(child.getName().equals(parent.getName())) {
+								if (child.getName().equals(parent.getName())) {
 									child.setParent(null);
 									iterator.remove();
 								}

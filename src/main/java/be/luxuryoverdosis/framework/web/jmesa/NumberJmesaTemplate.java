@@ -16,12 +16,12 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class NumberJmesaTemplate extends CustomTableFacadeTemplate {
 
-	public NumberJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public NumberJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayNumber.title", BaseWebConstants.NUMBER_IDS);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
 		filterMatchers.put(new MatcherKey(Integer.class, getColumnProperties()[1]), new NumberFilterMatcher(IntegerTool.INTEGER_PATTERN));
 	}
 
@@ -38,7 +38,7 @@ public class NumberJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "security.number.application.code");
 		teller = setTitleKeyRow(row, teller, "security.number.year");

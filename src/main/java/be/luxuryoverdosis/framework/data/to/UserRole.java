@@ -13,16 +13,16 @@ import javax.xml.bind.annotation.XmlType;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_user_role")
+@Table(name = "base_user_role")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=UserRole.SELECT_USERROLES_DTO_BY_USER, query=UserRole.Queries.SELECT_USERROLES_DTO_BY_USER),
-	@NamedQuery(name=UserRole.COUNT_USERROLES_BY_USER, query=UserRole.Queries.COUNT_USERROLES_BY_USER),
-	@NamedQuery(name=UserRole.COUNT_USERROLES_BY_ROLE, query=UserRole.Queries.COUNT_USERROLES_BY_ROLE),
-	@NamedQuery(name=UserRole.DELETE_USERROLES_BY_USER, query=UserRole.Queries.DELETE_USERROLES_BY_USER),
-	@NamedQuery(name=UserRole.DELETE_USERROLES_BY_USER_AND_ROLE, query=UserRole.Queries.DELETE_USERROLES_BY_USER_AND_ROLE)
+	@NamedQuery(name = UserRole.SELECT_USERROLES_DTO_BY_USER, query = UserRole.Queries.SELECT_USERROLES_DTO_BY_USER),
+	@NamedQuery(name = UserRole.COUNT_USERROLES_BY_USER, query = UserRole.Queries.COUNT_USERROLES_BY_USER),
+	@NamedQuery(name = UserRole.COUNT_USERROLES_BY_ROLE, query = UserRole.Queries.COUNT_USERROLES_BY_ROLE),
+	@NamedQuery(name = UserRole.DELETE_USERROLES_BY_USER, query = UserRole.Queries.DELETE_USERROLES_BY_USER),
+	@NamedQuery(name = UserRole.DELETE_USERROLES_BY_USER_AND_ROLE, query = UserRole.Queries.DELETE_USERROLES_BY_USER_AND_ROLE)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 @XmlType
 public class UserRole extends BaseTO {
 	public static final String SELECT_USERROLES_DTO_BY_USER = "selectUserRolesDtoByUser";
@@ -32,11 +32,11 @@ public class UserRole extends BaseTO {
 	public static final String DELETE_USERROLES_BY_USER_AND_ROLE = "deleteUserRolesByUserAndRole";
 	
 	@ManyToOne
-	@JoinColumn(name="User_Id")
+	@JoinColumn(name = "User_Id")
 	private User user;
 	
 	@ManyToOne
-	@JoinColumn(name="Role_Id")
+	@JoinColumn(name = "Role_Id")
 	private Role role;
 	
 	public UserRole() {
@@ -46,13 +46,13 @@ public class UserRole extends BaseTO {
 	public User getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 	public Role getRole() {
 		return role;
 	}
-	public void setRole(Role role) {
+	public void setRole(final Role role) {
 		this.role = role;
 	}
 	

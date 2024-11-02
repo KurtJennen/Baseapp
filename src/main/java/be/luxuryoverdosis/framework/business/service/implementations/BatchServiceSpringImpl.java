@@ -17,21 +17,21 @@ import be.luxuryoverdosis.framework.logging.Logging;
 @Service
 public class BatchServiceSpringImpl implements BatchService {
 	@Resource(name = "jobLauncher")
-	JobLauncher jobLauncher;
+	private JobLauncher jobLauncher;
 	
 	@Resource(name = "jobLauncherAsync")
-	JobLauncher jobLauncherAsync;
+	private JobLauncher jobLauncherAsync;
 	
 	@Resource(name = "userExportJob")
-	org.springframework.batch.core.Job userExportJob;
+	private org.springframework.batch.core.Job userExportJob;
 	
 	@Resource(name = "userImportJob")
-	org.springframework.batch.core.Job userImportJob;
+	private org.springframework.batch.core.Job userImportJob;
 	
 	@Resource
-	JobService jobService;
+	private JobService jobService;
 	
-	public void exportUserJob(FileDTO fileDTO) throws Exception {
+	public void exportUserJob(final FileDTO fileDTO) throws Exception {
 		Logging.info(this, "Begin exportUserJob");
 		
 		//Job
@@ -48,7 +48,7 @@ public class BatchServiceSpringImpl implements BatchService {
 		Logging.info(this, "End exportUserJob");
 	}
 	
-	public void importUserJob(FileDTO fileDTO) throws Exception {
+	public void importUserJob(final FileDTO fileDTO) throws Exception {
 		Logging.info(this, "Begin importUserJob");
 		
 		//Job

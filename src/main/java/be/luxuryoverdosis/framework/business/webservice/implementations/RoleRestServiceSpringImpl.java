@@ -22,13 +22,13 @@ public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRe
 	@Resource
 	private RoleService roleService;
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin readRequest");
 		
 		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -39,13 +39,13 @@ public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRe
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readAllRequest() throws JsonProcessingException {
 		Logging.info(this, "Begin readAllRequest");
 		
 		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -62,7 +62,7 @@ public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRe
 		
 		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -79,7 +79,7 @@ public class RoleRestServiceSpringImpl extends BaseRestService implements RoleRe
 		
 		RestWrapperDTO<RoleDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		

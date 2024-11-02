@@ -19,45 +19,45 @@ public class DetailNumberForm extends BaseForm {
 	public String getApplicationCode() {
 		return applicationCode;
 	}
-	public void setApplicationCode(String applicationCode) {
+	public void setApplicationCode(final String applicationCode) {
 		this.applicationCode = applicationCode;
 	}
 	public String getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(final String year) {
 		this.year = year;
 	}
 	public int getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(final int number) {
 		this.number = number;
 	}
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setYear("");
 		this.setNumber(0);
 		this.setType("");
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = new ActionErrors();
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE)) {
 			errors = super.validate(mapping, request);
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

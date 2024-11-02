@@ -8,40 +8,40 @@ public class SearchSelect {
 	public String getSelect() {
 		return select;
 	}
-	public void setSelect(String select) {
+	public void setSelect(final String select) {
 		this.select = select;
 	}
 	public String getOrderby() {
 		return orderby;
 	}
-	public void setOrderby(String orderby) {
+	public void setOrderby(final String orderby) {
 		this.orderby = orderby;
 	}
 	public SearchParameter[] getSearchParameters() {
 		return searchParameters;
 	}
-	public void setSearchParameters(SearchParameter[] searchParameters) {
+	public void setSearchParameters(final SearchParameter[] searchParameters) {
 		this.searchParameters = searchParameters;
 	}
-	public SearchParameter getSearchParameter(int index) {
+	public SearchParameter getSearchParameter(final int index) {
 		return searchParameters[index];
 	}
-	public void setSearchParameter(int index, SearchParameter searchParameter) {
+	public void setSearchParameter(final int index, final SearchParameter searchParameter) {
 		this.searchParameters[index] = searchParameter;
 	}
-	public SearchParameter getSearchParameter(String name) {
+	public SearchParameter getSearchParameter(final String name) {
 		for (int i = 0; i < searchParameters.length; i++) {
 			SearchParameter searchParameter = searchParameters[i];
-			if(searchParameter.getName().equals(name)) {
+			if (searchParameter.getName().equals(name)) {
 				return searchParameter;
 			}
 		}
 		return null;
 	}
-	public void setSearchParameter(String name, SearchParameter newSearchParameter) {
+	public void setSearchParameter(final String name, final SearchParameter newSearchParameter) {
 		for (int i = 0; i < searchParameters.length; i++) {
 			SearchParameter oldSearchParameter = searchParameters[i];
-			if(oldSearchParameter.getName().equals(name)) {
+			if (oldSearchParameter.getName().equals(name)) {
 				this.searchParameters[i] = newSearchParameter;
 			}
 		}

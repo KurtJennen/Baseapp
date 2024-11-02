@@ -18,27 +18,27 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 
 @Endpoint
 public class GetUserEndpoint {
-	@PayloadRoot(localPart="ReadUserRequest", namespace="http://www.luxuryoverdosis.be/user/schema/v1")
+	@PayloadRoot(localPart = "ReadUserRequest", namespace = "http://www.luxuryoverdosis.be/user/schema/v1")
 	@ResponsePayload
-	public ReadUserResponse readUserRequest(@RequestPayload ReadUserRequest request) throws Exception {		
+	public ReadUserResponse readUserRequest(@RequestPayload final ReadUserRequest request) throws Exception {		
 		return getUserEndpointService().readUserRequest(request);
 	}
 
-	@PayloadRoot(localPart="ReadAllUsersRequest", namespace="http://www.luxuryoverdosis.be/user/schema/v1")
+	@PayloadRoot(localPart = "ReadAllUsersRequest", namespace = "http://www.luxuryoverdosis.be/user/schema/v1")
 	@ResponsePayload
-	public ReadAllUsersResponse readAllUsersResponse(@RequestPayload ReadAllUsersRequest request) {
+	public ReadAllUsersResponse readAllUsersResponse(@RequestPayload final ReadAllUsersRequest request) {
 		return getUserEndpointService().readAllUsersRequest(request);
 	}
 	
-	@PayloadRoot(localPart="CreateOrUpdateUserRequest", namespace="http://www.luxuryoverdosis.be/user/schema/v1")
+	@PayloadRoot(localPart = "CreateOrUpdateUserRequest", namespace = "http://www.luxuryoverdosis.be/user/schema/v1")
 	@ResponsePayload
-	public CreateOrUpdateUserResponse createOrUpdateUserRequest(@RequestPayload CreateOrUpdateUserRequest request) {
+	public CreateOrUpdateUserResponse createOrUpdateUserRequest(@RequestPayload final CreateOrUpdateUserRequest request) {
 		return getUserEndpointService().createOrUpdateUserRequest(request);
 	}
 	
-	@PayloadRoot(localPart="DeleteUserRequest", namespace="http://www.luxuryoverdosis.be/user/schema/v1")
+	@PayloadRoot(localPart = "DeleteUserRequest", namespace = "http://www.luxuryoverdosis.be/user/schema/v1")
 	@ResponsePayload
-	public DeleteUserResponse deleteUserRequest(@RequestPayload DeleteUserRequest request) {
+	public DeleteUserResponse deleteUserRequest(@RequestPayload final DeleteUserRequest request) {
 		return getUserEndpointService().deleteUserRequest(request);
 	}
 	

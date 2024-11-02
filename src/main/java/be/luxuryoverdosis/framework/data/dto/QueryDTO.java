@@ -3,66 +3,66 @@ package be.luxuryoverdosis.framework.data.dto;
 public class QueryDTO extends BaseDTO {
 	private String name;
 	private String type;
-	public String complex;
-	public String[] names;
-	public String[] operators;
-	public String[] values;
-	public String[] addAndOrs;
-	public String[] openBrackets;
-	public String[] closeBrackets;
+	private String complex;
+	private String[] names;
+	private String[] operators;
+	private String[] values;
+	private String[] addAndOrs;
+	private String[] openBrackets;
+	private String[] closeBrackets;
 	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 	public String getComplex() {
 		return complex;
 	}
-	public void setComplex(String complex) {
+	public void setComplex(final String complex) {
 		this.complex = complex;
 	}
 	public String[] getNames() {
 		return names;
 	}
-	public void setNames(String[] names) {
+	public void setNames(final String[] names) {
 		this.names = names;
 	}
 	public String[] getOperators() {
 		return operators;
 	}
-	public void setOperators(String[] operators) {
+	public void setOperators(final String[] operators) {
 		this.operators = operators;
 	}
 	public String[] getValues() {
 		return values;
 	}
-	public void setValues(String[] values) {
+	public void setValues(final String[] values) {
 		this.values = values;
 	}
 	public String[] getAddAndOrs() {
 		return addAndOrs;
 	}
-	public void setAddAndOrs(String[] addAndOrs) {
+	public void setAddAndOrs(final String[] addAndOrs) {
 		this.addAndOrs = addAndOrs;
 	}
 	public String[] getOpenBrackets() {
 		return openBrackets;
 	}
-	public void setOpenBrackets(String[] openBrackets) {
+	public void setOpenBrackets(final String[] openBrackets) {
 		this.openBrackets = openBrackets;
 	}
 	public String[] getCloseBrackets() {
 		return closeBrackets;
 	}
-	public void setCloseBrackets(String[] closeBrackets) {
+	public void setCloseBrackets(final String[] closeBrackets) {
 		this.closeBrackets = closeBrackets;
 	}
 	

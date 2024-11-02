@@ -6,8 +6,8 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadAllUsersResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 
 public interface UserEndpointServiceClient {
-	public ReadUserResponse readUserRequest(String name);
-	public ReadAllUsersResponse readAllUsersRequest();
-	public CreateOrUpdateUserResponse createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName);
-	public DeleteUserResponse deleteUserRequest(String name);
+	ReadUserResponse readUserRequest(String name);
+	ReadAllUsersResponse readAllUsersRequest();
+	CreateOrUpdateUserResponse createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName);
+	DeleteUserResponse deleteUserRequest(String name);
 }

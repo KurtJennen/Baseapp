@@ -20,7 +20,7 @@ import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 @CrossOrigin(origins = {"${rest.origin}"})
 public class GetRoleRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String readRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getRoleRestService().readRequest(id);
 		} catch (Exception e) {
@@ -38,7 +38,7 @@ public class GetRoleRest {
 	}
 
 	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String createOrUpdateRequest(@RequestBody() RoleDTO roleDTO) throws JsonProcessingException {
+	public String createOrUpdateRequest(@RequestBody() final RoleDTO roleDTO) throws JsonProcessingException {
 		try {
 			return getRoleRestService().createOrUpdateRequest(roleDTO);
 		}  catch (Exception e) {
@@ -47,7 +47,7 @@ public class GetRoleRest {
 	}
 	
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String deleteRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getRoleRestService().deleteRequest(id);
 		} catch (Exception e) {
@@ -59,7 +59,7 @@ public class GetRoleRest {
 		return BaseSpringServiceLocator.getBean(RoleRestService.class);
 	}
 	
-	private String createWrapperDTO(Exception e) throws JsonProcessingException {
+	private String createWrapperDTO(final Exception e) throws JsonProcessingException {
 		RestWrapperDTO<RoleDTO> restWrapperDTO = new RestWrapperDTO<RoleDTO>();
 		return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
 	}	

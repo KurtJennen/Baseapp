@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.factory;
 import be.luxuryoverdosis.framework.data.dto.NumberDTO;
 import be.luxuryoverdosis.framework.data.to.Number;
 
-public class NumberFactory {
+public final class NumberFactory {
 	private NumberFactory() {
 	}
 	
@@ -19,7 +19,7 @@ public class NumberFactory {
 	}
 	
 	public static Number produceNumber(Number number, final NumberDTO numberDTO) {
-		if(number == null) {
+		if (number == null) {
 			number = new Number();
 		}
 		number.setId(numberDTO.getId());

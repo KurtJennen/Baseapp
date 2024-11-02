@@ -31,7 +31,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		Logging.info(this, "Begin createRoleDTO");
 		
 		Role role = new Role();
-		if(roleDTO.getId() > 0) {
+		if (roleDTO.getId() > 0) {
 			role = this.read(roleDTO.getId());
 		}
 		role = RoleFactory.produceRole(role, roleDTO);
@@ -42,7 +42,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		return this.readDTO(role.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public RoleDTO readDTO(final int id) {
 		Logging.info(this, "Begin readRoleDTO");
 		
@@ -57,10 +57,10 @@ public class RoleServiceSpringImpl implements RoleService {
 	@Transactional
 	public Role createOrUpdate(final Role role) {
 		Logging.info(this, "Begin createRole");
-		if(roleHibernateDAO.count(role.getName(), role.getId()) > 0) {
+		if (roleHibernateDAO.count(role.getName(), role.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.role"});
 		}
-		if(role.getName() == null) {
+		if (role.getName() == null) {
 			throw new ServiceException("errors.required", new String[] {"security.name"});
 		}
 		Role result = null;
@@ -69,7 +69,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Role read(final int id) {
 		Logging.info(this, "Begin readRole");
 		Role result = null;
@@ -78,7 +78,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Role readName(final String name) {
 		Logging.info(this, "Begin readNameRole");
 		Role result = null;
@@ -90,14 +90,14 @@ public class RoleServiceSpringImpl implements RoleService {
 	@Transactional
 	public void delete(final int id) {
 		Logging.info(this, "Begin deleteRole");
-		if(userRoleHibernateDAO.countRole(id) > 0) {
+		if (userRoleHibernateDAO.countRole(id) > 0) {
 			throw new ServiceException("delete.failed.foreign.key", new String[] {"table.role", "table.user.role"});
 		}
 		roleHibernateDAO.delete(id);
 		Logging.info(this, "End deleteRole");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Role> list() {
 		Logging.info(this, "Begin listRole");
 		ArrayList<Role> arrayList = null;
@@ -106,8 +106,8 @@ public class RoleServiceSpringImpl implements RoleService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
-	public ArrayList<RoleDTO> listDTO(String searchValue) {
+	@Transactional(readOnly = true)
+	public ArrayList<RoleDTO> listDTO(final String searchValue) {
 		Logging.info(this, "Begin listRole");
 		ArrayList<RoleDTO> arrayList = null;
 		arrayList = roleHibernateDAO.listDTO(searchValue);
@@ -115,8 +115,8 @@ public class RoleServiceSpringImpl implements RoleService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
-	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(int userId) {
+	@Transactional(readOnly = true)
+	public ArrayList<RoleDTO> listNotInUserRoleForUserDTO(final int userId) {
 		Logging.info(this, "Begin listRole");
 		ArrayList<RoleDTO> arrayList = null;
 		arrayList = roleHibernateDAO.listNotInUserRoleForUserDTO(userId);
@@ -124,7 +124,7 @@ public class RoleServiceSpringImpl implements RoleService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public long count(final String name, final int id) {
 		Logging.info(this, "Begin countRole");
 		Long countRole = roleHibernateDAO.count(name, id);

@@ -33,20 +33,20 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 	private int jobId;
 	private String jobUser;
 
-	public void setJobId(long jobId) {
-		this.jobId = (int)jobId;
+	public void setJobId(final long jobId) {
+		this.jobId = (int) jobId;
 	}
-	public void setJobUser(String jobUser) {
+	public void setJobUser(final  String jobUser) {
 		this.jobUser = jobUser;
 	}
 
-	protected void doWrite(SessionFactory sessionFactory, List<? extends UserDTO> users) {
+	protected void doWrite(final SessionFactory sessionFactory, final List<? extends UserDTO> users) {
 		ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
 		
 		Job job = jobService.read(jobId);
 		try {
 			for (UserDTO userDTO : users) {
-				if(userDTO.getId() < 0) {
+				if (userDTO.getId() < 0) {
 					userService.createOrUpdateDTO(userDTO);
 					
 					JobLog jobLog = new JobLog();
@@ -69,14 +69,11 @@ public class UserImportWriter extends HibernateItemWriter<UserDTO> {
 		}
 	}
 
-	private String getInput(String key) {
+	private String getInput(final String key) {
 		return BaseSpringServiceLocator.getMessage(key,  new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 	}
 
-	private String getOutput(UserDTO userDTO) {
+	private String getOutput(final UserDTO userDTO) {
 		return userDTO.getName() + BaseConstants.SPACE + userDTO.getUserName();
 	}
-
-	
-
 }

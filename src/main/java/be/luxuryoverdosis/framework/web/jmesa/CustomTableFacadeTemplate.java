@@ -29,6 +29,7 @@ import org.jmesa.view.html.component.HtmlTable;
 import org.jmesa.view.html.event.RowEvent;
 import org.jmesa.view.html.toolbar.Toolbar;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.dto.BaseDTO;
 import be.luxuryoverdosis.framework.data.to.BaseTO;
@@ -37,7 +38,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
-	private final int MAX_ROWS = 15;
+	private static final int MAX_ROWS = 15;
 	
 	private boolean clickable;
 	private String actionMethod;
@@ -45,11 +46,11 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 	private String nameIds;
 	private String caption;
 	private ArrayList<?> items;
-	protected HttpServletRequest request;
+	private HttpServletRequest request;
 	
 	protected abstract void setTitles(Row row);
 
-	public CustomTableFacadeTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request, String caption) {
+	public CustomTableFacadeTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request, final String caption) {
 		super(tableFacade);
 		this.items = items;
 		this.request = request;
@@ -58,7 +59,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		this.javascriptMethod = BaseWebConstants.DO_ACTION_DETAIL;
 		this.clickable = true;
 	}
-	public CustomTableFacadeTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request, String caption, String nameIds) {
+	public CustomTableFacadeTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request, final String caption, final String nameIds) {
 		super(tableFacade);
 		this.items = items;
 		this.request = request;
@@ -73,7 +74,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return clickable;
 	}
 
-	public void setClickable(boolean clickable) {
+	public void setClickable(final boolean clickable) {
 		this.clickable = clickable;
 	}
 
@@ -81,7 +82,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return actionMethod;
 	}
 
-	public void setActionMethod(String actionMethod) {
+	public void setActionMethod(final String actionMethod) {
 		this.actionMethod = actionMethod;
 	}
 
@@ -89,7 +90,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return javascriptMethod;
 	}
 
-	public void setJavascriptMethod(String javascriptMethod) {
+	public void setJavascriptMethod(final String javascriptMethod) {
 		this.javascriptMethod = javascriptMethod;
 	}
 
@@ -99,7 +100,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 	}
 	
 	@Override
-	final protected ExportType[] getExportTypes() {
+	protected final ExportType[] getExportTypes() {
 //		if(items.size() < 10000) {
 //			return new ExportType[]{CSV, EXCEL, PDF};
 //		} else {
@@ -109,22 +110,22 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 	}
 
 	@Override
-	final protected String getStateAttr() {
+	protected final String getStateAttr() {
 		return "restore";
 	}
 	
 	@Override
-	final protected Toolbar createToolbar() {
+	protected final Toolbar createToolbar() {
 		return new CustomToolbar();
 	}
 
 	@Override
-	final protected Collection<?> getItems() {
+	protected final Collection<?> getItems() {
 		return items;
 	}
 	
 	@Override
-	protected void modifyTable(Table table) {
+	protected void modifyTable(final Table table) {
 		if (isExporting()) {
 			table.setCaption(MessageLocator.getMessage(request, caption));
 
@@ -132,15 +133,15 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			
 			this.setTitles(row);
 		} else {
-			HtmlTable htmlTable = (HtmlTable)table;
+			HtmlTable htmlTable = (HtmlTable) table;
 			
 			HtmlRow htmlRow = htmlTable.getRow();
-			if(clickable) {
+			if (clickable) {
 				htmlRow.setOnclick(new RowEvent() {
-					public String execute(Object item, int rowcount) {
+					public String execute(final Object item, final int rowcount) {
 						Object id = ItemUtils.getItemValue(item, "id");
 	
-						if(nameIds != null) {
+						if (nameIds != null) {
 							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&id=" + id + "&nameIds=" + nameIds + "');";
 						} else {
 							return "javascript:" + javascriptMethod + "('" + actionMethod +  "&id=" + id + "');";
@@ -159,7 +160,7 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return super.render();
 	}
 
-	public String[] getColumnsInString(ArrayList<String> columnsList) {
+	public String[] getColumnsInString(final ArrayList<String> columnsList) {
 		String[] columns = new String[columnsList.size()];
 		int teller = 0;
 		
@@ -173,8 +174,8 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return columns;
 	}
 	
-	public int[] getIds(){
-		if(nameIds == null) {
+	public int[] getIds() {
+		if (nameIds == null) {
 			return null;
 		}
 		
@@ -200,53 +201,53 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 		return ids;
 	}
 	
-	public int setTitleRow(Row row, int teller, String title) {
+	public int setTitleRow(final Row row, final int teller, final String title) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
-		return ++teller;
+		return teller + 1;
 	}
 	
-	public int setTitleKeyRow(Row row, int teller, String titleKey) {
+	public int setTitleKeyRow(final Row row, final int teller, final String titleKey) {
 		return this.setTitleRow(row, teller, MessageLocator.getMessage(request, titleKey));
 	}
 	
-	public int setTitleRow(Row row, int teller, String title, DateCellEditor dateCellEditor) {
+	public int setTitleRow(final Row row, final int teller, final String title, final DateCellEditor dateCellEditor) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
 		column.getCellRenderer().setCellEditor(dateCellEditor);
-		return ++teller;
+		return teller + 1;
 	}
 	
-	public int setTitleKeyRow(Row row, int teller, String titleKey, DateCellEditor dateCellEditor) {
+	public int setTitleKeyRow(final Row row, final int teller, final String titleKey, final DateCellEditor dateCellEditor) {
 		return this.setTitleRow(row, teller, MessageLocator.getMessage(request, titleKey), dateCellEditor);
 	}
 	
-	public int setTitleRow(Row row, int teller, String title, NumberCellEditor numberCellEditor) {
+	public int setTitleRow(final Row row, final int teller, final String title, final NumberCellEditor numberCellEditor) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
-		if(!isExporting()) {
+		if (!isExporting()) {
 			HtmlColumn htmlColumn = (HtmlColumn) column;
 			htmlColumn.getCellRenderer().setCellEditor(numberCellEditor);
 			htmlColumn.getCellRenderer().setStyle("text-align: right");
 		}
-		return ++teller;
+		return teller + 1;
 	}
 	
-	public int setTitleKeyRow(Row row, int teller, String titleKey, NumberCellEditor numberCellEditor) {
+	public int setTitleKeyRow(final Row row, final int teller, final String titleKey, final NumberCellEditor numberCellEditor) {
 		return this.setTitleRow(row, teller, MessageLocator.getMessage(request, titleKey), numberCellEditor);
 	}
 	
 	@Deprecated
-	public int setTitleRowCheckbox(Row row, int teller, String title) {
+	public int setTitleRowCheckbox(final Row row, final int teller, final String title) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
-		if(!isExporting()) {
+		if (!isExporting()) {
 			column.getCellRenderer().setCellEditor(new CellEditor() {
-			    public Object getValue(Object item, String property, int rowcount) {
+			    public Object getValue(final Object item, final String property, final int rowcount) {
 			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 			        
 			        HtmlBuilder html = new HtmlBuilder();
-			        if(JaNeeEnum.JA.getCode().equals(value)) {
+			        if (JaNeeEnum.JA.getCode().equals(value)) {
 			        	html.input().type("checkbox").checked().disabled().close();
 			        } else {
 			        	html.input().type("checkbox").disabled().close();
@@ -256,25 +257,25 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			    }
 			});
 		}
-		return ++teller;
+		return teller + 1;
 	}
 	
 	@Deprecated
-	public int setTitleKeyRowCheckbox(Row row, int teller, String titleKey) {
+	public int setTitleKeyRowCheckbox(final Row row, final int teller, final String titleKey) {
 		return this.setTitleRowCheckbox(row, teller, MessageLocator.getMessage(request, titleKey));
 	}
 	
-	public int setTitleRowCheckboxEnum(Row row, int teller, String title) {
+	public int setTitleRowCheckboxEnum(final Row row, final int teller, final String title) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
-		if(!isExporting()) {
+		if (!isExporting()) {
 			HtmlColumn htmlColumn = (HtmlColumn) column;
 			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
-				public Object getValue(Object item, String property, int rowcount) {
-					JaNeeEnum value = (JaNeeEnum)new BasicCellEditor().getValue(item, property, rowcount);
+				public Object getValue(final Object item, final String property, final int rowcount) {
+					JaNeeEnum value = (JaNeeEnum) new BasicCellEditor().getValue(item, property, rowcount);
 					
 					HtmlBuilder html = new HtmlBuilder();
-					if(JaNeeEnum.JA.getCode().equals(value.getCode())) {
+					if (JaNeeEnum.JA.getCode().equals(value.getCode())) {
 						html.input().type("checkbox").checked().disabled().close();
 					} else {
 						html.input().type("checkbox").disabled().close();
@@ -285,26 +286,26 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			});
 			htmlColumn.getCellRenderer().setStyle("text-align: center");
 		}
-		return ++teller;
+		return teller + 1;
 	}
 	
-	public int setTitleKeyRowCheckboxEnum(Row row, int teller, String titleKey) {
+	public int setTitleKeyRowCheckboxEnum(final Row row, final int teller, final String titleKey) {
 		return this.setTitleRowCheckboxEnum(row, teller, MessageLocator.getMessage(request, titleKey));
 	}
 	
-	public int setTitleRowComment(Row row, int teller, String title) {
+	public int setTitleRowComment(final Row row, final int teller, final String title) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
 		column.setTitle(title);
-		if(!isExporting()) {
+		if (!isExporting()) {
 			HtmlColumn htmlColumn = (HtmlColumn) column;
 			htmlColumn.getCellRenderer().setCellEditor(new CellEditor() {
-			    public Object getValue(Object item, String property, int rowcount) {
+			    public Object getValue(final Object item, final String property, final int rowcount) {
 			        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 			        String valueAsString = (String) value;
 			        
-			        if(valueAsString != null) {
-						if(valueAsString.length() > 10) {
-							valueAsString = valueAsString.substring(0, 8);
+			        if (valueAsString != null) {
+						if (valueAsString.length() > BaseConstants.TIEN) {
+							valueAsString = valueAsString.substring(BaseConstants.NUL, BaseConstants.ACHT);
 						}
 					}
 			        
@@ -318,20 +319,20 @@ public abstract class CustomTableFacadeTemplate extends TableFacadeTemplate {
 			    }
 			});
 		}
-		return ++teller;
+		return teller + 1;
 	}
 	
-	public int setTitleKeyRowComment(Row row, int teller, String titleKey) {
+	public int setTitleKeyRowComment(final Row row, final int teller, final String titleKey) {
 		return this.setTitleRowComment(row, teller, MessageLocator.getMessage(request, titleKey));
 	}
 	
-	public int setTitleKeyRowHidden(Row row, int teller) {
+	public int setTitleKeyRowHidden(final Row row, final int teller) {
 		Column column = row.getColumn(getColumnProperties()[teller]);
-		if(!isExporting()) {
+		if (!isExporting()) {
 			column.setTitle(StringUtils.EMPTY);
 			HtmlColumn htmlColumn = (HtmlColumn) column;
 			htmlColumn.getCellRenderer().setStyle("visibility: hidden");
 		}
-		return ++teller;
+		return teller + 1;
 	}
 }

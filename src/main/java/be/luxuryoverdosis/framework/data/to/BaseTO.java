@@ -17,62 +17,62 @@ import javax.persistence.Version;
 @Access(AccessType.FIELD)
 public class BaseTO {
 	@Id
-	@Column(name="Id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "Id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private	int id = -1;
 	
 	@Version
-	@Column(name="Version")
+	@Column(name = "Version")
 	private int version = -1;
 	
-	@Column(name="UserAdd")
+	@Column(name = "UserAdd")
 	private String userAdd;
 	
-	@Column(name="UserUpdate")
+	@Column(name = "UserUpdate")
 	private String userUpdate;
 	
-	@Column(name="DateAdd")
+	@Column(name = "DateAdd")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateAdd;
 	
-	@Column(name="DateUpdate")
+	@Column(name = "DateUpdate")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateUpdate;
 	
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 	public int getVersion() {
 		return version;
 	}
-	public void setVersion(int version) {
+	public void setVersion(final int version) {
 		this.version = version;
 	}	
 	public String getUserAdd() {
 		return userAdd;
 	}
-	public void setUserAdd(String userAdd) {
+	public void setUserAdd(final String userAdd) {
 		this.userAdd = userAdd;
 	}
 	public String getUserUpdate() {
 		return userUpdate;
 	}
-	public void setUserUpdate(String userUpdate) {
+	public void setUserUpdate(final String userUpdate) {
 		this.userUpdate = userUpdate;
 	}
 	public Date getDateAdd() {
 		return dateAdd;
 	}
-	public void setDateAdd(Date dateAdd) {
+	public void setDateAdd(final Date dateAdd) {
 		this.dateAdd = dateAdd;
 	}
 	public Date getDateUpdate() {
 		return dateUpdate;
 	}
-	public void setDateUpdate(Date dateUpdate) {
+	public void setDateUpdate(final Date dateUpdate) {
 		this.dateUpdate = dateUpdate;
 	}
 	

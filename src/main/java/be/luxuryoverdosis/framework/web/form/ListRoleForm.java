@@ -19,28 +19,28 @@ public class ListRoleForm extends ListForm {
 	public String getDialogName() {
 		return dialogName;
 	}
-	public void setDialogName(String dialogName) {
+	public void setDialogName(final String dialogName) {
 		this.dialogName = dialogName;
 	}
 
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setDialogName("");
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = super.validate(mapping, request);
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
-			if(StringUtils.isEmpty(dialogName)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE)) {
+			if (StringUtils.isEmpty(dialogName)) {
 				errors.add("name", new ActionMessage("errors.required", MessageLocator.getMessage(request, "security.name")));
 				request.setAttribute(BaseWebConstants.ROLE_DIALOG, true);
 			}
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

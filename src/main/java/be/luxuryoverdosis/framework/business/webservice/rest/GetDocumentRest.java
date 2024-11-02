@@ -22,7 +22,7 @@ import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 @CrossOrigin(origins = {"${rest.origin}"})
 public class GetDocumentRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String readRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getDocumentRestService().readRequest(id);
 		} catch (Exception e) {
@@ -40,7 +40,7 @@ public class GetDocumentRest {
 	}
 
 	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String createOrUpdateRequest(@RequestParam(value="id") int id, @RequestParam(value="myFile") MultipartFile file) throws JsonProcessingException {
+	public String createOrUpdateRequest(@RequestParam(value = "id") final int id, @RequestParam(value = "myFile") final MultipartFile file) throws JsonProcessingException {
 		try {
 			DocumentDTO documentDTO = new DocumentDTO();
 			documentDTO.setId(id);
@@ -57,7 +57,7 @@ public class GetDocumentRest {
 	}
 	
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String deleteRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getDocumentRestService().deleteRequest(id);
 		} catch (Exception e) {
@@ -66,7 +66,7 @@ public class GetDocumentRest {
 	}
 	
 	@RequestMapping(value = "/downloadRequest", method = RequestMethod.GET)
-	public byte[] downloadRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public byte[] downloadRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getDocumentRestService().downloadRequest(id);
 		} catch (Exception e) {
@@ -78,7 +78,7 @@ public class GetDocumentRest {
 		return BaseSpringServiceLocator.getBean(DocumentRestService.class);
 	}
 	
-	private String createWrapperDTO(Exception e) throws JsonProcessingException {
+	private String createWrapperDTO(final Exception e) throws JsonProcessingException {
 		RestWrapperDTO<DocumentDTO> restWrapperDTO = new RestWrapperDTO<DocumentDTO>();
 		return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
 	}

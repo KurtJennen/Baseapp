@@ -15,7 +15,7 @@ public class UserDTO extends BaseDTO {
 	private String dateExpirationAsString;
 	private boolean isActivation;
 	private boolean isRegister;
-	ArrayList<String> roles = new ArrayList<String>();
+	private ArrayList<String> roles = new ArrayList<String>();
 	
 	private int[] linkedRoleIds;
 	private int[] unlinkedRoleIds;
@@ -24,7 +24,7 @@ public class UserDTO extends BaseDTO {
 		super();
 	}
 	
-	public UserDTO(int id, String name, String userName, String email) {
+	public UserDTO(final int id, final String name, final String userName, final String email) {
 		super();
 		setId(id);
 		this.name = name;
@@ -32,7 +32,7 @@ public class UserDTO extends BaseDTO {
 		this.email = email;
 	}
 	
-	public UserDTO(int id, String name, String userName, String email, Date dateExpiration) {
+	public UserDTO(final int id, final String name, final String userName, final String email, final Date dateExpiration) {
 		super();
 		setId(id);
 		this.name = name;
@@ -45,55 +45,55 @@ public class UserDTO extends BaseDTO {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getUserName() {
 		return userName;
 	}
-	public void setUserName(String userName) {
+	public void setUserName(final String userName) {
 		this.userName = userName;
 	}
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 	public String getEncryptedPassword() {
 		return encryptedPassword;
 	}
-	public void setEncryptedPassword(String encryptedPassword) {
+	public void setEncryptedPassword(final String encryptedPassword) {
 		this.encryptedPassword = encryptedPassword;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 	public Date getDateExpiration() {
 		return dateExpiration;
 	}
-	public void setDateExpiration(Date dateExpiration) {
+	public void setDateExpiration(final Date dateExpiration) {
 		this.dateExpiration = dateExpiration;
 	}
 	public String getDateExpirationAsString() {
 		return dateExpirationAsString;
 	}
-	public void setDateExpirationAsString(String dateExpirationAsString) {
+	public void setDateExpirationAsString(final String dateExpirationAsString) {
 		this.dateExpirationAsString = dateExpirationAsString;
 	}
 	public boolean isActivation() {
 		return isActivation;
 	}
-	public void setActivation(boolean isActivation) {
+	public void setActivation(final boolean isActivation) {
 		this.isActivation = isActivation;
 	}
 	public boolean isRegister() {
 		return isRegister;
 	}
-	public void setRegister(boolean isRegister) {
+	public void setRegister(final boolean isRegister) {
 		this.isRegister = isRegister;
 	}
 //	public BigDecimal getBedrag() {
@@ -114,20 +114,20 @@ public class UserDTO extends BaseDTO {
 	public ArrayList<String> getRoles() {
 		return roles;
 	}
-	public void setRoles(ArrayList<String> roles) {
+	public void setRoles(final ArrayList<String> roles) {
 		this.roles = roles;
 	}
 	
 	public int[] getLinkedRoleIds() {
 		return linkedRoleIds;
 	}
-	public void setLinkedRoleIds(int[] linkedRoleIds) {
+	public void setLinkedRoleIds(final int[] linkedRoleIds) {
 		this.linkedRoleIds = linkedRoleIds;
 	}
 	public int[] getUnlinkedRoleIds() {
 		return unlinkedRoleIds;
 	}
-	public void setUnlinkedRoleIds(int[] unlinkedRoleIds) {
+	public void setUnlinkedRoleIds(final int[] unlinkedRoleIds) {
 		this.unlinkedRoleIds = unlinkedRoleIds;
 	}
 }

@@ -26,7 +26,7 @@ public class JobParamServiceSpringImpl implements JobParamService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public JobParam read(final int id) {
 		Logging.info(this, "Begin readJobParam");
 		JobParam result = null;
@@ -49,7 +49,7 @@ public class JobParamServiceSpringImpl implements JobParamService {
 		Logging.info(this, "End deleteForJobJobParam");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<JobParam> list(final int jobId) {
 		Logging.info(this, "Begin listJobParam");
 		ArrayList<JobParam> arrayList = null;

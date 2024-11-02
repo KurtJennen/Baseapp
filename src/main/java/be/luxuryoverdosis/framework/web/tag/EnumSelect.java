@@ -29,31 +29,31 @@ public class EnumSelect extends CommonTag {
 	private EnumSelectObject enumSelectObject;
 	private ArrayList<EnumSelectOptionObject> options; 
 	
-	public void setClazz(String clazz) {
+	public void setClazz(final String clazz) {
 		this.clazz = clazz;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
-	public void setProperty(String property) {
+	public void setProperty(final String property) {
 		this.property = property;
 	}
-	public void setTabindex(String tabindex) {
+	public void setTabindex(final String tabindex) {
 		this.tabindex = tabindex;
 	}
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
-	public void setOnchange(String onchange) {
+	public void setOnchange(final String onchange) {
 		this.onchange = onchange;
 	}
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
 	
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 			
 			enumSelectObject = new EnumSelectObject();
 			enumSelectObject.setProperty(property);
@@ -64,11 +64,11 @@ public class EnumSelect extends CommonTag {
 			options = new ArrayList<EnumSelectOptionObject>();
 			
 			List<String> keyList = getKeysForClass();
-			for(String key : keyList) {
+			for (String key : keyList) {
 				EnumSelectOptionObject enumSelectOptionObject = new EnumSelectOptionObject();
 				enumSelectOptionObject.setKey(key);
 				enumSelectOptionObject.setKeyMessage(getKeyMessage(request, key));
-				if(key.equals(value)) {
+				if (key.equals(value)) {
 					enumSelectOptionObject.setSelected(true);
 				}
 				
@@ -76,13 +76,12 @@ public class EnumSelect extends CommonTag {
 			}
 			
 			enumSelectObject.setOptions(options);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_BUFFERED;
 	}
 
-	private String getKeyMessage(HttpServletRequest request, String key) {
+	private String getKeyMessage(final HttpServletRequest request, final String key) {
 		String[] keys = clazz.split("\\.");
 		String keyLabel = MessageLocator.getMessage(request, keys[keys.length - 1] + BaseConstants.POINT + key);
 		return keyLabel;
@@ -99,11 +98,10 @@ public class EnumSelect extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-			if(isEnabled()) {
+			if (isEnabled()) {
 				produceTemplate("enumSelectTemplate.ftl", enumSelectObject);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

@@ -20,14 +20,14 @@ import be.luxuryoverdosis.framework.web.form.DetailNumberForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class DetailNumberAction extends DispatchAction {
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -42,10 +42,10 @@ public class DetailNumberAction extends DispatchAction {
 		numberForm.setNumber(numberDTO.getNumber());
 		numberForm.setType(numberDTO.getType());
 		
-		if(BaseWebConstants.SAVE.equals(previous)) {
+		if (BaseWebConstants.SAVE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.number")));
 		}
-		if(BaseWebConstants.UPDATE.equals(previous)) {
+		if (BaseWebConstants.UPDATE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.number")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.number")));
@@ -56,7 +56,7 @@ public class DetailNumberAction extends DispatchAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -72,7 +72,7 @@ public class DetailNumberAction extends DispatchAction {
 
 	}
 	
-	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward update(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
@@ -87,7 +87,7 @@ public class DetailNumberAction extends DispatchAction {
 		numberDTO.setType(numberForm.getType());
 		
 		numberDTO = getNumberService().createOrUpdateDTO(numberDTO);
-		if(numberForm.getId() < 0) {
+		if (numberForm.getId() < 0) {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
@@ -100,7 +100,7 @@ public class DetailNumberAction extends DispatchAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward delete(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
 		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));

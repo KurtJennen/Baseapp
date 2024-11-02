@@ -12,22 +12,22 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 @Deprecated
 public class MenuTitle implements Tag {
-	PageContext pageContext;
+	private PageContext pageContext;
 	private String key;
 	private String roles;
 
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
 	
-	public void setRoles(String roles) {
+	public void setRoles(final String roles) {
 		this.roles = roles;
 	}
 
-	public void setParent(Tag t) {
+	public void setParent(final Tag t) {
 	}
 	
-	public void setPageContext(PageContext p) {
+	public void setPageContext(final PageContext p) {
 		pageContext = p;
 	}
 	
@@ -41,16 +41,16 @@ public class MenuTitle implements Tag {
 	public int doStartTag() throws JspException {
 		try {
 			JspWriter out = pageContext.getOut();
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
-			UserDTO userDTO = (UserDTO)request.getSession().getAttribute(BaseWebConstants.USER);
+			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
+			UserDTO userDTO = (UserDTO) request.getSession().getAttribute(BaseWebConstants.USER);
 			
 			boolean enabled = false;
-			if(userDTO != null) {
-				if(roles != null) {
+			if (userDTO != null) {
+				if (roles != null) {
 					String[] seperatedRoles = roles.split(",");
-					for(int i = 0; i < seperatedRoles.length; i++) {
+					for (int i = 0; i < seperatedRoles.length; i++) {
 						//if(seperatedRoles[i].equals(user.getRole().getName())) {
-						if(userDTO.getRoles().contains(seperatedRoles[i])) {
+						if (userDTO.getRoles().contains(seperatedRoles[i])) {
 							enabled = true;
 						}
 					}
@@ -62,12 +62,11 @@ public class MenuTitle implements Tag {
 				enabled = true;
 			}
 			
-			if(enabled) {
+			if (enabled) {
 				out.print(MessageLocator.getMessage(request, key));
 				out.println("<br />");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_INCLUDE;
 	}

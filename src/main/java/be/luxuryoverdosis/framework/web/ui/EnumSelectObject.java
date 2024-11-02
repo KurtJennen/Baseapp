@@ -15,37 +15,37 @@ public class EnumSelectObject {
 	public String getProperty() {
 		return property;
 	}
-	public void setProperty(String property) {
+	public void setProperty(final String property) {
 		this.property = property;
 	}
 	public String getTabindex() {
 		return tabindex;
 	}
-	public void setTabindex(String tabindex) {
+	public void setTabindex(final String tabindex) {
 		this.tabindex = tabindex;
 	}
 	public String getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
 	public String getOnchange() {
 		return onchange;
 	}
-	public void setOnchange(String onchange) {
+	public void setOnchange(final String onchange) {
 		this.onchange = onchange;
 	}
 	public boolean isDisabled() {
 		return disabled;
 	}
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
 	public ArrayList<EnumSelectOptionObject> getOptions() {
 		return options;
 	}
-	public void setOptions(ArrayList<EnumSelectOptionObject> options) {
+	public void setOptions(final ArrayList<EnumSelectOptionObject> options) {
 		this.options = options;
 	}
 	

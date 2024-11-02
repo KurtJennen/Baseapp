@@ -20,10 +20,10 @@ public class Config {
 	public static Config getInstance() {
 		return configInstance;
 	}
-	public void addKeyValue(String key, Object value) {
+	public void addKeyValue(final String key, final Object value) {
 		map.put(key, value);
 	}
-	public Object getValue(String key) {
+	public Object getValue(final String key) {
 		return map.get(key);
 	}
 	public Map<String, Object> getMap() {

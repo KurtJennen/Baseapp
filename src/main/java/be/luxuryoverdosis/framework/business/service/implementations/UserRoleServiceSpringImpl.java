@@ -16,8 +16,8 @@ public class UserRoleServiceSpringImpl implements UserRoleService {
 	@Resource
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
-	@Transactional(readOnly=true)
-    public ArrayList<UserRoleDTO> listDTO(int userId) {
+	@Transactional(readOnly = true)
+    public ArrayList<UserRoleDTO> listDTO(final int userId) {
         return userRoleHibernateDAO.listDTO(userId);
     }
 	

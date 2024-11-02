@@ -28,7 +28,7 @@ public class SqlServiceSpringImpl implements SqlService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Sql read(final int id) {
 		Logging.info(this, "Begin readSql");
 		Sql result = null;
@@ -37,7 +37,7 @@ public class SqlServiceSpringImpl implements SqlService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Sql readName(final String name) {
 		Logging.info(this, "Begin readNameSql");
 		Sql result = null;
@@ -53,7 +53,7 @@ public class SqlServiceSpringImpl implements SqlService {
 		Logging.info(this, "End deleteSql");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Sql> list() {
 		Logging.info(this, "Begin listSql");
 		ArrayList<Sql> arrayList = null;
@@ -62,7 +62,7 @@ public class SqlServiceSpringImpl implements SqlService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public long count(final String name) {
 		Logging.info(this, "Begin countSql(String)");
 		Long countSql = sqlHibernateDAO.count(name);
@@ -70,7 +70,7 @@ public class SqlServiceSpringImpl implements SqlService {
 		return countSql.longValue();
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public long count(final String name, final String application) {
 		Logging.info(this, "Begin countSql(String, String)");
 		Long  countSql = sqlHibernateDAO.count(name, application);

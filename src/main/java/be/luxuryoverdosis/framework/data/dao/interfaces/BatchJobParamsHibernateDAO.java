@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.BatchJobParams;
 
 public interface BatchJobParamsHibernateDAO {
-	public BatchJobParams read(final long jobInstanceId, final String keyName);
+	BatchJobParams read(long jobInstanceId, String keyName);
 	
-	public ArrayList<BatchJobParams> list(long jobInstanceId);
+	ArrayList<BatchJobParams> list(long jobInstanceId);
 }

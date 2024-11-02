@@ -15,12 +15,12 @@ import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class UserJmesaTemplate extends CustomTableFacadeTemplate {
-	public UserJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public UserJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayUser.title", BaseWebConstants.USER_IDS);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class UserJmesaTemplate extends CustomTableFacadeTemplate {
 		columnsList.add("email");
 		columnsList.add("dateExpiration");
 		columnsList.add("roleName");
-		if(isExporting()) {
+		if (isExporting()) {
 			columnsList.add("id");
 		}
 		
@@ -39,7 +39,7 @@ public class UserJmesaTemplate extends CustomTableFacadeTemplate {
 	}
 
 	
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		
 		teller = setTitleKeyRow(row, teller, "security.name.unique");

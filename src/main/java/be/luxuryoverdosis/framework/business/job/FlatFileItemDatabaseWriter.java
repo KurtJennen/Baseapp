@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.item.ExecutionContext;
-import org.springframework.batch.item.ItemStream;
 import org.springframework.batch.item.ItemStreamException;
 import org.springframework.batch.item.WriteFailedException;
 import org.springframework.batch.item.WriterNotOpenException;
@@ -40,7 +39,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	
 	//added by luxuryoverdosis
 	@Resource
-	JobService jobService;
+	private JobService jobService;
 	@Resource
 	private UserService userService;
 	
@@ -50,7 +49,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 
 	private static final boolean DEFAULT_TRANSACTIONAL = true;
 
-	protected static final Log logger = LogFactory.getLog(FlatFileItemWriter.class);
+	protected static final Log LOGGER = LogFactory.getLog(FlatFileItemWriter.class);
 
 	private static final String DEFAULT_LINE_SEPARATOR = System.getProperty("line.separator");
 
@@ -88,10 +87,10 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	}
 	
 	//added by luxuryoverdosis
-	public void setJobId(int jobId) {
+	public void setJobId(final int jobId) {
 		this.jobId = jobId;
 	}
-	public void setJobUser(String jobUser) {
+	public void setJobUser(final String jobUser) {
 		this.jobUser = jobUser;
 	}
 
@@ -109,7 +108,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * line.separator.
 	 * @param lineSeparator the line separator to set
 	 */
-	public void setLineSeparator(String lineSeparator) {
+	public void setLineSeparator(final String lineSeparator) {
 		this.lineSeparator = lineSeparator;
 	}
 
@@ -119,7 +118,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * 
 	 * @param lineAggregator the {@link LineAggregator} to set
 	 */
-	public void setLineAggregator(LineAggregator<T> lineAggregator) {
+	public void setLineAggregator(final LineAggregator<T> lineAggregator) {
 		this.lineAggregator = lineAggregator;
 	}
 
@@ -129,14 +128,14 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * 
 	 * @param resource
 	 */
-	public void setResource(org.springframework.core.io.Resource resource) {
+	public void setResource(final org.springframework.core.io.Resource resource) {
 		//this.resource = resource;
 	}
 
 	/**
 	 * Sets encoding for output template.
 	 */
-	public void setEncoding(String newEncoding) {
+	public void setEncoding(final String newEncoding) {
 		this.encoding = newEncoding;
 	}
 
@@ -172,7 +171,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * 
 	 * @param saveState
 	 */
-	public void setSaveState(boolean saveState) {
+	public void setSaveState(final boolean saveState) {
 		this.saveState = saveState;
 	}
 
@@ -180,7 +179,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * headerCallback will be called before writing the first item to file.
 	 * Newline will be automatically appended after the header is written.
 	 */
-	public void setHeaderCallback(FlatFileHeaderCallback headerCallback) {
+	public void setHeaderCallback(final FlatFileHeaderCallback headerCallback) {
 		this.headerCallback = headerCallback;
 	}
 
@@ -188,7 +187,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * footerCallback will be called after writing the last item to file, but
 	 * before the file is closed.
 	 */
-	public void setFooterCallback(FlatFileFooterCallback footerCallback) {
+	public void setFooterCallback(final FlatFileFooterCallback footerCallback) {
 		this.footerCallback = footerCallback;
 	}
 
@@ -196,7 +195,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * Flag to indicate that writing to the buffer should be delayed if a
 	 * transaction is active. Defaults to true.
 	 */
-	public void setTransactional(boolean transactional) {
+	public void setTransactional(final boolean transactional) {
 		this.transactional = transactional;
 	}
 
@@ -213,14 +212,14 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * @throws Exception if the transformer or file output fail,
 	 * WriterNotOpenException if the writer has not been initialized.
 	 */
-	public void write(List<? extends T> items) throws Exception {
+	public void write(final List<? extends T> items) throws Exception {
 
 		if (!getOutputState().isInitialized()) {
 			throw new WriterNotOpenException("Writer must be open before it can be written to");
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("Writing to flat file with " + items.size() + " items.");
+		if (LOGGER.isDebugEnabled()) {
+			LOGGER.debug("Writing to flat file with " + items.size() + " items.");
 		}
 
 		OutputState state = getOutputState();
@@ -233,8 +232,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		}
 		try {
 			state.write(lines.toString());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new WriteFailedException("Could not write data.  The file may be corrupt.", e);
 		}
 		state.linesWritten += lineCount;
@@ -250,11 +248,9 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 					footerCallback.writeFooter(state.outputBufferedWriter);
 					state.outputBufferedWriter.flush();
 				}
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				throw new ItemStreamException("Failed to write footer before closing", e);
-			}
-			finally {
+			} finally {
 				state.close();
 				//commented by luxury overdosis
 //				if (state.linesWritten == 0 && shouldDeleteIfEmpty) {
@@ -276,7 +272,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	 * 
 	 * @see ItemStream#open(ExecutionContext)
 	 */
-	public void open(ExecutionContext executionContext) throws ItemStreamException {
+	public void open(final ExecutionContext executionContext) throws ItemStreamException {
 
 		//commented by luxury overdosis
 		//Assert.notNull(resource, "The resource must be set");
@@ -286,15 +282,14 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		}
 	}
 
-	private void doOpen(ExecutionContext executionContext) throws ItemStreamException {
+	private void doOpen(final ExecutionContext executionContext) throws ItemStreamException {
 		OutputState outputState = getOutputState();
 		if (executionContext.containsKey(getKey(RESTART_DATA_NAME))) {
 			outputState.restoreFrom(executionContext);
 		}
 		try {
 			outputState.initializeBufferedWriter();
-		}
-		catch (IOException ioe) {
+		} catch (IOException ioe) {
 			throw new ItemStreamException("Failed to initialize writer", ioe);
 		}
 		if (outputState.lastMarkedByteOffsetPosition == 0) {
@@ -302,8 +297,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 				try {
 					headerCallback.writeHeader(outputState.outputBufferedWriter);
 					outputState.write(lineSeparator);
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					throw new ItemStreamException("Could not write headers.  The file may be corrupt.", e);
 				}
 			}
@@ -313,7 +307,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 	/**
 	 * @see ItemStream#update(ExecutionContext)
 	 */
-	public void update(ExecutionContext executionContext) {
+	public void update(final ExecutionContext executionContext) {
 		if (state == null) {
 			throw new ItemStreamException("ItemStream not open or already closed.");
 		}
@@ -324,8 +318,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 
 			try {
 				executionContext.putLong(getKey(RESTART_DATA_NAME), state.position());
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				throw new ItemStreamException("ItemStream does not return current position properly", e);
 			}
 
@@ -368,25 +361,25 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		private ByteArrayOutputStream baos;
 
 		// The bufferedWriter over the file channel that is actually written
-		Writer outputBufferedWriter;
+		private Writer outputBufferedWriter;
 
-		FileChannel fileChannel;
+		private FileChannel fileChannel;
 
 		// this represents the charset encoding (if any is needed) for the
 		// output file
-		String encoding = DEFAULT_CHARSET;
+		private String encoding = DEFAULT_CHARSET;
 
 		//commented by luxury overdosis
 		//boolean restarted = false;
 
-		long lastMarkedByteOffsetPosition = 0;
+		private long lastMarkedByteOffsetPosition = 0;
 
-		long linesWritten = 0;
+		private long linesWritten = 0;
 
 		//commented by luxury overdosis
 		//boolean shouldDeleteIfExists = true;
 
-		boolean initialized = false;
+		private boolean initialized = false;
 
 		/**
 		 * Return the byte offset position of the cursor in the output file as a
@@ -412,7 +405,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		/**
 		 * @param executionContext
 		 */
-		public void restoreFrom(ExecutionContext executionContext) {
+		public void restoreFrom(final ExecutionContext executionContext) {
 			lastMarkedByteOffsetPosition = executionContext.getLong(getKey(RESTART_DATA_NAME));
 			//commented by luxury overdosis
 			//restarted = true;
@@ -429,7 +422,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		/**
 		 * @param encoding
 		 */
-		public void setEncoding(String encoding) {
+		public void setEncoding(final String encoding) {
 			this.encoding = encoding;
 		}
 
@@ -454,11 +447,9 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 					
 					//outputBufferedWriter.close();
 				}
-			}
-//			catch (IOException ioe) {
+//			} catch (IOException ioe) {
 //				throw new ItemStreamException("Unable to close the the ItemWriter", ioe);
-//			}
-			finally {
+			} finally {
 				if (!transactional) {
 					closeStream();
 				}
@@ -479,8 +470,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 					if (baos != null) {
 						baos.close();
 					}
-				}
-				catch (IOException ioe) {
+				} catch (IOException ioe) {
 					throw new ItemStreamException("Unable to close the the ItemWriter", ioe);
 				}
 //			}
@@ -490,7 +480,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		 * @param line
 		 * @throws IOException
 		 */
-		public void write(String line) throws IOException {
+		public void write(final String line) throws IOException {
 			if (!initialized) {
 				initializeBufferedWriter();
 			}
@@ -560,7 +550,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 		 * Returns the buffered writer opened to the beginning of the file
 		 * specified by the absolute path name contained in absoluteFileName.
 		 */
-		private Writer getBufferedWriter(WritableByteChannel fileChannel, String encoding) {
+		private Writer getBufferedWriter(final WritableByteChannel fileChannel, final String encoding) {
 			try {
 				Writer writer = Channels.newWriter(fileChannel, encoding);
 //				if (transactional) {
@@ -572,8 +562,7 @@ public class FlatFileItemDatabaseWriter<T> extends ExecutionContextUserSupport i
 //				} else {
 					return new BufferedWriter(writer);
 //				}
-			}
-			catch (UnsupportedCharsetException ucse) {
+			} catch (UnsupportedCharsetException ucse) {
 				throw new ItemStreamException("Bad encoding configuration for output file " + fileChannel, ucse);
 			}
 		}

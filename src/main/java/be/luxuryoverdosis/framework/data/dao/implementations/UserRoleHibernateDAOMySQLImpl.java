@@ -22,7 +22,7 @@ public class UserRoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void delete(int userId) {
+	public void delete(final int userId) {
 		Logging.info(this, "Begin deleteUserRole");
 		
 		Query<UserRole> query = getCurrentSession().getNamedQuery(UserRole.DELETE_USERROLES_BY_USER);
@@ -32,7 +32,7 @@ public class UserRoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 		Logging.info(this, "End deleteUserRole");
 	}
 	@SuppressWarnings("unchecked")
-	public void delete(int userId, int roleId) {
+	public void delete(final int userId, final int roleId) {
 		Logging.info(this, "Begin deleteUserRole");
 		
 		Query<Long> query = getCurrentSession().getNamedQuery(UserRole.DELETE_USERROLES_BY_USER_AND_ROLE);
@@ -44,7 +44,7 @@ public class UserRoleHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport i
 	}
 
 	@SuppressWarnings("unchecked")
-	public ArrayList<UserRoleDTO> listDTO(int userId) {
+	public ArrayList<UserRoleDTO> listDTO(final int userId) {
 		Logging.info(this, "Begin listUserRole");
 		
 		Query<UserRoleDTO> query = getCurrentSession().getNamedQuery(UserRole.SELECT_USERROLES_DTO_BY_USER);

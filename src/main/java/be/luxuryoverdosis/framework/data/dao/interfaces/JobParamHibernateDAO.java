@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.JobParam;
 
 public interface JobParamHibernateDAO {
-	public JobParam createOrUpdate(JobParam jobParam);
-	public JobParam read(int id);
-	public void delete(int id);
-	public void deleteForJob(int jobId);
+	JobParam createOrUpdate(JobParam jobParam);
+	JobParam read(int id);
+	void delete(int id);
+	void deleteForJob(int jobId);
 	
-	public ArrayList<JobParam> list(int jobId);
+	ArrayList<JobParam> list(int jobId);
 }

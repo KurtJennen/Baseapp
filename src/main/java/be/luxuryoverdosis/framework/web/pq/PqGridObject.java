@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.web.pq;
 
 import java.util.ArrayList;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class PqGridObject {
@@ -13,8 +14,8 @@ public class PqGridObject {
 	private String url;
 	private String width = "99%";
 	private String height = "500";
-	private int freezeCols = 1;
-	private int rPP = 15;
+	private int freezeCols = BaseConstants.EEN;
+	private int rPP = BaseConstants.VIJFTIEN;
 	private boolean paging = true;
 	private boolean summary = false;
 	private String exportUrl;
@@ -28,73 +29,73 @@ public class PqGridObject {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	public String getWidth() {
 		return width;
 	}
-	public void setWidth(String width) {
+	public void setWidth(final String width) {
 		this.width = width;
 	}
 	public String getHeight() {
 		return height;
 	}
-	public void setHeight(String height) {
+	public void setHeight(final String height) {
 		this.height = height;
 	}
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 	public int getFreezeCols() {
 		return freezeCols;
 	}
-	public void setFreezeCols(int freezeCols) {
+	public void setFreezeCols(final int freezeCols) {
 		this.freezeCols = freezeCols;
 	}
 	public String getUrl() {
 		return url;
 	}
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
 	public boolean isPaging() {
 		return paging;
 	}
-	public void setPaging(boolean paging) {
+	public void setPaging(final boolean paging) {
 		this.paging = paging;
 	}
 	public int getrPP() {
 		return rPP;
 	}
-	public void setrPP(int rPP) {
+	public void setrPP(final int rPP) {
 		this.rPP = rPP;
 	}
 	public boolean isSummary() {
 		return summary;
 	}
-	public void setSummary(boolean summary) {
+	public void setSummary(final boolean summary) {
 		this.summary = summary;
 	}
 	public String getNameSelectedIds() {
 		return nameSelectedIds;
 	}
-	public void setNameSelectedIds(String nameSelectedIds) {
+	public void setNameSelectedIds(final String nameSelectedIds) {
 		this.nameSelectedIds = nameSelectedIds;
 	}
 	public int[] getSelectedIds() {
 		return selectedIds;
 	}
-	public void setSelectedIds(int[] selectedIds) {
+	public void setSelectedIds(final int[] selectedIds) {
 		this.selectedIds = selectedIds;
 	}
 	public String getRowClickMethod() {
 		return rowClickMethod;
 	}
-	public void setRowClickMethod(String rowClickMethod) {
+	public void setRowClickMethod(final String rowClickMethod) {
 		this.rowClickMethod = rowClickMethod;
 	}
 	public ArrayList<PqGridColumnObject> getPqGridColumnObjects() {
@@ -103,40 +104,40 @@ public class PqGridObject {
 	public String getExportUrl() {
 		return exportUrl;
 	}
-	public void setExportUrl(String exportUrl) {
+	public void setExportUrl(final String exportUrl) {
 		this.exportUrl = exportUrl;
 	}
 	public String getExportLabelCsv() {
 		return exportLabelCsv;
 	}
-	public void setExportLabelCsv(String exportLabelCsv) {
+	public void setExportLabelCsv(final String exportLabelCsv) {
 		this.exportLabelCsv = exportLabelCsv;
 	}
 	public String getExportLabelExcel() {
 		return exportLabelExcel;
 	}
-	public void setExportLabelExcel(String exportLabelExcel) {
+	public void setExportLabelExcel(final String exportLabelExcel) {
 		this.exportLabelExcel = exportLabelExcel;
 	}
 	public String getLocale() {
 		return locale;
 	}
-	public void setLocale(String locale) {
+	public void setLocale(final String locale) {
 		this.locale = locale;
 	}
 	public String getLanguage() {
 		return language;
 	}
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		this.language = language;
 	}
 	public String getCurrency() {
 		return currency;
 	}
-	public void setCurrency(String currency) {
+	public void setCurrency(final String currency) {
 		this.currency = currency;
 	}
-	public void setPqGridColumnObjects(ArrayList<PqGridColumnObject> pqGridColumnObjects) {
+	public void setPqGridColumnObjects(final ArrayList<PqGridColumnObject> pqGridColumnObjects) {
 		this.pqGridColumnObjects = pqGridColumnObjects;
 	}
 }

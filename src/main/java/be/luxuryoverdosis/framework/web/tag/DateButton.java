@@ -17,19 +17,19 @@ public class DateButton extends CommonTag {
 	
 	private DateButtonObject dateButtonObject;
 
-	public void setProperty(String property) {
+	public void setProperty(final String property) {
 		this.property = property;
 	}
-	public void setTabindex(String tabindex) {
+	public void setTabindex(final String tabindex) {
 		this.tabindex = tabindex;
 	}
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
-	public void setOnchange(String onchange) {
+	public void setOnchange(final String onchange) {
 		this.onchange = onchange;
 	}
 
@@ -41,19 +41,17 @@ public class DateButton extends CommonTag {
 			dateButtonObject.setValue(value);
 			dateButtonObject.setDisabled(disabled);
 			dateButtonObject.setOnchange(onchange);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_BUFFERED;
 	}
 
 	public int doEndTag() throws JspException {
 		try {
-			if(isEnabled()) {
+			if (isEnabled()) {
 				produceTemplate("dateButtonTemplate.ftl", dateButtonObject);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 			
 		return EVAL_PAGE;

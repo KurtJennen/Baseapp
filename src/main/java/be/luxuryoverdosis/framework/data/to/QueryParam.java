@@ -13,81 +13,81 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_query_param")
+@Table(name = "base_query_param")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=QueryParam.SELECT_QUERYPARAMS_BY_QUERY, query=QueryParam.Queries.SELECT_QUERYPARAMS_BY_QUERY),
-	@NamedQuery(name=QueryParam.DELETE_QUERYPARAMS_BY_QUERY, query=QueryParam.Queries.DELETE_QUERYPARAMS_BY_QUERY),
-	@NamedQuery(name=QueryParam.COUNT_QUERYPARAMS_BY_QUERY, query=QueryParam.Queries.COUNT_QUERYPARAMS_BY_QUERY),
+	@NamedQuery(name = QueryParam.SELECT_QUERYPARAMS_BY_QUERY, query = QueryParam.Queries.SELECT_QUERYPARAMS_BY_QUERY),
+	@NamedQuery(name = QueryParam.DELETE_QUERYPARAMS_BY_QUERY, query = QueryParam.Queries.DELETE_QUERYPARAMS_BY_QUERY),
+	@NamedQuery(name = QueryParam.COUNT_QUERYPARAMS_BY_QUERY, query = QueryParam.Queries.COUNT_QUERYPARAMS_BY_QUERY),
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class QueryParam extends BaseTO {
 	public static final String SELECT_QUERYPARAMS_BY_QUERY = "selectQueryParamsByQuery";
 	public static final String DELETE_QUERYPARAMS_BY_QUERY = "deleteQueryParamsByQuery";
 	public static final String COUNT_QUERYPARAMS_BY_QUERY = "countQueryParamsByQuery";
 	
-	@Column(name="Name")
+	@Column(name = "Name")
 	private String name;
 
-	@Column(name="Operator")
+	@Column(name = "Operator")
 	private String operator;
 
-	@Column(name="Value")
+	@Column(name = "Value")
 	private String value;
 	
-	@Column(name="OpenBracket")
+	@Column(name = "OpenBracket")
 	private String openBracket;
 	
-	@Column(name="CloseBracket")
+	@Column(name = "CloseBracket")
 	private String closeBracket;
 	
-	@Column(name="AddAndOr")
+	@Column(name = "AddAndOr")
 	private String addAndOr;
 	
 	@ManyToOne
-	@JoinColumn(name="Query_Id")
+	@JoinColumn(name = "Query_Id")
 	private Query query;
 	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getOperator() {
 		return operator;
 	}
-	public void setOperator(String operator) {
+	public void setOperator(final String operator) {
 		this.operator = operator;
 	}
 	public String getValue() {
 		return value;
 	}
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
 	public String getOpenBracket() {
 		return openBracket;
 	}
-	public void setOpenBracket(String openBracket) {
+	public void setOpenBracket(final String openBracket) {
 		this.openBracket = openBracket;
 	}
 	public String getCloseBracket() {
 		return closeBracket;
 	}
-	public void setCloseBracket(String closeBracket) {
+	public void setCloseBracket(final String closeBracket) {
 		this.closeBracket = closeBracket;
 	}
 	public String getAddAndOr() {
 		return addAndOr;
 	}
-	public void setAddAndOr(String addAndOr) {
+	public void setAddAndOr(final String addAndOr) {
 		this.addAndOr = addAndOr;
 	}
 	public Query getQuery() {
 		return query;
 	}
-	public void setQuery(Query query) {
+	public void setQuery(final Query query) {
 		this.query = query;
 	}
 	

@@ -22,34 +22,34 @@ public class ListUserForm extends ListForm {
 	public FormFile getFormFile() {
 		return formFile;
 	}
-	public void setFormFile(FormFile formFile) {
+	public void setFormFile(final FormFile formFile) {
 		this.formFile = formFile;
 	}
 	public int[] getSelectedIdsExportUserJob() {
 		return selectedIdsExportUserJob;
 	}
-	public void setSelectedIdsExportUserJob(int[] selectedIdsExportUserJob) {
+	public void setSelectedIdsExportUserJob(final int[] selectedIdsExportUserJob) {
 		this.selectedIdsExportUserJob = selectedIdsExportUserJob;
 	}
 	public int[] getSelectedIdsImportUserJob() {
 		return selectedIdsImportUserJob;
 	}
-	public void setSelectedIdsImportUserJob(int[] selectedIdsImportUserJob) {
+	public void setSelectedIdsImportUserJob(final int[] selectedIdsImportUserJob) {
 		this.selectedIdsImportUserJob = selectedIdsImportUserJob;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setFormFile(null);
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = super.validate(mapping, request);
 		
-		if(this.getMethod().equals(BaseWebConstants.IMPORT_USER_JOB)) {
-			if(StringUtils.isEmpty(this.getFormFile().getFileName())) {
+		if (this.getMethod().equals(BaseWebConstants.IMPORT_USER_JOB)) {
+			if (StringUtils.isEmpty(this.getFormFile().getFileName())) {
 				errors.add("formFile", new ActionMessage("errors.required", MessageLocator.getMessage(request, "file")));
 			}
 		}
@@ -60,7 +60,7 @@ public class ListUserForm extends ListForm {
 		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_EXPORT_USER_JOB, getSelectedIdsExportUserJob());
 		super.checkOnlyOneOrMoreSelected(mapping, request, errors, BaseWebConstants.DELETE_IMPORT_USER_JOB, getSelectedIdsImportUserJob());
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

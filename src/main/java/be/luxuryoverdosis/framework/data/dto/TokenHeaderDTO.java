@@ -12,20 +12,19 @@ public class TokenHeaderDTO extends BaseDTO {
 	public String getAlg() {
 		return alg;
 	}
-	public void setAlg(String alg) {
+	public void setAlg(final String alg) {
 		this.alg = alg;
 	}
 	public String getTyp() {
 		return typ;
 	}
-	public void setTyp(String typ) {
+	public void setTyp(final String typ) {
 		this.typ = typ;
 	}
 	public String getKid() {
 		return kid;
 	}
-	public void setKid(String kid) {
+	public void setKid(final  String kid) {
 		this.kid = kid;
 	}
-	
 }

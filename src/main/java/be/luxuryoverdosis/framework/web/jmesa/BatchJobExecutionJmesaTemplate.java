@@ -16,22 +16,23 @@ import org.jmesa.view.editor.BasicCellEditor;
 import org.jmesa.view.editor.CellEditor;
 import org.springframework.batch.core.ExitStatus;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 
 public class BatchJobExecutionJmesaTemplate extends CustomTableFacadeTemplate {
 
-	public BatchJobExecutionJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public BatchJobExecutionJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJob.title");
 		setActionMethod("readJob");
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[2]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[3]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[4]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[8]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.TWEE]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.DRIE]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.VIER]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.ACHT]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class BatchJobExecutionJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "batchjobinstance.name");
 		teller = setTitleKeyRow(row, teller, "batchjobexecution.version");
@@ -64,26 +65,26 @@ public class BatchJobExecutionJmesaTemplate extends CustomTableFacadeTemplate {
 		teller = setTitleKeyRow(row, teller, "batchjobexecution.status");
 		
 		status.getCellRenderer().setCellEditor(new CellEditor() {
-		    public Object getValue(Object item, String property, int rowcount) {
+		    public Object getValue(final Object item, final String property, final int rowcount) {
 		    	String status = null;
 		        Object value = new BasicCellEditor().getValue(item, property, rowcount);
 		        
-		        if(ExitStatus.COMPLETED.getExitCode().equals(value)) {
+		        if (ExitStatus.COMPLETED.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.completed");
 				}
-		        if(ExitStatus.EXECUTING.getExitCode().equals(value)) {
+		        if (ExitStatus.EXECUTING.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.executing");
 		        }
-		        if(ExitStatus.FAILED.getExitCode().equals(value)) {
+		        if (ExitStatus.FAILED.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.failed");
 		        }
-		        if(ExitStatus.NOOP.getExitCode().equals(value)) {
+		        if (ExitStatus.NOOP.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.noop");
 		        }
-		        if(ExitStatus.STOPPED.getExitCode().equals(value)) {
+		        if (ExitStatus.STOPPED.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.stopped");
 		        }
-		        if(ExitStatus.UNKNOWN.getExitCode().equals(value)) {
+		        if (ExitStatus.UNKNOWN.getExitCode().equals(value)) {
 		        	status = BaseSpringServiceLocator.getMessage("batchjobexecution.status.unknown");
 		        }
 				

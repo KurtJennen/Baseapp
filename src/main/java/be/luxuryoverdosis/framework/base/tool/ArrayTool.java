@@ -3,11 +3,14 @@ package be.luxuryoverdosis.framework.base.tool;
 import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.web.exception.ServiceException;
 
-public class ArrayTool {
-	public static int[] sortArray(int[] number) {
-		for(int i = 0; i < number.length - 1; i++) {
-			for(int j = i + 1; j < number.length; j++) {
-				if(number[i] > number[j]) {
+public final class ArrayTool {
+	private ArrayTool() {
+	}
+	
+	public static int[] sortArray(final int[] number) {
+		for (int i = 0; i < number.length - 1; i++) {
+			for (int j = i + 1; j < number.length; j++) {
+				if (number[i] > number[j]) {
 					int temp = number[i];
 					number[i] = number[j];
 					number[j] = temp;
@@ -18,10 +21,10 @@ public class ArrayTool {
 		return number;
 	}
 	
-	public static int[] sortArray(int[] number, int length) {
-		for(int i = 0; i < length - 1; i++) {
-			for(int j = i + 1; j < length; j++) {
-				if(number[i] > number[j]) {
+	public static int[] sortArray(final int[] number, final int length) {
+		for (int i = 0; i < length - 1; i++) {
+			for (int j = i + 1; j < length; j++) {
+				if (number[i] > number[j]) {
 					int temp = number[i];
 					number[i] = number[j];
 					number[j] = temp;
@@ -32,17 +35,17 @@ public class ArrayTool {
 		return number;
 	}
 	
-	public static int[] addToArray(int[] number, int value) {
+	public static int[] addToArray(final int[] number, final int value) {
 		int length = 0;
 		
-		if(number != null) {
+		if (number != null) {
 			length = number.length;
 		}
 		
 		int[] newArray = new int[length + 1];
 		
-		if(number != null) {
-			for(int i = 0; i < length; i++) {
+		if (number != null) {
+			for (int i = 0; i < length; i++) {
 				newArray[i] = number[i];
 			}
 		}
@@ -51,22 +54,22 @@ public class ArrayTool {
 		return newArray;
 	}
 	
-	public static boolean isValueInArray(int[] number, int value) {
-		for(int i = 0; i < number.length; i++) {
-			if(number[i] == value) {
+	public static boolean isValueInArray(final int[] number, final int value) {
+		for (int i = 0; i < number.length; i++) {
+			if (number[i] == value) {
 				return true;
 			}
 		}
 		return false;
 	}
 	
-	public static int positionValueInArray(int[] number, int value) {
-		if(number == null) {
+	public static int positionValueInArray(final int[] number, final int value) {
+		if (number == null) {
 			return -1;
 		}
 		
-		for(int i = 0; i < number.length; i++) {
-			if(number[i] == value) {
+		for (int i = 0; i < number.length; i++) {
+			if (number[i] == value) {
 				return i;
 			}
 		}
@@ -74,32 +77,32 @@ public class ArrayTool {
 		return -1;
 	}
 	
-	public static void makeZero(int[] number) {
-		for(int i = 0; i < number.length; i++) {
+	public static void makeZero(final int[] number) {
+		for (int i = 0; i < number.length; i++) {
 			number[i] = 0;
 		}
 	}
 	
-	public static boolean isValueTimesInArray(int[] number, int value, int times) {
+	public static boolean isValueTimesInArray(final int[] number, final int value, final int times) {
 		int count = 0;
-		for(int i = 0; i < number.length; i++) {
-			if(number[i] == value) {
+		for (int i = 0; i < number.length; i++) {
+			if (number[i] == value) {
 				count++;
 			}
 		}
-		if(count == times) {
+		if (count == times) {
 			return true;
 		}
 		
 		return false;
 	}
 	
-	public static void isJobLength(Integer[] ids) {
+	public static void isJobLength(final Integer[] ids) {
 		isLengthOk(ids, Constants.DUIZEND);
 	}
 	
-	public static void isLengthOk(Integer[] ids, int length) {
-		if(ids.length > length) {
+	public static void isLengthOk(final Integer[] ids, final int length) {
+		if (ids.length > length) {
 			throw new ServiceException("errors.arraylength", new String[] {String.valueOf(length)});
 		}
 	}

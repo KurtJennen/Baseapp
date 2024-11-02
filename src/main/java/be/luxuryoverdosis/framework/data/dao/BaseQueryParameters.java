@@ -1,6 +1,9 @@
 package be.luxuryoverdosis.framework.data.dao;
 
 public class BaseQueryParameters {
+	protected BaseQueryParameters() {
+	}
+	
 	public static final String APPLICATION = "application";
 	public static final String APPLICATION_CODE = "applicationCode";
 	public static final String DISABLED = "disabled";

@@ -17,7 +17,7 @@ public class JobHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 	public Job createOrUpdate(final Job job) {
 		Logging.info(this, "Begin createJob");
 		try {
-			if(job.getFileData() != null) {
+			if (job.getFileData() != null) {
 				Blob blob = getCurrentSession().getLobHelper().createBlob(job.getFileData());
 				job.setFile(blob);
 			}

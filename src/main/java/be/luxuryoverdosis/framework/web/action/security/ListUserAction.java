@@ -33,14 +33,14 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class ListUserAction extends AjaxAction {
-	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward search(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Search");
 		Logging.info(this, "End Search Success");
 		
 		return (mapping.findForward(BaseWebConstants.SEARCH));
 	}
 		
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -48,10 +48,10 @@ public class ListUserAction extends AjaxAction {
 		
 		String previous = request.getParameter(BaseWebConstants.PREVIOUS);
 		
-		if(BaseWebConstants.DELETE.equals(previous)) {
+		if (BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.user")));
 		}
-		if(BaseWebConstants.JOB.equals(previous)) {
+		if (BaseWebConstants.JOB.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("job.success", MessageLocator.getMessage(request, "table.user")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.user")));
@@ -63,14 +63,14 @@ public class ListUserAction extends AjaxAction {
 	}
 	
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public ActionForward readExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward readExportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ReadExportUserJob");
 		Logging.info(this, "End ReadExportUserJob Success");
 		
@@ -80,7 +80,7 @@ public class ListUserAction extends AjaxAction {
 		return readJob(mapping, request, jobId);
 	}
 	
-	public ActionForward readImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward readImportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ReadImportUserJob");
 		Logging.info(this, "End ReadImportUserJob Success");
 		
@@ -90,7 +90,7 @@ public class ListUserAction extends AjaxAction {
 		return readJob(mapping, request, jobId);
 	}
 
-	private ActionForward readJob(ActionMapping mapping, HttpServletRequest request, int jobId) {
+	private ActionForward readJob(final ActionMapping mapping, final HttpServletRequest request, final int jobId) {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_NIVEAU, BaseConstants.JOB_NIVEAU_USER);
 		
         ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ_JOB));
@@ -99,7 +99,7 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward deleteExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward deleteExportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin DeleteExportUserJob");
 		
 		ListUserForm userForm = (ListUserForm) form;
@@ -110,7 +110,7 @@ public class ListUserAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward deleteImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward deleteImportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin DeleteImportUserJob");
 		
 		ListUserForm userForm = (ListUserForm) form;
@@ -121,7 +121,7 @@ public class ListUserAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward createExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward createExportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateExportUserJob");
 		
 		ListUserForm listUserForm = (ListUserForm) form;
@@ -139,7 +139,7 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward createImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward createImportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateImportUserJob");
 		
 		ListUserForm listUserForm = (ListUserForm) form;
@@ -158,10 +158,10 @@ public class ListUserAction extends AjaxAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward ajaxList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 	
-		SearchUserForm searchForm = (SearchUserForm)request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
+		SearchUserForm searchForm = (SearchUserForm) request.getSession().getAttribute(BaseWebConstants.SEARCH_USER_FORM);
 	
 		ArrayList<Object> userList = getSearchService().search(getSearchSelect(), searchForm.getSearchCriteria());
 		if (userList.size() > 0) {
@@ -174,7 +174,7 @@ public class ListUserAction extends AjaxAction {
 	    return null;
 	}
 	
-	public ActionForward ajaxListExportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxListExportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		ajaxListJob(response, BaseConstants.JOB_EXPORT_USER);
@@ -184,7 +184,7 @@ public class ListUserAction extends AjaxAction {
 		return null;
 	}
 	
-	public ActionForward ajaxListImportUserJob(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxListImportUserJob(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		ajaxListJob(response, BaseConstants.JOB_IMPORT_USER);
@@ -194,7 +194,7 @@ public class ListUserAction extends AjaxAction {
 		return null;
 	}
 
-	private void ajaxListJob(HttpServletResponse response, String jobName) throws Exception {
+	private void ajaxListJob(final HttpServletResponse response, final String jobName) throws Exception {
 		ArrayList<BatchJobInstanceDTO> userListJob = getBatchJobInstanceService().list(jobName);
 		if (userListJob.size() > 0) {
 			super.sendAsJson(response, userListJob);
@@ -218,6 +218,6 @@ public class ListUserAction extends AjaxAction {
 	}
 	
 	private SearchSelect getSearchSelect() {
-		return (SearchSelect)BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
+		return (SearchSelect) BaseSpringServiceLocator.getBean(BaseSpringServiceConstants.SEARCH_USER);
 	}
 }

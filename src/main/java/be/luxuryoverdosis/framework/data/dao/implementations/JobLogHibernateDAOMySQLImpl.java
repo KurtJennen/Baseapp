@@ -17,7 +17,7 @@ public class JobLogHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport imp
 	public JobLog createOrUpdate(final JobLog jobLog) {
 		Logging.info(this, "Begin createJobLog");
 		try {
-			if(jobLog.getFileData() != null) {
+			if (jobLog.getFileData() != null) {
 				Blob blob = getCurrentSession().getLobHelper().createBlob(jobLog.getFileData());
 				jobLog.setFile(blob);
 			}

@@ -32,15 +32,15 @@ public class UserImportProcessor implements ItemProcessor<UserImportDTO, UserDTO
 	private int jobId;
 	private String jobUser;
 
-	public void setJobId(long jobId) {
-		this.jobId = (int)jobId;
+	public void setJobId(final long jobId) {
+		this.jobId = (int) jobId;
 	}
-	public void setJobUser(String jobUser) {
+	public void setJobUser(final String jobUser) {
 		this.jobUser = jobUser;
 	}
 
 	@Override
-	public UserDTO process(UserImportDTO importDTO) throws Exception {
+	public UserDTO process(final UserImportDTO importDTO) throws Exception {
 		ThreadManager.setUserOnThread(userService.readNameDTO(jobUser));
 		Job job = jobService.read(jobId);
 		
@@ -66,7 +66,7 @@ public class UserImportProcessor implements ItemProcessor<UserImportDTO, UserDTO
 		return userDTO;
 	}
 
-	private String getInput(String key) {
+	private String getInput(final String key) {
 		return BaseSpringServiceLocator.getMessage(key, new Object[]{BaseSpringServiceLocator.getMessage("table.user")});
 	}
 	

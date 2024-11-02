@@ -22,7 +22,7 @@ import be.luxuryoverdosis.generated.user.schema.v1.User;
 
 @Service
 public class UserEndpointServiceClientImpl implements UserEndpointServiceClient {
-	@Resource(name="webServiceTemplate")
+	@Resource(name = "webServiceTemplate")
 	private WebServiceTemplate webServiceTemplate;
 	@Resource
 	private UserWebServiceMessageSenderAuthorization userWebServiceMessageSenderAuthorization;
@@ -51,7 +51,7 @@ public class UserEndpointServiceClientImpl implements UserEndpointServiceClient 
 		return readAllUsersResponse;
 	}
 	
-	public  CreateOrUpdateUserResponse createOrUpdateUserRequest(String name, String userName, String encryptedPassword, String email, String roleName) {
+	public  CreateOrUpdateUserResponse createOrUpdateUserRequest(final String name, final String userName, final String encryptedPassword, final String email, final String roleName) {
 		CreateOrUpdateUserRequest createOrUpdateUserRequest = new CreateOrUpdateUserRequest();
 		
 		User user = new User();
@@ -77,7 +77,7 @@ public class UserEndpointServiceClientImpl implements UserEndpointServiceClient 
 	}
 
 	@Override
-	public DeleteUserResponse deleteUserRequest(String name) {
+	public DeleteUserResponse deleteUserRequest(final String name) {
 		DeleteUserRequest deleteUserRequest = new DeleteUserRequest();
 		deleteUserRequest.setName(name);
 		

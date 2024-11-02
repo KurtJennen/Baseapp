@@ -6,9 +6,9 @@ import be.luxuryoverdosis.framework.data.dto.BatchJobInstanceDTO;
 import be.luxuryoverdosis.framework.data.to.BatchJobInstance;
 
 public interface BatchJobInstanceHibernateDAO {
-	public BatchJobInstance read(final long id);
-	public void delete(final long id);
+	BatchJobInstance read(long id);
+	void delete(long id);
 	
-	public ArrayList<BatchJobInstanceDTO> list(String... jobNames);
-	public ArrayList<BatchJobInstanceDTO> list(String keyName, long longValue, String... jobNames);
+	ArrayList<BatchJobInstanceDTO> list(String... jobNames);
+	ArrayList<BatchJobInstanceDTO> list(String keyName, long longValue, String... jobNames);
 }

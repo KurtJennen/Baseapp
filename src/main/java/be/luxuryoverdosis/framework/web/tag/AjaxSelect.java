@@ -6,6 +6,7 @@ import javax.servlet.jsp.JspException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.struts.taglib.TagUtils;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.ui.AjaxSelectObject;
 
@@ -21,7 +22,7 @@ public class AjaxSelect extends CommonTag {
 	private boolean disabled;
 	private String image = "zoom.png";
 	private String size;
-	private int minLength = 3;
+	private int minLength = BaseConstants.DRIE;
 	private String maxLength;
     private String width = "90";
     private String maxHeight = "500";
@@ -31,60 +32,60 @@ public class AjaxSelect extends CommonTag {
 	
 	private AjaxSelectObject ajaxSelectObject;
 	
-	public void setProperty(String property) {
+	public void setProperty(final String property) {
 		this.property = property;
 	}
-	public void setMethodAll(String methodAll) {
+	public void setMethodAll(final String methodAll) {
 		this.methodAll = methodAll;
 	}
-	public void setMethodOne(String methodOne) {
+	public void setMethodOne(final String methodOne) {
 		this.methodOne = methodOne;
 	}
-	public void setFieldsAll(String fieldsAll) {
+	public void setFieldsAll(final String fieldsAll) {
 		this.fieldsAll = fieldsAll;
 	}
-	public void setFieldsOne(String fieldsOne) {
+	public void setFieldsOne(final String fieldsOne) {
 		this.fieldsOne = fieldsOne;
 	}
-	public void setTabindex(String tabindex) {
+	public void setTabindex(final String tabindex) {
 		this.tabindex = tabindex;
 	}
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
-	public void setSize(String size) {
+	public void setSize(final String size) {
 		this.size = size;
 	}
-	public void setMinLength(int minLength) {
+	public void setMinLength(final int minLength) {
 		this.minLength = minLength;
 	}
-	public void setMaxLength(String maxLength) {
+	public void setMaxLength(final String maxLength) {
 		this.maxLength = maxLength;
 	}
-    public void setWidth(String width) {
+    public void setWidth(final String width) {
         this.width = width;
     }
-    public void setMaxHeight(String maxHeight) {
+    public void setMaxHeight(final String maxHeight) {
         this.maxHeight = maxHeight;
     }
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
-	public void setCallbackActionMethodOne(String callbackActionMethodOne) {
+	public void setCallbackActionMethodOne(final String callbackActionMethodOne) {
 		this.callbackActionMethodOne = callbackActionMethodOne;
 	}
-	public void setCallbackActionMethodBlur(String callbackActionMethodBlur) {
+	public void setCallbackActionMethodBlur(final String callbackActionMethodBlur) {
 		this.callbackActionMethodBlur = callbackActionMethodBlur;
 	}
 
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 			
-			Object value = TagUtils.getInstance().lookup(pageContext, "org.apache.struts.taglib.html.BEAN", property, null);
+			Object value = TagUtils.getInstance().lookup(getPageContext(), "org.apache.struts.taglib.html.BEAN", property, null);
 			
 			ajaxSelectObject = new AjaxSelectObject();
 			ajaxSelectObject.setProperty(property);
@@ -106,8 +107,7 @@ public class AjaxSelect extends CommonTag {
 			ajaxSelectObject.setSeperatedArray(produceSeperatedArray());
 			ajaxSelectObject.setValue(value.toString());
 			ajaxSelectObject.setSearchNoResultKey(MessageLocator.getMessage(request, "search.no.result"));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_BUFFERED;
 	}
@@ -134,11 +134,10 @@ public class AjaxSelect extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-			if(isEnabled()) {
+			if (isEnabled()) {
 				produceTemplate("ajaxSelectTemplate.ftl", ajaxSelectObject);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

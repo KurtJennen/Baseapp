@@ -22,7 +22,7 @@ public class BatchJobDetailSelectedHibernateDAOMySQLImpl extends AbstractHiberna
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void delete(int jobHeaderSelectedId) {
+	public void delete(final int jobHeaderSelectedId) {
 		Logging.info(this, "Begin deleteBatchJobDetailSelected");
 		
 		Query<BatchJobParams> query = getCurrentSession().getNamedQuery(BatchJobDetailSelected.DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED);

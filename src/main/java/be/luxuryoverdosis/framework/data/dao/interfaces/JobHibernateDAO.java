@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.Job;
 
 public interface JobHibernateDAO {
-	public Job createOrUpdate(Job job);
-	public Job read(int id);
-	public void delete(int id);
+	Job createOrUpdate(Job job);
+	Job read(int id);
+	void delete(int id);
 	
-	public ArrayList<Job> list(String name);
-	public ArrayList<Job> listStarted(String name);
-	public ArrayList<Job> listNotStarted(String name);
+	ArrayList<Job> list(String name);
+	ArrayList<Job> listStarted(String name);
+	ArrayList<Job> listNotStarted(String name);
 }

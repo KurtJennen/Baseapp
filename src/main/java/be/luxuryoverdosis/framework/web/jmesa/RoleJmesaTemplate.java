@@ -14,12 +14,12 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class RoleJmesaTemplate extends CustomTableFacadeTemplate {
 
-	public RoleJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public RoleJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayRole.title", BaseWebConstants.ROLE_IDS);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class RoleJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "security.name");
 	}

@@ -18,7 +18,7 @@ public class BatchStepExecutionServiceSpringImpl implements BatchStepExecutionSe
 	private BatchStepExecutionHibernateDAO batchStepExecutionHibernateDAO;
 	
 	@Transactional
-	public ArrayList<BatchStepExecution> list(long jobInstanceId) {
+	public ArrayList<BatchStepExecution> list(final long jobInstanceId) {
 		Logging.info(this, "Begin listBatchStepExecution");
 		ArrayList<BatchStepExecution> arrayList = null;
 		arrayList = batchStepExecutionHibernateDAO.list(jobInstanceId);

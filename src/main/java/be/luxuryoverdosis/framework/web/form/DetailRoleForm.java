@@ -16,25 +16,25 @@ public class DetailRoleForm extends BaseForm {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setName("");
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = new ActionErrors();
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE)) {
 			errors = super.validate(mapping, request);
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

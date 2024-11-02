@@ -1,6 +1,9 @@
 package be.luxuryoverdosis.framework.business.service;
 
 public class BaseSpringServiceConstants {
+	protected BaseSpringServiceConstants() {
+	}
+	
 	public static final String SEARCH_USER = "searchUser";
 	
 	public static final String DOCUMENT_SERVICE = "documentService";

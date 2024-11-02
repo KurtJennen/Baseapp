@@ -25,7 +25,7 @@ public class MenuForm extends BaseForm {
 	public int getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(final int userId) {
 		this.userId = userId;
 	}
 	public String[] getHidden() {
@@ -34,7 +34,7 @@ public class MenuForm extends BaseForm {
 	public JaNeeEnum[] getHiddenAsEnum() {
 		return JaNeeEnum.convert(hidden);
 	}
-	public void setHidden(String[] hidden) {
+	public void setHidden(final String[] hidden) {
 		this.hidden = hidden;
 	}
 	public String[] getDisabled() {
@@ -43,7 +43,7 @@ public class MenuForm extends BaseForm {
 	public JaNeeEnum[] getDisabledAsEnum() {
 		return JaNeeEnum.convert(disabled);
 	}
-	public void setDisabled(String[] disabled) {
+	public void setDisabled(final String[] disabled) {
 		this.disabled = disabled;
 	}
 	public String[] getForPay() {
@@ -52,7 +52,7 @@ public class MenuForm extends BaseForm {
 	public JaNeeEnum[] getForPayAsEnum() {
 		return JaNeeEnum.convert(forPay);
 	}
-	public void setForPay(String[] forPay) {
+	public void setForPay(final String[] forPay) {
 		this.forPay = forPay;
 	}
 	public String[] getPayed() {
@@ -61,31 +61,31 @@ public class MenuForm extends BaseForm {
 	public JaNeeEnum[] getPayedAsEnum() {
 		return JaNeeEnum.convert(payed);
 	}
-	public void setPayed(String[] payed) {
+	public void setPayed(final String[] payed) {
 		this.payed = payed;
 	}
 	public ArrayList<MenuDTO> getMenus() {
 		return menus;
 	}
-	public void setMenus(ArrayList<MenuDTO> menus) {
+	public void setMenus(final ArrayList<MenuDTO> menus) {
 		this.menus = menus;
 	}
 
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setUserId(-1);
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = new ActionErrors();
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE)) {
 			errors = super.validate(mapping, request);
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

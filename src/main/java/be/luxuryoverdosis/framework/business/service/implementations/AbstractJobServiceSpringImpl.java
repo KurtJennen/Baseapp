@@ -31,8 +31,8 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 	
 	private static final int LENGTH = 256;
 	
-	abstract public String getJobName();
-	abstract public void processFileJobBusiness(final Job job, final ArrayList<JobParam> jobParams);
+	public abstract String getJobName();
+	public abstract void processFileJobBusiness(Job job, ArrayList<JobParam> jobParams);
 	
 	public void processReadJob() {
 		Logging.info(this, "Begin processReadJob");
@@ -42,7 +42,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		
 		this.startReadJob(jobs);
 		
-		while(jobsIterator.hasNext()) {
+		while (jobsIterator.hasNext()) {
 			Job job = (Job) jobsIterator.next();
 			ArrayList<JobParam> jobParams = jobParamHibernateDAO.list(job.getId());
 			
@@ -60,7 +60,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		
 		Iterator<Job> jobsIterator = jobs.iterator();
 		
-		while(jobsIterator.hasNext()) {
+		while (jobsIterator.hasNext()) {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
@@ -77,7 +77,7 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		
 		Iterator<Job> jobsIterator = jobs.iterator();
 		
-		while(jobsIterator.hasNext()) {
+		while (jobsIterator.hasNext()) {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));
@@ -93,16 +93,16 @@ public abstract class AbstractJobServiceSpringImpl extends BaseService implement
 		StringBuffer recordBuffer = new StringBuffer();
 		StringBuffer outputBuffer = new StringBuffer();
 		
-		if(record != null) {
-			if(record.length() > LENGTH) {
+		if (record != null) {
+			if (record.length() > LENGTH) {
 				recordBuffer.append(record.substring(0, LENGTH));
 			} else {
 				recordBuffer.append(record);
 			}
 		}
 		
-		if(output != null) {
-			if(output.length() > LENGTH) {
+		if (output != null) {
+			if (output.length() > LENGTH) {
 				outputBuffer.append(output.substring(0, LENGTH));
 			} else {
 				outputBuffer.append(output);

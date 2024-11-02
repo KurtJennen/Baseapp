@@ -21,8 +21,8 @@ import be.luxuryoverdosis.framework.web.form.ListForm;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class BaseAction extends DispatchAction {
-	public int[] setIds(HttpServletRequest request, ArrayList<?> items, String nameIds) {
-		if(nameIds == null) {
+	public int[] setIds(final HttpServletRequest request, final ArrayList<?> items, final String nameIds) {
+		if (nameIds == null) {
 			return null;
 		}
 		
@@ -48,20 +48,20 @@ public class BaseAction extends DispatchAction {
 		return ids;
 	}
 	
-	public void setSelectedTab(ActionForm form, HttpServletRequest request) throws Exception {
+	public void setSelectedTab(final ActionForm form, final HttpServletRequest request) throws Exception {
 		BaseForm baseForm = (BaseForm) form;
 		
 		String selectedTab = request.getParameter(BaseWebConstants.SELECTED_TAB);
-		if(selectedTab != null) {
+		if (selectedTab != null) {
 			baseForm.setSelectedTab(Integer.parseInt(selectedTab));
 		}
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
        return read(mapping, form, request, response, BaseWebConstants.READ);
     }
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response, String forward) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response, final String forward) throws Exception {
         Logging.info(this, "Begin Read");
         
         ListForm listForm = (ListForm) form;

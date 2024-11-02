@@ -28,76 +28,76 @@ public class BaseForm extends ValidatorForm {
 	public int[] getIds() {
 		return ids;
 	}
-	public void setIds(int[] ids) {
+	public void setIds(final int[] ids) {
 		this.ids = ids;
 	}
     public int[] getSelectedIds() {
         return selectedIds;
     }
-    public void setSelectedIds(int[] selectedIds) {
+    public void setSelectedIds(final int[] selectedIds) {
         this.selectedIds = selectedIds;
     }
 	public int getSelectedTab() {
 		return selectedTab;
 	}
-	public void setSelectedTab(int selectedTab) {
+	public void setSelectedTab(final int selectedTab) {
 		this.selectedTab = selectedTab;
 	}
 	public int getSelectedTab1() {
 		return selectedTab1;
 	}
-	public void setSelectedTab1(int selectedTab1) {
+	public void setSelectedTab1(final int selectedTab1) {
 		this.selectedTab1 = selectedTab1;
 	}
 	public String getMethod() {
 		return method;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
 	public int getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 	public int getVersion() {
 		return version;
 	}
-	public void setVersion(int version) {
+	public void setVersion(final int version) {
 		this.version = version;
 	}
 	public int getDocumentId() {
 		return documentId;
 	}
-	public void setDocumentId(int documentId) {
+	public void setDocumentId(final int documentId) {
 		this.documentId = documentId;
 	}
 	public boolean isFirstVisible() {
 		return firstVisible;
 	}
-	public void setFirstVisible(boolean firstVisible) {
+	public void setFirstVisible(final boolean firstVisible) {
 		this.firstVisible = firstVisible;
 	}
 	public boolean isPreviousVisible() {
 		return previousVisible;
 	}
-	public void setPreviousVisible(boolean previousVisible) {
+	public void setPreviousVisible(final boolean previousVisible) {
 		this.previousVisible = previousVisible;
 	}
 	public boolean isNextVisible() {
 		return nextVisible;
 	}
-	public void setNextVisible(boolean nextVisible) {
+	public void setNextVisible(final boolean nextVisible) {
 		this.nextVisible = nextVisible;
 	}
 	public boolean isLastVisible() {
 		return lastVisible;
 	}
-	public void setLastVisible(boolean lastVisible) {
+	public void setLastVisible(final boolean lastVisible) {
 		this.lastVisible = lastVisible;
 	}
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setMethod("");
 		this.setSelectedTab(0);
@@ -110,11 +110,11 @@ public class BaseForm extends ValidatorForm {
 		this.setLastVisible(true);
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		ActionErrors errors = super.validate(mapping, request);
 		
-		if(this.getMethod().equals(BaseWebConstants.CREATE_DOCUMENT)) {
-			if(documentId < 0) {
+		if (this.getMethod().equals(BaseWebConstants.CREATE_DOCUMENT)) {
+			if (documentId < 0) {
 				errors.add("documentId", new ActionMessage("errors.required", MessageLocator.getMessage(request, "document")));
 			}
 		}
@@ -122,20 +122,20 @@ public class BaseForm extends ValidatorForm {
 		return errors;
 	}
 	
-	public void checkOnlyOneSelected(ActionMapping mapping, HttpServletRequest request, ActionErrors errors, String method, int[] ids) {
-		if(this.getMethod().equals(method)) {
-			if(ids == null || ids.length == 0) {
+	public void checkOnlyOneSelected(final ActionMapping mapping, final HttpServletRequest request, final ActionErrors errors, final String method, final int[] ids) {
+		if (this.getMethod().equals(method)) {
+			if (ids == null || ids.length == 0) {
 				errors.add("", new ActionMessage("errors.selected.one"));
 			}
-			if(ids != null && ids.length > 1) {
+			if (ids != null && ids.length > 1) {
 				errors.add("", new ActionMessage("errors.selected.more"));
 			}
 		}
 	}
 	
-	public void checkOnlyOneOrMoreSelected(ActionMapping mapping, HttpServletRequest request, ActionErrors errors, String method, int[] ids) {
-		if(this.getMethod().equals(method)) {
-			if(ids == null || ids.length == 0) {
+	public void checkOnlyOneOrMoreSelected(final ActionMapping mapping, final HttpServletRequest request, final ActionErrors errors, final String method, final int[] ids) {
+		if (this.getMethod().equals(method)) {
+			if (ids == null || ids.length == 0) {
 				errors.add("", new ActionMessage("errors.selected.one.more"));
 			}
 		}

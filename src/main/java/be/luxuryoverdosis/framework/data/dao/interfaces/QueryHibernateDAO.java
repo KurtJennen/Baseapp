@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.Query;
 
 public interface QueryHibernateDAO {
-	public Query createOrUpdate(Query query);
-	public Query read(int id);
-	public Query read(String name, String type, int userId);
-	public void delete(int id);
+	Query createOrUpdate(Query query);
+	Query read(int id);
+	Query read(String name, String type, int userId);
+	void delete(int id);
 	
-	public ArrayList<Query> list(String type, int userId);
+	ArrayList<Query> list(String type, int userId);
 	
-	public long count(String name, String type, int userId);
+	long count(String name, String type, int userId);
 }

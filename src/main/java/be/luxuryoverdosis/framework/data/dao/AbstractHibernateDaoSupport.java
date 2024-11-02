@@ -20,7 +20,7 @@ public abstract class AbstractHibernateDaoSupport extends HibernateDaoSupport {
 		return jdbcTemplate;
 	}
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+	public void setJdbcTemplate(final JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 

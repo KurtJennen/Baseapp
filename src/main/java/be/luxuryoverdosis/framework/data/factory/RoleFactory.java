@@ -3,7 +3,7 @@ package be.luxuryoverdosis.framework.data.factory;
 import be.luxuryoverdosis.framework.data.dto.RoleDTO;
 import be.luxuryoverdosis.framework.data.to.Role;
 
-public class RoleFactory {
+public final class RoleFactory {
 	private RoleFactory() {
 	}
 	
@@ -16,7 +16,7 @@ public class RoleFactory {
 	}
 	
 	public static Role produceRole(Role role, final RoleDTO roleDTO) {
-		if(role == null) {
+		if (role == null) {
 			role = new Role();
 		}
 		role.setId(roleDTO.getId());

@@ -43,7 +43,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		Logging.info(this, "Begin createDocumentDTO");
 
 		Document document = new Document();
-		if(documentDTO.getId() > 0) {
+		if (documentDTO.getId() > 0) {
 			document = this.read(documentDTO.getId());
 		}
 		document = DocumentFactory.produceDocument(document, documentDTO);
@@ -54,7 +54,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return this.readDTO(document.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public DocumentDTO readDTO(final int id) {
 		Logging.info(this, "Begin readDocumentDTO");
 		
@@ -69,19 +69,19 @@ public class DocumentServiceSpringImpl implements DocumentService {
 	@Transactional
 	public Document createOrUpdate(final Document document) {
 		Logging.info(this, "Begin createDocument");
-		if(documentHibernateDAO.count(document.getType(), document.getFileName(), document.getId()) > 0) {
+		if (documentHibernateDAO.count(document.getType(), document.getFileName(), document.getId()) > 0) {
 			throw new ServiceException("exists", new String[] {"table.document"});
 		}
-		if(StringUtils.isEmpty(document.getFileName())) {
+		if (StringUtils.isEmpty(document.getFileName())) {
 			throw new ServiceException("errors.required", new String[] {"file.name"});
 		}
-		if(document.getFileData() == null) {
+		if (document.getFileData() == null) {
 			throw new ServiceException("errors.required", new String[] {"file.data"});
 		}
-		if(StringUtils.isEmpty(document.getContentType())) {
+		if (StringUtils.isEmpty(document.getContentType())) {
 			throw new ServiceException("errors.required", new String[] {"file.contenttype"});
 		}
-		if(!document.getFileName().endsWith(FileType.ODT)) {
+		if (!document.getFileName().endsWith(FileType.ODT)) {
 			throw new ServiceException("ends.not.with", new String[] {"file"});
 		}
 		Document result = null;
@@ -90,7 +90,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Document read(final int id) {
 		Logging.info(this, "Begin readDocument");
 		Document result = null;
@@ -108,8 +108,8 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		Logging.info(this, "End deleteDocument");
 	}
 	
-	@Transactional(readOnly=true)
-	public byte[] downloadFile(int id){
+	@Transactional(readOnly = true)
+	public byte[] downloadFile(final int id) {
 		Logging.info(this, "Begin downloadFileDocument");
 		
 		Document document = documentHibernateDAO.read(id);
@@ -120,7 +120,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return fileData;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<DocumentDTO> listDTO() {
 		Logging.info(this, "Begin listJob");
 		ArrayList<DocumentDTO> arrayList = null;
@@ -129,7 +129,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Document> list(final String type) {
 		Logging.info(this, "Begin listJob");
 		ArrayList<Document> arrayList = null;
@@ -138,7 +138,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		return arrayList;
 	}
 
-	@SuppressWarnings({ "rawtypes" })
+	@SuppressWarnings({"rawtypes"})
 	public File createDocument(final Document document, final Object data, final Class clazz) {
 		try {
 			DocumentTemplateFactory documentTemplateFactory = new DocumentTemplateFactory();

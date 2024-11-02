@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.business.service.interfaces.UserService;
 import be.luxuryoverdosis.framework.business.thread.ThreadManager;
@@ -25,7 +26,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 import net.sf.navigator.menu.MenuRepository;
 
 public class LoginAction extends DispatchAction {
-	public ActionForward index(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward index(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Index");
 		
 		LoginForm loginForm = (LoginForm) form;
@@ -40,7 +41,7 @@ public class LoginAction extends DispatchAction {
 		return (mapping.getInputForward());
 	}
 	
-	public ActionForward login(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward login(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Login");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -55,17 +56,17 @@ public class LoginAction extends DispatchAction {
 		boolean activation = loginWrapperDTO.isActivation();
 		int days = loginWrapperDTO.getDays();
 		
-		if(userDTO == null) {
+		if (userDTO == null) {
 			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.user"));
 		}
-		if(userDTO != null && (!loginForm.getName().equals(userDTO.getName()) || !loginForm.getPassword().equals(userDTO.getPassword()))) {
+		if (userDTO != null && (!loginForm.getName().equals(userDTO.getName()) || !loginForm.getPassword().equals(userDTO.getPassword()))) {
 			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.name.or.password"));
 		}
-		if(days == 0 && activation) {
+		if (days == 0 && activation) {
 			return addActionMessage(mapping, request, actionMessages, MessageLocator.getMessage(request, "login.reset"));
 		}
 		
-		if(days > 0 && days <= UserService.DAYS_OF_WARNING && activation){			
+		if (days > 0 && days <= UserService.DAYS_OF_WARNING && activation) {			
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.warning", String.valueOf(days)));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.success", MessageLocator.getMessage(request, "login")));
@@ -73,7 +74,7 @@ public class LoginAction extends DispatchAction {
 		
 		SessionManager.putInSession(request, BaseWebConstants.USER, userDTO);
 		ThreadManager.setUserOnThread(userDTO);
-		request.getSession().setMaxInactiveInterval(60 * 60 * 1000);
+		request.getSession().setMaxInactiveInterval(BaseConstants.ZESTIG * BaseConstants.ZESTIG * BaseConstants.DUIZEND);
 		
 		request.getSession().getServletContext().setAttribute(MenuRepository.MENU_REPOSITORY_KEY, loginWrapperDTO.getMenuRepository());
 					
@@ -81,7 +82,7 @@ public class LoginAction extends DispatchAction {
 		return (mapping.findForward(BaseWebConstants.SUCCESS));
 	}
 
-	private ActionForward addActionMessage(ActionMapping mapping, HttpServletRequest request, ActionMessages actionMessages, String message) {
+	private ActionForward addActionMessage(final ActionMapping mapping, final HttpServletRequest request, final ActionMessages actionMessages, final String message) {
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("login.failed", message));
 		saveMessages(request, actionMessages);
 		request.setAttribute(BaseWebConstants.ERROR, 1);
@@ -89,7 +90,7 @@ public class LoginAction extends DispatchAction {
 		return (mapping.findForward(BaseWebConstants.FAILED));
 	}
 	
-	public ActionForward logout(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward logout(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Logout");
 		
 		LoginForm loginForm = (LoginForm) form;
@@ -102,7 +103,7 @@ public class LoginAction extends DispatchAction {
 		return new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 	}
 	
-	public ActionForward register(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward register(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Register");
 		Logging.info(this, "End Register Success");
 		

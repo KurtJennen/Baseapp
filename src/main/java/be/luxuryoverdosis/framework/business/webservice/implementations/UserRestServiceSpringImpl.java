@@ -30,13 +30,13 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 	@Resource
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin readRequest");
 		
 		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -49,13 +49,13 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readRequest(final String name, final String password) throws JsonProcessingException {
 		Logging.info(this, "Begin readRequest");
 		
 		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -71,13 +71,13 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 		return restWrapperDTO.sendRestWrapperDto();
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String readAllRequest() throws JsonProcessingException {
 		Logging.info(this, "Begin readAllRequest");
 		
 		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -94,7 +94,7 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 		
 		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -107,12 +107,12 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 	}
 
 	@Transactional
-	public String deleteRequest(int id) throws JsonProcessingException {
+	public String deleteRequest(final int id) throws JsonProcessingException {
 		Logging.info(this, "Begin deleteRequest");
 		
 		RestWrapperDTO<UserDTO> restWrapperDTO = createRestWrapperDTO();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			return checkUserOnThread(restWrapperDTO);
 		}
 		
@@ -126,7 +126,7 @@ public class UserRestServiceSpringImpl extends BaseRestService implements UserRe
 		return new RestWrapperDTO<UserDTO>();
 	}
 	
-	private UserDTO fillUserRoles(UserDTO userDTO) {
+	private UserDTO fillUserRoles(final UserDTO userDTO) {
 		userDTO.setRoles(new ArrayList<String>());
 		
 		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(userDTO.getId());

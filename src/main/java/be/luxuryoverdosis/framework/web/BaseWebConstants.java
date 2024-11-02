@@ -1,6 +1,8 @@
 package be.luxuryoverdosis.framework.web;
 
 public class BaseWebConstants {
+	protected BaseWebConstants() {
+	}
 	//Javascript
 	public static final String DO_ACTION = "doAction";
 	public static final String DO_ACTION_DETAIL = "doActionDetail";

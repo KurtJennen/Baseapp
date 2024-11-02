@@ -16,20 +16,21 @@ import org.jmesa.view.editor.BasicCellEditor;
 import org.jmesa.view.editor.CellEditor;
 import org.jmesa.view.editor.DateCellEditor;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class JobJmesaTemplate extends CustomTableFacadeTemplate {
-	public JobJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public JobJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJob.title", BaseWebConstants.JOB_IDS);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[2]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[3]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.TWEE]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.DRIE]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 	
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "job.name");
 		teller = setTitleKeyRow(row, teller, "file.name");
@@ -56,8 +57,8 @@ public class JobJmesaTemplate extends CustomTableFacadeTemplate {
 		teller = setTitleKeyRow(row, teller, "job.status");
 		
 		status.getCellRenderer().setCellEditor(new CellEditor() {
-		    public Object getValue(Object item, String property, int rowcount) {
-		    	JobStatusEnum value = (JobStatusEnum)new BasicCellEditor().getValue(item, property, rowcount);
+		    public Object getValue(final Object item, final String property, final int rowcount) {
+		    	JobStatusEnum value = (JobStatusEnum) new BasicCellEditor().getValue(item, property, rowcount);
 		        
 				return BaseSpringServiceLocator.getMessage("JobStatusEnum." + value.getCode());
 		    }

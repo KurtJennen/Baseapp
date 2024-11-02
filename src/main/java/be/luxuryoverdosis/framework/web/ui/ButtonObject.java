@@ -12,43 +12,43 @@ public class ButtonObject {
 	public String getButtonType() {
 		return buttonType;
 	}
-	public void setButtonType(String buttonType) {
+	public void setButtonType(final String buttonType) {
 		this.buttonType = buttonType;
 	}
 	public String getMethod() {
 		return method;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
 	public String getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
 	public String getTitle() {
 		return title;
-	}
-	public void setTitle(String title) {
+	} 
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 	public boolean isShowKey() {
 		return showKey;
 	}
-	public void setShowKey(boolean showKey) {
+	public void setShowKey(final boolean showKey) {
 		this.showKey = showKey;
 	}
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 	public String getDialogId() {
 		return dialogId;
 	}
-	public void setDialogId(String dialogId) {
+	public void setDialogId(final String dialogId) {
 		this.dialogId = dialogId;
 	}
 	

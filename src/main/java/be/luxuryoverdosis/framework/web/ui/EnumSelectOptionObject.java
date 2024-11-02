@@ -8,19 +8,19 @@ public class EnumSelectOptionObject {
 	public String getKey() {
 		return key;
 	}
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
 	public String getKeyMessage() {
 		return keyMessage;
 	}
-	public void setKeyMessage(String keyMessage) {
+	public void setKeyMessage(final String keyMessage) {
 		this.keyMessage = keyMessage;
 	}
 	public boolean isSelected() {
 		return selected;
 	}
-	public void setSelected(boolean selected) {
+	public void setSelected(final boolean selected) {
 		this.selected = selected;
 	}
 	

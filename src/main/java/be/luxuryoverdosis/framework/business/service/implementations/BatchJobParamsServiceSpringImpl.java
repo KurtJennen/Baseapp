@@ -18,7 +18,7 @@ public class BatchJobParamsServiceSpringImpl implements BatchJobParamsService {
 	private BatchJobParamsHibernateDAO batchJobParamsHibernateDAO;
 	
 	@Transactional(readOnly = true)
-	public ArrayList<BatchJobParams> list(long jobInstanceId) {
+	public ArrayList<BatchJobParams> list(final long jobInstanceId) {
 		Logging.info(this, "Begin listBatchJobParams");
 		ArrayList<BatchJobParams> arrayList = null;
 		arrayList = batchJobParamsHibernateDAO.list(jobInstanceId);

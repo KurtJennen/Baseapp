@@ -11,18 +11,18 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 public class ListForm extends BaseForm {
     private static final long serialVersionUID = 1L;
     
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
+    public void reset(final ActionMapping mapping, final HttpServletRequest request) {
         super.reset(mapping, request);
     }
     
-    public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+    public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
         Logging.info(this, "Begin Validating");
         
         ActionErrors errors = super.validate(mapping, request);
         
         super.checkOnlyOneSelected(mapping, request, errors, BaseWebConstants.READ, getSelectedIds());
         
-        if(errors.size() > 0) {
+        if (errors.size() > 0) {
             request.setAttribute(BaseWebConstants.ERROR, 1);
         }
             

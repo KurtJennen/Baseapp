@@ -12,7 +12,7 @@ public enum JaNeeEnum {
 	private static final List<String> JA_NEE_CODES = new ArrayList<String>();
 	
 	static {
-		for(JaNeeEnum value : values()) {
+		for (JaNeeEnum value : values()) {
 			JA_NEE_CODES.add(value.getCode());
 		}
 	}
@@ -27,7 +27,7 @@ public enum JaNeeEnum {
 		return BaseSpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 	
-	private JaNeeEnum (String code) {
+	JaNeeEnum(final String code) {
 		this.code = code;
 	}
 	
@@ -35,9 +35,9 @@ public enum JaNeeEnum {
 		return JA_NEE_CODES;
 	}
 	
-	public static JaNeeEnum convert(String code) {
+	public static JaNeeEnum convert(final String code) {
 		for (JaNeeEnum jaNeeEnum: values()) {
-			if(jaNeeEnum.getCode().equals(code)) {
+			if (jaNeeEnum.getCode().equals(code)) {
 				return jaNeeEnum;
 			}
 		}
@@ -45,8 +45,8 @@ public enum JaNeeEnum {
 		return JaNeeEnum.NEE;
 	}
 	
-	public static JaNeeEnum[] convert(String[] array) {
-		JaNeeEnum jaNeeEnum[] = new JaNeeEnum[array.length];
+	public static JaNeeEnum[] convert(final String[] array) {
+		JaNeeEnum[] jaNeeEnum = new JaNeeEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
 			jaNeeEnum[i] = convert(array[i]);

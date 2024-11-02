@@ -12,54 +12,54 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="batch_job_instance")
+@Table(name = "batch_job_instance")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME),
-	@NamedQuery(name=BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER, query=BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER),
-	@NamedQuery(name=BatchJobInstance.DELETE_BATCH_JOB_INSTANCES_BY_ID, query=BatchJobInstance.Queries.DELETE_BATCH_JOB_INSTANCES_BY_ID)
+	@NamedQuery(name = BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME, query = BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME),
+	@NamedQuery(name = BatchJobInstance.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER, query = BatchJobInstance.Queries.SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER),
+	@NamedQuery(name = BatchJobInstance.DELETE_BATCH_JOB_INSTANCES_BY_ID, query = BatchJobInstance.Queries.DELETE_BATCH_JOB_INSTANCES_BY_ID)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchJobInstance {
 	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME = "selectBatchJobInstancesByJobName";
 	public static final String SELECT_BATCH_JOB_INSTANCES_BY_JOB_NAME_AND_JOB_PARAMETER = "selectBatchJobInstancesByJobNameAndJobParameter";
 	public static final String DELETE_BATCH_JOB_INSTANCES_BY_ID = "deleteBatchJobInstancesById";
 	
 	@Id
-	@Column(name="Job_Instance_Id")
+	@Column(name = "Job_Instance_Id")
 	private long id;
 	
-	@Column(name="Version")
+	@Column(name = "Version")
 	private long version;
 	
-	@Column(name="Job_Name")
+	@Column(name = "Job_Name")
 	private String jobName;
 	
-	@Column(name="Job_Key")
+	@Column(name = "Job_Key")
 	private String jobKey;
 	
 	public long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(final long id) {
 		this.id = id;
 	}
 	public long getVersion() {
 		return version;
 	}
-	public void setVersion(long version) {
+	public void setVersion(final long version) {
 		this.version = version;
 	}
 	public String getJobName() {
 		return jobName;
 	}
-	public void setJobName(String jobName) {
+	public void setJobName(final String jobName) {
 		this.jobName = jobName;
 	}
 	public String getJobKey() {
 		return jobKey;
 	}
-	public void setJobKey(String jobKey) {
+	public void setJobKey(final String jobKey) {
 		this.jobKey = jobKey;
 	}
 	

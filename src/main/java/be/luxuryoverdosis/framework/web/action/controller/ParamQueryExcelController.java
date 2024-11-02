@@ -18,8 +18,8 @@ public class ParamQueryExcelController {
 
     @RequestMapping(value = "/export", method = RequestMethod.POST)
     public @ResponseBody
-    String excel(String excel, String extension, HttpServletRequest request) throws IOException {
-        String filename="";
+    String excel(final String excel, final String extension, final HttpServletRequest request) throws IOException {
+        String filename = "";
         if (extension.equals("csv") || extension.equals("xml")) {
             filename = "pqGrid." + extension;
             HttpSession ses = request.getSession(true);
@@ -29,7 +29,7 @@ public class ParamQueryExcelController {
     }
 
     @RequestMapping(value = "/export", method = RequestMethod.GET)
-    public void excel(String filename, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void excel(final String filename, final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         if (filename.equals("pqGrid.csv") || filename.equals("pqGrid.xml")) {
             HttpSession ses = request.getSession(true);
             String excel = (String) ses.getAttribute("excel");
@@ -38,8 +38,7 @@ public class ParamQueryExcelController {
                     
             response.setContentType("text/plain");
             
-            response.setHeader("Content-Disposition",
-                    "attachment;filename=" + filename);
+            response.setHeader("Content-Disposition", "attachment;filename=" + filename);
             response.setContentLength(bytes.length);
             ServletOutputStream out = response.getOutputStream();
             out.write(bytes);

@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.Config;
 import be.luxuryoverdosis.framework.logging.Logging;
 
@@ -18,22 +19,21 @@ public abstract class BaseSpringServiceLocator {
 	public BaseSpringServiceLocator() {
 		try {
 			setApplicationContext(new ClassPathXmlApplicationContext(getConfigLocations()));
-		}
-		catch (BeansException e) {
+		} catch (BeansException e) {
 			e.printStackTrace();
 		}
 		Logging.debug(this, "Initializing applicationContext");
 	}
 	
-	public static Object getBean(String beanName) {
+	public static Object getBean(final String beanName) {
 		return BaseSpringServiceLocator.getApplicationContext().getBean(beanName);
 	}
 	
-	public static <T> T getBean(Class<T> beanClass) {
+	public static <T> T getBean(final Class<T> beanClass) {
 		return BaseSpringServiceLocator.getApplicationContext().getBean(beanClass);
 	}
 	
-	public static void setApplicationContext(ApplicationContext applicationContext) {
+	public static void setApplicationContext(final ApplicationContext applicationContext) {
 		BaseSpringServiceLocator.applicationContext = applicationContext;
 	}
 
@@ -41,34 +41,36 @@ public abstract class BaseSpringServiceLocator {
 		return applicationContext;
 	}
 	
-	public static String getMessage(String key) {
+	public static String getMessage(final String key) {
 		return getMessage(key, null, null);
 	}
 	
-	public static String getMessage(String key, Object[] arg) {
+	public static String getMessage(final String key, final Object[] arg) {
 		return getMessage(key, arg, null);
 	}
 	
-	public static String getMessage(String key, Object[] arg, Locale locale) {
-		if(locale == null) {
-			String fmt_locale = (String) Config.getInstance().getValue(javax.servlet.jsp.jstl.core.Config.FMT_LOCALE);
-			if(fmt_locale.length() == 2) {
-				locale = new Locale(fmt_locale.substring(0, 2));
+	public static String getMessage(final String key, final Object[] arg, final Locale locale) {
+		Locale l = locale;
+		
+		if (l == null) {
+			String fmtLocale = (String) Config.getInstance().getValue(javax.servlet.jsp.jstl.core.Config.FMT_LOCALE);
+			if (fmtLocale.length() == BaseConstants.TWEE) {
+				l = new Locale(fmtLocale.substring(BaseConstants.NUL, BaseConstants.TWEE));
 			}
-			if(fmt_locale.length() == 5) {
-				locale = new Locale(fmt_locale.substring(0, 2), fmt_locale.substring(3, 5));
+			if (fmtLocale.length() == BaseConstants.VIJF) {
+				l = new Locale(fmtLocale.substring(BaseConstants.NUL, BaseConstants.TWEE), fmtLocale.substring(BaseConstants.DRIE, BaseConstants.VIJF));
 			}
-			if(fmt_locale.length() == 8) {
-				locale = new Locale(fmt_locale.substring(0, 2), fmt_locale.substring(3, 5), fmt_locale.substring(6, 8));
+			if (fmtLocale.length() == BaseConstants.ACHT) {
+				l = new Locale(fmtLocale.substring(BaseConstants.NUL, BaseConstants.TWEE), fmtLocale.substring(BaseConstants.DRIE, BaseConstants.VIJF), fmtLocale.substring(BaseConstants.ZES, BaseConstants.ACHT));
 			}
-			if(locale == null) {
-				locale = Locale.getDefault();
+			if (l == null) {
+				l = Locale.getDefault();
 			}
 		}
 		
 		
 		try {
-			return applicationContext.getMessage(key, arg, locale);
+			return applicationContext.getMessage(key, arg, l);
 		} catch (NoSuchMessageException e) {
 			return key;
 		}

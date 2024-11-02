@@ -20,7 +20,7 @@ import be.luxuryoverdosis.framework.data.restwrapperdto.RestWrapperDTO;
 @CrossOrigin(origins = {"${rest.origin}"})
 public class GetUserRest {
 	@RequestMapping(value = "/readRequest", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String readRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getUserRestService().readRequest(id);
 		} catch (Exception e) {
@@ -29,7 +29,7 @@ public class GetUserRest {
 	}
 	
 	@RequestMapping(value = "/readRequestName", method = RequestMethod.GET, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String readRequestName(@RequestParam(value="name") String name, @RequestParam(value="password") String password) throws JsonProcessingException {
+	public String readRequestName(@RequestParam(value = "name") final String name, @RequestParam(value = "password") final String password) throws JsonProcessingException {
 		try {
 			return getUserRestService().readRequest(name, password);
 		} catch (Exception e) {
@@ -48,7 +48,7 @@ public class GetUserRest {
 	}
 
 	@RequestMapping(value = "/createOrUpdateRequest", method = {RequestMethod.PUT, RequestMethod.POST}, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String createOrUpdateRequest(@RequestBody() UserDTO userDTO) throws JsonProcessingException {
+	public String createOrUpdateRequest(@RequestBody() final UserDTO userDTO) throws JsonProcessingException {
 		try {
 			return getUserRestService().createOrUpdateRequest(userDTO);
 		} catch (Exception e) {
@@ -57,7 +57,7 @@ public class GetUserRest {
 	}
 	
 	@RequestMapping(value = "/deleteRequest", method = RequestMethod.DELETE, produces = FileContentType.REST_RESPONSE_JSON_UTF8)
-	public String deleteRequest(@RequestParam(value="id") int id) throws JsonProcessingException {
+	public String deleteRequest(@RequestParam(value = "id") final int id) throws JsonProcessingException {
 		try {
 			return getUserRestService().deleteRequest(id);
 		} catch (Exception e) {
@@ -69,7 +69,7 @@ public class GetUserRest {
 		return BaseSpringServiceLocator.getBean(UserRestService.class);
 	}
 	
-	private String createWrapperDTO(Exception e) throws JsonProcessingException {
+	private String createWrapperDTO(final Exception e) throws JsonProcessingException {
 		RestWrapperDTO<UserDTO> restWrapperDTO = new RestWrapperDTO<UserDTO>();
 		return restWrapperDTO.sendRestErrorWrapperDto(e.getMessage());
 	}	

@@ -5,5 +5,5 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.dto.SearchDTO;
 
 public interface SearchHibernateDAO {
-	public ArrayList<Object> search(String select, ArrayList<SearchDTO> searchDTOs);
+	ArrayList<Object> search(String select, ArrayList<SearchDTO> searchDTOs);
 }

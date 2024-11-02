@@ -27,40 +27,40 @@ public class EnumRadio extends CommonTag {
 	private EnumRadioObject enumRadioObject;
 	private ArrayList<EnumRadioInputObject> inputs;
 	
-	public void setClazz(String clazz) {
+	public void setClazz(final String clazz) {
 		this.clazz = clazz;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
-	public void setProperty(String property) {
+	public void setProperty(final String property) {
 		this.property = property;
 	}
-	public void setTabindex(String tabindex) {
+	public void setTabindex(final String tabindex) {
 		this.tabindex = tabindex;
 	}
-	public void setValue(String value) {
+	public void setValue(final String value) {
 		this.value = value;
 	}
-	public void setDisabled(boolean disabled) {
+	public void setDisabled(final boolean disabled) {
 		this.disabled = disabled;
 	}
 	
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 			
 			enumRadioObject = new EnumRadioObject();
 			inputs = new ArrayList<EnumRadioInputObject>();
 			
 			List<String> keyList = getKeysForClass();
-			for(String key : keyList) {
+			for (String key : keyList) {
 				EnumRadioInputObject enumRadioObject = new EnumRadioInputObject();
 				enumRadioObject.setProperty(property);
 				enumRadioObject.setTabindex(tabindex);
 				enumRadioObject.setValue(key);
 				enumRadioObject.setDisabled(disabled);
-				if(key.equals(value)) {
+				if (key.equals(value)) {
 					enumRadioObject.setChecked(true);
 				}
 				enumRadioObject.setKeyMessage(getKeyMessage(request, key));
@@ -69,13 +69,12 @@ public class EnumRadio extends CommonTag {
 			}
 			
 			enumRadioObject.setInputs(inputs);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_BUFFERED;
 	}
 
-	private String getKeyMessage(HttpServletRequest request, String key) {
+	private String getKeyMessage(final HttpServletRequest request, final String key) {
 		String[] keys = clazz.split("\\.");
 		String keyLabel = MessageLocator.getMessage(request, keys[keys.length - 1] + BaseConstants.POINT + key);
 		return keyLabel;
@@ -92,11 +91,10 @@ public class EnumRadio extends CommonTag {
 
 	public int doEndTag() throws JspException {
 		try {
-			if(isEnabled()) {
+			if (isEnabled()) {
 				produceTemplate("enumRadioTemplate.ftl", enumRadioObject);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

@@ -19,49 +19,49 @@ public class RestWrapperDTO<T> {
 	public ArrayList<String> getErrors() {
 		return errors;
 	}
-	public void setErrors(ArrayList<String> errors) {
+	public void setErrors(final ArrayList<String> errors) {
 		this.errors = errors;
 	}
 	public ArrayList<String> getMessages() {
 		return messages;
 	}
-	public void setMessages(ArrayList<String> messages) {
+	public void setMessages(final ArrayList<String> messages) {
 		this.messages = messages;
 	}
 	public T getDto() {
 		return dto;
 	}
-	public void setDto(T dto) {
+	public void setDto(final T dto) {
 		this.dto = dto;
 	}
 	public ArrayList<T> getDtoList() {
 		return dtoList;
 	}
-	public void setDtoList(ArrayList<T> dtoList) {
+	public void setDtoList(final ArrayList<T> dtoList) {
 		this.dtoList = dtoList;
 	}
 	public HashMap<String, ArrayList<? extends BaseDTO>> getLists() {
 		return lists;
 	}
-	public void setLists(HashMap<String, ArrayList<? extends BaseDTO>> lists) {
+	public void setLists(final HashMap<String, ArrayList<? extends BaseDTO>> lists) {
 		this.lists = lists;
 	}
-	public void addList(String name, ArrayList<? extends BaseDTO> list) {
+	public void addList(final String name, final ArrayList<? extends BaseDTO> list) {
 		this.lists.put(name, list);
 	}
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	
-	public String sendRestMessageWrapperDto(String message) throws JsonProcessingException {
+	public String sendRestMessageWrapperDto(final String message) throws JsonProcessingException {
 		messages.add(message);
 		return sendRestWrapperDto();
 	}
 	
-	public String sendRestErrorWrapperDto(String error) throws JsonProcessingException {
+	public String sendRestErrorWrapperDto(final String error) throws JsonProcessingException {
 		errors.add(error);
 		return sendRestWrapperDto();
 	}

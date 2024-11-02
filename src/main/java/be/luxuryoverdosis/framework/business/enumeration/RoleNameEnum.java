@@ -13,7 +13,7 @@ public enum RoleNameEnum {
 	private static final List<String> ROLE_CODES = new ArrayList<String>();
 	
 	static {
-		for(RoleNameEnum value : values()) {
+		for (RoleNameEnum value : values()) {
 			ROLE_CODES.add(value.getCode());
 		}
 	}
@@ -25,27 +25,18 @@ public enum RoleNameEnum {
 	public int getType() {
 		return type;
 	}
-	public void setType(int type) {
-		this.type = type;
-	}
 	public String getCode() {
 		return code;
 	}
-	public void setCode(String code) {
-		this.code = code;
-	}
 	public int getRang() {
 		return rang;
-	}
-	public void setRang(int rang) {
-		this.rang = rang;
 	}
 
 	public String getCodeAsKey() {
 		return SpringServiceLocator.getMessage(this.getClass().getSimpleName() + "." + code);
 	}
 	
-	private RoleNameEnum(int type, String code, int rang) {
+	RoleNameEnum(final int type, final String code, final  int rang) {
 		this.type = type;
 		this.code = code;
 		this.rang = rang;
@@ -55,9 +46,9 @@ public enum RoleNameEnum {
 		return ROLE_CODES;
 	}
 	
-	public static RoleNameEnum convert(String code) {
+	public static RoleNameEnum convert(final String code) {
 		for (RoleNameEnum roleEnum: values()) {
-			if(roleEnum.getCode().equals(code)) {
+			if (roleEnum.getCode().equals(code)) {
 				return roleEnum;
 			}
 		}
@@ -65,8 +56,8 @@ public enum RoleNameEnum {
 		return RoleNameEnum.NORMALEGEBRUIKER;
 	}
 	
-	public static RoleNameEnum[] convert(String[] array) {
-		RoleNameEnum roleEnum[] = new RoleNameEnum[array.length];
+	public static RoleNameEnum[] convert(final String[] array) {
+		RoleNameEnum[] roleEnum = new RoleNameEnum[array.length];
 		
 		for (int i = 0; i < array.length; i++) {
 			roleEnum[i] = convert(array[i]);

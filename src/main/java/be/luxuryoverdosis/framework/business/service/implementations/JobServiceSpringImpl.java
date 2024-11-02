@@ -58,7 +58,7 @@ public class JobServiceSpringImpl implements JobService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Job read(final int id) {
 		Logging.info(this, "Begin readJob");
 		Job result = null;
@@ -90,11 +90,11 @@ public class JobServiceSpringImpl implements JobService {
 			
 			int jobId = -1;
 			
-			if(batchJobParams != null) {
-				jobId = (int)batchJobParams.getLongValue();
+			if (batchJobParams != null) {
+				jobId = (int) batchJobParams.getLongValue();
 			}
-			if(batchJobExecutionParams != null) {
-				jobId = (int)batchJobExecutionParams.getLongValue();
+			if (batchJobExecutionParams != null) {
+				jobId = (int) batchJobExecutionParams.getLongValue();
 			}
 			this.delete(jobId);
 			
@@ -112,8 +112,8 @@ public class JobServiceSpringImpl implements JobService {
 		Logging.info(this, "End deleteJob");
 	}
 	
-	@Transactional(readOnly=true)
-	public Job downloadFile(int jobInstanceId){
+	@Transactional(readOnly = true)
+	public Job downloadFile(final int jobInstanceId) {
 		Logging.info(this, "Begin downloadFileJob");
 		
 		Job job = null;
@@ -123,14 +123,14 @@ public class JobServiceSpringImpl implements JobService {
 		BatchJobExecution batchJobExecution = batchJobExecutionHibernateDAO.read(jobInstanceId);
 		BatchJobExecutionParams batchJobExecutionParams = batchJobExecutionParamsHibernateDAO.read(batchJobExecution.getId(), BaseConstants.JOB_ID);
 		
-		if(batchJobParams != null) {
-			job = jobHibernateDAO.read((int)batchJobParams.getLongValue());
+		if (batchJobParams != null) {
+			job = jobHibernateDAO.read((int) batchJobParams.getLongValue());
 			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 			job.setFileData(bytes);
 		}
 		
-		if(batchJobExecutionParams != null) {
-			job = jobHibernateDAO.read((int)batchJobExecutionParams.getLongValue());
+		if (batchJobExecutionParams != null) {
+			job = jobHibernateDAO.read((int) batchJobExecutionParams.getLongValue());
 			byte[] bytes = BlobTool.convertBlobToBytes(job.getFile());
 			job.setFileData(bytes);
 		}
@@ -140,7 +140,7 @@ public class JobServiceSpringImpl implements JobService {
 		return job;
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Job> list(final String name) {
 		Logging.info(this, "Begin listJob");
 		ArrayList<Job> arrayList = null;
@@ -149,11 +149,11 @@ public class JobServiceSpringImpl implements JobService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Job> list(final String name, final boolean started) {
 		Logging.info(this, "Begin listJob");
 		ArrayList<Job> arrayList = null;
-		if(started) {
+		if (started) {
 			arrayList = jobHibernateDAO.listStarted(name);
 		} else {
 			arrayList = jobHibernateDAO.listNotStarted(name);
@@ -163,7 +163,7 @@ public class JobServiceSpringImpl implements JobService {
 		return arrayList;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public DetailJobWrapperDTO getDetailJobWrapperDTO(final int jobInstanceId) {
 		Logging.info(this, "Begin getDetailJobWrapperDTO(int)");
 		DetailJobWrapperDTO detailJobWrapperDTO = new DetailJobWrapperDTO();
@@ -186,7 +186,7 @@ public class JobServiceSpringImpl implements JobService {
 		
 		Iterator<Job> jobsIterator = jobs.iterator();
 		
-		while(jobsIterator.hasNext()) {
+		while (jobsIterator.hasNext()) {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setStarted(new Date(Calendar.getInstance().getTimeInMillis()));
@@ -203,7 +203,7 @@ public class JobServiceSpringImpl implements JobService {
 		
 		Iterator<Job> jobsIterator = jobs.iterator();
 		
-		while(jobsIterator.hasNext()) {
+		while (jobsIterator.hasNext()) {
 			Job job = (Job) jobsIterator.next();
 			
 			job.setEnded(new Date(Calendar.getInstance().getTimeInMillis()));

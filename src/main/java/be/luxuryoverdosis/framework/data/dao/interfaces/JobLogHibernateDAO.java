@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 
 public interface JobLogHibernateDAO {
-	public JobLog createOrUpdate(JobLog jobLog);
-	public JobLog read(int id);
-	public void delete(int id);
-	public void deleteForJob(int jobId);
+	JobLog createOrUpdate(JobLog jobLog);
+	JobLog read(int id);
+	void delete(int id);
+	void deleteForJob(int jobId);
 	
-	public ArrayList<JobLog> list(int jobId);
+	ArrayList<JobLog> list(int jobId);
 }

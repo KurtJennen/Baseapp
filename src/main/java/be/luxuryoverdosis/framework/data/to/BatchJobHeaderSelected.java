@@ -9,17 +9,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="batch_job_hdr_selected")
+@Table(name = "batch_job_hdr_selected")
 @Access(AccessType.FIELD)
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchJobHeaderSelected extends BaseTO {
-	@Column(name="Job_Name")
+	@Column(name = "Job_Name")
 	private String jobName;
 
 	public String getJobName() {
 		return jobName;
 	}
-	public void setJobName(String jobName) {
+	public void setJobName(final String jobName) {
 		this.jobName = jobName;
 	}
 	

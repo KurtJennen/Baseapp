@@ -6,7 +6,7 @@ import org.quartz.JobExecutionException;
 
 public class BaseappJob implements Job {
 	
-	public void execute(JobExecutionContext arg0) throws JobExecutionException {
+	public void execute(final JobExecutionContext arg0) throws JobExecutionException {
 	}
 
 }

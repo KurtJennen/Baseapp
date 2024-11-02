@@ -8,7 +8,7 @@ import be.luxuryoverdosis.framework.data.to.BatchStepExecution;
 import be.luxuryoverdosis.framework.data.to.JobLog;
 
 public class DetailJobWrapperDTO {
-	byte[] fileData;
+	private byte[] fileData;
 	private String fileName;
 	private String jobName;
 	private ArrayList<BatchJobParams> batchJobParamsList = new ArrayList<BatchJobParams>();
@@ -19,43 +19,43 @@ public class DetailJobWrapperDTO {
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	public String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 	public String getJobName() {
 		return jobName;
 	}
-	public void setJobName(String jobName) {
+	public void setJobName(final String jobName) {
 		this.jobName = jobName;
 	}
 	public ArrayList<BatchJobParams> getBatchJobParamsList() {
 		return batchJobParamsList;
 	}
-	public void setBatchJobParamsList(ArrayList<BatchJobParams> batchJobParamsList) {
+	public void setBatchJobParamsList(final ArrayList<BatchJobParams> batchJobParamsList) {
 		this.batchJobParamsList = batchJobParamsList;
 	}
 	public ArrayList<BatchJobExecutionParams> getBatchJobExecutionParamsList() {
 		return batchJobExecutionParamsList;
 	}
-	public void setBatchJobExecutionParamsList(ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList) {
+	public void setBatchJobExecutionParamsList(final ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList) {
 		this.batchJobExecutionParamsList = batchJobExecutionParamsList;
 	}
 	public ArrayList<BatchStepExecution> getBatchStepExecutionList() {
 		return batchStepExecutionList;
 	}
-	public void setBatchStepExecutionList(ArrayList<BatchStepExecution> batchStepExecutionList) {
+	public void setBatchStepExecutionList(final ArrayList<BatchStepExecution> batchStepExecutionList) {
 		this.batchStepExecutionList = batchStepExecutionList;
 	}
 	public ArrayList<JobLog> getJobLogList() {
 		return jobLogList;
 	}
-	public void setJobLogList(ArrayList<JobLog> jobLogList) {
+	public void setJobLogList(final ArrayList<JobLog> jobLogList) {
 		this.jobLogList = jobLogList;
 	}
 }

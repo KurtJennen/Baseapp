@@ -18,18 +18,18 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class ApplicationExceptionHandler extends ExceptionHandler {
 
-	public ActionForward execute(Exception ex, ExceptionConfig ae, ActionMapping mapping, ActionForm formInstance, HttpServletRequest request, HttpServletResponse response) throws ServletException {
+	public ActionForward execute(final Exception ex, final ExceptionConfig ae, final ActionMapping mapping, final ActionForm formInstance, final HttpServletRequest request, final HttpServletResponse response) throws ServletException {
 		ActionMessages actionMessages = new ActionMessages();
 		
 		String destination = Globals.ERROR_KEY;
 		ActionForward actionForward = mapping.findForward(BaseWebConstants.FAILED);
 				
 		
-		if(ex instanceof ServiceException) {
+		if (ex instanceof ServiceException) {
 			ServiceException sex = (ServiceException) ex;
 			destination = Globals.MESSAGE_KEY;
 			
-			if(sex.getValues() == null) {
+			if (sex.getValues() == null) {
 				actionMessages.add(destination, new ActionMessage(sex.getKey()));
 			} else {
 				String[] messages = new String[sex.getValues().length];
@@ -46,11 +46,11 @@ public class ApplicationExceptionHandler extends ExceptionHandler {
 			actionForward = mapping.getInputForward();
 
 			request.setAttribute(BaseWebConstants.ERROR, 1);
-		} else if(ex instanceof ApplicationException) {
+		} else if (ex instanceof ApplicationException) {
 			ApplicationException aex = (ApplicationException) ex;
 			actionMessages.add(destination, new ActionMessage(aex.getApplicationMessage()));
 		} else {
-			actionMessages.add(destination, new ActionMessage(ex.fillInStackTrace().toString() , false));
+			actionMessages.add(destination, new ActionMessage(ex.fillInStackTrace().toString(), false));
 			for (int i = 0; i < ex.getStackTrace().length; i++) {
 				StackTraceElement element = ex.getStackTrace()[i];
 				actionMessages.add(destination, new ActionMessage(element.toString(), false));

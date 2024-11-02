@@ -38,21 +38,21 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 	@Resource
 	private UserRoleHibernateDAO userRoleHibernateDAO;
 	
-	@Transactional(readOnly=true)
-	public ReadUserResponse readUserRequest(ReadUserRequest request) {
+	@Transactional(readOnly = true)
+	public ReadUserResponse readUserRequest(final ReadUserRequest request) {
 		Logging.info(this, "Begin readUserRequest");
 		
 		ReadUserResponse readUserResponse = new ReadUserResponse();
 		Message message = new Message();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
 			readUserResponse.setMessage(message);
 			return readUserResponse;
 		}
 		
 		User user = userService.readName(request.getName());
-		if(user != null) {
+		if (user != null) {
 			be.luxuryoverdosis.generated.user.schema.v1.User userWs = createUser(user);
 			
 			readUserResponse.setUser(userWs);
@@ -68,14 +68,14 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		return readUserResponse;
 	}
 	
-	@Transactional(readOnly=true)
-	public ReadAllUsersResponse readAllUsersRequest(ReadAllUsersRequest request) {
+	@Transactional(readOnly = true)
+	public ReadAllUsersResponse readAllUsersRequest(final ReadAllUsersRequest request) {
 		Logging.info(this, "Begin readAllUsersRequest");
 		
 		ReadAllUsersResponse readAllUsersResponse = new ReadAllUsersResponse();
 		Message message = new Message();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
 			readAllUsersResponse.setMessage(message);
 			return readAllUsersResponse;
@@ -96,13 +96,13 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 	}
 
 	@Transactional
-	public CreateOrUpdateUserResponse createOrUpdateUserRequest(CreateOrUpdateUserRequest request) {
+	public CreateOrUpdateUserResponse createOrUpdateUserRequest(final CreateOrUpdateUserRequest request) {
 		Logging.info(this, "Begin createOrUpdateUserRequest");
 		
 		CreateOrUpdateUserResponse createOrUpdateUserResponse = new CreateOrUpdateUserResponse();
 		Message message = new Message();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
 			createOrUpdateUserResponse.setMessage(message);
 			return createOrUpdateUserResponse;
@@ -113,7 +113,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		be.luxuryoverdosis.generated.user.schema.v1.User userWs = request.getUser();
 		
 		User user = userService.readName(userWs.getName());
-		if(user == null) {
+		if (user == null) {
 			user = new User();
 			user.setId(-1);
 			isNew = true;
@@ -147,13 +147,13 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 	}
 
 	@Transactional
-	public DeleteUserResponse deleteUserRequest(DeleteUserRequest request) {
+	public DeleteUserResponse deleteUserRequest(final DeleteUserRequest request) {
 		Logging.info(this, "Begin deleteUserRequest");
 		
 		DeleteUserResponse deleteUserResponse = new DeleteUserResponse();
 		Message message = new Message();
 		
-		if(ThreadManager.getUserFromThread() == null) {
+		if (ThreadManager.getUserFromThread() == null) {
 			message.setMessage(BaseSpringServiceLocator.getMessage("security.access.denied"));
 			deleteUserResponse.setMessage(message);
 			return deleteUserResponse;
@@ -161,7 +161,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		
 		User user = userService.readName(request.getName());
 		
-		if(user != null) {
+		if (user != null) {
 			userService.delete(user.getId());
 			message.setMessage(BaseSpringServiceLocator.getMessage("delete.success", new Object[]{BaseSpringServiceLocator.getMessage("table.user")}));
 		} else {
@@ -175,7 +175,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		return deleteUserResponse;
 	}
 	
-	private be.luxuryoverdosis.generated.user.schema.v1.User createUser(User user) {
+	private be.luxuryoverdosis.generated.user.schema.v1.User createUser(final User user) {
 		be.luxuryoverdosis.generated.user.schema.v1.User userWs = new be.luxuryoverdosis.generated.user.schema.v1.User();
 		//userWs.setDateExpiration(user.getDateExpiration());
 		userWs.setEmail(user.getEmail());
@@ -188,7 +188,7 @@ public class UserEndpointServiceSpringImpl implements UserEndpointService {
 		return userWs;
 	}
 
-	private void fillUserRoles(User user, be.luxuryoverdosis.generated.user.schema.v1.User userWs) {
+	private void fillUserRoles(final User user, final be.luxuryoverdosis.generated.user.schema.v1.User userWs) {
 		Roles roles = new Roles();
 		ArrayList<UserRoleDTO> userRolesList = userRoleHibernateDAO.listDTO(user.getId());
 		for (UserRoleDTO userRoleDTO : userRolesList) {

@@ -13,18 +13,18 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_number")
+@Table(name = "base_number")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Number.SELECT_NUMBERS, query=Number.Queries.SELECT_NUMBERS),
-	@NamedQuery(name=Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query=Number.Queries.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE),
-	@NamedQuery(name=Number.COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query=Number.Queries.COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE),
+	@NamedQuery(name = Number.SELECT_NUMBERS, query = Number.Queries.SELECT_NUMBERS),
+	@NamedQuery(name = Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query = Number.Queries.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE),
+	@NamedQuery(name = Number.COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query = Number.Queries.COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE),
 })
 @NamedNativeQueries({
-	@NamedNativeQuery(name=Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE, query=Number.NativeQueries.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE),
-	@NamedNativeQuery(name=Number.UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query=Number.NativeQueries.UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE)
+	@NamedNativeQuery(name = Number.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE, query = Number.NativeQueries.SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE_FOR_UPDATE),
+	@NamedNativeQuery(name = Number.UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE, query = Number.NativeQueries.UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Number extends BaseTO {
 	public static final String SELECT_NUMBERS = "selectNumbers";
 	public static final String SELECT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE = "selectNumbersByApplicationCodeAndYearAndType";
@@ -32,40 +32,40 @@ public class Number extends BaseTO {
 	public static final String UPDATE_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE = "updateNumbersByApplicationCodeAndYearAndType";
 	public static final String COUNT_NUMBERS_BY_APPLICATION_CODE_AND_YEAR_AND_TYPE = "countNumbersByApplicationCodeAndYearAndType";
 	
-	@Column(name="AppCode")
+	@Column(name = "AppCode")
 	private String applicationCode;
 	
-	@Column(name="Year")
+	@Column(name = "Year")
 	private String year;
 	
-	@Column(name="Number")
+	@Column(name = "Number")
 	private int number;
 	
-	@Column(name="Type")
+	@Column(name = "Type")
 	private String type;
 	
 	public String getApplicationCode() {
 		return applicationCode;
 	}
-	public void setApplicationCode(String applicationCode) {
+	public void setApplicationCode(final String applicationCode) {
 		this.applicationCode = applicationCode;
 	}
 	public String getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(final String year) {
 		this.year = year;
 	}
 	public int getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(final int number) {
 		this.number = number;
 	}
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 	

@@ -60,7 +60,7 @@ public class UserServiceSpringImplTest {
 	private MenuService menuService;
 	
 	@Mock
-	JavaMailSender javaMailSender;
+	private JavaMailSender javaMailSender;
 	
 	@Before
 	public void before() {
@@ -78,7 +78,7 @@ public class UserServiceSpringImplTest {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserRole();
 		UserDTO userDTO = UserDTOMother.produceUserDTO();
-		MimeMessage msg = new MimeMessage((Session)null);
+		MimeMessage msg = new MimeMessage((Session) null);
 		
 		when(roleHibernateDAO.read(anyInt())).thenReturn(role);
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
@@ -112,7 +112,7 @@ public class UserServiceSpringImplTest {
 	public void testCreateOrUpdate() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUser();
-		MimeMessage msg = new MimeMessage((Session)null);
+		MimeMessage msg = new MimeMessage((Session) null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
@@ -147,7 +147,7 @@ public class UserServiceSpringImplTest {
 	public void testCreateOrUpdateDate() {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserDate();
-		MimeMessage msg = new MimeMessage((Session)null);
+		MimeMessage msg = new MimeMessage((Session) null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(roleHibernateDAO.readName(anyObject())).thenReturn(role);
@@ -165,7 +165,7 @@ public class UserServiceSpringImplTest {
 	@Test
 	public void testCreateOrUpdateRole() {
 		User user = UserMother.produceUserRole();
-		MimeMessage msg = new MimeMessage((Session)null);
+		MimeMessage msg = new MimeMessage((Session) null);
 		
 		when(userHibernateDAO.count(anyString(), anyInt())).thenReturn(0L);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);
@@ -253,7 +253,7 @@ public class UserServiceSpringImplTest {
 		Role role = RoleMother.produceRole();
 		User user = UserMother.produceUserDate();
 		UserRole userRole = UserRoleMother.produceUserRole();
-		MimeMessage msg = new MimeMessage((Session)null);
+		MimeMessage msg = new MimeMessage((Session) null);
 		
 		when(userHibernateDAO.read(anyInt())).thenReturn(user);
 		when(userHibernateDAO.createOrUpdate(anyObject())).thenReturn(user);

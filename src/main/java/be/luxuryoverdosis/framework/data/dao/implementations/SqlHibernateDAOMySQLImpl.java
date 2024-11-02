@@ -37,8 +37,8 @@ public class SqlHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implem
 		ArrayList<Sql> arrayList = (ArrayList<Sql>) query.list();
 		
 		Sql sql = null;
-		if(!arrayList.isEmpty()) {
-			sql = (Sql)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			sql = (Sql) arrayList.iterator().next();
 		}
 		Logging.info(this, "End readNameSql");
 		return sql;

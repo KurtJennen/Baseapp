@@ -24,13 +24,13 @@ import net.sf.navigator.menu.MenuRepository;
 
 public class MenuAction extends DispatchAction {
 	
-	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages, ActionForm form) throws Exception {
+	private void storeListsInSession(final HttpServletRequest request, final ActionMessages actionMessages, final ActionForm form) throws Exception {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
 		UserDTO userDTO = ThreadManager.getUserFromThread();
 		
 		MenuForm menuForm = (MenuForm) form;
-		if(menuForm.getUserId() < 0) {
+		if (menuForm.getUserId() < 0) {
 			menuForm.setUserId(userDTO.getId());
 		}
 		
@@ -43,7 +43,7 @@ public class MenuAction extends DispatchAction {
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.user")));
 	}
 	
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -56,7 +56,7 @@ public class MenuAction extends DispatchAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward changeUser(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward changeUser(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ChangeUser");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -67,7 +67,7 @@ public class MenuAction extends DispatchAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward update(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -84,14 +84,14 @@ public class MenuAction extends DispatchAction {
 		return list(mapping, menuForm, request, response);
 	}
 	
-	public ActionForward disabled(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward disabled(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Disabled");
 		Logging.info(this, "End Disabled");
 		
 		return mapping.findForward(BaseWebConstants.DISABLED);
 	}
 	
-	public ActionForward forPay(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward forPay(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ForPay");
 		Logging.info(this, "End ForPay");
 		
@@ -102,7 +102,7 @@ public class MenuAction extends DispatchAction {
 		return BaseSpringServiceLocator.getBean(MenuService.class);
 	}
 	
-	private MenuRepository getMenuRepository(HttpServletRequest request) {
+	private MenuRepository getMenuRepository(final HttpServletRequest request) {
 		return (MenuRepository) request.getSession().getServletContext().getAttribute(MenuRepository.MENU_REPOSITORY_KEY);
 	}
 

@@ -21,7 +21,7 @@ import be.luxuryoverdosis.framework.web.action.ajaxaction.AjaxAction;
 import be.luxuryoverdosis.framework.web.form.KeycloakForm;
 
 public class KeycloakAction extends AjaxAction {
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -33,7 +33,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward configuration(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward configuration(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Configuration");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -49,7 +49,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward authentication(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward authentication(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Authentication");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -61,7 +61,7 @@ public class KeycloakAction extends AjaxAction {
 		return new ActionForward(getKeycloackRestServiceClient().authenticationUrl(keycloakDTO), true);
 	}
 	
-	public ActionForward afterAuthentication(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward afterAuthentication(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin AfterAuthentication");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -73,7 +73,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward token(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward token(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Token");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -81,8 +81,8 @@ public class KeycloakAction extends AjaxAction {
 		TokenDTO tokenDTO = getKeycloackRestServiceClient().tokenUrl(fillDTO(keycloakForm));
 		
 		keycloakForm.setTokenResult(tokenDTO.getTokenResult());
-		keycloakForm.setRefreshToken(tokenDTO.getRefresh_token());
-		keycloakForm.setIdToken(tokenDTO.getId_token());
+		keycloakForm.setRefreshToken(tokenDTO.getRefreshToken());
+		keycloakForm.setIdToken(tokenDTO.getIdToken());
 		keycloakForm.setIdTokenHeader(tokenDTO.getIdTokenHeader());
 		keycloakForm.setIdTokenPayload(tokenDTO.getIdTokenPayload());
 		keycloakForm.setIdTokenSignature(tokenDTO.getIdTokenSignature());
@@ -92,7 +92,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward refresh(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward refresh(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Refresh");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -106,7 +106,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward userinfo(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward userinfo(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Userinfo");
 		
 		KeycloakForm keycloakForm = (KeycloakForm) form;
@@ -120,7 +120,7 @@ public class KeycloakAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	private KeycloakDTO fillDTO(KeycloakForm keycloakForm) throws JsonParseException, JsonMappingException, IOException {
+	private KeycloakDTO fillDTO(final KeycloakForm keycloakForm) throws JsonParseException, JsonMappingException, IOException {
 		KeycloakDTO keycloakDTO = new KeycloakDTO();
 		keycloakDTO.setDefaultUri(keycloakForm.getDefaultUri());
 		

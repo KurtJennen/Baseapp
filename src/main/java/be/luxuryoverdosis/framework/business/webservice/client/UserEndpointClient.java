@@ -10,9 +10,11 @@ import be.luxuryoverdosis.generated.user.schema.v1.ReadUserResponse;
 import be.luxuryoverdosis.generated.user.schema.v1.Role;
 import be.luxuryoverdosis.generated.user.schema.v1.User;
 
-public class UserEndpointClient {
-
-	public static void main(String[] args) {
+public final class UserEndpointClient {
+	private UserEndpointClient() {
+	}
+	
+	public static void main(final String[] args) {
 		SpringServiceLocator.getSpringServiceLocator();
 		
 		//ReadUserRequest
@@ -23,8 +25,8 @@ public class UserEndpointClient {
 		//ReadAllUsersRequest
 		ReadAllUsersResponse readAllUsersResponse = getUserEndpointServiceClient().readAllUsersRequest();
 		printMessage(readAllUsersResponse.getMessage());
-		if(readAllUsersResponse.getUser() != null) {
-			for(User user : readAllUsersResponse.getUser()) {
+		if (readAllUsersResponse.getUser() != null) {
+			for (User user : readAllUsersResponse.getUser()) {
 				print(user);
 			}
 		}
@@ -39,19 +41,19 @@ public class UserEndpointClient {
 		
 	}
 	
-	private static void print(User user) {
+	private static void print(final User user) {
 		System.out.println(user.getName());
 		System.out.println(user.getUserName());
 		System.out.println(user.getDateExpiration());
 		System.out.println(user.getEmail());
 		System.out.println(user.getEncryptedPassword());
 		
-		for(Role role : user.getRoles().getRole()) {
+		for (Role role : user.getRoles().getRole()) {
 			System.out.println(role.getName());
 		}
 	}
 
-	private static void printMessage(Message message) {
+	private static void printMessage(final Message message) {
 		System.out.println(message.getMessage());
 	}
 	

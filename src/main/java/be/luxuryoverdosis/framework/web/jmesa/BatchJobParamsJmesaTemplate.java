@@ -12,18 +12,19 @@ import org.jmesa.core.filter.MatcherKey;
 import org.jmesa.facade.TableFacade;
 import org.jmesa.view.component.Row;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.tool.DateTool;
 
 public class BatchJobParamsJmesaTemplate extends CustomTableFacadeTemplate {
 
-	public BatchJobParamsJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public BatchJobParamsJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayJobParams.title");
 		setClickable(false);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
-		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[3]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
+		filterMatchers.put(new MatcherKey(Date.class, getColumnProperties()[BaseConstants.DRIE]), new DateFilterMatcher(DateTool.UTIL_DATETIME_PATTERN));
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class BatchJobParamsJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "batchjobparams.type.code");
 		teller = setTitleKeyRow(row, teller, "batchjobparams.key.name");

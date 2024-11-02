@@ -26,38 +26,38 @@ public class Button extends CommonTag {
 	private ButtonObject buttonObject;
 	private UiDialogObject uiDialogObject;
 	
-	public void setButtonType(ButtonTypeEnum buttonType) {
+	public void setButtonType(final ButtonTypeEnum buttonType) {
 		this.buttonType = buttonType;
 	}
-	public void setMethod(String method) {
+	public void setMethod(final String method) {
 		this.method = method;
 	}
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
-	public void setKey(String key) {
+	public void setKey(final String key) {
 		this.key = key;
 	}
-	public void setShowKey(boolean showKey) {
+	public void setShowKey(final boolean showKey) {
 		this.showKey = showKey;
 	}
-	public void setMessageKey(String messageKey) {
+	public void setMessageKey(final String messageKey) {
 		this.messageKey = messageKey;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
-	public void setDialogId(String dialogId) {
+	public void setDialogId(final String dialogId) {
 		this.dialogId = dialogId;
 	}
 	
 	public int doStartTag() throws JspException {
 		try {
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 			
 			buttonObject = new ButtonObject();
 			buttonObject.setButtonType(buttonType.getCode());
-			if(StringUtils.contains(method, BaseWebConstants.DELETE)) {
+			if (StringUtils.contains(method, BaseWebConstants.DELETE)) {
 				buttonObject.setButtonType(ButtonTypeEnum.CONFIRM.getCode());
 			}
 			buttonObject.setMethod(method);
@@ -67,7 +67,7 @@ public class Button extends CommonTag {
 			buttonObject.setType(type);
 			buttonObject.setDialogId(dialogId);
 			
-			if(ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
+			if (ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
 				buttonObject.setType("button");
 				
 				uiDialogObject = new UiDialogObject();
@@ -88,27 +88,25 @@ public class Button extends CommonTag {
 				uiDialogObject.setDefaultNoButton(true);
 				
 				Object dialog = request.getAttribute(id + StringUtils.capitalize(BaseWebConstants.DIALOG));
-				if(dialog != null && (boolean)dialog) {
+				if (dialog != null && (boolean) dialog) {
 					uiDialogObject.setAutoOpen(true);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_BUFFERED;
 	}
 
 	public int doEndTag() throws JspException {
 		try {
-			if(isEnabled()) {
+			if (isEnabled()) {
 				produceTemplate("buttonTemplate.ftl", buttonObject);
 				
-				if(ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
+				if (ButtonTypeEnum.CONFIRM.getCode().equals(buttonObject.getButtonType())) {
 					produceTemplate("uiConfirmDialogTemplate.ftl", uiDialogObject);
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

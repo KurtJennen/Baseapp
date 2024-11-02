@@ -38,11 +38,11 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class DetailJobAction extends AjaxAction {	
 	
-	private void storeDetailListsInSession(HttpServletRequest request, HttpServletResponse response, int jobInstanceId) {
+	private void storeDetailListsInSession(final HttpServletRequest request, final HttpServletResponse response, final int jobInstanceId) {
 		SessionManager.putInSession(request, BaseWebConstants.JOB_ID, jobInstanceId);
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		
 		ActionMessages actionMessages = new ActionMessages();
@@ -51,7 +51,7 @@ public class DetailJobAction extends AjaxAction {
 		storeDetailListsInSession(request, response, jobInstanceId);
 		
 		BatchJobInstance batchJobInstance = getBatchJobInstanceService().read(jobInstanceId);
-		JobForm jobForm = (JobForm)form;
+		JobForm jobForm = (JobForm) form;
 		jobForm.setJobName(batchJobInstance.getJobName());
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.job")));
@@ -62,10 +62,10 @@ public class DetailJobAction extends AjaxAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward back(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward back(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Back");
 		
-		String jobNiveau = (String)SessionManager.getFromSession(request, BaseWebConstants.JOB_NIVEAU);
+		String jobNiveau = (String) SessionManager.getFromSession(request, BaseWebConstants.JOB_NIVEAU);
 		
 		ActionRedirect redirect = new ActionRedirect(mapping.findForward(BaseWebConstants.BACK + StringTool.toCamelCase(jobNiveau)));
 			
@@ -74,10 +74,10 @@ public class DetailJobAction extends AjaxAction {
 		return redirect;
 	}
 
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward delete(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin delete");
 		
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
 		getJobService().delete(new int[] {jobInstanceId});
 		
@@ -86,10 +86,10 @@ public class DetailJobAction extends AjaxAction {
 		return back(mapping, form, request, response);
 	}
 	
-	public void downloadFile(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void downloadFile(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin downloadFile");
 		
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
 		Job job = getJobService().downloadFile(jobInstanceId);
 		byte[] bytes = job.getFileData();
@@ -99,7 +99,7 @@ public class DetailJobAction extends AjaxAction {
 		Logging.info(this, "End downloadFile");
 	}
 	
-	public void downloadFileLog(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void downloadFileLog(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin downloadFileLog");
 
 		int jobLogId = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
@@ -112,10 +112,10 @@ public class DetailJobAction extends AjaxAction {
 		Logging.info(this, "End downloadFileLog");
 	}
 	
-	public ActionForward ajaxBatchJobParamsList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxBatchJobParamsList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
         Logging.info(this, "Begin Ajax");
         
-        int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+        int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
         
         ArrayList<BatchJobParams> batchJobParamsList = getBatchJobParamsService().list(jobInstanceId);
         if (batchJobParamsList.size() > 0) {
@@ -127,10 +127,10 @@ public class DetailJobAction extends AjaxAction {
         return null;
     }
 	
-	public ActionForward ajaxBatchJobExecutionParamsList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxBatchJobExecutionParamsList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
 		ArrayList<BatchJobExecutionParams> batchJobExecutionParamsList = getBatchJobExecutionParamsService().list(jobInstanceId);
 		if (batchJobExecutionParamsList.size() > 0) {
@@ -142,10 +142,10 @@ public class DetailJobAction extends AjaxAction {
 		return null;
 	}
 	
-	public ActionForward ajaxBatchJobStepExecutionList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxBatchJobStepExecutionList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
 		ArrayList<BatchStepExecution> batchJobStepExecutionList = getBatchStepExecutionService().list(jobInstanceId);
 		if (batchJobStepExecutionList.size() > 0) {
@@ -157,10 +157,10 @@ public class DetailJobAction extends AjaxAction {
 		return null;
 	}
 	
-	public ActionForward ajaxJobLogList(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxJobLogList(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
-		int jobInstanceId = (Integer)SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
+		int jobInstanceId = (Integer) SessionManager.getFromSession(request, BaseWebConstants.JOB_ID);
 		
 		ArrayList<JobLog> joblogList = getJobLogService().listForBatch(jobInstanceId);
 		if (joblogList.size() > 0) {

@@ -1,26 +1,36 @@
 package be.luxuryoverdosis.framework.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TokenPayloadDTO extends BaseDTO {
 	private String exp;
 	private String iat;
-	private String auth_time;
+	@JsonProperty(value = "auth_time")
+	private String authTime;
 	private String jti;
 	private String iss;
 	private String aud;
 	private String sub;
 	private String typ;
 	private String azp;
-	private String session_state;
-	private String at_hash;
+	@JsonProperty(value = "session_state")
+	private String sessionState;
+	@JsonProperty(value = "at_hash")
+	private String atHash;
 	private String acr;
 	private String sid;
-	private String email_verified;
-	private Object realm_access;
+	@JsonProperty(value = "email_verified")
+	private String emailVerified;
+	@JsonProperty(value = "realm_access")
+	private Object realmAccess;
 	private String name;
-	private String preferred_username;
+	@JsonProperty(value = "preferred_username")
+	private String preferredUsername;
 	private String myotherclaim;
-	private String given_name;
-	private String family_name;
+	@JsonProperty(value = "given_name")
+	private String givenName;
+	@JsonProperty(value = "family_name")
+	private String familyName;
 	private String email;
 	private String picture;
 	
@@ -33,141 +43,140 @@ public class TokenPayloadDTO extends BaseDTO {
 	public String getExp() {
 		return exp;
 	}
-	public void setExp(String exp) {
+	public void setExp(final String exp) {
 		this.exp = exp;
 	}
 	public String getIat() {
 		return iat;
 	}
-	public void setIat(String iat) {
+	public void setIat(final String iat) {
 		this.iat = iat;
 	}
-	public String getAuth_time() {
-		return auth_time;
+	public String getAuthTime() {
+		return authTime;
 	}
-	public void setAuth_time(String auth_time) {
-		this.auth_time = auth_time;
+	public void setAuthTime(final String authTime) {
+		this.authTime = authTime;
 	}
 	public String getJti() {
 		return jti;
 	}
-	public void setJti(String jti) {
+	public void setJti(final String jti) {
 		this.jti = jti;
 	}
 	public String getIss() {
 		return iss;
 	}
-	public void setIss(String iss) {
+	public void setIss(final String iss) {
 		this.iss = iss;
 	}
 	public String getAud() {
 		return aud;
 	}
-	public void setAud(String aud) {
+	public void setAud(final String aud) {
 		this.aud = aud;
 	}
 	public String getSub() {
 		return sub;
 	}
-	public void setSub(String sub) {
+	public void setSub(final String sub) {
 		this.sub = sub;
 	}
 	public String getTyp() {
 		return typ;
 	}
-	public void setTyp(String typ) {
+	public void setTyp(final String typ) {
 		this.typ = typ;
 	}
 	public String getAzp() {
 		return azp;
 	}
-	public void setAzp(String azp) {
+	public void setAzp(final String azp) {
 		this.azp = azp;
 	}
-	public String getSession_state() {
-		return session_state;
+	public String getSessionState() {
+		return sessionState;
 	}
-	public void setSession_state(String session_state) {
-		this.session_state = session_state;
+	public void setSessionState(final String sessionState) {
+		this.sessionState = sessionState;
 	}
-	public String getAt_hash() {
-		return at_hash;
+	public String getAtHash() {
+		return atHash;
 	}
-	public void setAt_hash(String at_hash) {
-		this.at_hash = at_hash;
+	public void setAtHash(final String atHash) {
+		this.atHash = atHash;
 	}
 	public String getAcr() {
 		return acr;
 	}
-	public void setAcr(String acr) {
+	public void setAcr(final String acr) {
 		this.acr = acr;
 	}
 	public String getSid() {
 		return sid;
 	}
-	public void setSid(String sid) {
+	public void setSid(final String sid) {
 		this.sid = sid;
 	}
-	public String getEmail_verified() {
-		return email_verified;
+	public String getEmailVerified() {
+		return emailVerified;
 	}
-	public void setEmail_verified(String email_verified) {
-		this.email_verified = email_verified;
+	public void setEmailVerified(final String emailVerified) {
+		this.emailVerified = emailVerified;
 	}
-	public Object getRealm_access() {
-		return realm_access;
+	public Object getRealmAccess() {
+		return realmAccess;
 	}
-	public void setRealm_access(Object realm_access) {
-		this.realm_access = realm_access;
+	public void setRealmAccess(final Object realmAccess) {
+		this.realmAccess = realmAccess;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
-	public String getPreferred_username() {
-		return preferred_username;
+	public String getPreferredUsername() {
+		return preferredUsername;
 	}
-	public void setPreferred_username(String preferred_username) {
-		this.preferred_username = preferred_username;
+	public void setPreferredUsername(final String preferredUsername) {
+		this.preferredUsername = preferredUsername;
 	}
 	public String getMyotherclaim() {
 		return myotherclaim;
 	}
-	public void setMyotherclaim(String myotherclaim) {
+	public void setMyotherclaim(final String myotherclaim) {
 		this.myotherclaim = myotherclaim;
 	}
-	public String getGiven_name() {
-		return given_name;
+	public String getGivenName() {
+		return givenName;
 	}
-	public void setGiven_name(String given_name) {
-		this.given_name = given_name;
+	public void setGivenName(final String givenName) {
+		this.givenName = givenName;
 	}
-	public String getFamily_name() {
-		return family_name;
+	public String getFamilyName() {
+		return familyName;
 	}
-	public void setFamily_name(String family_name) {
-		this.family_name = family_name;
+	public void setFamilyName(final String familyName) {
+		this.familyName = familyName;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 	public String getPicture() {
 		return picture;
 	}
-	public void setPicture(String picture) {
+	public void setPicture(final String picture) {
 		this.picture = picture;
 	}
 
 	public String getMyattribute() {
 		return myattribute;
 	}
-	public void setMyattribute(String myattribute) {
+	public void setMyattribute(final String myattribute) {
 		this.myattribute = myattribute;
 	}
-
 }

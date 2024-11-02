@@ -10,31 +10,31 @@ public class NavigationObject {
 	public String getAction() {
 		return action;
 	}
-	public void setAction(String action) {
+	public void setAction(final String action) {
 		this.action = action;
 	}
 	public String getNameIds() {
 		return nameIds;
 	}
-	public void setNameIds(String nameIds) {
+	public void setNameIds(final String nameIds) {
 		this.nameIds = nameIds;
 	}
 	public boolean isVisible() {
 		return visible;
 	}
-	public void setVisible(boolean visible) {
+	public void setVisible(final boolean visible) {
 		this.visible = visible;
 	}
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 	public String getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(final String image) {
 		this.image = image;
 	}
 	

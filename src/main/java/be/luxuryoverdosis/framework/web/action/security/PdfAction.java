@@ -17,7 +17,7 @@ import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class PdfAction extends DispatchAction {
 		
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		ActionMessages actionMessages = new ActionMessages();
 		

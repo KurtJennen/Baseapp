@@ -4,15 +4,15 @@ import javax.persistence.AttributeConverter;
 
 import be.luxuryoverdosis.framework.business.enumeration.JobStatusEnum;
 
-public class JobStatusConvertor implements AttributeConverter<JobStatusEnum, String>{
+public class JobStatusConvertor implements AttributeConverter<JobStatusEnum, String> {
 
 	@Override
-	public String convertToDatabaseColumn(JobStatusEnum attribute) {
+	public String convertToDatabaseColumn(final JobStatusEnum attribute) {
 		return attribute.getCode();
 	}
 
 	@Override
-	public JobStatusEnum convertToEntityAttribute(String attribute) {
+	public JobStatusEnum convertToEntityAttribute(final String attribute) {
 		return JobStatusEnum.convert(attribute);
 	}
 

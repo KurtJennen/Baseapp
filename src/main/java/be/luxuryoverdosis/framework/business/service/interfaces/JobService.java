@@ -6,17 +6,17 @@ import be.luxuryoverdosis.framework.data.to.Job;
 import be.luxuryoverdosis.framework.data.wrapperdto.DetailJobWrapperDTO;
 
 public interface JobService {
-	public Job createOrUpdate(Job job);
-	public Job read(int id);
-	public void delete(int jobId);
-	public void delete(int[] jobInstanceId);
-	public Job downloadFile(int jobInstanceId);
+	Job createOrUpdate(Job job);
+	Job read(int id);
+	void delete(int jobId);
+	void delete(int[] jobInstanceId);
+	Job downloadFile(int jobInstanceId);
 	
-	public ArrayList<Job> list(String name);
-	public ArrayList<Job> list(String name, boolean started);
+	ArrayList<Job> list(String name);
+	ArrayList<Job> list(String name, boolean started);
 	
-	public DetailJobWrapperDTO getDetailJobWrapperDTO(int jobInstanceId);
+	DetailJobWrapperDTO getDetailJobWrapperDTO(int jobInstanceId);
 	
-	public void startJobs(ArrayList<Job> jobs);
-	public void endJobs(ArrayList<Job> jobs);
+	void startJobs(ArrayList<Job> jobs);
+	void endJobs(ArrayList<Job> jobs);
 }

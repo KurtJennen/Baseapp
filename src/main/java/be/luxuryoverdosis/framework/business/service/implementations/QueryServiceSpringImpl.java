@@ -36,7 +36,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		UserDTO userDTO = ThreadManager.getUserFromThread();
 		
 		Query query = this.read(queryDTO.getName(), queryDTO.getType(), userDTO.getId());
-		if(query == null) {
+		if (query == null) {
 			query = new Query();
 		}
 		query.setName(queryDTO.getName());
@@ -48,17 +48,17 @@ public class QueryServiceSpringImpl implements QueryService {
 		
 		queryParamHibernateDAO.deleteForQuery(query.getId());
 		
-		for(int i = 0; i < queryDTO.getNames().length; i++) {
-			if(!queryDTO.getNames()[i].equals(SearchQuery.MINUS_ONE)) {
+		for (int i = 0; i < queryDTO.getNames().length; i++) {
+			if (!queryDTO.getNames()[i].equals(SearchQuery.MINUS_ONE)) {
 				QueryParam queryParam = new QueryParam();
 				queryParam.setQuery(query);
 				queryParam.setName(queryDTO.getNames()[i]);
 				queryParam.setOperator(queryDTO.getOperators()[i]);
 				queryParam.setValue(queryDTO.getValues()[i]);
-				if(queryDTO.getComplex().equals(SearchQuery.ONE)) {
+				if (queryDTO.getComplex().equals(SearchQuery.ONE)) {
 					queryParam.setOpenBracket(queryDTO.getOpenBrackets()[i]);
 					queryParam.setCloseBracket(queryDTO.getCloseBrackets()[i]);
-					if(i > 0) {
+					if (i > 0) {
 						queryParam.setAddAndOr(queryDTO.getAddAndOrs()[i - 1]);
 					}					
 				}
@@ -70,7 +70,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return this.readDTO(query.getId());
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public QueryDTO readDTO(final int id) {
 		Logging.info(this, "Begin readQueryDTO");
 		
@@ -82,7 +82,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		queryDTO.setOperators(this.readOperators(id));
 		queryDTO.setValues(this.readValues(id));
 		
-		if(SearchQuery.ZERO.equals(query.getComplex())) {
+		if (SearchQuery.ZERO.equals(query.getComplex())) {
 			queryDTO.setAddAndOrs(null);
 			queryDTO.setOpenBrackets(null);
 			queryDTO.setCloseBrackets(null);
@@ -105,7 +105,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Query read(final int id) {
 		Logging.info(this, "Begin readQuery");
 		Query result = null;
@@ -114,7 +114,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Query read(final String name, final String type, final int userId) {
 		Logging.info(this, "Begin readQuery");
 		Query result = null;
@@ -123,7 +123,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return result;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readNames(final int id) {
 		Logging.info(this, "Begin readNamesQuery");
 		
@@ -133,8 +133,8 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] names = new String[queryParameters.size()];
 		int teller = 0;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
 			names[teller] = queryParam.getName();
 			teller++;
 		}
@@ -143,7 +143,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return names;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readOperators(final int id) {
 		Logging.info(this, "Begin readOperatorsQuery");
 		
@@ -153,8 +153,8 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] operators = new String[queryParameters.size()];
 		int teller = 0;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
 			operators[teller] = queryParam.getOperator();
 			teller++;
 		}
@@ -163,7 +163,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return operators;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readValues(final int id) {
 		Logging.info(this, "Begin readValuesQuery");
 		
@@ -173,8 +173,8 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] values = new String[queryParameters.size()];
 		int teller = 0;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
 			values[teller] = queryParam.getValue();
 			teller++;
 		}
@@ -183,7 +183,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return values;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readAddAndOrs(final int id) {
 		Logging.info(this, "Begin readAddAndOrsQuery");
 		
@@ -193,9 +193,9 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] addAndOrs = new String[queryParameters.size()];
 		int teller = -1;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
-			if(teller >= 0) {
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
+			if (teller >= 0) {
 				addAndOrs[teller] = queryParam.getAddAndOr();
 			}
 			teller++;
@@ -205,7 +205,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return addAndOrs;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readOpenBrackets(final int id) {
 		Logging.info(this, "Begin readOpenBracketsQuery");
 		
@@ -215,8 +215,8 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] openBrackets = new String[queryParameters.size()];
 		int teller = 0;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
 			openBrackets[teller] = queryParam.getOpenBracket();
 			teller++;
 		}
@@ -225,7 +225,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		return openBrackets;
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public String[] readCloseBrackets(final int id) {
 		Logging.info(this, "Begin readCloseBracketsQuery");
 		
@@ -235,8 +235,8 @@ public class QueryServiceSpringImpl implements QueryService {
 		String[] closeBrackets = new String[queryParameters.size()];
 		int teller = 0;
 		
-		while(iterator.hasNext()) {
-			QueryParam queryParam = (QueryParam)iterator.next();
+		while (iterator.hasNext()) {
+			QueryParam queryParam = (QueryParam) iterator.next();
 			closeBrackets[teller] = queryParam.getCloseBracket();
 			teller++;
 		}
@@ -255,7 +255,7 @@ public class QueryServiceSpringImpl implements QueryService {
 		Logging.info(this, "End deleteQuery");
 	}
 
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public ArrayList<Query> list(final String type) {
 		Logging.info(this, "Begin listQuery");
 		

@@ -6,8 +6,11 @@ import java.io.Writer;
 
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
 
-public class ExceptionTool {
-	public static String convertExceptionToString(Exception e, String key, Object[] arg) {
+public final class ExceptionTool {
+	private ExceptionTool() {
+	}
+	
+	public static String convertExceptionToString(final Exception e, final String key, final Object[] arg) {
 		String message = e.getMessage();
 		if (message == null) {
 			Writer writer = new StringWriter();
@@ -15,14 +18,14 @@ public class ExceptionTool {
 			e.printStackTrace(printWriter);
 			message = writer.toString();
 		}
-		if(message == null) {
+		if (message == null) {
 			message = BaseSpringServiceLocator.getMessage(key,  arg);
 		}
 		
 		return message;
 	}
 	
-	public static String convertExceptionToString(Exception e, String key) {
+	public static String convertExceptionToString(final Exception e, final String key) {
 		return convertExceptionToString(e, key, null);
 	}
 	     

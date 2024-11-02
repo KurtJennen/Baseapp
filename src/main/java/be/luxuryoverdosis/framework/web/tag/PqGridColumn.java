@@ -2,7 +2,6 @@ package be.luxuryoverdosis.framework.web.tag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
 import org.apache.commons.lang.StringUtils;
@@ -29,55 +28,51 @@ public class PqGridColumn extends CommonTag {
 	private String filterCondition = "contain";
 	private String renderFunction = StringUtils.EMPTY;
 
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	public void setTitleKey(String titleKey) {
+	public void setTitleKey(final String titleKey) {
 		this.titleKey = titleKey;
 	}
-	public void setDataType(String dataType) {
+	public void setDataType(final String dataType) {
 		this.dataType = dataType;
 	}
-	public void setDataIndx(String dataIndx) {
+	public void setDataIndx(final String dataIndx) {
 		this.dataIndx = dataIndx;
 	}
-	public void setWidth(String width) {
+	public void setWidth(final String width) {
 		this.width = width;
 	}
-	public void setAlign(String align) {
+	public void setAlign(final String align) {
 		this.align = align;
 	}
-	public void setVisible(boolean visible) {
+	public void setVisible(final boolean visible) {
 		this.visible = visible;
 	}
-	public void setSortable(boolean sortable) {
+	public void setSortable(final boolean sortable) {
 		this.sortable = sortable;
 	}
-	public void setResizable(boolean resizable) {
+	public void setResizable(final boolean resizable) {
 		this.resizable = resizable;
 	}
-	public void setCurrency(boolean currency) {
+	public void setCurrency(final boolean currency) {
 		this.currency = currency;
 	}
-	public void setFilterType(String filterType) {
+	public void setFilterType(final String filterType) {
 		this.filterType = filterType;
 	}
-	public void setFilterCondition(String filterCondition) {
+	public void setFilterCondition(final String filterCondition) {
 		this.filterCondition = filterCondition;
 	}
-	public void setTotalizable(boolean totalizable) {
+	public void setTotalizable(final boolean totalizable) {
 		this.totalizable = totalizable;
 	}
-	public void setRenderFunction(String renderFunction) {
+	public void setRenderFunction(final String renderFunction) {
 		this.renderFunction = renderFunction;
 	}
 	
-	public void setParent(Tag t) {
+	public void setParent(final Tag t) {
 		parent = t;
-	}
-	
-	public void setPageContext(PageContext p) {
-		pageContext = p;
 	}
 	
 	public void release() {
@@ -88,13 +83,13 @@ public class PqGridColumn extends CommonTag {
 	}
 	
 	private Tag getParent(Tag tag) {
-		while(true) {
+		while (true) {
 			Tag parent = tag.getParent();
 			
-			if(parent == null) {
+			if (parent == null) {
 				return null;
 			}
-			if(parent != null && parent instanceof PqGrid){
+			if (parent != null && parent instanceof PqGrid) {
 				return parent;
 			}
 			
@@ -103,7 +98,7 @@ public class PqGridColumn extends CommonTag {
 	}
 	
 	public int doStartTag() throws JspException {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 		
 		PqGrid pqGridTag = (PqGrid) getParent(this);
 		

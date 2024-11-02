@@ -30,72 +30,72 @@ public class DetailUserForm extends BaseForm {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getUserName() {
 		return userName;
 	}
-	public void setUserName(String userName) {
+	public void setUserName(final String userName) {
 		this.userName = userName;
 	}
 	public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	public void setPassword(final String password) {
 		this.password = password;
 	}
 	public String getPasswordConfirm() {
 		return passwordConfirm;
 	}
-	public void setPasswordConfirm(String passwordConfirm) {
+	public void setPasswordConfirm(final String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
+	public void setEmail(final String email) {
 		this.email = email;
 	}
 	public String getDate() {
 		return date;
 	}
-	public void setDate(String date) {
+	public void setDate(final String date) {
 		this.date = date;
 	}
 	public boolean isActivation() {
 		return isActivation;
 	}
-	public void setActivation(boolean isActivation) {
+	public void setActivation(final boolean isActivation) {
 		this.isActivation = isActivation;
 	}
 	public int getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(final int roleId) {
 		this.roleId = roleId;
 	}
 	public String getRoleIdValue() {
 		return roleIdValue;
 	}
-	public void setRoleIdValue(String roleIdValue) {
+	public void setRoleIdValue(final String roleIdValue) {
 		this.roleIdValue = roleIdValue;
 	}
 	
 	public int[] getLinkedRoleIds() {
 		return linkedRoleIds;
 	}
-	public void setLinkedRoleIds(int[] linkedRoleIds) {
+	public void setLinkedRoleIds(final int[] linkedRoleIds) {
 		this.linkedRoleIds = linkedRoleIds;
 	}
 	public int[] getUnlinkedRoleIds() {
 		return unlinkedRoleIds;
 	}
-	public void setUnlinkedRoleIds(int[] unlinkedRoleIds) {
+	public void setUnlinkedRoleIds(final int[] unlinkedRoleIds) {
 		this.unlinkedRoleIds = unlinkedRoleIds;
 	}
 	
-	public void reset(ActionMapping mapping, HttpServletRequest request) {
+	public void reset(final ActionMapping mapping, final HttpServletRequest request) {
 		super.reset(mapping, request);
 		this.setName("");
 		this.setUserName("");
@@ -105,21 +105,21 @@ public class DetailUserForm extends BaseForm {
 		this.setDate(DateTool.formatUtilDate(DateTool.getDefaultDateFromCalendar()));
 	}
 	
-	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+	public ActionErrors validate(final ActionMapping mapping, final HttpServletRequest request) {
 		Logging.info(this, "Begin Validating");
 		
 		ActionErrors errors = new ActionErrors();
 		
-		if(this.getMethod().equals(BaseWebConstants.UPDATE)) {
+		if (this.getMethod().equals(BaseWebConstants.UPDATE)) {
 			errors = super.validate(mapping, request);
 			
-			if(!password.equals(passwordConfirm)) {
+			if (!password.equals(passwordConfirm)) {
 				errors.add("password", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password"), MessageLocator.getMessage(request, "security.password.confirm")));
 				errors.add("passwordConfirm", new ActionMessage("equal", MessageLocator.getMessage(request, "security.password.confirm"), MessageLocator.getMessage(request, "security.password")));
 			}
 		}
 		
-		if(errors.size() > 0) {
+		if (errors.size() > 0) {
 			request.setAttribute(BaseWebConstants.ERROR, 1);
 		}
 			

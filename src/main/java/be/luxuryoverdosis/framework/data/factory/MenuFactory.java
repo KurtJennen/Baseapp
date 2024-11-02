@@ -6,11 +6,11 @@ import be.luxuryoverdosis.framework.data.dto.MenuDTO;
 import be.luxuryoverdosis.framework.data.to.Menu;
 import net.sf.navigator.menu.MenuComponent;
 
-public class MenuFactory {
+public final class MenuFactory {
 	private MenuFactory() {
 	}
 	
-	public static MenuDTO produceMenuDTO(final MenuComponent menuComponent, final String parentTitle, String fullLevel, int level) {
+	public static MenuDTO produceMenuDTO(final MenuComponent menuComponent, final String parentTitle, final String fullLevel, final int level) {
 		MenuDTO menuDTO = new MenuDTO();
 		menuDTO.setId(-1);
 		menuDTO.setFullName(parentTitle + menuComponent.getName());
@@ -27,7 +27,7 @@ public class MenuFactory {
 	}
 	
 	public static MenuDTO produceMenuDTO(final Menu menu, MenuDTO menuDTO) {
-		if(menuDTO == null) {
+		if (menuDTO == null) {
 			menuDTO = new MenuDTO();
 		}
 		menuDTO.setId(menu.getId());
@@ -39,7 +39,7 @@ public class MenuFactory {
 		menuDTO.setDisabled(menu.getDisabled());
 		menuDTO.setForPay(menu.getForPay());
 		menuDTO.setPayed(menu.getPayed());
-		if(menu.getUser() != null) {
+		if (menu.getUser() != null) {
 			menuDTO.setUserId(menu.getUser().getId());
 		}
 		
@@ -47,7 +47,7 @@ public class MenuFactory {
 	}
 	
 	public static Menu produceMenu(Menu menu, final MenuDTO menuDTO) {
-		if(menu == null) {
+		if (menu == null) {
 			menu = new Menu();
 		}
 		menu.setId(menuDTO.getId());

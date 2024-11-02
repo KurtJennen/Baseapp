@@ -4,9 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 import be.luxuryoverdosis.framework.BaseConstants;
 
-
-
-public class StringTool {
+public final class StringTool {
+	private StringTool() {
+	}
+	
 	public static String toCamelCase(final String jobNiveau) {
 		String camelCase = StringUtils.EMPTY;
 		

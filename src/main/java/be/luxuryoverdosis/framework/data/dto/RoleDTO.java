@@ -8,7 +8,7 @@ public class RoleDTO extends BaseDTO {
 		super();
 	}
 	
-	public RoleDTO(int id, String name) {
+	public RoleDTO(final int id, final String name) {
 		super();
 		setId(id);
 		this.name = name;
@@ -17,7 +17,7 @@ public class RoleDTO extends BaseDTO {
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 }

@@ -10,7 +10,7 @@ import be.luxuryoverdosis.framework.web.action.BaseAction;
 import net.sf.json.JSONArray;
 
 public class AjaxAction extends BaseAction {	
-	public ActionForward sendAsJson(HttpServletResponse response, Object object) throws Exception {
+	public ActionForward sendAsJson(final HttpServletResponse response, final Object object) throws Exception {
 		
 		response.setContentType("text/text;charset=utf-8");
 		response.setHeader("cache-control", "no-cache");

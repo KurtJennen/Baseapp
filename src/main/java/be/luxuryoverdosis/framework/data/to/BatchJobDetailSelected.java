@@ -13,34 +13,34 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="batch_job_dtl_selected")
+@Table(name = "batch_job_dtl_selected")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=BatchJobDetailSelected.SELECT_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED, query=BatchJobDetailSelected.Queries.SELECT_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED),
-	@NamedQuery(name=BatchJobDetailSelected.DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED, query=BatchJobDetailSelected.Queries.DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED)
+	@NamedQuery(name = BatchJobDetailSelected.SELECT_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED, query = BatchJobDetailSelected.Queries.SELECT_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED),
+	@NamedQuery(name = BatchJobDetailSelected.DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED, query = BatchJobDetailSelected.Queries.DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class BatchJobDetailSelected extends BaseTO {
 	public static final String SELECT_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED = "selectBatchJobDetailSelectedByBatchJobHeaderSelected";
 	public static final String DELETE_BATCHJOBDETAILSELECTED_BY_BATCHJOBHEADERSELECTED = "deleteBatchJobDetailSelectedByBatchJobHeaderSelected";
 	
 	@ManyToOne
-	@JoinColumn(name="Batch_Job_Hdr_Selected_Id")
+	@JoinColumn(name = "Batch_Job_Hdr_Selected_Id")
 	private BatchJobHeaderSelected batchJobHeaderSelected;
 	
-	@Column(name="Selected_id")
+	@Column(name = "Selected_id")
 	private int selectedId;
 	
 	public BatchJobHeaderSelected getBatchJobHeaderSelected() {
 		return batchJobHeaderSelected;
 	}
-	public void setBatchJobHeaderSelected(BatchJobHeaderSelected batchJobHeaderSelected) {
+	public void setBatchJobHeaderSelected(final BatchJobHeaderSelected batchJobHeaderSelected) {
 		this.batchJobHeaderSelected = batchJobHeaderSelected;
 	}
 	public int getSelectedId() {
 		return selectedId;
 	}
-	public void setSelectedId(int selectedId) {
+	public void setSelectedId(final int selectedId) {
 		this.selectedId = selectedId;
 	}
 

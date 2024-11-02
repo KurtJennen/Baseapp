@@ -35,14 +35,14 @@ public class SearchUserAction extends SearchAction {
 		return BaseSpringServiceConstants.SEARCH_USER;
 	}
 	
-	private void storeListsInSession(HttpServletRequest request, ActionMessages actionMessages) {
+	private void storeListsInSession(final HttpServletRequest request, final ActionMessages actionMessages) {
 		SessionManager.delete(request, SessionManager.TYPE_ATTRIBUTES, SessionManager.SUBTYPE_LIST);
 		
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("list.success", MessageLocator.getMessage(request, "table.document")));
 		SessionManager.putInSession(request, BaseWebConstants.DOCUMENT_LIST, getDocumentService().list(DocumentTypeEnum.USER.getCode()));
 	}
 		
-	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward search(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Search");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -52,7 +52,7 @@ public class SearchUserAction extends SearchAction {
 		
 		storeListsInSession(request, actionMessages);
 						
-		if(BaseWebConstants.DELETE.equals(previous)) {
+		if (BaseWebConstants.DELETE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("delete.success", MessageLocator.getMessage(request, "table.query")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("search.success", MessageLocator.getMessage(request, "table.user")));
@@ -63,21 +63,21 @@ public class SearchUserAction extends SearchAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		Logging.info(this, "End Create Success");
 		
 		return (mapping.findForward(BaseWebConstants.CREATE));
 	}
 	
-	public void report(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void report(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Report");
 		
 		String realPathReport = request.getSession().getServletContext().getRealPath(BaseConstants.REPORT_USERS_PATH);
@@ -90,7 +90,7 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "End Report");
 	}
 	
-	public void createDocument(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void createDocument(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateDocument");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -106,7 +106,7 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "End CreateDocument Success");
 	}
 	
-	public void createDocumentAndConvertToPdf(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void createDocumentAndConvertToPdf(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin CreateDocument");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -122,7 +122,7 @@ public class SearchUserAction extends SearchAction {
 		Logging.info(this, "End CreateDocument Success");
 	}
 	
-	public ActionForward ajaxSearchAllUser(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxSearchAllUser(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		SearchUserForm searchUserForm = (SearchUserForm) form;
@@ -137,7 +137,7 @@ public class SearchUserAction extends SearchAction {
 		return null;
 	}
 	
-	public ActionForward ajaxSearchOneUser(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxSearchOneUser(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		SearchUserForm searchUserForm = (SearchUserForm) form;

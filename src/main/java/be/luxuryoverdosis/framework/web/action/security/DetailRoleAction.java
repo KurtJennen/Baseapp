@@ -23,14 +23,14 @@ public class DetailRoleAction extends NavigationAction {
 		return BaseWebConstants.ROLE_IDS;
 	}
 	
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -44,10 +44,10 @@ public class DetailRoleAction extends NavigationAction {
 		
 		super.setNavigationButtons(form, request);
 		
-		if(BaseWebConstants.SAVE.equals(previous)) {
+		if (BaseWebConstants.SAVE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.role")));
 		}
-		if(BaseWebConstants.UPDATE.equals(previous)) {
+		if (BaseWebConstants.UPDATE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.role")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.role")));
@@ -58,7 +58,7 @@ public class DetailRoleAction extends NavigationAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -73,7 +73,7 @@ public class DetailRoleAction extends NavigationAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward update(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.READ));
@@ -85,7 +85,7 @@ public class DetailRoleAction extends NavigationAction {
 		roleDTO.setName(roleForm.getName());
 		
 		roleDTO = getRoleService().createOrUpdateDTO(roleDTO);
-		if(roleForm.getId() < 0) {
+		if (roleForm.getId() < 0) {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
@@ -98,7 +98,7 @@ public class DetailRoleAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward delete(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
 		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));

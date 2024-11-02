@@ -6,12 +6,12 @@ import be.luxuryoverdosis.framework.data.dto.DocumentDTO;
 import be.luxuryoverdosis.framework.data.to.Document;
 
 public interface DocumentHibernateDAO {
-	public Document createOrUpdate(Document document);
-	public Document read(int id);
-	public void delete(int id);
+	Document createOrUpdate(Document document);
+	Document read(int id);
+	void delete(int id);
 	
-	public ArrayList<Document> list(String type);
-	public ArrayList<DocumentDTO> listDTO();
+	ArrayList<Document> list(String type);
+	ArrayList<DocumentDTO> listDTO();
 	
-	public long count(String type, String fileName, int id);
+	long count(String type, String fileName, int id);
 }

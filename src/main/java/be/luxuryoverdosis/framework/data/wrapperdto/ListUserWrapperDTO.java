@@ -12,19 +12,19 @@ public class ListUserWrapperDTO {
 	public ArrayList<Object> getSearchUserList() {
 		return searchUserList;
 	}
-	public void setSearchUserList(ArrayList<Object> searchUserList) {
+	public void setSearchUserList(final ArrayList<Object> searchUserList) {
 		this.searchUserList = searchUserList;
 	}
 	public ArrayList<BatchJobInstanceDTO> getBatchJobInstanceImportList() {
 		return batchJobInstanceImportList;
 	}
-	public void setBatchJobInstanceImportList(ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList) {
+	public void setBatchJobInstanceImportList(final ArrayList<BatchJobInstanceDTO> batchJobInstanceImportList) {
 		this.batchJobInstanceImportList = batchJobInstanceImportList;
 	}
 	public ArrayList<BatchJobInstanceDTO> getBatchJobInstanceExportList() {
 		return batchJobInstanceExportList;
 	}
-	public void setBatchJobInstanceExportList(ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList) {
+	public void setBatchJobInstanceExportList(final ArrayList<BatchJobInstanceDTO> batchJobInstanceExportList) {
 		this.batchJobInstanceExportList = batchJobInstanceExportList;
 	}
 }

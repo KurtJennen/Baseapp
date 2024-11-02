@@ -14,71 +14,71 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_document")
+@Table(name = "base_document")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Document.SELECT_DOCUMENTS_BY_TYPE, query=Document.Queries.SELECT_DOCUMENTS_BY_TYPE),
-	@NamedQuery(name=Document.SELECT_DOCUMENTS_DTO, query=Document.Queries.SELECT_DOCUMENTS_DTO),
-	@NamedQuery(name=Document.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME, query=Document.Queries.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME)
+	@NamedQuery(name = Document.SELECT_DOCUMENTS_BY_TYPE, query = Document.Queries.SELECT_DOCUMENTS_BY_TYPE),
+	@NamedQuery(name = Document.SELECT_DOCUMENTS_DTO, query = Document.Queries.SELECT_DOCUMENTS_DTO),
+	@NamedQuery(name = Document.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME, query = Document.Queries.COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Document extends BaseTO {
 	public static final String SELECT_DOCUMENTS_BY_TYPE = "selectDocumentsByType";
 	public static final String SELECT_DOCUMENTS_DTO = "selectDocumentsDto";
 	public static final String COUNT_DOCUMENTS_BY_TYPE_AND_FILENAME = "countDocumentsByTypeAndFilename";
 	
-	@Column(name="type")
+	@Column(name = "type")
 	private String type;
 	
-	@Column(name="Filename")
+	@Column(name = "Filename")
 	private String fileName;
 	
-	@Column(name="File")
+	@Column(name = "File")
 	private Blob file;
 	
 	@Transient
 	private byte[] fileData;
 	
-	@Column(name="Filesize")
+	@Column(name = "Filesize")
 	private int fileSize;
 	
-	@Column(name="Contenttype")
+	@Column(name = "Contenttype")
 	private String contentType;
 	
 	public String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type;
 	}
 	public String getFileName() {
 		return fileName;
 	}
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		this.fileName = fileName;
 	}
 	public Blob getFile() {
 		return file;
 	}
-	public void setFile(Blob file) {
+	public void setFile(final Blob file) {
 		this.file = file;
 	}
 	public byte[] getFileData() {
 		return fileData;
 	}
-	public void setFileData(byte[] fileData) {
+	public void setFileData(final byte[] fileData) {
 		this.fileData = fileData;
 	}
 	public int getFileSize() {
 		return fileSize;
 	}
-	public void setFileSize(int fileSize) {
+	public void setFileSize(final int fileSize) {
 		this.fileSize = fileSize;
 	}
 	public String getContentType() {
 		return contentType;
 	}
-	public void setContentType(String contentType) {
+	public void setContentType(final String contentType) {
 		this.contentType = contentType;
 	}
 	

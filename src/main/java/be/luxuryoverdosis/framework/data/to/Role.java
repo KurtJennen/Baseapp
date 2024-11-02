@@ -11,16 +11,16 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Proxy;
 
 @Entity
-@Table(name="base_role")
+@Table(name = "base_role")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Role.SELECT_ROLES, query=Role.Queries.SELECT_ROLES),
-	@NamedQuery(name=Role.SELECT_ROLES_BY_NAME, query=Role.Queries.SELECT_ROLES_BY_NAME),
-	@NamedQuery(name=Role.SELECT_ROLES_DTO_BY_NAME, query=Role.Queries.SELECT_ROLES_DTO_BY_NAME),
-	@NamedQuery(name=Role.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER, query=Role.Queries.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER),
-	@NamedQuery(name=Role.COUNT_ROLES_BY_NAME, query=Role.Queries.COUNT_ROLES_BY_NAME)
+	@NamedQuery(name = Role.SELECT_ROLES, query = Role.Queries.SELECT_ROLES),
+	@NamedQuery(name = Role.SELECT_ROLES_BY_NAME, query = Role.Queries.SELECT_ROLES_BY_NAME),
+	@NamedQuery(name = Role.SELECT_ROLES_DTO_BY_NAME, query = Role.Queries.SELECT_ROLES_DTO_BY_NAME),
+	@NamedQuery(name = Role.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER, query = Role.Queries.SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER),
+	@NamedQuery(name = Role.COUNT_ROLES_BY_NAME, query = Role.Queries.COUNT_ROLES_BY_NAME)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Role extends BaseTO {
 	public static final String SELECT_ROLES = "selectRoles";
 	public static final String SELECT_ROLES_BY_NAME = "selectRolesByName";
@@ -28,13 +28,13 @@ public class Role extends BaseTO {
 	public static final String SELECT_ROLES_DTO_NOT_IN_USERROLES_BY_USER = "selectRolesDtoNotInUserRolesByUser";
 	public static final String COUNT_ROLES_BY_NAME = "countRolesByName";
 	
-	@Column(name="Name")
+	@Column(name = "Name")
 	private String name;
 	
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	

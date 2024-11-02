@@ -5,5 +5,5 @@ import java.util.ArrayList;
 import be.luxuryoverdosis.framework.data.dto.UserRoleDTO;
 
 public interface UserRoleService {
-	 public ArrayList<UserRoleDTO> listDTO(int userId);
+	 ArrayList<UserRoleDTO> listDTO(int userId);
 }

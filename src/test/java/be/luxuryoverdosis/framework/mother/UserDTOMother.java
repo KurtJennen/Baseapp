@@ -7,6 +7,8 @@ import be.luxuryoverdosis.framework.base.tool.DateTool;
 import be.luxuryoverdosis.framework.data.dto.UserDTO;
 
 public class UserDTOMother {
+	protected UserDTOMother() {
+	}	
 
 	public static UserDTO produceUserDTO() {
 		UserDTO userDTO = new UserDTO();

@@ -9,6 +9,7 @@ import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.Tag;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.base.SearchQuery;
 import be.luxuryoverdosis.framework.business.query.SearchParameter;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
@@ -19,15 +20,15 @@ import be.luxuryoverdosis.framework.web.form.SearchForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
 
 public class Search implements Tag {
-	PageContext pageContext;
-	String searchService;
-	String searchName;
+	private PageContext pageContext;
+	private String searchService;
+	private String searchName;
 		
-	public void setPageContext(PageContext p) {
+	public void setPageContext(final PageContext p) {
 		pageContext = p;
 	}
 	
-	public void setParent(Tag t) {
+	public void setParent(final Tag t) {
 	}
 	
 	public void release() {
@@ -37,22 +38,22 @@ public class Search implements Tag {
 		return null;
 	}
 
-	public void setSearchService(String searchService) {
+	public void setSearchService(final String searchService) {
 		this.searchService = searchService;
 	}
 	
-	public void setSearchName(String searchName) {
+	public void setSearchName(final String searchName) {
 		this.searchName = searchName;
 	}
 
 	public int doStartTag() throws JspException {
 		try {
 			JspWriter out = pageContext.getOut();
-			HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+			HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
 			
-			SearchForm searchForm = (SearchForm)request.getSession().getAttribute(searchName);
+			SearchForm searchForm = (SearchForm) request.getSession().getAttribute(searchName);
 			
-			if(!searchName.equals(searchForm.getSearchName())) {
+			if (!searchName.equals(searchForm.getSearchName())) {
 				searchForm.setDefaultLines(2);
 			}
 			
@@ -107,9 +108,9 @@ public class Search implements Tag {
 			
 			Iterator<Query> queriesIterator = queries.iterator();
 			
-			while(queriesIterator.hasNext()) {
-				Query query = (Query)queriesIterator.next();
-				if(searchForm.getSelectQuery() != null && searchForm.getSelectQuery().equals(String.valueOf(query.getId()))) {
+			while (queriesIterator.hasNext()) {
+				Query query = (Query) queriesIterator.next();
+				if (searchForm.getSelectQuery() != null && searchForm.getSelectQuery().equals(String.valueOf(query.getId()))) {
 					out.print("<option value=\"" + query.getId() + "\" selected=\"selected\">" + query.getName() + "</option>");
 				} else {
 					out.print("<option value=\"" + query.getId() + "\">" + query.getName() + "</option>");
@@ -136,16 +137,16 @@ public class Search implements Tag {
 			//table2
 			out.print("<table>");
 			
-			for(int i = 0; i < searchForm.getDefaultLines(); i++) {
+			for (int i = 0; i < searchForm.getDefaultLines(); i++) {
 				out.print("<tr>");
 				
-				if(searchForm.getComplexQuery().equals(SearchQuery.ONE)) {
+				if (searchForm.getComplexQuery().equals(SearchQuery.ONE)) {
 					out.print("<td>");
-					if(i > 0) {
+					if (i > 0) {
 						out.print("<select name=\"addAndOrs\">");
 						out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
-						for(int j = 0; j < SearchQuery.DEFAULT_ADD.length; j++) {
-							if(searchForm.getAddAndOrs() != null && i - 1 < searchForm.getAddAndOrs().length && searchForm.getAddAndOrs()[i - 1].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
+						for (int j = 0; j < SearchQuery.DEFAULT_ADD.length; j++) {
+							if (searchForm.getAddAndOrs() != null && i - 1 < searchForm.getAddAndOrs().length && searchForm.getAddAndOrs()[i - 1].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
 								out.print("<option value=\"" + j + "\" selected=\"selected\">" + MessageLocator.getMessage(request, "search." + SearchQuery.DEFAULT_ADD[j].toLowerCase()) + "</option>");
 							} else {
 								out.print("<option value=\"" + j + "\">" + MessageLocator.getMessage(request, "search." + SearchQuery.DEFAULT_ADD[j].toLowerCase()) + "</option>");
@@ -158,8 +159,8 @@ public class Search implements Tag {
 					out.print("<td>");
 					out.print("<select name=\"openBrackets\">");
 					out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
-					for(int j = 0; j < SearchQuery.DEFAULT_OPEN.length; j++) {
-						if(searchForm.getOpenBrackets() != null && i < searchForm.getOpenBrackets().length && searchForm.getOpenBrackets()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
+					for (int j = 0; j < SearchQuery.DEFAULT_OPEN.length; j++) {
+						if (searchForm.getOpenBrackets() != null && i < searchForm.getOpenBrackets().length && searchForm.getOpenBrackets()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
 							out.print("<option value=\"" + j + "\" selected=\"selected\">" + SearchQuery.DEFAULT_OPEN[j] + "</option>");
 						} else {
 							out.print("<option value=\"" + j + "\">" + SearchQuery.DEFAULT_OPEN[j] + "</option>");
@@ -172,9 +173,9 @@ public class Search implements Tag {
 				out.print("<td>");
 				out.print("<select name=\"names\">");
 				out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
-				for(int j = 0; j < getSearchSelect().getSearchParameters().length; j++) {
+				for (int j = 0; j < getSearchSelect().getSearchParameters().length; j++) {
 					SearchParameter searchParameter = getSearchSelect().getSearchParameter(j);
-					if(searchForm.getNames() != null && i < searchForm.getNames().length && searchForm.getNames()[i].equals(String.valueOf(searchParameter.getName())) && searchName.equals(searchForm.getSearchName())) {
+					if (searchForm.getNames() != null && i < searchForm.getNames().length && searchForm.getNames()[i].equals(String.valueOf(searchParameter.getName())) && searchName.equals(searchForm.getSearchName())) {
 						out.print("<option value=\"" + searchParameter.getName() + "\" selected=\"selected\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
 					} else {
 						out.print("<option value=\"" + searchParameter.getName() + "\">" + MessageLocator.getMessage(request, searchParameter.getKey()) + "</option>");
@@ -186,16 +187,16 @@ public class Search implements Tag {
 				
 				out.print("<td>");
 				out.print("<select name=\"operators\">");
-				for(int j = 0; j < SearchQuery.DEFAULT_OPERATORS.length; j++) {
-					if(searchForm.getOperators() != null && i < searchForm.getNames().length && searchForm.getOperators()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
-						if(j < 6) {
+				for (int j = 0; j < SearchQuery.DEFAULT_OPERATORS.length; j++) {
+					if (searchForm.getOperators() != null && i < searchForm.getNames().length && searchForm.getOperators()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
+						if (j < BaseConstants.ZES) {
 							out.print("<option value=\"" + j + "\" selected=\"selected\">" + SearchQuery.DEFAULT_OPERATORS[j] + "</option>");
 						} else {
 							out.print("<option value=\"" + j + "\" selected=\"selected\">" + MessageLocator.getMessage(request, "search." + SearchQuery.DEFAULT_OPERATORS[j]) + "</option>");
 						}
 						
 					} else {
-						if(j < 6) {
+						if (j < BaseConstants.ZES) {
 							out.print("<option value=\"" + j + "\">" + SearchQuery.DEFAULT_OPERATORS[j] + "</option>");
 						} else {
 							out.print("<option value=\"" + j + "\">" + MessageLocator.getMessage(request, "search." + SearchQuery.DEFAULT_OPERATORS[j]) + "</option>");
@@ -206,19 +207,19 @@ public class Search implements Tag {
 				out.print("</td>");
 				
 				out.print("<td>");
-				if(searchForm.getValues() != null && i < searchForm.getValues().length && searchName.equals(searchForm.getSearchName())) {
+				if (searchForm.getValues() != null && i < searchForm.getValues().length && searchName.equals(searchForm.getSearchName())) {
 					out.print("<input type=\"text\" name=\"values\" value=\"" + searchForm.getValues()[i] + "\" />");
 				} else {
 					out.print("<input type=\"text\" name=\"values\">");
 				}
 				out.print("</td>");
 				
-				if(searchForm.getComplexQuery().equals(SearchQuery.ONE)) {					
+				if (searchForm.getComplexQuery().equals(SearchQuery.ONE)) {					
 					out.print("<td>");
 					out.print("<select name=\"closeBrackets\">");
 					out.print("<option value=\"" + SearchQuery.MINUS_ONE + "\">" + MessageLocator.getMessage(request, "select") + "</option>");
-					for(int j = 0; j < SearchQuery.DEFAULT_CLOSE.length; j++) {
-						if(searchForm.getCloseBrackets() != null && i < searchForm.getCloseBrackets().length && searchForm.getCloseBrackets()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
+					for (int j = 0; j < SearchQuery.DEFAULT_CLOSE.length; j++) {
+						if (searchForm.getCloseBrackets() != null && i < searchForm.getCloseBrackets().length && searchForm.getCloseBrackets()[i].equals(String.valueOf(j)) && searchName.equals(searchForm.getSearchName())) {
 							out.print("<option value=\"" + j + "\" selected=\"selected\">" + SearchQuery.DEFAULT_CLOSE[j] + "</option>");
 						} else {
 							out.print("<option value=\"" + j + "\">" + SearchQuery.DEFAULT_CLOSE[j] + "</option>");
@@ -248,8 +249,7 @@ public class Search implements Tag {
 			}
 			
 			out.print("</table>");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		return EVAL_BODY_INCLUDE;
 	}
@@ -263,7 +263,7 @@ public class Search implements Tag {
 	}
 	
 	private SearchSelect getSearchSelect() {
-		return (SearchSelect)BaseSpringServiceLocator.getBean(searchService);
+		return (SearchSelect) BaseSpringServiceLocator.getBean(searchService);
 	}
 	
 }

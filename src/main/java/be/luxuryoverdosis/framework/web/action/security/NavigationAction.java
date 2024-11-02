@@ -20,35 +20,35 @@ public abstract class NavigationAction extends AjaxAction {
 	public abstract String getNameIds();
 	public abstract ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
-	public ActionForward first(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward first(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
 		Logging.info(this, "Begin First");
 		Logging.info(this, "End First Success");
 		
 		return navigate(mapping, form, request, response);
 	}
 	
-	public ActionForward previous(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward previous(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
 		Logging.info(this, "Begin Previous");
 		Logging.info(this, "End Previous Success");
 		
 		return navigate(mapping, form, request, response);
 	}
 	
-	public ActionForward next(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward next(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
 		Logging.info(this, "Begin Next");
 		Logging.info(this, "End Next Success");
 		
 		return navigate(mapping, form, request, response);
 	}
 	
-	public ActionForward last(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward last(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
 		Logging.info(this, "Begin Last");
 		Logging.info(this, "End Last Success");
 		
 		return navigate(mapping, form, request, response);
 	}
 	
-	public ActionForward navigate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) {
+	public ActionForward navigate(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) {
 		Logging.info(this, "Begin Navigate");
 		
 		BaseForm baseForm = (BaseForm) form;
@@ -63,26 +63,26 @@ public abstract class NavigationAction extends AjaxAction {
 		return redirect;
 	}
 	
-	private int getId(BaseForm baseForm, HttpServletRequest request) {
+	private int getId(final BaseForm baseForm, final HttpServletRequest request) {
 		int position = getPosition(baseForm, request);
 		return baseForm.getIds()[position];
 	}
 	
-	public void setNavigationButtons(ActionForm form, HttpServletRequest request) {
+	public void setNavigationButtons(final ActionForm form, final HttpServletRequest request) {
 		Logging.info(this, "Begin Visible");
 		
 		BaseForm baseForm = (BaseForm) form;
 		
 		int position = getCurrentPosition(baseForm, request);
 		
-		if(baseForm.getId() > 0 && position == -1) {
+		if (baseForm.getId() > 0 && position == -1) {
 			position = saveIds(baseForm, request);
 		}
-		if(baseForm.getIds() == null || position == 0) {
+		if (baseForm.getIds() == null || position == 0) {
 			baseForm.setFirstVisible(false);
 			baseForm.setPreviousVisible(false);
 		}
-		if(baseForm.getIds() == null || position == baseForm.getIds().length - 1) {
+		if (baseForm.getIds() == null || position == baseForm.getIds().length - 1) {
 			baseForm.setNextVisible(false);
 			baseForm.setLastVisible(false);
 		}
@@ -90,49 +90,49 @@ public abstract class NavigationAction extends AjaxAction {
 		Logging.info(this, "End Visible Success");
 	}
 
-	private int getCurrentPosition(BaseForm baseForm, HttpServletRequest request) {
+	private int getCurrentPosition(final BaseForm baseForm, final HttpServletRequest request) {
 		loadIds(baseForm, request);
 		
 		return ArrayTool.positionValueInArray(baseForm.getIds(), baseForm.getId());
 	}
 	
-	private int getPosition(BaseForm baseForm, HttpServletRequest request) {
+	private int getPosition(final BaseForm baseForm, final HttpServletRequest request) {
 		int position = getCurrentPosition(baseForm, request);
 		
-		if(BaseWebConstants.FIRST.equals(baseForm.getMethod())) {
+		if (BaseWebConstants.FIRST.equals(baseForm.getMethod())) {
 			return 0;
 		}
-		if(BaseWebConstants.PREVIOUS.equals(baseForm.getMethod())) {
-			if(position < 0) {
+		if (BaseWebConstants.PREVIOUS.equals(baseForm.getMethod())) {
+			if (position < 0) {
 				return baseForm.getIds().length - 1;
 			}
-			if(position != 0) {
+			if (position != 0) {
 				position--;
 			}
 			return position;
 		}
-		if(BaseWebConstants.NEXT.equals(baseForm.getMethod())) {
-			if(position < 0) {
+		if (BaseWebConstants.NEXT.equals(baseForm.getMethod())) {
+			if (position < 0) {
 				return 0;
 			}
-			if(position != baseForm.getIds().length - 1) {
+			if (position != baseForm.getIds().length - 1) {
 				position++;
 			}
 			return position;
 		}
-		if(BaseWebConstants.LAST.equals(baseForm.getMethod())) {
+		if (BaseWebConstants.LAST.equals(baseForm.getMethod())) {
 			return baseForm.getIds().length - 1;
 		}
 		return position;
 	}
 	
-	private void loadIds(BaseForm baseForm, HttpServletRequest request) {
-		int[] ids = (int[])SessionManager.getFromSession(request, getNameIds());
+	private void loadIds(final BaseForm baseForm, final HttpServletRequest request) {
+		int[] ids = (int[]) SessionManager.getFromSession(request, getNameIds());
 		
 		baseForm.setIds(ids);
 	}
 	
-	private int saveIds(BaseForm baseForm, HttpServletRequest request) {
+	private int saveIds(final BaseForm baseForm, final HttpServletRequest request) {
 		int[] ids = ArrayTool.addToArray(baseForm.getIds(), baseForm.getId());
 		
 		baseForm.setIds(ids);

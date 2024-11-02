@@ -22,8 +22,8 @@ public class BatchJobExecutionHibernateDAOMySQLImpl extends AbstractHibernateDao
 		ArrayList<BatchJobExecution> arrayList = (ArrayList<BatchJobExecution>) query.list();
 		
 		BatchJobExecution batchJobExecution = null;
-		if(!arrayList.isEmpty()) {
-			batchJobExecution = (BatchJobExecution)arrayList.iterator().next();
+		if (!arrayList.isEmpty()) {
+			batchJobExecution = (BatchJobExecution) arrayList.iterator().next();
 		}
 		
 		Logging.info(this, "End readBatchJobExecution");

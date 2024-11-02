@@ -25,12 +25,15 @@ import org.xml.sax.SAXException;
 
 import be.luxuryoverdosis.framework.base.Encoding;
 
-public class JaxbTool {
-	public static Marshaller getMarshaller(Class<?> clazz) throws JAXBException {
+public final class JaxbTool {
+	private JaxbTool() {
+	}
+	
+	public static Marshaller getMarshaller(final Class<?> clazz) throws JAXBException {
 		return getMarshaller(clazz, Encoding.UTF_8);
 	}
 	
-	public static Marshaller getMarshaller(Class<?> clazz, String encoding) throws JAXBException {
+	public static Marshaller getMarshaller(final Class<?> clazz, final String encoding) throws JAXBException {
 		JAXBContext jc = JAXBContext.newInstance(clazz);
         Marshaller m = jc.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
@@ -39,11 +42,11 @@ public class JaxbTool {
         return m;
 	}
 	
-	public static Unmarshaller getUnmarshaller(Class<?> clazz) throws JAXBException {
+	public static Unmarshaller getUnmarshaller(final Class<?> clazz) throws JAXBException {
         return getUnmarshaller(clazz, null);
     }
 	
-	public static Unmarshaller getUnmarshaller(Class<?> clazz, String schemaLocation) throws JAXBException {
+	public static Unmarshaller getUnmarshaller(final Class<?> clazz, final String schemaLocation) throws JAXBException {
         JAXBContext jc = JAXBContext.newInstance(clazz);
         Unmarshaller unmarshaller = jc.createUnmarshaller();
 
@@ -62,11 +65,11 @@ public class JaxbTool {
         return unmarshaller;
     }
 	
-	public static InputStream getInputStream(Class<?> clazz, Object data) throws JAXBException {
+	public static InputStream getInputStream(final Class<?> clazz, final Object data) throws JAXBException {
 		return getInputStream(clazz, data, Encoding.UTF_8);
 	}
 	
-	public static InputStream getInputStream(Class<?> clazz, Object data, String encoding) throws JAXBException {
+	public static InputStream getInputStream(final Class<?> clazz, final Object data, final String encoding) throws JAXBException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		getMarshaller(clazz, encoding).marshal(data, out);
 		InputStream in = new ByteArrayInputStream(out.toByteArray());
@@ -74,45 +77,45 @@ public class JaxbTool {
 		return in;
 	}
 	
-	public static OutputStream getOutputStream(Class<?> clazz, Object data, OutputStream out) throws JAXBException {
+	public static OutputStream getOutputStream(final Class<?> clazz, final Object data, final OutputStream out) throws JAXBException {
 		getMarshaller(clazz).marshal(data, out);
 		return out;
 	}
 	
-	public static String getXml(Class<?> clazz, Object data) throws JAXBException {
+	public static String getXml(final Class<?> clazz, final Object data) throws JAXBException {
 		return getXml(clazz, data, Encoding.UTF_8);
 	}
 	
-	public static String getXml(Class<?> clazz, Object data, String encoding) throws JAXBException {
+	public static String getXml(final Class<?> clazz, final Object data, final String encoding) throws JAXBException {
 		StringWriter stringWriter = new StringWriter();
 		getMarshaller(clazz, encoding).marshal(data, stringWriter);
 		return stringWriter.toString();
 	}
 	
-	public static Object getObject(String xmlString, Class<?> clazz) throws JAXBException {
+	public static Object getObject(final String xmlString, final Class<?> clazz) throws JAXBException {
         return getObject(xmlString, clazz, null);
     }
 	
-	public static Object getObject(String xmlString, Class<?> clazz, String schemaLocation) throws JAXBException {
+	public static Object getObject(final String xmlString, final Class<?> clazz, final String schemaLocation) throws JAXBException {
 		return getUnmarshaller(clazz, schemaLocation).unmarshal(new StringReader(xmlString));
 	}
 	
-	public static Object getObject(InputStream inputStream, Class<?> clazz) throws JAXBException, IOException {
+	public static Object getObject(final InputStream inputStream, final Class<?> clazz) throws JAXBException, IOException {
 		return getObject(inputStream, clazz, null);
 	}
 	
-	public static Object getObject(InputStream inputStream, Class<?> clazz, String schemaLocation) throws JAXBException, IOException {
+	public static Object getObject(final InputStream inputStream, final Class<?> clazz, final String schemaLocation) throws JAXBException, IOException {
         return getUnmarshaller(clazz, schemaLocation).unmarshal(inputStream);
     }
 	
-	public static byte[] getXmlWithValidation(Class<?> clazz, Object data, String schemaLocation, String xsdPath) throws JAXBException, IOException, SAXException {
+	public static byte[] getXmlWithValidation(final Class<?> clazz, final Object data, final String schemaLocation, final String xsdPath) throws JAXBException, IOException, SAXException {
 		Marshaller marshaller = getMarshaller(clazz);
 		marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, schemaLocation);
 		
 		return isValid(clazz, data, xsdPath);
 	}
 
-	private static byte[] isValid(Class<?> clazz, Object data, String xsdPath) throws JAXBException, SAXException, IOException {
+	private static byte[] isValid(final Class<?> clazz, final Object data, final String xsdPath) throws JAXBException, SAXException, IOException {
 		String xml = getXml(clazz, data);
 		
 		Resource resource = new DefaultResourceLoader().getResource(xsdPath);

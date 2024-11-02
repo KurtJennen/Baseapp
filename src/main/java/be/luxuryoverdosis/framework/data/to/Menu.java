@@ -17,19 +17,19 @@ import be.luxuryoverdosis.framework.business.enumeration.JaNeeEnum;
 import be.luxuryoverdosis.framework.data.convertor.JaNeeConvertor;
 
 @Entity
-@Table(name="base_menu")
+@Table(name = "base_menu")
 @Access(AccessType.FIELD)
 @NamedQueries({
-	@NamedQuery(name=Menu.SELECT_MENUS_BY_FULL_NAME_AND_USER, query=Menu.Queries.SELECT_MENUS_BY_FULL_NAME_AND_USER),
-	@NamedQuery(name=Menu.SELECT_MENUS_DTO_BY_USER, query=Menu.Queries.SELECT_MENUS_DTO_BY_USER),
-	@NamedQuery(name=Menu.SELECT_MENUS_HIDDEN_DTO_BY_USER, query=Menu.Queries.SELECT_MENUS_HIDDEN_DTO_BY_USER),
-	@NamedQuery(name=Menu.SELECT_MENUS_DISABLED_DTO_BY_USER, query=Menu.Queries.SELECT_MENUS_DISABLED_DTO_BY_USER),
-	@NamedQuery(name=Menu.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED, query=Menu.Queries.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED),
-	@NamedQuery(name=Menu.DELETE_MENUS_BY_USER, query=Menu.Queries.DELETE_MENUS_BY_USER),
-	@NamedQuery(name=Menu.COUNT_MENUS_BY_USER, query=Menu.Queries.COUNT_MENUS_BY_USER),
-	@NamedQuery(name=Menu.COUNT_MENUS_BY_FULL_NAME_AND_USER, query=Menu.Queries.COUNT_MENUS_BY_FULL_NAME_AND_USER)
+	@NamedQuery(name = Menu.SELECT_MENUS_BY_FULL_NAME_AND_USER, query = Menu.Queries.SELECT_MENUS_BY_FULL_NAME_AND_USER),
+	@NamedQuery(name = Menu.SELECT_MENUS_DTO_BY_USER, query = Menu.Queries.SELECT_MENUS_DTO_BY_USER),
+	@NamedQuery(name = Menu.SELECT_MENUS_HIDDEN_DTO_BY_USER, query = Menu.Queries.SELECT_MENUS_HIDDEN_DTO_BY_USER),
+	@NamedQuery(name = Menu.SELECT_MENUS_DISABLED_DTO_BY_USER, query = Menu.Queries.SELECT_MENUS_DISABLED_DTO_BY_USER),
+	@NamedQuery(name = Menu.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED, query = Menu.Queries.SELECT_MENUS_FORPAY_DTO_BY_USER_AND_PAYED),
+	@NamedQuery(name = Menu.DELETE_MENUS_BY_USER, query = Menu.Queries.DELETE_MENUS_BY_USER),
+	@NamedQuery(name = Menu.COUNT_MENUS_BY_USER, query = Menu.Queries.COUNT_MENUS_BY_USER),
+	@NamedQuery(name = Menu.COUNT_MENUS_BY_FULL_NAME_AND_USER, query = Menu.Queries.COUNT_MENUS_BY_FULL_NAME_AND_USER)
 })
-@Proxy(lazy=false)
+@Proxy(lazy = false)
 public class Menu extends BaseTO {
 	public static final String SELECT_MENUS_BY_FULL_NAME_AND_USER = "selectMenusByFullNameAndUser";
 	public static final String SELECT_MENUS_DTO_BY_USER = "selectMenusDtoByUser";
@@ -40,99 +40,99 @@ public class Menu extends BaseTO {
 	public static final String COUNT_MENUS_BY_USER = "countMenusByUser";
 	public static final String COUNT_MENUS_BY_FULL_NAME_AND_USER = "counMenustByFullNameAndUser";
 	
-	@Column(name="FullName")
+	@Column(name = "FullName")
 	private String fullName;
 	
-	@Column(name="Name")
+	@Column(name = "Name")
 	private String name;
 	
-	@Column(name="Title")
+	@Column(name = "Title")
 	private String title;
 	
-	@Column(name="FullLevel")
+	@Column(name = "FullLevel")
 	private String fullLevel;
 	
-	@Column(name="Level")
+	@Column(name = "Level")
 	private int level;
 	
-	@Column(name="Hidden")
-	@Convert(converter=JaNeeConvertor.class)
+	@Column(name = "Hidden")
+	@Convert(converter = JaNeeConvertor.class)
 	private JaNeeEnum hidden;
 	
-	@Column(name="Disabled")
-	@Convert(converter=JaNeeConvertor.class)
+	@Column(name = "Disabled")
+	@Convert(converter = JaNeeConvertor.class)
 	private JaNeeEnum disabled;
 	
-	@Column(name="ForPay")
-	@Convert(converter=JaNeeConvertor.class)
+	@Column(name = "ForPay")
+	@Convert(converter = JaNeeConvertor.class)
 	private JaNeeEnum forPay;
 	
-	@Column(name="Payed")
-	@Convert(converter=JaNeeConvertor.class)
+	@Column(name = "Payed")
+	@Convert(converter = JaNeeConvertor.class)
 	private JaNeeEnum payed;
 	
 	@ManyToOne
-	@JoinColumn(name="User_Id")
+	@JoinColumn(name = "User_Id")
 	private User user;
 	
 	public String getFullName() {
 		return fullName;
 	}
-	public void setFullName(String fullName) {
+	public void setFullName(final String fullName) {
 		this.fullName = fullName;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	public String getTitle() {
 		return title;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
 	public String getFullLevel() {
 		return fullLevel;
 	}
-	public void setFullLevel(String fullLevel) {
+	public void setFullLevel(final String fullLevel) {
 		this.fullLevel = fullLevel;
 	}
 	public int getLevel() {
 		return level;
 	}
-	public void setLevel(int level) {
+	public void setLevel(final int level) {
 		this.level = level;
 	}
 	public JaNeeEnum getHidden() {
 		return hidden;
 	}
-	public void setHidden(JaNeeEnum hidden) {
+	public void setHidden(final JaNeeEnum hidden) {
 		this.hidden = hidden;
 	}
 	public JaNeeEnum getDisabled() {
 		return disabled;
 	}
-	public void setDisabled(JaNeeEnum disabled) {
+	public void setDisabled(final JaNeeEnum disabled) {
 		this.disabled = disabled;
 	}
 	public JaNeeEnum getForPay() {
 		return forPay;
 	}
-	public void setForPay(JaNeeEnum forPay) {
+	public void setForPay(final JaNeeEnum forPay) {
 		this.forPay = forPay;
 	}
 	public JaNeeEnum getPayed() {
 		return payed;
 	}
-	public void setPayed(JaNeeEnum payed) {
+	public void setPayed(final JaNeeEnum payed) {
 		this.payed = payed;
 	}
 	public User getUser() {
 		return user;
 	}
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 	}
 	

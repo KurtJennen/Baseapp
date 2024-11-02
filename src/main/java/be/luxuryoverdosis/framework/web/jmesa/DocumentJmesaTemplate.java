@@ -14,12 +14,12 @@ import be.luxuryoverdosis.framework.web.BaseWebConstants;
 
 public class DocumentJmesaTemplate extends CustomTableFacadeTemplate {
 
-	public DocumentJmesaTemplate(TableFacade tableFacade, ArrayList<?> items, HttpServletRequest request) {
+	public DocumentJmesaTemplate(final TableFacade tableFacade, final ArrayList<?> items, final HttpServletRequest request) {
 		super(tableFacade, items, request, "displayDocument.title", BaseWebConstants.DOCUMENT_IDS);
 	}
 
 	@Override
-	protected void addFilterMatchers(Map<MatcherKey, FilterMatcher> filterMatchers) {
+	protected void addFilterMatchers(final Map<MatcherKey, FilterMatcher> filterMatchers) {
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class DocumentJmesaTemplate extends CustomTableFacadeTemplate {
 		return getColumnsInString(columnsList);
 	}
 
-	protected void setTitles(Row row) {
+	protected void setTitles(final Row row) {
 		int teller = 0;
 		teller = setTitleKeyRow(row, teller, "document.type");
 		teller = setTitleKeyRow(row, teller, "file.name");

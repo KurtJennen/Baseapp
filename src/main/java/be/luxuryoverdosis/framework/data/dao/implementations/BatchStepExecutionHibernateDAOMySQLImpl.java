@@ -14,7 +14,7 @@ import be.luxuryoverdosis.framework.logging.Logging;
 @Repository
 public class BatchStepExecutionHibernateDAOMySQLImpl extends AbstractHibernateDaoSupport implements BatchStepExecutionHibernateDAO {
 	@SuppressWarnings("unchecked")
-	public ArrayList<BatchStepExecution> list(long jobInstanceId) {
+	public ArrayList<BatchStepExecution> list(final long jobInstanceId) {
 		Logging.info(this, "Begin listBatchStepExecution");
 		
 		Query<BatchStepExecution> query = getCurrentSession().getNamedQuery(BatchStepExecution.SELECT_BATCH_STEP_EXECUTIONS_BY_JOB_INSTANCE);

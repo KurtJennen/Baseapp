@@ -28,7 +28,7 @@ import be.luxuryoverdosis.framework.web.message.MessageLocator;
 import be.luxuryoverdosis.framework.web.sessionmanager.SessionManager;
 
 public class DetailUserAction extends NavigationAction {
-	private void storeListsInSession(HttpServletRequest request, DetailUserForm detailUserForm) {
+	private void storeListsInSession(final HttpServletRequest request, final DetailUserForm detailUserForm) {
 		ArrayList<UserRoleDTO> linkedRolesList = getUserRoleService().listDTO(detailUserForm.getId());
         SessionManager.putInSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST, linkedRolesList);
         
@@ -40,21 +40,21 @@ public class DetailUserAction extends NavigationAction {
 		return BaseWebConstants.USER_IDS;
 	}
 	
-	public ActionForward search(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward search(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Search");
 		Logging.info(this, "End Search Success");
 		
 		return (mapping.findForward(BaseWebConstants.SEARCH));
 	}
 	
-	public ActionForward list(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward list(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin List");
 		Logging.info(this, "End List Success");
 		
 		return (mapping.findForward(BaseWebConstants.LIST));
 	}
 	
-	public ActionForward read(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward read(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Read");
 
 		ActionMessages actionMessages = new ActionMessages();
@@ -77,10 +77,10 @@ public class DetailUserAction extends NavigationAction {
 		
 		super.setNavigationButtons(form, request);
 		
-		if(BaseWebConstants.SAVE.equals(previous)) {
+		if (BaseWebConstants.SAVE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("save.success", MessageLocator.getMessage(request, "table.user")));
 		}
-		if(BaseWebConstants.UPDATE.equals(previous)) {
+		if (BaseWebConstants.UPDATE.equals(previous)) {
 			actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("update.success", MessageLocator.getMessage(request, "table.user")));
 		}
 		actionMessages.add(ActionMessages.GLOBAL_MESSAGE, new ActionMessage("read.success", MessageLocator.getMessage(request, "table.user")));
@@ -91,7 +91,7 @@ public class DetailUserAction extends NavigationAction {
 		return mapping.getInputForward();
 	}
 
-	public ActionForward create(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward create(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Create");
 		ActionMessages actionMessages = new ActionMessages();
 		
@@ -112,7 +112,7 @@ public class DetailUserAction extends NavigationAction {
 		return mapping.getInputForward();
 	}
 	
-	public ActionForward update(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward update(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Update");
 		
 		ActionRedirect actionRedirect = null;
@@ -129,7 +129,7 @@ public class DetailUserAction extends NavigationAction {
 		userDTO.setLinkedRoleIds(userForm.getLinkedRoleIds());
 		userDTO.setUnlinkedRoleIds(userForm.getUnlinkedRoleIds());
 		
-		if(SessionManager.getFromSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST) == null) {
+		if (SessionManager.getFromSession(request, BaseWebConstants.USER_ROLE_LINKED_LIST) == null) {
 			actionRedirect = new ActionRedirect(mapping.findForward(BaseWebConstants.LOGIN));
 			userDTO.setRegister(true);
 		} else {
@@ -137,7 +137,7 @@ public class DetailUserAction extends NavigationAction {
 		}
 		
 		userDTO = getUserService().createOrUpdateDTO(userDTO);
-		if(userForm.getId() < 0) {
+		if (userForm.getId() < 0) {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.SAVE);
 		} else {
 			actionRedirect.addParameter(BaseWebConstants.PREVIOUS, BaseWebConstants.UPDATE);
@@ -150,7 +150,7 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward delete(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward delete(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Delete");
 		
 		int id = Integer.parseInt(request.getParameter(BaseWebConstants.ID));
@@ -165,7 +165,7 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward activateYear(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward activateYear(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ActivateYear");
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -181,7 +181,7 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward activateHalfYear(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward activateHalfYear(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin ActivateHalfYear");
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -197,7 +197,7 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward deactivate(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward deactivate(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Deactivate");
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -213,7 +213,7 @@ public class DetailUserAction extends NavigationAction {
 		return actionRedirect;
 	}
 	
-	public ActionForward ajaxSearchAllRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxSearchAllRole(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -228,7 +228,7 @@ public class DetailUserAction extends NavigationAction {
 		return null;
 	}
 	
-	public ActionForward ajaxSearchOneRole(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxSearchOneRole(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin Ajax");
 		
 		DetailUserForm userForm = (DetailUserForm) form;
@@ -242,7 +242,7 @@ public class DetailUserAction extends NavigationAction {
 		return null;
 	}
 	
-	public ActionForward ajaxSelectTest(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ActionForward ajaxSelectTest(final ActionMapping mapping, final ActionForm form, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
 		Logging.info(this, "Begin AjaxSelectTest");
 		
 		DetailUserForm userForm = (DetailUserForm) form;

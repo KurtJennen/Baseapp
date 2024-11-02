@@ -8,6 +8,7 @@ import javax.servlet.jsp.JspException;
 
 import org.apache.commons.lang.StringUtils;
 
+import be.luxuryoverdosis.framework.BaseConstants;
 import be.luxuryoverdosis.framework.web.BaseWebConstants;
 import be.luxuryoverdosis.framework.web.form.BaseForm;
 import be.luxuryoverdosis.framework.web.message.MessageLocator;
@@ -27,48 +28,48 @@ public class PqGrid extends CommonTag {
 	private String height = "520";
 	private int freezeCols = 1;
 	private boolean paging = true;
-	private int rPP = 14;
+	private int rPP = BaseConstants.VEERTIEN;
 	private boolean clickable = true;
 	
 	private PqGridObject pqGridObject;
 
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
-	public void setTitle(String title) {
+	public void setTitle(final String title) {
 		this.title = title;
 	}
-	public void setTitleKey(String titleKey) {
+	public void setTitleKey(final String titleKey) {
 		this.titleKey = titleKey;
 	}
-	public void setNameSelectedIds(String nameSelectedIds) {
+	public void setNameSelectedIds(final String nameSelectedIds) {
 		this.nameSelectedIds = nameSelectedIds;
 	}
-	public void setRowClickMethod(String rowClickMethod) {
+	public void setRowClickMethod(final String rowClickMethod) {
 		this.rowClickMethod = rowClickMethod;
 	}
-	public void setPqGridObject(PqGridObject pqGridObject) {
+	public void setPqGridObject(final PqGridObject pqGridObject) {
 		this.pqGridObject = pqGridObject;
 	}
-	public void setUrl(String url) {
+	public void setUrl(final String url) {
 		this.url = url;
 	}
-	public void setWidth(String width) {
+	public void setWidth(final String width) {
 		this.width = width;
 	}
-	public void setHeight(String height) {
+	public void setHeight(final String height) {
 		this.height = height;
 	}
-	public void setFreezeCols(int freezeCols) {
+	public void setFreezeCols(final int freezeCols) {
 		this.freezeCols = freezeCols;
 	}
-	public void setPaging(boolean paging) {
+	public void setPaging(final boolean paging) {
 		this.paging = paging;
 	}
-	public void setrPP(int rPP) {
+	public void setrPP(final int rPP) {
 		this.rPP = rPP;
 	}
-	public void setClickable(boolean clickable) {
+	public void setClickable(final boolean clickable) {
 		this.clickable = clickable;
 	}
 	
@@ -77,7 +78,7 @@ public class PqGrid extends CommonTag {
 	}
 	
 	public int doStartTag() throws JspException {
-		HttpServletRequest request = (HttpServletRequest)pageContext.getRequest();
+		HttpServletRequest request = (HttpServletRequest) getPageContext().getRequest();
 		
 		BaseForm baseForm = (BaseForm) request.getAttribute("org.apache.struts.taglib.html.BEAN");
 		
@@ -94,7 +95,7 @@ public class PqGrid extends CommonTag {
 		pqGridObject.setNameSelectedIds(nameSelectedIds);
 		pqGridObject.setSelectedIds(baseForm.getSelectedIds());
 		
-		if(clickable && isEnabled()) {
+		if (clickable && isEnabled()) {
 			pqGridObject.setRowClickMethod(rowClickMethod);
 		} else {
 			pqGridObject.setRowClickMethod(StringUtils.EMPTY);
@@ -123,8 +124,7 @@ public class PqGrid extends CommonTag {
 	public int doEndTag() throws JspException {
 		try {
 			produceTemplate("pqTemplate.ftl", pqGridObject);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 		}
 		
 		return EVAL_PAGE;

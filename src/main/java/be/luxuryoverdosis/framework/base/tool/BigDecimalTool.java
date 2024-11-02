@@ -8,16 +8,19 @@ import java.util.Locale;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.validator.routines.BigDecimalValidator;
 
-public class BigDecimalTool {
+public final class BigDecimalTool {
+	private BigDecimalTool() {
+	}
+	
 	public static final String BIGDECIMAL_FILTER_PATTERN = "#0.00";
 	public static final String BIGDECIMAL_PATTERN = "###,##0.00";
 	public static final String BIGDECIMAL_PATTERN_DOUBLE = "###,##0.0000";
-	public static String ZERO = "0,00";
-	public static String ZERO_DOUBLE = "0,0000";
-	public static int FRACTION = 2;
-	public static int FRACTION_DOUBLE = 4;
+	public static final String ZERO = "0,00";
+	public static final String ZERO_DOUBLE = "0,0000";
+	public static final int FRACTION = 2;
+	public static final int FRACTION_DOUBLE = 4;
 	
-	public static String toString(BigDecimal decimal, int fraction, boolean grouping) {
+	public static String toString(final BigDecimal decimal, final int fraction, final boolean grouping) {
 		String convertedDecimal = "";
 		
 		Locale locale = Locale.getDefault();
@@ -28,30 +31,30 @@ public class BigDecimalTool {
         formatter.setMaximumFractionDigits(fraction);
         formatter.setGroupingUsed(grouping);
         
-        if(decimal != null) {
+        if (decimal != null) {
         	convertedDecimal = formatter.format(decimal);
         }
         
         return convertedDecimal;
 	}
 	
-	public static String toString(BigDecimal decimal) {
+	public static String toString(final BigDecimal decimal) {
 		return toString(decimal, FRACTION, true);
 	}
 	
-	public static String toStringDouble(BigDecimal decimal) {
+	public static String toStringDouble(final BigDecimal decimal) {
 		return toString(decimal, FRACTION_DOUBLE, true);
 	}
 	
-	public static BigDecimal toBigDecimal(String string, int fraction) {
+	public static BigDecimal toBigDecimal(final String string, final int fraction) {
 		BigDecimal convertedDecimal = BigDecimal.ZERO;
 		
 		Locale locale = Locale.getDefault();
 		
-        if(string != null && StringUtils.isNotEmpty(string)) {
+        if (string != null && StringUtils.isNotEmpty(string)) {
         	BigDecimal validatedDecimal = new BigDecimalValidator().validate(string, locale);
         	
-        	if(validatedDecimal != null) {
+        	if (validatedDecimal != null) {
         		convertedDecimal = new BigDecimalValidator().validate(string, locale).setScale(fraction, RoundingMode.HALF_UP);
         	}
         }
@@ -59,11 +62,11 @@ public class BigDecimalTool {
         return convertedDecimal;
 	}
 	
-	public static BigDecimal toBigDecimal(String string) {
+	public static BigDecimal toBigDecimal(final String string) {
 		return toBigDecimal(string, FRACTION);
 	}
 	
-	public static BigDecimal toBigDecimalDouble(String string) {
+	public static BigDecimal toBigDecimalDouble(final String string) {
 		return toBigDecimal(string, FRACTION_DOUBLE);
 	}
 }
