@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
-<!-- 2019-07-17T09:29:37 -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Users" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="09cd0ef1-899e-476a-9df9-c53c834799e5">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Baseapp"/>
+<!-- 2025-09-11T11:25:47 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Users" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="09cd0ef1-899e-476a-9df9-c53c834799e5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="MySqlBaseapp"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="net.sf.jasperreports.data.adapter" value="MySqlBaseApp"/>
 	<queryString>
 		<![CDATA[select base_user.name, base_user.username, base_user.email, base_user.dateexp, base_role.name as rol
-from base_user, base_role
-where base_user.role_id = base_role.id]]>
+from base_user, base_user_role, base_role
+where base_user.id = base_user_role.user_id
+and base_user_role.role_id = base_role.id]]>
 	</queryString>
 	<field name="name" class="java.lang.String"/>
 	<field name="username" class="java.lang.String"/>
