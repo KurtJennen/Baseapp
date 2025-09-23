@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.InputSource;
 
-import be.luxuryoverdosis.baseapp.Constants;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.base.tool.JaxbTool;
@@ -167,7 +166,7 @@ public class DocumentServiceSpringImpl implements DocumentService {
 		File inputFile = createDocument(document, data, clazz);
 		
 		String baseName = FileUtils.getBaseName(document.getFileName());
-		File outputFile = new File(baseName + Constants.POINT + FileType.PDF);
+		File outputFile = new File(baseName + FileType.PDF);
 		
 		DocumentConverter documentConverter = officeService.getDocumentConverter();
 		try {

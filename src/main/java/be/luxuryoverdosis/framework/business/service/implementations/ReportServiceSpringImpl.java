@@ -1,6 +1,7 @@
 package be.luxuryoverdosis.framework.business.service.implementations;
 
 import java.sql.Connection;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -45,4 +46,27 @@ public class ReportServiceSpringImpl implements ReportService {
 			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
 		}
 	}
+	
+    public byte[] create(final String realPathReport, final Map<String, Object> parameters) {
+        
+        try {
+            Logging.info(this, "Begin createReport");
+            
+            JasperDesign jasperDesign = JRXmlLoader.load(realPathReport);
+            JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
+            
+            Connection connection = dataSource.getConnection();
+            
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, connection);
+            
+            Logging.info(this, "End createReport");
+            
+            byte[] pdfByteArray = JasperExportManager.exportReportToPdf(jasperPrint);
+            
+            return pdfByteArray;
+            
+        } catch (Exception e) {
+            throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
+        }
+    }
 }

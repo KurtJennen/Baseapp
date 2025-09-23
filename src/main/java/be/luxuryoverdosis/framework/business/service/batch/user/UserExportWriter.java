@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.batch.item.database.HibernateItemWriter;
+import org.springframework.http.MediaType;
 
 import be.luxuryoverdosis.framework.BaseConstants;
-import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.BlobTool;
 import be.luxuryoverdosis.framework.base.tool.ExceptionTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
@@ -64,7 +64,7 @@ public class UserExportWriter extends HibernateItemWriter<User> {
 			job.setFileData(baos.toString().getBytes());
 			job.setFileName(BaseConstants.JOB_EXPORT_USER_FILENAME);
 			job.setFileSize(baos.size());
-			job.setContentType(FileContentType.TEXT_PLAIN);
+			job.setContentType(MediaType.TEXT_PLAIN_VALUE);
 			
 			jobService.createOrUpdate(job);
 			

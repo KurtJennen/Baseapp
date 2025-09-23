@@ -11,10 +11,10 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
+import org.springframework.http.MediaType;
 
 import be.luxuryoverdosis.framework.business.enumeration.DocumentTypeEnum;
 import be.luxuryoverdosis.framework.BaseConstants;
-import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
@@ -83,7 +83,7 @@ public class SearchUserAction extends SearchAction {
 		String realPathReport = request.getSession().getServletContext().getRealPath(BaseConstants.REPORT_USERS_PATH);
 		byte[] pdfByteArray = getReportService().create(realPathReport);
 		
-		ResponseTool.writeResponseForDownload(response, BaseConstants.FILE_USERS, FileContentType.APPLICATION_PDF, pdfByteArray);
+		ResponseTool.writeResponseForDownload(response, BaseConstants.FILE_USERS, MediaType.APPLICATION_PDF_VALUE, pdfByteArray);
 		
 		response.flushBuffer();
 		

@@ -12,9 +12,9 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.upload.FormFile;
+import org.springframework.http.MediaType;
 
 import be.luxuryoverdosis.framework.BaseConstants;
-import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.business.query.SearchSelect;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceConstants;
 import be.luxuryoverdosis.framework.business.service.BaseSpringServiceLocator;
@@ -126,7 +126,7 @@ public class ListUserAction extends AjaxAction {
 		
 		ListUserForm listUserForm = (ListUserForm) form;
 		
-		FileDTO fileDTO = new FileDTO(null, BaseConstants.JOB_EXPORT_USER_FILENAME, 0, FileContentType.TEXT_PLAIN);
+		FileDTO fileDTO = new FileDTO(null, BaseConstants.JOB_EXPORT_USER_FILENAME, 0, MediaType.TEXT_PLAIN_VALUE);
 		
 		getBatchService().exportUserJob(fileDTO);
 		

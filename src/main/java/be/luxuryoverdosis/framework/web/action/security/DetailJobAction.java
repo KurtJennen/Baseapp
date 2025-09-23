@@ -11,8 +11,8 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.ActionRedirect;
+import org.springframework.http.MediaType;
 
-import be.luxuryoverdosis.framework.base.FileContentType;
 import be.luxuryoverdosis.framework.base.FileType;
 import be.luxuryoverdosis.framework.base.tool.ResponseTool;
 import be.luxuryoverdosis.framework.base.tool.StringTool;
@@ -94,7 +94,7 @@ public class DetailJobAction extends AjaxAction {
 		Job job = getJobService().downloadFile(jobInstanceId);
 		byte[] bytes = job.getFileData();
 		
-		ResponseTool.writeResponseForDownload(response, job.getFileName(), FileContentType.TEXT_PLAIN, bytes);
+		ResponseTool.writeResponseForDownload(response, job.getFileName(), MediaType.TEXT_PLAIN_VALUE, bytes);
 		
 		Logging.info(this, "End downloadFile");
 	}
@@ -107,7 +107,7 @@ public class DetailJobAction extends AjaxAction {
 		JobLog jobLog = getJobLogService().downloadFile(jobLogId);
 		byte[] bytes = jobLog.getFileData();
 		
-		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + FileType.TXT, FileContentType.TEXT_PLAIN, bytes);
+		ResponseTool.writeResponseForDownload(response, BaseWebConstants.DOWNLOAD_FILE_LOG + FileType.TXT, MediaType.TEXT_PLAIN_VALUE, bytes);
 		
 		Logging.info(this, "End downloadFileLog");
 	}

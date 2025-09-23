@@ -8,6 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 import be.luxuryoverdosis.framework.base.Encoding;
 import be.luxuryoverdosis.framework.base.FileContentType;
@@ -34,7 +35,7 @@ public class ResponseTool {
 	
 	public static void initializeResponseForAuthentication(HttpServletResponse response) {
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
-		response.setContentType(FileContentType.APPLICATION_JSON);
+		response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 		response.setCharacterEncoding(Encoding.UTF_8);
 	}
 	
