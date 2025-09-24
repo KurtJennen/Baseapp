@@ -10,6 +10,7 @@ public class EnumSelectObject {
 	private String value;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
+	private boolean multiple;
 	private ArrayList<EnumSelectOptionObject> options = new ArrayList<EnumSelectOptionObject>();
 	
 	public String getProperty() {
@@ -41,6 +42,12 @@ public class EnumSelectObject {
 	}
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+	public boolean isMultiple() {
+		return multiple;
+	}
+	public void setMultiple(boolean multiple) {
+		this.multiple = multiple;
 	}
 	public ArrayList<EnumSelectOptionObject> getOptions() {
 		return options;

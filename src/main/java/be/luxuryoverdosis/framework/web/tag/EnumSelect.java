@@ -25,6 +25,7 @@ public class EnumSelect extends CommonTag {
 	private String value;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
+	private boolean multiple;
 	
 	private EnumSelectObject enumSelectObject;
 	private ArrayList<EnumSelectOptionObject> options; 
@@ -50,6 +51,9 @@ public class EnumSelect extends CommonTag {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
+	public void setMultiple(boolean multiple) {
+		this.multiple = multiple;
+	}
 	
 	public int doStartTag() throws JspException {
 		try {
@@ -60,6 +64,7 @@ public class EnumSelect extends CommonTag {
 			enumSelectObject.setTabindex(tabindex);
 			enumSelectObject.setOnchange(onchange);
 			enumSelectObject.setDisabled(disabled);
+			enumSelectObject.setMultiple(multiple);
 			
 			options = new ArrayList<EnumSelectOptionObject>();
 			

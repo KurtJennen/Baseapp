@@ -3,6 +3,10 @@
 	tabindex="${templateData.tabindex}"
 	onchange="${templateData.onchange}"
 	
+	<#if templateData.multiple = true>
+		multiple="multiple"
+	</#if>
+	
 	<#if templateData.disabled = true>
 		disabled="disabled"
 	</#if>
