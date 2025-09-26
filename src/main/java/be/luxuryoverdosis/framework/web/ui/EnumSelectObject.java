@@ -8,6 +8,7 @@ public class EnumSelectObject {
 	private String property;
 	private String tabindex;
 	private String value;
+	private int size = 5;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
 	private boolean multiple;
@@ -30,6 +31,12 @@ public class EnumSelectObject {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
 	}
 	public String getOnchange() {
 		return onchange;

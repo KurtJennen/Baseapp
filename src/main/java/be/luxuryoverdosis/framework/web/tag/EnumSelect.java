@@ -23,6 +23,7 @@ public class EnumSelect extends CommonTag {
 	private String property;
 	private String tabindex;
 	private String value;
+	private int size = 5;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
 	private boolean multiple;
@@ -45,6 +46,9 @@ public class EnumSelect extends CommonTag {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	public void setSize(int size) {
+		this.size = size;
+	}
 	public void setOnchange(String onchange) {
 		this.onchange = onchange;
 	}
@@ -65,6 +69,7 @@ public class EnumSelect extends CommonTag {
 			enumSelectObject.setOnchange(onchange);
 			enumSelectObject.setDisabled(disabled);
 			enumSelectObject.setMultiple(multiple);
+			enumSelectObject.setSize(size);
 			
 			options = new ArrayList<EnumSelectOptionObject>();
 			

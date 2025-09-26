@@ -3,7 +3,9 @@
 	tabindex="${templateData.tabindex}"
 	onchange="${templateData.onchange}"
 	
+	
 	<#if templateData.multiple = true>
+		size="${templateData.size}"
 		multiple="multiple"
 	</#if>
 	
