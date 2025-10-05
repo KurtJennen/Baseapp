@@ -12,4 +12,13 @@ public class ArrayListTool {
         return arrayList;
 	}
 	
+    public static ArrayList<String> toArrayList(String[] array) {
+        ArrayList<String> arrayList = new ArrayList<String>();
+        for (String id :array) {
+            arrayList.add(id);
+        }
+        
+        return arrayList;
+    }
+	
 }
