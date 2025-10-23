@@ -26,25 +26,7 @@ public class ReportServiceSpringImpl implements ReportService {
 	
 	public byte[] create(final String realPathReport) {
 		
-		try {
-			Logging.info(this, "Begin createReport");
-			
-			JasperDesign jasperDesign = JRXmlLoader.load(realPathReport);
-			JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-			
-			Connection connection = dataSource.getConnection();
-			
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, connection);
-			
-			Logging.info(this, "End createReport");
-			
-			byte[] pdfByteArray = JasperExportManager.exportReportToPdf(jasperPrint);
-			
-			return pdfByteArray;
-			
-		} catch (Exception e) {
-			throw new ServiceException("errors.exception.type", new String[]{e.getClass().getName().toLowerCase()});
-		}
+		return create(realPathReport, null);
 	}
 	
     public byte[] create(final String realPathReport, final Map<String, Object> parameters) {
