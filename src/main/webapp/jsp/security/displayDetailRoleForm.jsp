@@ -20,6 +20,7 @@
 			<td><fmt:message key="security.name" />*:</td>
 			<td>
 				<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="1" property="name" value="${detailRoleForm.name}" method="getAllCodes"/>
+<!--				<lo:enumSelect clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="2" property="names" multipleValues="${detailRoleForm.names}" method="getAllCodes" multiple="true" size="5"/>-->
 			</td>
 <%-- 			<td><lo:enumRadio clazz="be.luxuryoverdosis.framework.business.enumeration.RoleNameEnum" tabindex="1" property="name" value="${detailRoleForm.name}"  method="getAllCodes"/> </td> --%>
 		</tr>

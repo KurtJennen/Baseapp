@@ -2,6 +2,7 @@ package be.luxuryoverdosis.framework.web.tag;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ public class EnumSelect extends CommonTag {
 	private String property;
 	private String tabindex;
 	private String value;
+	private String[] multipleValues;
 	private int size = 5;
 	private String onchange = StringUtils.EMPTY;
 	private boolean disabled;
@@ -45,6 +47,9 @@ public class EnumSelect extends CommonTag {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public void setMultipleValues(String[] multipleValues) {
+		this.multipleValues = multipleValues;
 	}
 	public void setSize(int size) {
 		this.size = size;
@@ -78,9 +83,16 @@ public class EnumSelect extends CommonTag {
 				EnumSelectOptionObject enumSelectOptionObject = new EnumSelectOptionObject();
 				enumSelectOptionObject.setKey(key);
 				enumSelectOptionObject.setKeyMessage(getKeyMessage(request, key));
-				if(key.equals(value)) {
-					enumSelectOptionObject.setSelected(true);
+				if(multiple) {
+					if(multipleValues != null && Arrays.asList(multipleValues).contains(key)) {
+						enumSelectOptionObject.setSelected(true);
+					}
+				} else {
+					if(key.equals(value)) {
+						enumSelectOptionObject.setSelected(true);
+					}
 				}
+				
 				
 				options.add(enumSelectOptionObject);
 			}
